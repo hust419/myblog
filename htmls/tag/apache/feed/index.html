@@ -1,0 +1,83 @@
+<br />
+<b>Warning</b>:  Use of undefined constant LC_ARCHIVERS_OPTION - assumed 'LC_ARCHIVERS_OPTION' (this will throw an Error in a future version of PHP) in <b>/usr/share/nginx/html/wordpress/wp-content/plugins/lc-archivers/Lc-archivers.php</b> on line <b>89</b><br />
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Apache &#8211; 三两带走</title>
+	<atom:link href="http://192.168.1.7/htmls/tag/apache/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>Apache &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Apache的日志</title>
+		<link>https://huster.top/htmls/145.html</link>
+		<comments>https://huster.top/htmls/145.html#respond</comments>
+		<pubDate>Fri, 06 Apr 2012 04:17:27 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[系统架构学习]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[日志]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=145</guid>
+		<description><![CDATA[为了有效的管理网站，日志是必须的。apache的日志包含access日志和错误日志。前者有助于重现用<a class="moretag" href="https://huster.top/htmls/145.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>为了有效的管理网站，日志是必须的。apache的日志包含access日志和错误日志。前者有助于重现用户的访问情景，来分析用户的行为，后者用于网站的错误判读。</p>
+<p><span id="more-145"></span></p>
+<p>安全提示：</p>
+<p>对于access日志目录有写权限的人，能够获取apache的执行者的权限（默认root）。另一方面，原始日志中没有对特殊符号进行过滤，所有处理原始数据需要格外的小心。</p>
+<p>错误日志</p>
+<p>错误日志有助于我们分析网站的问题所在，通常如下的样式：</p>
+<p><code>[Wed Oct 11 14:32:52 2000] [error] [client 127.0.0.1] client denied by server configuration: /export/home/live/ap/htdocs/test </code></p>
+<p>通常使用 <code>tail -f error_log来定位最新的错误信息</code></p>
+<p><code></code>access日志</p>
+<p>access保存了所有的请求信息，<code><a href="http://httpd.apache.org/docs/2.0/mod/mod_log_config.html#customlog">CustomLog</a></code>  他被这个东西定义。另外，你可以借助<a href="http://dmoz.org/Computers/Software/Internet/Site_Management/Log_analysis/">Open Directory</a> or <a href="http://dir.yahoo.com/Computers_and_Internet/Software/Internet/World_Wide_Web/Servers/Log_Analysis_Tools/"> Yahoo</a>.这些工具来分析日志。access日志一共包含两种日志 ：</p>
+<h3><a id="common" name="common"></a>Common Log Format</h3>
+<p>其格式类似:<code>127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326 </code></p>
+<h3><a id="combined" name="combined"></a>Combined Log Format</h3>
+<p>这种日志，比common多了两个字段 :</p>
+<p><code>127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326 "http://www.example.com/start.html" "Mozilla/4.08 [en] (Win98; I ;Nav)" </code></p>
+<p><code>"http://www.example.com/start.html"</code> (<code>\"%{Referer}i\"</code>) &#8212;-referer 信息</p>
+<p><code>"Mozilla/4.08 [en] (Win98; I ;Nav)"</code> 客户端的信息</p>
+<p>还有<a id="multiple" name="multiple"></a>Multiple Access Logs和<a id="conditional" name="conditional"></a>Conditional Logs详细查看：<a href="http://httpd.apache.org/docs/2.0/logs.html" target="_blank">apache官网介绍</a></p>
+<p>值得一提的是日志的轮转：</p>
+<p>首先需要解决的问题是，如果网站访问量比较大，那么日志增加的会非常快，通常一天下来几百G都有可能，磁盘可能很快就满了，处理日志也比较麻烦，我们可能需要定时的将日志备份，打包，转移等等。当时，通常这么做需要重启服务器的，因为apache一直持续的在想文件中写入日志。通过优雅的重启，能够解决这个问题。apache在写入新的日志文件前，通常会等待几分钟，处理旧的请求，以及写入日志。因此通常需要将apache sleep一段时间，例如：</p>
+<p><code>mv access_log access_log.old<br />
+mv error_log error_log.old<br />
+apachectl graceful<br />
+sleep 600<br />
+gzip access_log.old error_log.old </code></p>
+<p>另一个更好的办法是：<a id="piped" name="piped"></a>Piped Logs 他是将日志输出到一个接受标准输入的程序，让程序对日志进行处理，用的比较多的是<a href="http://www.cronolog.org/">cronolog</a> ，例举几个常见的例子：</p>
+<p><code>CustomLog "|bin/rotatelogs /var/logs/logfile 86400" common</code> //每天一个文件</p>
+<p><code>CustomLog "|bin/rotatelogs /var/logs/logfile 5M" common</code> // 每5M一个</p>
+<p><code>ErrorLog "|bin/rotatelogs /var/logs/errorlog.%Y-%m-%d-%H" // 每小时存一次错误日志</code></p>
+<p>CustomLog &#8220;|/usr/sbin/apache/bin/cronolog /usr/local/apache/logs/search/%Y/%m/%d/access-%Y-%m-%d_%H.log&#8221; combined</p>
+<p>combined日志，每1小时存一次<br />
+ErrorLog &#8220;|grep -v &#8216;tairclientapi_impl&#8217;  &#8211;line-buffered|/home/admin/apache/bin/cronolog /home/admin/apache/logs/search/%Y/%m/%d/error-%Y-%m-%d.log&#8221;</p>
+<p>首先交给grep处理，然后刷新到log</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/145.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>
