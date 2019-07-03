@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html><body><br><b>Warning</b>:  Use of undefined constant LC_ARCHIVERS_OPTION - assumed 'LC_ARCHIVERS_OPTION' (this will throw an Error in a future version of PHP) in <b>/usr/share/nginx/html/wordpress/wp-content/plugins/lc-archivers/Lc-archivers.php</b> on line <b>89</b><br><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>并发编程模型(转载) – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/557.html/amp"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//fonts.googleapis.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="hestia-clients-bar-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/companion-legacy/assets/css/hestia/clients-bar.css" type="text/css" media="all"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="bootstrap-css" href="https://huster.top/wp-content/themes/hestia/assets/bootstrap/css/bootstrap.min.css" type="text/css" media="all"><link rel="stylesheet" id="orfeo_parent-css" href="https://huster.top/wp-content/themes/hestia/style.css" type="text/css" media="all"><style id="orfeo_parent-inline-css" type="text/css">
+.hestia-pricing .hestia-table-one .card-pricing .category { color: #f5593d; }.hestia-pricing .hestia-table-two .card-pricing { background-color: #f5593d; }.pagination .nav-links .page-numbers { color: #f5593d; border-color: #f5593d; }.pagination .nav-links .page-numbers.current { border-color: #f5593d; }.pagination .nav-links .page-numbers:hover { background-color: #f5593d; }.pagination .nav-links .page-numbers:hover { border-color: #f5593d; }.woocommerce-pagination ul.page-numbers .page-numbers { color: #f5593d; border-color: #f5593d; } .woocommerce-pagination ul.page-numbers li > span.current { border-color: #f5593d !important; }.woocommerce-pagination ul.page-numbers .page-numbers:hover { background-color: #f5593d; }.woocommerce-pagination ul.page-numbers .page-numbers:hover { border-color: #f5593d; }.entry-categories .label { background-color: #f5593d;}.woocommerce .star-rating { color: #f5593d; }.woocommerce div.product p.stars span a:before { color: #f5593d; }.woocommerce-cart table.shop_table button { 
+		    background-color: #f5593d !important;
+		    border-color: #f5593d !important; 
+        }.woocommerce-cart table.shop_table button:hover { 
+		    background-color: #f5593d !important; 
+		    border-color: #f5593d !important;
+        }.woocommerce-page .woocommerce-message { background-color: #f5593d; }.track_order input[type=submit] { background-color: #f5593d; }.track_order input[type=submit]:hover { background-color: #f5593d; }div[id^=woocommerce_product_tag_cloud].widget a { background-color: #f5593d; }.woocommerce.widget_shopping_cart .buttons > a.button { background-color: #f5593d; }.woocommerce.widget_shopping_cart .buttons > a.button:hover { background-color: #f5593d; }
+</style><link rel="stylesheet" id="hestia-font-sizes-css" href="https://huster.top/wp-content/themes/hestia/assets/css/font-sizes.min.css" type="text/css" media="all"><link rel="stylesheet" id="font-awesome-css" href="https://huster.top/wp-content/themes/hestia/assets/font-awesome/css/font-awesome.min.css" type="text/css" media="all"><link rel="stylesheet" id="hestia_style-css" href="https://huster.top/wp-content/themes/orfeo/style.css" type="text/css" media="all"><style id="hestia_style-inline-css" type="text/css">
+.hestia-top-bar, .hestia-top-bar .widget.widget_shopping_cart .cart_list {
+			background-color: #363537
+		}
+		.hestia-top-bar .widget .label-floating input[type=search]:-webkit-autofill {
+			-webkit-box-shadow: inset 0 0 0px 9999px #363537
+		}.hestia-top-bar, .hestia-top-bar .widget .label-floating input[type=search], .hestia-top-bar .widget.widget_search form.form-group:before, .hestia-top-bar .widget.widget_product_search form.form-group:before, .hestia-top-bar .widget.widget_shopping_cart:before {
+			color: #ffffff
+		} 
+		.hestia-top-bar .widget .label-floating input[type=search]{
+			-webkit-text-fill-color:#ffffff !important 
+		}.hestia-top-bar a, .hestia-top-bar .top-bar-nav li a {
+			color: #ffffff
+		}.hestia-top-bar a:hover, .hestia-top-bar .top-bar-nav li a:hover {
+			color: #eeeeee
+		}
+	
+		a, 
+		.navbar .dropdown-menu li:hover > a,
+		.navbar .dropdown-menu li:focus > a,
+		.navbar .dropdown-menu li:active > a,
+		.navbar .navbar-nav > li .dropdown-menu li:hover > a,
+		body:not(.home) .navbar-default .navbar-nav > .active:not(.btn) > a,
+		body:not(.home) .navbar-default .navbar-nav > .active:not(.btn) > a:hover,
+		body:not(.home) .navbar-default .navbar-nav > .active:not(.btn) > a:focus,
+		a:hover, 
+		.card-blog a.moretag:hover, 
+		.card-blog a.more-link:hover, 
+		.widget a:hover {
+		    color:#f5593d;
+		}
+		
+		.pagination span.current, .pagination span.current:focus, .pagination span.current:hover {
+			border-color:#f5593d
+		}
+		
+		button,
+		button:hover,
+		.woocommerce .track_order button[type="submit"],     
+		.woocommerce .track_order button[type="submit"]:hover,     
+		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit,
+		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit:hover,
+		input[type="button"],
+		input[type="button"]:hover,
+		input[type="submit"],
+		input[type="submit"]:hover,
+		input#searchsubmit, 
+		.pagination span.current, 
+		.pagination span.current:focus, 
+		.pagination span.current:hover,
+		.btn.btn-primary,
+		.btn.btn-primary:link,
+		.btn.btn-primary:hover, 
+		.btn.btn-primary:focus, 
+		.btn.btn-primary:active, 
+		.btn.btn-primary.active, 
+		.btn.btn-primary.active:focus, 
+		.btn.btn-primary.active:hover,
+		.btn.btn-primary:active:hover, 
+		.btn.btn-primary:active:focus, 
+		.btn.btn-primary:active:hover,
+		.hestia-sidebar-open.btn.btn-rose,
+		.hestia-sidebar-close.btn.btn-rose,
+		.hestia-sidebar-open.btn.btn-rose:hover,
+		.hestia-sidebar-close.btn.btn-rose:hover,
+		.hestia-sidebar-open.btn.btn-rose:focus,
+		.hestia-sidebar-close.btn.btn-rose:focus,
+		.label.label-primary,
+		.hestia-work .portfolio-item:nth-child(6n+1) .label,
+		.nav-cart .nav-cart-content .widget .buttons .button{
+		    background-color: #f5593d;
+		}
+		
+		@media (max-width: 768px) { 
+	
+			.navbar-default .navbar-nav>li>a:hover,
+			.navbar-default .navbar-nav>li>a:focus,
+			.navbar .navbar-nav .dropdown .dropdown-menu li a:hover,
+			.navbar .navbar-nav .dropdown .dropdown-menu li a:focus,
+			.navbar button.navbar-toggle:hover,
+			.navbar .navbar-nav li:hover > a i {
+			    color: #f5593d;
+			}
+		}
+		
+		body:not(.woocommerce-page) button:not([class^="fl-"]):not(.hestia-scroll-to-top):not(.navbar-toggle),
+		body:not(.woocommerce-page) .button:not([class^="fl-"]):not(hestia-scroll-to-top):not(.navbar-toggle):not(.add_to_cart_button),
+		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit,
+		input[type="submit"], 
+		input[type="button"], 
+		.btn.btn-primary,
+		.widget_product_search button[type="submit"],
+		.hestia-sidebar-open.btn.btn-rose,
+		.hestia-sidebar-close.btn.btn-rose {
+		    -webkit-box-shadow: 0 2px 2px 0 rgba(245,89,61,0.14),0 3px 1px -2px rgba(245,89,61,0.2),0 1px 5px 0 rgba(245,89,61,0.12);
+		    box-shadow: 0 2px 2px 0 rgba(245,89,61,0.14),0 3px 1px -2px rgba(245,89,61,0.2),0 1px 5px 0 rgba(245,89,61,0.12);
+		}
+		
+		.card .header-primary, .card .content-primary {
+		    background: #f5593d;
+		}
+		
+		body:not(.woocommerce-page) .button:not([class^="fl-"]):not(.hestia-scroll-to-top):not(.navbar-toggle):not(.add_to_cart_button):hover,
+		body:not(.woocommerce-page) button:not([class^="fl-"]):not(.hestia-scroll-to-top):not(.navbar-toggle):hover,
+		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit:hover,
+		input[type="submit"]:hover,
+		input[type="button"]:hover,
+		input#searchsubmit:hover, 
+		.widget_product_search button[type="submit"]:hover,
+		.pagination span.current, 
+		.btn.btn-primary:hover, 
+		.btn.btn-primary:focus, 
+		.btn.btn-primary:active, 
+		.btn.btn-primary.active, 
+		.btn.btn-primary:active:focus, 
+		.btn.btn-primary:active:hover, 
+		.hestia-sidebar-open.btn.btn-rose:hover,
+		.hestia-sidebar-close.btn.btn-rose:hover,
+		.pagination span.current:hover{
+			-webkit-box-shadow: 0 14px 26px -12pxrgba(245,89,61,0.42),0 4px 23px 0 rgba(0,0,0,0.12),0 8px 10px -5px rgba(245,89,61,0.2);
+		    box-shadow: 0 14px 26px -12px rgba(245,89,61,0.42),0 4px 23px 0 rgba(0,0,0,0.12),0 8px 10px -5px rgba(245,89,61,0.2);
+			color: #fff;
+		}
+		
+		.form-group.is-focused .form-control {
+		background-image: -webkit-gradient(linear,left top, left bottom,from(#f5593d),to(#f5593d)),-webkit-gradient(linear,left top, left bottom,from(#d2d2d2),to(#d2d2d2));
+			background-image: -webkit-linear-gradient(#f5593d),to(#f5593d),-webkit-linear-gradient(#d2d2d2,#d2d2d2);
+			background-image: linear-gradient(#f5593d),to(#f5593d),linear-gradient(#d2d2d2,#d2d2d2);
+		}
+		
+		.navbar:not(.navbar-transparent) li:not(.btn):hover > a,
+		.navbar li.on-section > a, 
+		.navbar.full-screen-menu.navbar-transparent li:not(.btn):hover > a,
+		.navbar.full-screen-menu .navbar-toggle:hover,
+		.navbar:not(.navbar-transparent) .nav-cart:hover, 
+		.navbar:not(.navbar-transparent) .hestia-toggle-search:hover {
+				color:#f5593d}
+		
+		.header-filter-gradient { 
+			background: linear-gradient(45deg, rgba(81,188,218,1) 0%, rgb(147,216,197) 100%); 
+		} 
+.btn.btn-primary:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item), input[type="submit"]:not(.search-submit), body:not(.woocommerce-account) .woocommerce .button.woocommerce-Button, .woocommerce .product button.button, .woocommerce .product button.button.alt, .woocommerce .product #respond input#submit, .woocommerce-cart .blog-post .woocommerce .cart-collaterals .cart_totals .checkout-button, .woocommerce-checkout #payment #place_order, .woocommerce-account.woocommerce-page button.button, .woocommerce .track_order button[type="submit"], .nav-cart .nav-cart-content .widget .buttons .button, .woocommerce a.button.wc-backward, body.woocommerce .wccm-catalog-item a.button, body.woocommerce a.wccm-button.button, form.woocommerce-form-coupon button.button, div.wpforms-container .wpforms-form button[type=submit].wpforms-submit, div.woocommerce a.button.alt, div.woocommerce table.my_account_orders .button, .btn.colored-button, .btn.btn-left, .btn.btn-right, .btn:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item):not(.hestia-sidebar-open):not(.hestia-sidebar-close){ padding-top:15px;  padding-bottom:15px;  padding-left:33px;  padding-right:33px; }
+.btn.btn-primary:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item), input[type="submit"]:not(.search-submit), body:not(.woocommerce-account) .woocommerce .button.woocommerce-Button, .woocommerce .product button.button, .woocommerce .product button.button.alt, .woocommerce .product #respond input#submit, .woocommerce-cart .blog-post .woocommerce .cart-collaterals .cart_totals .checkout-button, .woocommerce-checkout #payment #place_order, .woocommerce-account.woocommerce-page button.button, .woocommerce .track_order button[type="submit"], .nav-cart .nav-cart-content .widget .buttons .button, .woocommerce a.button.wc-backward, body.woocommerce .wccm-catalog-item a.button, body.woocommerce a.wccm-button.button, form.woocommerce-form-coupon button.button, div.wpforms-container .wpforms-form button[type=submit].wpforms-submit, div.woocommerce a.button.alt, div.woocommerce table.my_account_orders .button, input[type="submit"].search-submit, .hestia-view-cart-wrapper .added_to_cart.wc-forward, .woocommerce-product-search button, .woocommerce-cart .actions .button, #secondary div[id^=woocommerce_price_filter] .button, .woocommerce div[id^=woocommerce_widget_cart].widget .buttons .button, .searchform input[type=submit], .searchform button, .search-form:not(.media-toolbar-primary) input[type=submit], .search-form:not(.media-toolbar-primary) button, .woocommerce-product-search input[type=submit], .btn.colored-button, .btn.btn-left, .btn.btn-right, .btn:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item):not(.hestia-sidebar-open):not(.hestia-sidebar-close){border-radius:3px;}
+h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in-content , .info-title, .card-title,
+		.page-header.header-small .hestia-title, .page-header.header-small .title, .widget h5, .hestia-title, 
+		.title, .card-title, .info-title, .footer-brand, .footer-big h4, .footer-big h5, .media .media-heading, 
+		.carousel h1.hestia-title, .carousel h2.title, 
+		.carousel span.sub-title, .woocommerce.single-product h1.product_title, .woocommerce section.related.products h2, .hestia-about h1, .hestia-about h2, .hestia-about h3, .hestia-about h4, .hestia-about h5 {
+			font-family: Montserrat;
+		}
+		body, ul, .tooltip-inner {
+			font-family: Montserrat;
+		}
+
+			.home.blog .hestia-blogs {
+				background-color: #fff !important;
+			}
+		
+			.woocommerce-checkout #hestia-checkout-coupon .woocommerce-message,
+			.woocommerce-checkout #hestia-checkout-coupon .woocommerce-error {
+				margin-left: auto;
+				margin-right: auto;
+			}
+		
+			.btn,
+			button,
+			.button {
+				box-shadow: none !important;
+			}
+			
+			.btn:hover,
+			button:hover,
+			.button:hover {
+				opacity: 0.75;
+			}
+		
+			.carousel .buttons .btn-primary + .btn-right {
+				margin-left: 15px;
+			}		
+			.carousel .buttons .btn,
+			.carousel .buttons .btn-right {
+				margin: 15px;
+			}
+		
+			.carousel .hestia-big-title-content .hestia-title {
+				font-weight: 800;
+			}
+			.carousel .hestia-big-title-content .sub-title {
+				font-family: inherit;
+				font-size: 19px;
+				font-weight: 300;
+				line-height: 26px;
+				margin: 0 0 8px;
+			}
+			.carousel .hestia-big-title-content .buttons .btn,
+			.carousel .hestia-big-title-content .buttons .btn-right {
+				border-radius: 30px;
+				font-family: inherit;
+				font-size: 14px;
+				font-weight: 600;
+				line-height: 24px;
+				padding: 11px 30px;
+			}
+			.carousel .hestia-big-title-content .buttons .btn-right {
+				background-color: transparent;
+				border: 2px solid #fff;
+				padding: 9px 28px;
+			}
+		
+
+		.page-template-builder-fullwidth-std .header > .elementor {
+			padding-top: 70px;
+		}
+
+</style><link rel="stylesheet" id="hestia_fonts-css" href="https://fonts.googleapis.com/css?family=Roboto+Slab%3A400%2C700&subset=latin%2Clatin-ext&ver=2.0.4" type="text/css" media="all"><link rel="stylesheet" id="hestia-google-font-montserrat-css" href="//fonts.googleapis.com/css?family=Montserrat%3A300%2C400%2C500%2C700&subset=latin&ver=4.9.10" type="text/css" media="all"><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"><div class="wrapper post-557 post type-post status-publish format-standard hentry category-java category-75 default ">
+		<header class="header "><nav class="navbar navbar-default navbar-fixed-top  hestia_left navbar-not-transparent"><div class="container">
+						<div class="navbar-header">
+			<div class="title-logo-wrapper">
+				<a class="navbar-brand" href="https://huster.top/" title="三两带走">
+					<p>三两带走</p></a>
+			</div>
+								<div class="navbar-toggle-wrapper">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navigation">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="sr-only">切换导航</span>
+			</button>
+					</div>
+				</div>
+					</div>
+					</nav><div style="display: none"></div>		</header><div id="primary" class="boxed-layout-header page-header header-small" data-parallax="active"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1 text-center"><h1 class="hestia-title entry-title">并发编程模型(转载)</h1><h4 class="author">于<time class="date updated published" datetime="2018-06-19T19:22:46+00:00">2018 年 6 月 19 日</time>由<a href="https://huster.top/htmls/author/admin" class="vcard author"><strong class="fn">龙安_任天兵</strong></a>发布</h4></div></div></div><div class="header-filter header-filter-gradient"></div></div>
+<div class="main  main-raised ">
+	<div class="blog-post blog-post-wrapper">
+		<div class="container">
+			<article id="post-557" class="section section-text"><div class="row">
+				<div class="col-md-8 single-post-container" data-layout="sidebar-right">
+			<div class="single-post-wrap">
+				<p>这篇文章写的可是真好，把以前模模糊糊的概念弄的很清晰</p>
+<p><span id="more-557"></span></p>
+<h3 class="title">并发编程模型</h3>
+<div class="post_content">
+<p><a title="concurrency-models" href="http://tutorials.jenkov.com/java-concurrency/concurrency-models.html" target="_blank" rel="noopener">原文链接</a> 作者: Jakob Jenkov 译者: 林威建 [weakielin@gmail.com]</p>
+<p>并发系统可以采用多种并发编程模型来实现。并发模型指定了系统中的线程如何通过协作来完成分配给它们的作业。不同的并发模型采用不同的方式拆分作业，同时线程间的协作和交互方式也不相同。这篇并发模型教程将会较深入地介绍目前（2015年，本文撰写时间）比较流行的几种并发模型。<br><span id="more-19235"></span></p>
+<h1>并发模型与分布式系统之间的相似性</h1>
+<p>本文所描述的并发模型类似于分布式系统中使用的很多体系结构。在并发系统中线程之间可以相互通信。在分布式系统中进程之间也可以相互通信（进程有可能在不同的机器中）。线程和进程之间具有很多相似的特性。这也就是为什么很多并发模型通常类似于各种分布式系统架构。</p>
+<p>当然，分布式系统在处理网络失效、远程主机或进程宕掉等方面也面临着额外的挑战。但是运行在巨型服务器上的并发系统也可能遇到类似的问题，比如一块CPU失效、一块网卡失效或一个磁盘损坏等情况。虽然出现失效的概率可能很低，但是在理论上仍然有可能发生。</p>
+<p>由于并发模型类似于分布式系统架构，因此它们通常可以互相借鉴思想。例如，为工作者们（线程）分配作业的模型一般与分布式系统中的<a title="负载均衡" href="http://tutorials.jenkov.com/software-architecture/load-balancing.html" target="_blank" rel="noopener">负载均衡系统</a>比较相似。同样，它们在日志记录、失效转移、幂等性等错误处理技术上也具有相似性。<br>
+【注：幂等性，一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同】</p>
+<h1>并行工作者</h1>
+<p>第一种并发模型就是我所说的并行工作者模型。传入的作业会被分配到不同的工作者上。下图展示了并行工作者模型：<br><img src="http://tutorials.jenkov.com/images/java-concurrency/concurrency-models-1.png" alt="并行工作者模型"><br>
+在并行工作者模型中，委派者（Delegator）将传入的作业分配给不同的工作者。每个工作者完成整个任务。工作者们并行运作在不同的线程上，甚至可能在不同的CPU上。</p>
+<p>如果在某个汽车厂里实现了并行工作者模型，每台车都会由一个工人来生产。工人们将拿到汽车的生产规格，并且从头到尾负责所有工作。</p>
+<p>在Java应用系统中，并行工作者模型是最常见的并发模型（即使正在转变）。<a title="java-concurrent-utils" href="http://tutorials.jenkov.com/java-util-concurrent/index.html" target="_blank" rel="noopener">java.util.concurrent包</a>中的许多并发实用工具都是设计用于这个模型的。你也可以在Java企业级（J2EE）应用服务器的设计中看到这个模型的踪迹。</p>
+<h2>并行工作者模型的优点</h2>
+<p>并行工作者模式的优点是，它很容易理解。你只需添加更多的工作者来提高系统的并行度。</p>
+<p>例如，如果你正在做一个网络爬虫，可以试试使用不同数量的工作者抓取到一定数量的页面，然后看看多少数量的工作者消耗的时间最短（意味着性能最高）。由于网络爬虫是一个IO密集型工作，最终结果很有可能是你电脑中的每个CPU或核心分配了几个线程。每个CPU若只分配一个线程可能有点少，因为在等待数据下载的过程中CPU将会空闲大量时间。</p>
+<h1>并行工作者模型的缺点</h1>
+<p>并行工作者模型虽然看起来简单，却隐藏着一些缺点。接下来的章节中我会分析一些最明显的弱点。</p>
+<h3>共享状态可能会很复杂</h3>
+<p>在实际应用中，并行工作者模型可能比前面所描述的情况要复杂得多。共享的工作者经常需要访问一些共享数据，无论是内存中的或者共享的数据库中的。下图展示了并行工作者模型是如何变得复杂的：<br><img src="http://tutorials.jenkov.com/images/java-concurrency/concurrency-models-2.png" alt="并行工作者模型的复杂情况"><br>
+有些共享状态是在像作业队列这样的通信机制下。但也有一些共享状态是业务数据，数据缓存，数据库连接池等。</p>
+<p>一旦共享状态潜入到并行工作者模型中，将会使情况变得复杂起来。线程需要以某种方式存取共享数据，以确保某个线程的修改能够对其他线程可见（数据修改需要同步到主存中，不仅仅将数据保存在执行这个线程的CPU的缓存中）。线程需要避免<a title="竞争状态" href="http://tutorials.jenkov.com/java-concurrency/race-conditions-and-critical-sections.html" target="_blank" rel="noopener">竟态</a>，<a title="死锁" href="http://tutorials.jenkov.com/java-concurrency/deadlock.html" target="_blank" rel="noopener">死锁</a>以及很多其他共享状态的并发性问题。</p>
+<p>此外，在等待访问共享数据结构时，线程之间的互相等待将会丢失部分并行性。许多并发数据结构是阻塞的，意味着在任何一个时间只有一个或者很少的线程能够访问。这样会导致在这些共享数据结构上出现竞争状态。在执行需要访问共享数据结构部分的代码时，高竞争基本上会导致执行时出现一定程度的串行化。</p>
+<p>现在的<a title="无阻塞算法" href="http://tutorials.jenkov.com/java-concurrency/non-blocking-algorithms.html" target="_blank" rel="noopener">非阻塞并发算法</a>也许可以降低竞争并提升性能，但是非阻塞算法的实现比较困难。</p>
+<p>可持久化的数据结构是另一种选择。在修改的时候，可持久化的数据结构总是保护它的前一个版本不受影响。因此，如果多个线程指向同一个可持久化的数据结构，并且其中一个线程进行了修改，进行修改的线程会获得一个指向新结构的引用。所有其他线程保持对旧结构的引用，旧结构没有被修改并且因此保证一致性。Scala编程包含几个持久化数据结构。<br>
+【注：这里的可持久化数据结构不是指持久化存储，而是一种数据结构，比如Java中的String类，以及CopyOnWriteArrayList类，具体可<a title="可持久化的数据结构" href="http://www.cnblogs.com/tedzhao/archive/2008/11/12/1332112.html" target="_blank" rel="noopener">参考</a>】</p>
+<p>虽然可持久化的数据结构在解决共享数据结构的并发修改时显得很优雅，但是可持久化的数据结构的表现往往不尽人意。</p>
+<p>比如说，一个可持久化的链表需要在头部插入一个新的节点，并且返回指向这个新加入的节点的一个引用（这个节点指向了链表的剩余部分）。所有其他现场仍然保留了这个链表之前的第一个节点，对于这些线程来说链表仍然是为改变的。它们无法看到新加入的元素。</p>
+<p>这种可持久化的列表采用链表来实现。不幸的是链表在现代硬件上表现的不太好。链表中得每个元素都是一个独立的对象，这些对象可以遍布在整个计算机内存中。现代CPU能够更快的进行顺序访问，所以你可以在现代的硬件上用数组实现的列表，以获得更高的性能。数组可以顺序的保存数据。CPU缓存能够一次加载数组的一大块进行缓存，一旦加载完成CPU就可以直接访问缓存中的数据。这对于元素散落在RAM中的链表来说，不太可能做得到。</p>
+<h3>无状态的工作者</h3>
+<p>共享状态能够被系统中得其他线程修改。所以工作者在每次需要的时候必须重读状态，以确保每次都能访问到最新的副本，不管共享状态是保存在内存中的还是在外部数据库中。工作者无法在内部保存这个状态（但是每次需要的时候可以重读）称为无状态的。</p>
+<p>每次都重读需要的数据，将会导致速度变慢，特别是状态保存在外部数据库中的时候。</p>
+<h3>任务顺序是不确定的</h3>
+<p>并行工作者模式的另一个缺点是，作业执行顺序是不确定的。无法保证哪个作业最先或者最后被执行。作业A可能在作业B之前就被分配工作者了，但是作业B反而有可能在作业A之前执行。</p>
+<p>并行工作者模式的这种非确定性的特性，使得很难在任何特定的时间点推断系统的状态。这也使得它也更难（如果不是不可能的话）保证一个作业在其他作业之前被执行。</p>
+<h1>流水线模式</h1>
+<p>第二种并发模型我们称之为流水线并发模型。我之所以选用这个名字，只是为了配合“并行工作者”的隐喻。其他开发者可能会根据平台或社区选择其他称呼（比如说反应器系统，或事件驱动系统）。下图表示一个流水线并发模型：<br><img src="http://tutorials.jenkov.com/images/java-concurrency/concurrency-models-3.png" alt="流水线并发模型"></p>
+<p>类似于工厂中生产线上的工人们那样组织工作者。每个工作者只负责作业中的部分工作。当完成了自己的这部分工作时工作者会将作业转发给下一个工作者。每个工作者在自己的线程中运行，并且不会和其他工作者共享状态。有时也被成为<em>无共享</em>并行模型。</p>
+<p>通常使用非阻塞的IO来设计使用流水线并发模型的系统。非阻塞IO意味着，一旦某个工作者开始一个IO操作的时候（比如读取文件或从网络连接中读取数据），这个工作者不会一直等待IO操作的结束。IO操作速度很慢，所以等待IO操作结束很浪费CPU时间。此时CPU可以做一些其他事情。当IO操作完成的时候，IO操作的结果（比如读出的数据或者数据写完的状态）被传递给下一个工作者。</p>
+<p>有了非阻塞IO，就可以使用IO操作确定工作者之间的边界。工作者会尽可能多运行直到遇到并启动一个IO操作。然后交出作业的控制权。当IO操作完成的时候，在流水线上的下一个工作者继续进行操作，直到它也遇到并启动一个IO操作。<br><img src="http://tutorials.jenkov.com/images/java-concurrency/concurrency-models-4.png" alt="No-blocking-IO"></p>
+<p>在实际应用中，作业有可能不会沿着单一流水线进行。由于大多数系统可以执行多个作业，作业从一个工作者流向另一个工作者取决于作业需要做的工作。在实际中可能会有多个不同的虚拟流水线同时运行。这是现实当中作业在流水线系统中可能的移动情况：<br><img src="http://tutorials.jenkov.com/images/java-concurrency/concurrency-models-5.png" alt="multi-assembly-line"></p>
+<p>作业甚至也有可能被转发到超过一个工作者上并发处理。比如说，作业有可能被同时转发到作业执行器和作业日志器。下图说明了三条流水线是如何通过将作业转发给同一个工作者（中间流水线的最后一个工作者）来完成作业:<br><img src="http://tutorials.jenkov.com/images/java-concurrency/concurrency-models-6.png" alt="complex-condition"></p>
+<p>流水线有时候比这个情况更加复杂。</p>
+<h3>反应器，事件驱动系统</h3>
+<p>采用流水线并发模型的系统有时候也称为反应器系统或事件驱动系统。系统内的工作者对系统内出现的事件做出反应，这些事件也有可能来自于外部世界或者发自其他工作者。事件可以是传入的HTTP请求，也可以是某个文件成功加载到内存中等。在写这篇文章的时候，已经有很多有趣的反应器/事件驱动平台可以使用了，并且不久的将来会有更多。比较流行的似乎是这几个：</p>
+<ul><li><a title="Vert.x" href="http://tutorials.jenkov.com/vert.x/index.html" target="_blank" rel="noopener">Vert.x</a></li>
+<li>AKKa</li>
+<li>Node.JS(JavaScript)</li>
+</ul><p>我个人觉得Vert.x是相当有趣的（特别是对于我这样使用Java/JVM的人来说）</p>
+<h3>Actors 和 Channels</h3>
+<p>Actors 和 channels 是两种比较类似的流水线（或反应器/事件驱动）模型。</p>
+<p>在Actor模型中每个工作者被称为actor。Actor之间可以直接异步地发送和处理消息。Actor可以被用来实现一个或多个像前文描述的那样的作业处理流水线。下图给出了Actor模型：<br><img src="http://tutorials.jenkov.com/images/java-concurrency/concurrency-models-7.png" alt="actor-model"></p>
+<p>而在Channel模型中，工作者之间不直接进行通信。相反，它们在不同的通道中发布自己的消息（事件）。其他工作者们可以在这些通道上监听消息，发送者无需知道谁在监听。下图给出了Channel模型：<br><img src="http://tutorials.jenkov.com/images/java-concurrency/concurrency-models-8.png" alt="channel-model"></p>
+<p>在写这篇文章的时候，channel模型对于我来说似乎更加灵活。一个工作者无需知道谁在后面的流水线上处理作业。只需知道作业（或消息等）需要转发给哪个通道。通道上的监听者可以随意订阅或者取消订阅，并不会影响向这个通道发送消息的工作者。这使得工作者之间具有松散的耦合。</p>
+<h1>流水线模型的优点</h1>
+<p>相比并行工作者模型，流水线并发模型具有几个优点，在接下来的章节中我会介绍几个最大的优点。</p>
+<h3>无需共享的状态</h3>
+<p>工作者之间无需共享状态，意味着实现的时候无需考虑所有因并发访问共享对象而产生的并发性问题。这使得在实现工作者的时候变得非常容易。在实现工作者的时候就好像是单个线程在处理工作-基本上是一个单线程的实现。</p>
+<h3>有状态的工作者</h3>
+<p>当工作者知道了没有其他线程可以修改它们的数据，工作者可以变成有状态的。对于有状态，我是指，它们可以在内存中保存它们需要操作的数据，只需在最后将更改写回到外部存储系统。因此，有状态的工作者通常比无状态的工作者具有更高的性能。</p>
+<h3>较好的硬件整合（Hardware Conformity）</h3>
+<p>单线程代码在整合底层硬件的时候往往具有更好的优势。首先，当能确定代码只在单线程模式下执行的时候，通常能够创建更优化的数据结构和算法。</p>
+<p>其次，像前文描述的那样，单线程有状态的工作者能够在内存中缓存数据。在内存中缓存数据的同时，也意味着数据很有可能也缓存在执行这个线程的CPU的缓存中。这使得访问缓存的数据变得更快。</p>
+<p>我说的硬件整合是指，以某种方式编写的代码，使得能够自然地受益于底层硬件的工作原理。有些开发者称之为<em>mechanical sympathy</em>。我更倾向于硬件整合这个术语，因为计算机只有很少的机械部件，并且能够隐喻“更好的匹配（match better）”，相比“同情（sympathy）”这个词在上下文中的意思，我觉得“conform”这个词表达的非常好。当然了，这里有点吹毛求疵了，用自己喜欢的术语就行。</p>
+<h3>合理的作业顺序</h3>
+<p>基于流水线并发模型实现的并发系统，在某种程度上是有可能保证作业的顺序的。作业的有序性使得它更容易地推出系统在某个特定时间点的状态。更进一步，你可以将所有到达的作业写入到日志中去。一旦这个系统的某一部分挂掉了，该日志就可以用来重头开始重建系统当时的状态。按照特定的顺序将作业写入日志，并按这个顺序作为有保障的作业顺序。下图展示了一种可能的设计：<br><img src="http://tutorials.jenkov.com/images/java-concurrency/concurrency-models-8.png" alt="job-ordering"></p>
+<p>实现一个有保障的作业顺序是不容易的，但往往是可行的。如果可以，它将大大简化一些任务，例如备份、数据恢复、数据复制等，这些都可以通过日志文件来完成。</p>
+<h1>流水线模型的缺点</h1>
+<p>流水线并发模型最大的缺点是作业的执行往往分布到多个工作者上，并因此分布到项目中的多个类上。这样导致在追踪某个作业到底被什么代码执行时变得困难。</p>
+<p>同样，这也加大了代码编写的难度。有时会将工作者的代码写成回调处理的形式。若在代码中嵌入过多的回调处理，往往会出现所谓的回调地狱（callback hell）现象。所谓回调地狱，就是意味着在追踪代码在回调过程中到底做了什么，以及确保每个回调只访问它需要的数据的时候，变得非常困难</p>
+<p>使用并行工作者模型可以简化这个问题。你可以打开工作者的代码，从头到尾优美的阅读被执行的代码。当然并行工作者模式的代码也可能同样分布在不同的类中，但往往也能够很容易的从代码中分析执行的顺序。</p>
+<h1>函数式并行（Functional Parallelism）</h1>
+<p>第三种并发模型是函数式并行模型，这是也最近（2015）讨论的比较多的一种模型。函数式并行的基本思想是采用函数调用实现程序。函数可以看作是”代理人（agents）“或者”actor“，函数之间可以像流水线模型（AKA 反应器或者事件驱动系统）那样互相发送消息。某个函数调用另一个函数，这个过程类似于消息发送。</p>
+<p>函数都是通过拷贝来传递参数的，所以除了接收函数外没有实体可以操作数据。这对于避免共享数据的竞态来说是很有必要的。同样也使得函数的执行类似于原子操作。每个函数调用的执行独立于任何其他函数的调用。</p>
+<p>一旦每个函数调用都可以独立的执行，它们就可以分散在不同的CPU上执行了。这也就意味着能够在多处理器上并行的执行使用函数式实现的算法。</p>
+<p>Java7中的java.util.concurrent包里包含的<a href="http://tutorials.jenkov.com/java-util-concurrent/java-fork-and-join-forkjoinpool.html">ForkAndJoinPool</a>能够帮助我们实现类似于函数式并行的一些东西。而Java8中并行<a href="http://tutorials.jenkov.com/java-collections/streams.html">streams</a>能够用来帮助我们并行的迭代大型集合。记住有些开发者对ForkAndJoinPool进行了批判（你可以在我的ForkAndJoinPool教程里面看到批评的链接）。</p>
+<p>函数式并行里面最难的是确定需要并行的那个函数调用。跨CPU协调函数调用需要一定的开销。某个函数完成的工作单元需要达到某个大小以弥补这个开销。如果函数调用作用非常小，将它并行化可能比单线程、单CPU执行还慢。</p>
+<p>我个人认为（可能不太正确），你可以使用反应器或者事件驱动模型实现一个算法，像函数式并行那样的方法实现工作的分解。使用事件驱动模型可以更精确的控制如何实现并行化（我的观点）。</p>
+<p>此外，将任务拆分给多个CPU时协调造成的开销，仅仅在该任务是程序当前执行的唯一任务时才有意义。但是，如果当前系统正在执行多个其他的任务时（比如web服务器，数据库服务器或者很多其他类似的系统），将单个任务进行并行化是没有意义的。不管怎样计算机中的其他CPU们都在忙于处理其他任务，没有理由用一个慢的、函数式并行的任务去扰乱它们。使用流水线（反应器）并发模型可能会更好一点，因为它开销更小（在单线程模式下顺序执行）同时能更好的与底层硬件整合。</p>
+<h1>使用那种并发模型最好？</h1>
+<p>所以，用哪种并发模型更好呢?</p>
+<p>通常情况下，这个答案取决于你的系统打算做什么。如果你的作业本身就是并行的、独立的并且没有必要共享状态，你可能会使用并行工作者模型去实现你的系统。虽然许多作业都不是自然并行和独立的。对于这种类型的系统，我相信使用流水线并发模型能够更好的发挥它的优势，而且比并行工作者模型更有优势。</p>
+<p>你甚至不用亲自编写所有流水线模型的基础结构。像Vert.x这种现代化的平台已经为你实现了很多。我也会去为探索如何设计我的下一个项目，使它运行在像Vert.x这样的优秀平台上。我感觉Java EE已经没有任何优势了。</p>
+<div>
+<p><strong>原创文章，转载请注明：</strong> 转载自<a href="http://ifeve.com/">并发编程网 – ifeve.com</a><strong>本文链接地址:</strong> <a href="http://ifeve.com/%e5%b9%b6%e5%8f%91%e7%bc%96%e7%a8%8b%e6%a8%a1%e5%9e%8b/">并发编程模型</a></p>
+</div>
+</div>
+								</div>
+			
+		<div class="section section-blog-info">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="entry-categories">分类：						<span class="label label-primary"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a></span><span class="label label-primary"><a href="https://huster.top/htmls/category/%e8%bd%ac%e8%bd%bd">转载</a></span>					</div>
+									</div>
+				
+        <div class="col-md-6">
+            <div class="entry-social">
+                <a target="_blank" rel="tooltip" data-original-title="分享到 Facebook" class="btn btn-just-icon btn-round btn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://huster.top/htmls/557.html">
+                   <i class="fa fa-facebook"></i>
+                </a>
+                
+                <a target="_blank" rel="tooltip" data-original-title="分享至微博" class="btn btn-just-icon btn-round btn-twitter" href="https://twitter.com/home?status=%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B(%E8%BD%AC%E8%BD%BD)%20-%20https://huster.top/htmls/557.html">
+                   <i class="fa fa-twitter"></i>
+                </a>
+                
+                <a target="_blank" rel="tooltip" data-original-title=" 分享到 Google+" class="btn btn-just-icon btn-round btn-google" href="https://plus.google.com/share?url=https://huster.top/htmls/557.html">
+                   <i class="fa fa-google"></i>
+               </a>
+            </div>
+		</div>			</div>
+			<hr><div class="card card-profile card-plain">
+			<div class="row">
+				<div class="col-md-2">
+					<div class="card-avatar">
+						<a href="https://huster.top/htmls/author/admin" title="龙安_任天兵"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=100&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=200&r=g 2x" class="avatar avatar-100 photo" height="100" width="100"></a>
+					</div>
+				</div>
+				<div class="col-md-10">
+					<h4 class="card-title">龙安_任天兵</h4>
+					<p class="description">不忘初心，方得始终!</p>
+				</div>
+			</div>
+		</div>
+		
+<div id="comments" class="section section-comments">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="media-area">
+				<h3 class="hestia-title text-center">
+					2 条评论				</h3>
+						<div class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 media" id="comment-24313">
+							<a class="pull-left" href="">
+					<div class="comment-author avatar vcard">
+						<img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=64&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=128&r=g 2x" class="avatar avatar-64 photo" height="64" width="64"></div>
+				</a>
+						<div class="media-body">
+				<h4 class="media-heading">
+					龙安_任天兵					<small>
+						· 2018 年 11 月 29 日 21:03					</small>
+				</h4>
+				<p>ok</p>
+				<div class="media-footer">
+					<a rel="nofollow" class="comment-reply-link" href="https://huster.top/htmls/557.html" onclick='return addComment.moveForm( "comment-24313", "24313", "respond", "557" )' aria-label="回复给龙安_任天兵"><i class="fa fa-mail-reply"></i> 回复</a>				</div>
+			</div>
+		</div>
+		
+		<div class="pingback even thread-even depth-1 media" id="comment-24311">
+						<div class="media-body">
+				<h4 class="media-heading">
+					<a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Java多线程总结(上部分)面试题解答 – 三两带走</a>					<small>
+						· 2018 年 11 月 23 日 17:30					</small>
+				</h4>
+				<p>[…]     具体的文章可以参考 https://huster.top/htmls/557.html  3) 如何在Java中实现线程？ 4) 用Runnable还是Thread？ 6) Thread 类中的start() 和 […]</p>
+				<div class="media-footer">
+					<a rel="nofollow" class="comment-reply-link" href="https://huster.top/htmls/557.html" onclick='return addComment.moveForm( "comment-24311", "24311", "respond", "557" )' aria-label="回复给Java多线程总结(上部分)面试题解答 – 三两带走"><i class="fa fa-mail-reply"></i> 回复</a>				</div>
+			</div>
+		</div>
+		
+			</div>
+			<div class="media-body">
+					<div id="respond" class="comment-respond">
+		<h3 class="hestia-title text-center">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="/htmls/557.html#respond" style="display:none;">取消回复</a></small></h3> <span class="pull-left author"> <div class="avatar"><img src="https://huster.top/wp-content/themes/hestia/assets/img/placeholder.jpg" height="64" width="64"></div> </span>			<form action="https://huster.top/wp-comments-post.php" method="post" id="commentform" class="form media-body">
+				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><div class="row"> <div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">名称</label><input id="author" name="author" class="form-control" type="text"><span class="hestia-input"></span> </div> </div>
+<div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">电子邮件</label><input id="email" name="email" class="form-control" type="email"><span class="hestia-input"></span> </div> </div>
+<div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">网站</label><input id="url" name="url" class="form-control" type="url"><span class="hestia-input"></span> </div> </div> </div>
+<div class="form-group label-floating is-empty"> <label class="control-label">在想些什么？</label><textarea id="comment" name="comment" class="form-control" rows="6" aria-required="true"></textarea><span class="hestia-input"></span> </div><p class="form-submit"><input name="submit" type="submit" id="submit" class="btn btn-primary pull-right" value="发表评论"><input type="hidden" name="comment_post_ID" value="557" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="642127956d"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="103"></p>			</form>
+			</div>
+								</div>
+		</div>
+	</div>
+</div>
+		</div>
+		</div>	<div class="col-md-3 blog-sidebar-wrapper col-md-offset-1 ">
+		<aside id="secondary" class="blog-sidebar" role="complementary"><div id="recent-posts-2" class="widget widget_recent_entries">		<h5>近期文章</h5>		<ul><li>
+					<a href="https://huster.top/htmls/662.html">JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/657.html">Java类库设计之日志框架选择</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/649.html">Java多线程知识点（下）</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/645.html">如何写代码来解决生产者消费者问题？</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/642.html">Java多线程总结(上部分)面试题解答</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/637.html">细说Java的内存模型</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/633.html">Java面试题之Java语法的基础知识</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/629.html">Java的锁</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/610.html">写给计算机专业毕业生的22条宝贵建议</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/573.html">spring boot应用在 POST请求的Invalid CORS request的问题</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/568.html">Mac下Pip的报错问题</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/557.html">并发编程模型(转载)</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/552.html">从ThreadPoolExecutor的invokeAll方法说开去:如何等待多个并发任务结束并收集结果</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/548.html">认识ExecutorCompletionService返回最快的结果</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/543.html">Java里的Join的执行顺序问题</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/538.html">spring boot cache踩到的坑</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/530.html">Hessian的使用</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/524.html">通过文件覆盖类里面的属性–一种配置文件的另类实现方式</a>
+									</li>
+					</ul></div><div id="archives-2" class="widget widget_archive"><h5>文章归档</h5>		<ul><li><a href="https://huster.top/htmls/date/2019/06">2019年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/05">2019年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/12">2018年十二月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2018/11">2018年十一月</a> (5)</li>
+	<li><a href="https://huster.top/htmls/date/2018/10">2018年十月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2018/08">2018年八月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/07">2018年七月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/06">2018年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/04">2018年四月</a> (3)</li>
+	<li><a href="https://huster.top/htmls/date/2018/01">2018年一月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/10">2017年十月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/08">2017年八月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2017/07">2017年七月</a> (6)</li>
+	<li><a href="https://huster.top/htmls/date/2017/06">2017年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/04">2017年四月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/12">2016年十二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/11">2016年十一月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2016/10">2016年十月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/06">2016年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/03">2016年三月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2015/11">2015年十一月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2015/01">2015年一月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2014/10">2014年十月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2013/08">2013年八月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2013/06">2013年六月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2013/05">2013年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2013/03">2013年三月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/12">2012年十二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/09">2012年九月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/08">2012年八月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/07">2012年七月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/06">2012年六月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/05">2012年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/04">2012年四月</a> (10)</li>
+	<li><a href="https://huster.top/htmls/date/2012/03">2012年三月</a> (8)</li>
+	<li><a href="https://huster.top/htmls/date/2010/12">2010年十二月</a> (1)</li>
+		</ul></div><div id="categories-2" class="widget widget_categories"><h5>分类目录</h5>		<ul><li class="cat-item cat-item-57"><a href="https://huster.top/htmls/category/nas-%e7%be%a4%e6%99%96">nas-群晖</a> (2)
+</li>
+	<li class="cat-item cat-item-11"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7">PHP高效编程</a> (6)
+<ul class="children"><li class="cat-item cat-item-53"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php-tools">PHP的开发工具</a> (3)
+</li>
+	<li class="cat-item cat-item-6"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php%e9%82%a3%e4%ba%9b%e6%9c%89%e8%b6%a3%e7%9a%84%e4%ba%8b%e5%84%bf" title="php那些以前没注意到的，或者很少注意到事情">PHP编程</a> (3)
+</li>
+</ul></li>
+	<li class="cat-item cat-item-74"><a href="https://huster.top/htmls/category/tensortflow">TensortFlow</a> (2)
+</li>
+	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
+</li>
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (57)
+<ul class="children"><li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
+</li>
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (34)
+</li>
+	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
+</li>
+	<li class="cat-item cat-item-23"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/%e6%9c%8d%e5%8a%a1">PHP编写服务的研究</a> (1)
+</li>
+	<li class="cat-item cat-item-40"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/rfc793-tcp%e6%8e%a7%e5%88%b6%e5%8d%8f%e8%ae%ae">RFC793-TCP控制协议</a> (1)
+</li>
+	<li class="cat-item cat-item-56"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/spring%e6%96%87%e6%a1%a3">Spring文档</a> (3)
+</li>
+	<li class="cat-item cat-item-1"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized">其他</a> (5)
+</li>
+</ul></li>
+	<li class="cat-item cat-item-16"><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84">系统架构学习</a> (13)
+</li>
+	<li class="cat-item cat-item-75"><a href="https://huster.top/htmls/category/%e8%bd%ac%e8%bd%bd">转载</a> (2)
+</li>
+		</ul></div><div id="tag_cloud-2" class="widget widget_tag_cloud"><h5>标签</h5><div class="tagcloud"><a href="https://huster.top/htmls/tag/apache" class="tag-cloud-link tag-link-31 tag-link-position-1" style="font-size: 8pt;" aria-label="Apache (1个项目)">Apache</a>
+<a href="https://huster.top/htmls/tag/codesniffer" class="tag-cloud-link tag-link-12 tag-link-position-2" style="font-size: 8pt;" aria-label="CodeSniffer (1个项目)">CodeSniffer</a>
+<a href="https://huster.top/htmls/tag/ecache" class="tag-cloud-link tag-link-67 tag-link-position-3" style="font-size: 8pt;" aria-label="Ecache (1个项目)">Ecache</a>
+<a href="https://huster.top/htmls/tag/globals" class="tag-cloud-link tag-link-10 tag-link-position-4" style="font-size: 8pt;" aria-label="GLOBALS (1个项目)">GLOBALS</a>
+<a href="https://huster.top/htmls/tag/hessian" class="tag-cloud-link tag-link-73 tag-link-position-5" style="font-size: 8pt;" aria-label="Hessian (1个项目)">Hessian</a>
+<a href="https://huster.top/htmls/tag/http1-1" class="tag-cloud-link tag-link-22 tag-link-position-6" style="font-size: 15.905882352941pt;" aria-label="HTTP/1.1 (5个项目)">HTTP/1.1</a>
+<a href="https://huster.top/htmls/tag/httpurlconnection" class="tag-cloud-link tag-link-71 tag-link-position-7" style="font-size: 8pt;" aria-label="HttpURLConnection (1个项目)">HttpURLConnection</a>
+<a href="https://huster.top/htmls/tag/http%e8%af%b7%e6%b1%82" class="tag-cloud-link tag-link-70 tag-link-position-8" style="font-size: 8pt;" aria-label="Http请求 (1个项目)">Http请求</a>
+<a href="https://huster.top/htmls/tag/ioc" class="tag-cloud-link tag-link-17 tag-link-position-9" style="font-size: 8pt;" aria-label="IoC (1个项目)">IoC</a>
+<a href="https://huster.top/htmls/tag/java" class="tag-cloud-link tag-link-58 tag-link-position-10" style="font-size: 22pt;" aria-label="Java (13个项目)">Java</a>
+<a href="https://huster.top/htmls/tag/java-spring-petclinic" class="tag-cloud-link tag-link-55 tag-link-position-11" style="font-size: 8pt;" aria-label="Java spring-petclinic (1个项目)">Java spring-petclinic</a>
+<a href="https://huster.top/htmls/tag/log4j" class="tag-cloud-link tag-link-68 tag-link-position-12" style="font-size: 8pt;" aria-label="log4j (1个项目)">log4j</a>
+<a href="https://huster.top/htmls/tag/logback" class="tag-cloud-link tag-link-69 tag-link-position-13" style="font-size: 8pt;" aria-label="logback (1个项目)">logback</a>
+<a href="https://huster.top/htmls/tag/maven" class="tag-cloud-link tag-link-64 tag-link-position-14" style="font-size: 8pt;" aria-label="Maven (1个项目)">Maven</a>
+<a href="https://huster.top/htmls/tag/maven-shade-plugin" class="tag-cloud-link tag-link-66 tag-link-position-15" style="font-size: 8pt;" aria-label="maven-shade-plugin (1个项目)">maven-shade-plugin</a>
+<a href="https://huster.top/htmls/tag/mybatis" class="tag-cloud-link tag-link-72 tag-link-position-16" style="font-size: 8pt;" aria-label="mybatis (1个项目)">mybatis</a>
+<a href="https://huster.top/htmls/tag/php" class="tag-cloud-link tag-link-7 tag-link-position-17" style="font-size: 12.941176470588pt;" aria-label="PHP (3个项目)">PHP</a>
+<a href="https://huster.top/htmls/tag/plugin" class="tag-cloud-link tag-link-65 tag-link-position-18" style="font-size: 8pt;" aria-label="Plugin (1个项目)">Plugin</a>
+<a href="https://huster.top/htmls/tag/register_globals" class="tag-cloud-link tag-link-9 tag-link-position-19" style="font-size: 8pt;" aria-label="register_globals (1个项目)">register_globals</a>
+<a href="https://huster.top/htmls/tag/rfc" class="tag-cloud-link tag-link-20 tag-link-position-20" style="font-size: 8pt;" aria-label="RFC (1个项目)">RFC</a>
+<a href="https://huster.top/htmls/tag/rfc2616" class="tag-cloud-link tag-link-21 tag-link-position-21" style="font-size: 8pt;" aria-label="RFC2616 (1个项目)">RFC2616</a>
+<a href="https://huster.top/htmls/tag/serializable" class="tag-cloud-link tag-link-59 tag-link-position-22" style="font-size: 8pt;" aria-label="Serializable (1个项目)">Serializable</a>
+<a href="https://huster.top/htmls/tag/spring" class="tag-cloud-link tag-link-63 tag-link-position-23" style="font-size: 10.964705882353pt;" aria-label="Spring (2个项目)">Spring</a>
+<a href="https://huster.top/htmls/tag/spring-boot" class="tag-cloud-link tag-link-62 tag-link-position-24" style="font-size: 10.964705882353pt;" aria-label="Spring boot (2个项目)">Spring boot</a>
+<a href="https://huster.top/htmls/tag/thinkphp" class="tag-cloud-link tag-link-34 tag-link-position-25" style="font-size: 8pt;" aria-label="ThinkPHP (1个项目)">ThinkPHP</a>
+<a href="https://huster.top/htmls/tag/vsftp" class="tag-cloud-link tag-link-43 tag-link-position-26" style="font-size: 8pt;" aria-label="VSFTP (1个项目)">VSFTP</a>
+<a href="https://huster.top/htmls/tag/wordpress%e6%ba%90%e7%a0%81" class="tag-cloud-link tag-link-8 tag-link-position-27" style="font-size: 10.964705882353pt;" aria-label="wordpress源码 (2个项目)">wordpress源码</a>
+<a href="https://huster.top/htmls/tag/zeromq" class="tag-cloud-link tag-link-29 tag-link-position-28" style="font-size: 14.588235294118pt;" aria-label="ZeroMQ (4个项目)">ZeroMQ</a>
+<a href="https://huster.top/htmls/tag/zmq" class="tag-cloud-link tag-link-41 tag-link-position-29" style="font-size: 12.941176470588pt;" aria-label="zmq (3个项目)">zmq</a>
+<a href="https://huster.top/htmls/tag/zmq%e7%9a%84%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-42 tag-link-position-30" style="font-size: 8pt;" aria-label="ZMQ的学习笔记 (1个项目)">ZMQ的学习笔记</a>
+<a href="https://huster.top/htmls/tag/%e4%ba%92%e8%81%94%e7%bd%91" class="tag-cloud-link tag-link-14 tag-link-position-31" style="font-size: 12.941176470588pt;" aria-label="互联网 (3个项目)">互联网</a>
+<a href="https://huster.top/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86" class="tag-cloud-link tag-link-61 tag-link-position-32" style="font-size: 8pt;" aria-label="动态代理 (1个项目)">动态代理</a>
+<a href="https://huster.top/htmls/tag/%e5%8f%8c%e5%bc%95%e5%8f%b7" class="tag-cloud-link tag-link-36 tag-link-position-33" style="font-size: 8pt;" aria-label="双引号 (1个项目)">双引号</a>
+<a href="https://huster.top/htmls/tag/%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="tag-cloud-link tag-link-78 tag-link-position-34" style="font-size: 10.964705882353pt;" aria-label="多线程 (2个项目)">多线程</a>
+<a href="https://huster.top/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-28 tag-link-position-35" style="font-size: 8pt;" aria-label="学习笔记 (1个项目)">学习笔记</a>
+<a href="https://huster.top/htmls/tag/%e5%ae%89%e5%85%a8" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 8pt;" aria-label="安全 (1个项目)">安全</a>
+<a href="https://huster.top/htmls/tag/%e6%8a%80%e6%9c%af%e5%80%ba%e5%8a%a1" class="tag-cloud-link tag-link-30 tag-link-position-37" style="font-size: 8pt;" aria-label="技术债务 (1个项目)">技术债务</a>
+<a href="https://huster.top/htmls/tag/%e6%97%a5%e5%bf%97" class="tag-cloud-link tag-link-32 tag-link-position-38" style="font-size: 10.964705882353pt;" aria-label="日志 (2个项目)">日志</a>
+<a href="https://huster.top/htmls/tag/%e6%9d%83%e5%88%a9" class="tag-cloud-link tag-link-49 tag-link-position-39" style="font-size: 8pt;" aria-label="权利 (1个项目)">权利</a>
+<a href="https://huster.top/htmls/tag/%e6%9f%b4%e9%9d%99" class="tag-cloud-link tag-link-48 tag-link-position-40" style="font-size: 8pt;" aria-label="柴静 (1个项目)">柴静</a>
+<a href="https://huster.top/htmls/tag/%e6%b3%9b%e5%9e%8b" class="tag-cloud-link tag-link-60 tag-link-position-41" style="font-size: 8pt;" aria-label="泛型 (1个项目)">泛型</a>
+<a href="https://huster.top/htmls/tag/%e6%b5%8f%e8%a7%88%e5%99%a8" class="tag-cloud-link tag-link-15 tag-link-position-42" style="font-size: 8pt;" aria-label="浏览器 (1个项目)">浏览器</a>
+<a href="https://huster.top/htmls/tag/%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-13 tag-link-position-43" style="font-size: 8pt;" aria-label="系统设计 (1个项目)">系统设计</a>
+<a href="https://huster.top/htmls/tag/%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-47 tag-link-position-44" style="font-size: 8pt;" aria-label="读书笔记 (1个项目)">读书笔记</a>
+<a href="https://huster.top/htmls/tag/%e8%bd%af%e4%bb%b6%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-18 tag-link-position-45" style="font-size: 8pt;" aria-label="软件设计 (1个项目)">软件设计</a></div>
+</div><div id="linkcat-2" class="widget widget_links"><h5>链接表</h5>
+	<ul class="xoxo blogroll"><li><a href="http://blog.sina.com.cn/rentb" rel="me" title="原来的博客地址" target="_blank">博客老地址</a></li>
+<li><a href="http://blog.csdn.net/heiyeshuwu" rel="colleague" target="_blank">黑夜路人</a></li>
+
+	</ul></div>
+<div id="recent-comments-2" class="widget widget_recent_comments"><h5>近期评论</h5><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/645.html" rel="external nofollow" class="url">如何写代码来解决生产者消费者问题？ – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/615.html/comment-page-1#comment-24314">理解Java线程间的通信</a>》</li><li class="recentcomments"><span class="comment-author-link">龙安_任天兵</span>发表在《<a href="https://huster.top/htmls/557.html/comment-page-1#comment-24313">并发编程模型(转载)</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Java多线程总结(上部分)面试题解答 – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/637.html/comment-page-1#comment-24312">细说Java的内存模型</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Java多线程总结(上部分)面试题解答 – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/557.html/comment-page-1#comment-24311">并发编程模型(转载)</a>》</li><li class="recentcomments"><span class="comment-author-link">shanchao</span>发表在《<a href="https://huster.top/htmls/573.html/comment-page-1#comment-24309">spring boot应用在 POST请求的Invalid CORS request的问题</a>》</li><li class="recentcomments"><span class="comment-author-link">adimin</span>发表在《<a href="https://huster.top/htmls/462.html/comment-page-1#comment-24307">介绍spring的两个接口ApplicationContextAware和ApplicationListener</a>》</li><li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a href="https://huster.top/htmls/462.html/comment-page-1#comment-24306">介绍spring的两个接口ApplicationContextAware和ApplicationListener</a>》</li><li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a href="https://huster.top/htmls/472.html/comment-page-1#comment-24276">Spring boot访问js、css、图片(img)访问404无法访问的问题</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="http://kailin.li" rel="external nofollow" class="url">kailin</a></span>发表在《<a href="https://huster.top/htmls/472.html/comment-page-1#comment-24275">Spring boot访问js、css、图片(img)访问404无法访问的问题</a>》</li><li class="recentcomments"><span class="comment-author-link">基地华科男</span>发表在《<a href="https://huster.top/about-me/comment-page-2#comment-24271">关于我</a>》</li></ul></div>		</aside></div>
+			</div>
+</article></div>
+	</div>
+</div>
+
+			<div class="section related-posts">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<h2 class="hestia-title text-center">相关文章</h2>
+							<div class="row">
+																	<div class="col-md-4">
+										<div class="card card-blog">
+																						<div class="content">
+												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" title="查看Java学习中的全部文章">Java学习</a> </h6>
+												<h4 class="card-title">
+													<a class="blog-item-title-link" href="https://huster.top/htmls/662.html" title="JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用" rel="bookmark">
+														JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用													</a>
+												</h4>
+												<p class="card-description">背景 jvm sandbox是一个开源项目https://github<a class="moretag" href="https://huster.top/htmls/662.html"> 阅读更多…</a></p>
+											</div>
+										</div>
+									</div>
+																	<div class="col-md-4">
+										<div class="card card-blog">
+																						<div class="content">
+												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" title="查看Java学习中的全部文章">Java学习</a> </h6>
+												<h4 class="card-title">
+													<a class="blog-item-title-link" href="https://huster.top/htmls/657.html" title="Java类库设计之日志框架选择" rel="bookmark">
+														Java类库设计之日志框架选择													</a>
+												</h4>
+												<p class="card-description">Java日志框架现状 Java日志框架的故事说来话长，做过开发的一定遇<a class="moretag" href="https://huster.top/htmls/657.html"> 阅读更多…</a></p>
+											</div>
+										</div>
+									</div>
+																	<div class="col-md-4">
+										<div class="card card-blog">
+																						<div class="content">
+												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" title="查看Java学习中的全部文章">Java学习</a> </h6>
+												<h4 class="card-title">
+													<a class="blog-item-title-link" href="https://huster.top/htmls/649.html" title="Java多线程知识点（下）" rel="bookmark">
+														Java多线程知识点（下）													</a>
+												</h4>
+												<p class="card-description">26） 如何写代码来解决生产者消费者问题？ 我们先尝试使用队列实现一个<a class="moretag" href="https://huster.top/htmls/649.html"> 阅读更多…</a></p>
+											</div>
+										</div>
+									</div>
+																							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer-wrapper">
+						<footer class="footer footer-black footer-big"><div class="container">
+								
+		<div class="content">
+			<div class="row">
+				<div class="col-md-4"><div id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script src="https://s22.cnzz.com/z_stat.php?id=3943131&web_id=3943131" language="JavaScript"></script></div></div></div>			</div>
+		</div>
+		<hr><div class="hestia-bottom-footer-content"><ul class="footer-menu pull-left"><li class="page_item page-item-50"><a href="https://huster.top/books">那些年，那些书</a></li>
+<li class="page_item page-item-52"><a href="https://huster.top/music">那些年，那些音乐</a></li>
+<li class="page_item page-item-54"><a href="https://huster.top/movie">那些年，那些电影</a></li>
+<li class="page_item page-item-60"><a href="https://huster.top/myworkspac">我的开发环境</a></li>
+<li class="page_item page-item-5"><a href="https://huster.top/about-me">关于我</a></li>
+<li class="page_item page-item-89"><a href="https://huster.top/notebook">留言本</a></li>
+</ul><div class="copyright pull-right">
+				Hestia |由<a href="https://themeisle.com" rel="nofollow">ThemeIsle</a>开发			</div>
+			</div>			</div>
+					</footer></div>
+	</div>
+<script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shCore.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushAS3.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushBash.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushColdFusion.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushClojure.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCpp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCSharp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCss.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushDelphi.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushDiff.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushErlang.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushFSharp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushGroovy.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJava.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJavaFX.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJScript.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushLatex.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushMatlabKey.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushObjC.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPerl.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPhp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPlain.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPowerShell.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPython.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushR.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushRuby.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushScala.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushSql.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushVb.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushXml.js"></script><script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/styles/shCore.css?ver=2.1.364";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/styles/shThemeRDark.css?ver=2.1.364";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.clipboardSwf = 'https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/clipboard.swf';
+	SyntaxHighlighter.config.strings.expandSource = 'show source';
+	SyntaxHighlighter.config.strings.viewSource = 'view source';
+	SyntaxHighlighter.config.strings.copyToClipboard = 'copy to clipboard';
+	SyntaxHighlighter.config.strings.copyToClipboardConfirmation = 'The code is in your clipboard now';
+	SyntaxHighlighter.config.strings.print = 'print';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['auto-links'] = false;
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.all();
+
+	// Infinite scroll support
+	if ( typeof( jQuery ) !== 'undefined' ) {
+		jQuery( function( $ ) {
+			$( document.body ).on( 'post-load', function() {
+				SyntaxHighlighter.highlight();
+			} );
+		} );
+	}
+</script><script type="text/javascript" src="https://huster.top/wp-content/themes/hestia/assets/bootstrap/js/bootstrap.min.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/ui/core.min.js"></script><script type="text/javascript">
+/* <![CDATA[ */
+var requestpost = {"ajaxurl":"https:\/\/huster.top\/wp-admin\/admin-ajax.php","disable_autoslide":"","masonry":""};
+/* ]]> */
+</script><script type="text/javascript" src="https://huster.top/wp-content/themes/hestia/assets/js/script.min.js"></script><script async="async" type="text/javascript" src="https://huster.top/wp-content/plugins/akismet/_inc/form.js"></script></body></html>
