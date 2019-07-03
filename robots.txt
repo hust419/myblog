@@ -1,0 +1,7 @@
+<br />
+<b>Warning</b>:  Use of undefined constant LC_ARCHIVERS_OPTION - assumed 'LC_ARCHIVERS_OPTION' (this will throw an Error in a future version of PHP) in <b>/usr/share/nginx/html/wordpress/wp-content/plugins/lc-archivers/Lc-archivers.php</b> on line <b>89</b><br />
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+
+Sitemap: https://huster.top/sitemap.xml
