@@ -1,0 +1,61 @@
+<br />
+<b>Warning</b>:  Use of undefined constant LC_ARCHIVERS_OPTION - assumed 'LC_ARCHIVERS_OPTION' (this will throw an Error in a future version of PHP) in <b>/usr/share/nginx/html/wordpress/wp-content/plugins/lc-archivers/Lc-archivers.php</b> on line <b>89</b><br />
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>mybatis &#8211; 三两带走</title>
+	<atom:link href="http://192.168.1.7/htmls/tag/mybatis/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>mybatis &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Mybatis获取最近插入的主键</title>
+		<link>https://huster.top/htmls/516.html</link>
+		<comments>https://huster.top/htmls/516.html#comments</comments>
+		<pubDate>Sun, 23 Jul 2017 07:43:50 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[Java学习]]></category>
+		<category><![CDATA[Java]]></category>
+		<category><![CDATA[mybatis]]></category>
+
+		<guid isPermaLink="false">http://huster.top/?p=516</guid>
+		<description><![CDATA[通常情况下，我们插入一条记录的mapper如下： @Insert("insert into expe<a class="moretag" href="https://huster.top/htmls/516.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>通常情况下，我们插入一条记录的mapper如下：</p>
+<pre></pre>
+<pre class="brush:java">    @Insert("insert into experiment_info (gmt_create, gmt_modified, user_id, name, type) values (now(),now(),#{userId},#{name},#{type})")
+    int saveExperimentInfo(ExperimentInfoDO infoDO);</pre>
+<p>&nbsp;</p>
+<p>但是有时候，我们需要拿到这次插入之后生成的主键应该怎么办呢? 其实很简单，只需要一句话就可以完成, 将以上的代码改为如下:</p>
+<p>&nbsp;</p>
+<pre class="brush:java">    @Insert("insert into experiment_info (gmt_create, gmt_modified, user_id, name, type) values (now(),now(),#{userId},#{name},#{type})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int saveExperimentInfo(ExperimentInfoDO infoDO);</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>其中id是默认值，可以省略不写。</p>
+<p>还有一种办法是，生成一个主键主动传入。</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/516.html/feed</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+	</channel>
+</rss>
