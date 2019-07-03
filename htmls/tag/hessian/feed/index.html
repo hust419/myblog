@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Hessian &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/tag/hessian/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>Hessian &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Hessian的使用</title>
+		<link>https://huster.top/htmls/530.html</link>
+		<comments>https://huster.top/htmls/530.html#respond</comments>
+		<pubDate>Fri, 20 Oct 2017 12:03:03 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[Java学习]]></category>
+		<category><![CDATA[Hessian]]></category>
+
+		<guid isPermaLink="false">http://huster.top/?p=530</guid>
+		<description><![CDATA[hessian主要是用来做序列化和反序列化的，序列化后的对象可以存储(文件或者数据库中)，需要使用的<a class="moretag" href="https://huster.top/htmls/530.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>hessian主要是用来做序列化和反序列化的，序列化后的对象可以存储(文件或者数据库中)，需要使用的时候，再将它反序列化得到对象。常用的序列化协议有人也能看懂的json，Google的protoBuf以及hessian等等。今天要介绍的就是hessian的用法。<br />
+一、当然是他的主功能，序列化，我们新建一个对象，然后将这个对象序列化之后存储到文件，然后再从文件中读取序列化后的数据，通过hessian反序列化成对象。代码如</p>
+<p><span id="more-530"></span></p>
+<p>====序列化和反序列化=====</p>
+<pre class="brush:java">
+package hessian;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import com.caucho.hessian.io.Hessian2Input;
+import com.caucho.hessian.io.Hessian2Output;
+import top.huster.hessian.domain.TestObject;
+
+public class HessianSerialization {
+
+    public static void main(String[] args)  {
+        TestObject testObject = new TestObject(1, "a", 12L);
+        try {
+            OutputStream os = new FileOutputStream("test.data");
+            Hessian2Output out = new Hessian2Output(os);
+            out.writeObject(testObject);
+            out.flush();
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+        }
+        try {
+            InputStream is = new FileInputStream("test.data");
+            Hessian2Input in = new Hessian2Input(is);
+            TestObject obj = (TestObject)in.readObject(TestObject.class);
+            is.close();
+        } catch (Exception e) {
+
+        }
+
+    }
+}
+//=== TestObject ==== 即使是private域, 反序列化也能拿到值
+package top.huster.hessian.domain;
+
+import java.io.Serializable;
+
+public class TestObject implements Serializable {
+
+    private static final long serialVersionUID = 8948707708814774073L;
+    public int count;
+    public String name;
+    private Long number;
+
+    public TestObject(int count, String name, Long number) {
+        this.count = count;
+        this.name = name;
+        this.number = number;
+    }
+}
+
+</pre>
+<p>总结： 即使你定义的对象属性是私有属性, 也能够成功恢复对象</p>
+<p>二、 使用hessian来执行远程调用<br />
+RPC的调用实现方式有很多种，记得以前做php的时候，还给别人提供过一个webService的服务,那时候觉得写Java好像都是一批老程序员，不过Java也的确是很久了。<br />
+RPC的服务实现有很多，淘宝内部有一个HSF,他通过configserver解决了调用寻址的问题，开源的叫dubbo。今天要介绍的是使用hessian实现的远程调用。你可以像调本地方法一样调用远程的服务。实现非常简单，但是没有解决寻址的问题，寻址是使用域名来实现的。</p>
+<ol>
+<li>首先定义一个接口</li>
+</ol>
+<pre class="brush:java">package top.huster.hessian;
+
+public interface HelloWorldService {
+     String hello();
+}
+</pre>
+<p>&nbsp;</p>
+<ol>
+<li>在服务端实现这个接口</li>
+</ol>
+<pre class="brush:java">package top.huster.hessian;
+
+public class HelloWorldServiceImpl implements HelloWorldService {
+
+    @Override
+    public String hello() {
+        return "hello longan!";
+    }
+}
+</pre>
+<p>&nbsp;</p>
+<ol>
+<li>然后将这个服务注册出去， 因为我用的是spring boot所以我以bean的方式注册Servlet，你也可以通过配置web.xml的方式来实现</li>
+</ol>
+<pre class="brush:java">package top.huster.hessian;
+
+import com.caucho.hessian.server.HessianServlet;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Configuration
+public class ServletRegistion {
+
+    @Bean
+    public ServletRegistrationBean servletRegistrationBean() {
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
+        HessianServlet hessianServlet = new HessianServlet();
+        hessianServlet.setHomeAPI(HelloWorldService.class);
+        hessianServlet.setHome(new HelloWorldServiceImpl());
+        servletRegistrationBean.setServlet(hessianServlet);
+        List&lt;String&gt; urlMappings=new ArrayList&lt;&gt;();
+        urlMappings.add("/hello");
+        servletRegistrationBean.setUrlMappings(urlMappings);
+        servletRegistrationBean.setName("hello");
+
+        return servletRegistrationBean;
+    }
+
+    @Bean
+    public ServletRegistrationBean servletRegistrationBean2() {
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
+        HessianServlet hessianServlet = new HessianServlet();
+        hessianServlet.setHomeAPI(FileUploadService.class);
+        hessianServlet.setHome(new FileUploadServiceimpl());
+        servletRegistrationBean.setServlet(hessianServlet);
+        List&lt;String&gt; urlMappings=new ArrayList&lt;&gt;();
+        urlMappings.add("/upload");
+        servletRegistrationBean.setUrlMappings(urlMappings);
+        servletRegistrationBean.setName("upload");
+        return servletRegistrationBean;
+    }
+}
+</pre>
+<p>&nbsp;</p>
+<ol>
+<li>客户端来调用</li>
+</ol>
+<pre class="brush:java">package hessian;
+
+import com.caucho.hessian.client.HessianProxyFactory;
+import top.huster.hessian.HelloWorldService;
+
+public class HessianClientTest {
+    public static void main(String []args)
+        throws Exception {
+        String url = "http://localhost:8080/hello";
+
+        HessianProxyFactory factory = new HessianProxyFactory();
+        HelloWorldService basic = (HelloWorldService) factory.create(HelloWorldService.class, url);
+        String result = basic.hello();
+        System.out.println("Hello: " + result);
+    }
+}
+</pre>
+<p>&nbsp;</p>
+<p>总结： 当你执行client端代码的时候，返回了正确的字符，实际上执行的是远程服务器的代码</p>
+<p>三、 使用hessian上传和下载文件</p>
+<p>因为使用hessian可以很方便的实现远程调用，而他的数据是通过网络以二进制流的方式发送，所以可以很容易的实现大文件的上传和下载。</p>
+<ol>
+<li>提供一个接口</li>
+</ol>
+<pre class="brush:java">package top.huster.hessian;
+
+import java.io.InputStream;
+
+public interface FileUploadService {
+     void upload(String filename, InputStream inputStream);
+}</pre>
+<p>&nbsp;</p>
+<ol>
+<li>他的实现</li>
+</ol>
+<pre class="brush:java">package top.huster.hessian;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
+public class FileUploadServiceimpl implements FileUploadService{
+
+    @Override
+    public void upload(String filename, InputStream inputStream) {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(filename);
+            byte[] bytes = new byte[1024];
+            while (inputStream.read(bytes) != -1) {
+                fileOutputStream.write(bytes);
+            }
+
+            inputStream.close();
+            fileOutputStream.close();
+            System.out.println("ok ......");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
+    }
+}
+
+</pre>
+<p>&nbsp;</p>
+<ol>
+<li>同样注册一个服务</li>
+</ol>
+<pre class="brush:java">package top.huster.hessian;
+
+import com.caucho.hessian.server.HessianServlet;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Configuration
+public class ServletRegistion {
+
+    @Bean
+    public ServletRegistrationBean servletRegistrationBean() {
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
+        HessianServlet hessianServlet = new HessianServlet();
+        hessianServlet.setHomeAPI(HelloWorldService.class);
+        hessianServlet.setHome(new HelloWorldServiceImpl());
+        servletRegistrationBean.setServlet(hessianServlet);
+        List&lt;String&gt; urlMappings=new ArrayList&lt;&gt;();
+        urlMappings.add("/hello");
+        servletRegistrationBean.setUrlMappings(urlMappings);
+        servletRegistrationBean.setName("hello");
+
+        return servletRegistrationBean;
+    }
+
+    @Bean
+    public ServletRegistrationBean servletRegistrationBean2() {
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
+        HessianServlet hessianServlet = new HessianServlet();
+        hessianServlet.setHomeAPI(FileUploadService.class);
+        hessianServlet.setHome(new FileUploadServiceimpl());
+        servletRegistrationBean.setServlet(hessianServlet);
+        List&lt;String&gt; urlMappings=new ArrayList&lt;&gt;();
+        urlMappings.add("/upload");
+        servletRegistrationBean.setUrlMappings(urlMappings);
+        servletRegistrationBean.setName("upload");
+        return servletRegistrationBean;
+    }
+}
+</pre>
+<p>&nbsp;</p>
+<ol>
+<li>客户端的上传代码</li>
+</ol>
+<pre class="brush:java">package hessian;
+
+import java.io.FileInputStream;
+
+import com.caucho.hessian.client.HessianProxyFactory;
+import top.huster.hessian.FileUploadService;
+
+public class FileUploadClient {
+
+    public static void main(String[] args) throws Exception{
+        String url = "http://localhost:8080/upload";
+        HessianProxyFactory factory = new HessianProxyFactory();
+        FileUploadService basic = (FileUploadService) factory.create(FileUploadService.class, url);
+        FileInputStream inputStream = new FileInputStream("/Users/longan/Downloads/TPPSystem2017.key");
+        basic.upload("abc", inputStream);
+    }
+}
+</pre>
+<p>&nbsp;</p>
+<p>总结： 测试速度还是很快的，因为是本地^_^！在这里踩了一个坑，由于spring boot的文档特别的模糊，虽然告诉你如何注册一个Servlet服务，但是并没有写的很详细。我在注册第二个Servlet服务的时候，怎么都无法成功。虽然我也知道注册多个Servlet需要return多个ServletRegistrationBean，但是依然不成功。最后看到参考文档里提到，注册多个的时候，一定要设置Servlet的名字，否则就会因为同名被覆盖掉，设置了name之后果然就好了。</p>
+<p>好了，hessian的介绍就差不多了，后面的还有一个运行在applet上的就不演示了，可以去看他的官方文档。</p>
+<p>发现一个好东西 Resin server-push servlet可以源源不断的往client端push数据，非常适合实时的日志展示。<br />
+在以往，我们日志的展示都是通过循环请求服务端，查看有没有最新的信息，而通过这个东西，可以在服务端有新信息的时候，主动的push到client端，是不是很神奇？ 有空可以试试。</p>
+<p>参考文档 :<br />
+http://www.jianshu.com/p/be2dafc8c644</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/530.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>

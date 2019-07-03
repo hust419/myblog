@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>其他 &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>其他 &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>如何在Mybatis注解中使用枚举类型</title>
+		<link>https://huster.top/htmls/504.html</link>
+		<comments>https://huster.top/htmls/504.html#comments</comments>
+		<pubDate>Mon, 10 Jul 2017 12:45:37 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[Java学习]]></category>
+		<category><![CDATA[其他]]></category>
+
+		<guid isPermaLink="false">http://huster.top/?p=504</guid>
+		<description><![CDATA[当下我们都在使用spring boot，配合注解的使用，我们彻底抛弃了xml的配置。在使用sprin<a class="moretag" href="https://huster.top/htmls/504.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>当下我们都在使用spring boot，配合注解的使用，我们彻底抛弃了xml的配置。在使用spring boot mybatis的时候，关于使用spring boot mybatis注解使用的文档却不清不楚。官网大部分的例子和使用都是叫你如何写mapper.xml。很多时候，一些特别的需求关于注解如何实现这个功能都是一句话带过，很多地方连一句话都没有。在使用spring boot mybatis的过程中，我遇到过很多特殊的需求。例如动态sql的使用，通过插件来注入修改用户的sql语句，枚举类型的使用等。很多case当时搞明白了，过了段时间再用又忘记了，去寻找解决方法的时候又没有靠谱答案，所以这里把用过的一些case写一个序列的文章，方便自己和后来者。</p>
+<p><span id="more-504"></span></p>
+<p>这篇文章是关于mybatis使用注解处理枚举类型的情况。很多时候，我们定义一个类型的时候数据库里存储的往往是int类型，而我们希望在代码中还是能保持和使用枚举类型，这个时候就要针对枚举类型做出一些处理了。官网关于使用xml的时候处理枚举类型描述[文档](http://www.mybatis.org/mybatis-3/zh/configuration.html#typeHandlers)。 举例说明，我们有一个描述数据类型的枚举类。</p>
+<pre class="brush:java">public enum ConfigType {
+STRING(1), BOOLEAN(2), OTHER(3);
+private int type;
+ConfigType(int type) {
+this.type = type;
+}
+public int getType() {
+return type;
+}
+public void setType(int type) {
+this.type = type;
+}
+public static ConfigType getType(int type) {
+if (1 == type) {
+return STRING;
+} else if (2 == type) {
+return BOOLEAN;
+}
+return OTHER;
+}
+}</pre>
+<p>&nbsp;</p>
+<p>然而在我们数据的字段设计的时候, 这个type字段存储的是int类型。这个时候我们直接在mapper里写入的时候，就会出错, 因为ConfigInfo里定义的type是ConfigType的枚举类型, 而数据库是int类型,他当然不知道怎么办了。ps,如果你的数据库存储的是String类型,他会把枚举的name存储进去.</p>
+<pre class="brush:java">@Insert("insert into config_info (gmt_create, gmt_modified, user_id, name, type) values (now(),now(),#{userId},#{name},#{type})")
+int saveConfigInfo(ConfigInfo infoDO);
+</pre>
+<p>&nbsp;<br />
+为什么会把枚举的名称存储进去呢? 以为默认的枚举处理是使用EnumTypeHandler(还有其他一大票的handler把JavaType转成jdbcType), MyBatis 会利用 EnumTypeHandler 来把 Enum 值转换成对应的名字。</p>
+<p>那么如果我们要转成整型怎么办呢？ 使用EnumOrdinalTypeHandler，将上面的insert语句修改如下</p>
+<pre class="brush:java">@Insert("insert into config_info (gmt_create, gmt_modified, user_id, name, type) values (now(),now(),#{userId},#{name},#{type,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler})")
+int saveConfigInfo(ConfigInfo infoDO);</pre>
+<p>&nbsp;</p>
+<p>org.apache.ibatis.parsing.GenericTokenParser这个类在处理的时候，就会使用这个类处理枚举类。他是使用的枚举的索引（下标从0开始）来转换的数字。这样做有个弊端。数据和位置强耦合，代码里还看不到，调整下顺序你以为没问题，结果全挂了，风险大。</p>
+<p>所以我们应该如何自定义枚举的抓换逻辑呢？ 你得定义一个自己的handler</p>
+<pre class="brush:java">public class ConfigTypeEnumHandler extends BaseTypeHandler&lt;ConfigType&gt; {
+public void setNonNullParameter(PreparedStatement ps, int i, ConfigType parameter, JdbcType jdbcType) throws SQLException {
+ps.setInt(i, parameter.getType());
+}
+public ConfigType getNullableResult(ResultSet rs, String columnName) throws SQLException {
+int type = rs.getInt(columnName);
+if (rs.wasNull()) {
+return null;
+} else {
+return ConfigType.getType(type);
+}
+}
+
+public ConfigType getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+int type = rs.getInt(columnIndex);
+if (rs.wasNull()) {
+return null;
+} else {
+return ConfigType.getType(type);
+}
+}
+
+public ConfigType getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+int type = cs.getInt(columnIndex);
+if (cs.wasNull()) {
+return null;
+} else {
+return ConfigType.getType(type);
+}
+}
+}
+</pre>
+<p>然后将你的mapper里面的handler改成自己的,这样的枚举类型你可以自由决定取用哪个字段。</p>
+<pre class="brush:java">@Insert("insert into config_info (gmt_create, gmt_modified, user_id, name, type) values (now(),now(),#{userId},#{name},#{type,typeHandler=your.package.name. ConfigTypeEnumHandler})")
+int saveConfigInfo(ConfigInfo infoDO);</pre>
+<p>下一篇【动态sql】<br />
+下一篇【使用插件实现注入用户sql】</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/504.html/feed</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+		<item>
+		<title>Spring boot的controller无法生效404的原因</title>
+		<link>https://huster.top/htmls/446.html</link>
+		<comments>https://huster.top/htmls/446.html#respond</comments>
+		<pubDate>Fri, 04 Mar 2016 11:26:23 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[其他]]></category>
+
+		<guid isPermaLink="false">http://huster.top/?p=446</guid>
+		<description><![CDATA[我记得我不止一次遇到这个问题了，按照要求定义了controller，始终就是404，上一次的原因我已<a class="moretag" href="https://huster.top/htmls/446.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>我记得我不止一次遇到这个问题了，按照要求定义了controller，始终就是404，上一次的原因我已经不大记得了，这次又遇到就好好查一查。</p>
+<p>先搜索引擎一遍，发现大家都遇到过404的问题，各种原因都有，这里面当然有各种原因，最关键的是没有任何错误日志导致问题非常的难查。</p>
+<p>一般情况，如果有内部错误或者有致命的异常都会导致404.但是我一个Controller非常的简单，没有任何逻辑，也没有任何错误日志，让人非常的迷茫。</p>
+<p>&nbsp;</p>
+<p><span id="more-446"></span></p>
+<pre>@RestController
+@RequestMapping("/orange/")
+public class AbcApi {</pre>
+<pre>@RequestMapping("/pub")
+public ApiStatus publishOrange (HttpServletRequest request) {
+    }
+}
+按照官方的说明，我们定义如上的一个controller，然而这么简单却还有错误？ 原因是abc的这个类可能冲突了，已经在别处定义过了，所以初始化的时候，他找到的AbcApi的类，并不是controller类型的，导致这个controller被丢失掉了。
+解决办法是，修改掉AbcApi的名称，这个真的是Spring boot的软肋。
+
+关键代码是：
+RequestMappingHandlerAdapter 打出来的日志里，会记录所有的control，我没有发现我定义的controller，所以得看看是什么原因。
+
+<a href="http://huster.top/wp-content/uploads/2016/03/mapped.png"><img class="alignnone size-full wp-image-447" src="http://huster.top/wp-content/uploads/2016/03/mapped.png" alt="mapped" width="1335" height="334" srcset="https://huster.top/wp-content/uploads/2016/03/mapped.png 1335w, https://huster.top/wp-content/uploads/2016/03/mapped-300x75.png 300w, https://huster.top/wp-content/uploads/2016/03/mapped-1024x256.png 1024w" sizes="(max-width: 1335px) 100vw, 1335px" />
+
+</a>找到这个函数：</pre>
+<pre>ControllerAdviceBean.findAnnotatedBeans
+这个函数内会寻找所有的controller并且加入列表。</pre>
+<pre>beanNamesForTypeIncludingAncestors（）
+这个函数内，会有类型的判断
+
+========end=</pre>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/446.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Spring Boot 在Tomcat容器中的启动办法</title>
+		<link>https://huster.top/htmls/430.html</link>
+		<comments>https://huster.top/htmls/430.html#respond</comments>
+		<pubDate>Tue, 17 Nov 2015 13:20:51 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[其他]]></category>
+
+		<guid isPermaLink="false">http://huster.top/?p=430</guid>
+		<description><![CDATA[使用Spring boot的官方tutorials可以非常方便的完成spring的示例，示例也非常简<a class="moretag" href="https://huster.top/htmls/430.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>使用Spring boot的官方<a href="http://spring.io/guides#tutorials" target="_blank">tutorials</a>可以非常方便的完成spring的示例，示例也非常简单，使用注解直接就完成了RESTful API的开发。但是当这个应用使用tomcat来启动的时候，却产生了404错误。加之使用的是淘宝改动过的tomcat（<a href="http://tomcat.alibaba-inc.com/" target="_blank">主页地址</a>），使得寻找问题变得复杂起来。最后，在阅读了官方文档后，饶了几个页面，终于找到了问题所在。无论你是使用的<a class="guide--title" href="http://spring.io/guides/gs/rest-service/">Building a RESTful Web Service</a>的代码，还是使用的官方https://start.spring.io/生成的代码，都是同样的解法。</p>
+<p><span id="more-430"></span></p>
+<p>在pom中进行如下修改，请注意红色部分。</p>
+<pre>&lt;groupId&gt;...&lt;/groupId&gt;
+&lt;artifactId&gt;...&lt;/artifactId&gt;
+&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+<span style="color: #ff0000;">&lt;packaging&gt;war&lt;/packaging&gt; </span></pre>
+<pre>&lt;dependency&gt;
+   &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+   &lt;artifactId&gt;spring-boot-starter-tomcat&lt;/artifactId&gt;
+<span style="color: #ff0000;">   &lt;scope&gt;provided&lt;/scope&gt;</span>
+&lt;/dependency&gt;</pre>
+<p>找到你的运行的入口类，有类级别的注解 @SpringBootApplication，这个类需要继承自SpringBootServletInitializer并且覆写：</p>
+<pre class="brush:java">@Override
+protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+    return application.sources(AdminApplication.class);
+}
+
+最终你生成的文件可能看起来如下：</pre>
+<pre class="brush:java">package top.huster;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.web.bind.annotation.RestController;
+
+@SpringBootApplication
+@RestController
+@EnableAutoConfiguration
+public class AdminApplication  extends SpringBootServletInitializer {
+
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(AdminApplication.class);
+    }
+
+
+    public static void main(String[] args) {
+        SpringApplication.run(AdminApplication.class, args);
+    }
+}
+</pre>
+<p>到这里，再打成war包，放到你的tomcat容器里，就能跑起来了。我的IDEA的配置如下：</p>
+<p><a href="http://huster.top/wp-content/uploads/2015/11/idea.png"><img class="alignnone size-full wp-image-431" src="http://huster.top/wp-content/uploads/2015/11/idea.png" alt="idea" width="979" height="609" srcset="https://huster.top/wp-content/uploads/2015/11/idea.png 979w, https://huster.top/wp-content/uploads/2015/11/idea-300x187.png 300w" sizes="(max-width: 979px) 100vw, 979px" /></a></p>
+<p>&nbsp;</p>
+<p>下面我们试着分析下，为什么？</p>
+<p>1. Spring boot 项目里已经在内嵌了tomcat容器，所以你如果要使用外部的tomcat容器，则需要在pom文件中，将内嵌的tomcat容器写成provided范围。之所以内嵌容器，spring 是为了一个jar文件也能启动一个http服务，而抛弃了繁杂的配置。同时为了让tomcat能够识别，我们把打成的包改成传统的war，默认是jar。这个是我们修改pom的原因。</p>
+<p><!--more--></p>
+<p>2. 打出来的包是war包，tomcat也能启起来，但是总是报404错误。这个是由于我们的主类（入口类）并没有被加载，所以后面所有的Control都无法识别和生效。我们通过继承SpringBootServletInitializer让tomcat的serverlet拉起来。</p>
+<p>最终参考答案在这里：http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto-create-a-deployable-war-file</p>
+<p>找到他不容易啊，最初从这里找到他：http://spring.io/guides/gs/convert-jar-to-war/</p>
+<p>利用如上特征，我们使用goolge的zxing写一个动态生成二维码的应用，这个二维码不会生成文件，是一次性的</p>
+<pre class="brush:java">  @RequestMapping("/barcode")
+    public  void getBarcode(HttpServletResponse response) throws  IOException,WriterException {
+        String content = "http://www.huster.top";
+            BitMatrix matrix = new MultiFormatWriter().encode(content,
+                    BarcodeFormat.QR_CODE,
+                    200,
+                    200
+                    );
+        try {
+            MatrixToImageWriter.writeToStream(matrix, "GIF", response.getOutputStream());
+            response.flushBuffer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/430.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>[转载]git在git push之后无痕回滚到某一次提交的方法</title>
+		<link>https://huster.top/htmls/413.html</link>
+		<comments>https://huster.top/htmls/413.html#respond</comments>
+		<pubDate>Wed, 21 Jan 2015 09:00:56 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[其他]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=413</guid>
+		<description><![CDATA[有一天，你高兴的改完了代码，并git push之后发现，哎呀，改错分支了。我的分支是xxxxx需要上<a class="moretag" href="https://huster.top/htmls/413.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>有一天，你高兴的改完了代码，并git push之后发现，哎呀，改错分支了。我的分支是xxxxx需要上线的，结果同时在开发另外一个项目，分支叫ssssss，这个尴尬的时候，有没有办法不留痕迹的将你的分支恢复到git push之前的状态呢？所谓的无痕是指在远程也没有记录，方法如下：</p>
+<p>git代码库回滚: 指的是将代码库某分支退回到以前的某个commit id</p>
+<p><span id="more-413"></span></p>
+<p>【本地代码库回滚】：</p>
+<p>git reset &#8211;hard commit-id :回滚到commit-id，讲commit-id之后提交的commit都去除</p>
+<p>git reset &#8211;hard HEAD~3：将最近3次的提交回滚</p>
+<p>&nbsp;</p>
+<p>【远程代码库回滚】：</p>
+<p>这个是重点要说的内容，过程比本地回滚要复杂</p>
+<p>应用场景：自动部署系统发布后发现问题，需要回滚到某一个commit，再重新发布</p>
+<p>原理：先将本地分支退回到某个commit，删除远程分支，再重新push本地分支</p>
+<p>操作步骤：</p>
+<p>1、git checkout the_branch</p>
+<p>2、git pull</p>
+<p>3、git branch the_branch_backup //备份一下这个分支当前的情况</p>
+<p>4、git reset &#8211;hard the_commit_id //把the_branch本地回滚到the_commit_id</p>
+<p>5、git push origin :the_branch //删除远程 the_branch</p>
+<p>6、git push origin the_branch //用回滚后的本地分支重新建立远程分支</p>
+<p>7、git push origin :the_branch_backup //如果前面都成功了，删除这个备份分支</p>
+<p>&nbsp;</p>
+<p>这个方法真是极秒啊</p>
+<p>参考资料：http://www.cnblogs.com/qualitysong/archive/2012/11/27/2791486.html</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/413.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>读书笔记：我只是讨厌屈服（柴静）</title>
+		<link>https://huster.top/htmls/322.html</link>
+		<comments>https://huster.top/htmls/322.html#comments</comments>
+		<pubDate>Tue, 18 Jun 2013 15:06:44 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[其他]]></category>
+		<category><![CDATA[权利]]></category>
+		<category><![CDATA[柴静]]></category>
+		<category><![CDATA[读书笔记]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=322</guid>
+		<description><![CDATA[柴静的这篇文章，内容非常丰富， 里面穿插了很多历史上，以及过去发生的事情。讲述了美国争取种族平等的事<a class="moretag" href="https://huster.top/htmls/322.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>柴静的这篇文章，内容非常丰富， 里面穿插了很多历史上，以及过去发生的事情。讲述了美国争取种族平等的事件起因，讲述了国内发生的为了争取权利，个人对抗“权威”的事情。然而，可悲的是，目前，在中国，这种做法让人觉得很难理解。这种做法没用，不可取，或者是5毛钱的事情，跟我没关系。然后，正如书中所说，你觉得今天的拆迁跟我没关系，我不想去关心，明天的征税跟我没关系，我不去关心，但是总有一天，跟你有关系的时候，也没有人去争取，自身的权利。</p>
+<p><span id="more-322"></span></p>
+<p>&nbsp;</p>
+<p><a href="http://www.longant.com/wp-content/uploads/2013/06/权利，不去争取，就是一张废纸.jpg"><img class="wp-image-325 alignright" title="权利，不去争取，就是一张废纸" src="http://www.longant.com/wp-content/uploads/2013/06/权利，不去争取，就是一张废纸.jpg" alt="我只是讨厌屈服阅读笔记思维图" width="2262" height="1599" /></a></p>
+<pre class="brush:other"></pre>
+<p>&nbsp;</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/322.html/feed</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+	</channel>
+</rss>

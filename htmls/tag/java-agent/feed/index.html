@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>java agent &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/tag/java-agent/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>java agent &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</title>
+		<link>https://huster.top/htmls/662.html</link>
+		<comments>https://huster.top/htmls/662.html#respond</comments>
+		<pubDate>Mon, 03 Jun 2019 12:41:44 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[Java学习]]></category>
+		<category><![CDATA[java agent]]></category>
+		<category><![CDATA[jvm sandbox]]></category>
+
+		<guid isPermaLink="false">http://huster.top/?p=662</guid>
+		<description><![CDATA[背景 jvm sandbox是一个开源项目https://github.com/alibaba/jv<a class="moretag" href="https://huster.top/htmls/662.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<h1>背景</h1>
+<p>jvm sandbox是一个开源项目https://github.com/alibaba/jvm-sandbox/wiki/FIRST-MODULE，他是对java agent的一个应用，他将agent发扬光大，让你可以不用用户改代码的情况下，进行代码增强，实现AOP，切面编程的功能，非常强大。但是他的代码量其实不大，文档清晰，所以读起来不是太费劲。他最最基础和核心的功能是使用了Java 提供的 Instrumenttation和ClassFileTransformer来实现的，我们先来了解下这个两个类的API，了解他们都提供了什么功能。</p>
+<p>&nbsp;</p>
+<p><span id="more-662"></span></p>
+<h1 id="0Pnqw">Instrumentation类用途</h1>
+<p>提供Java代码增强功能。例如为了提供收集数据的功能，可以通过字节码增强技术，对类的方法进行增强。由于代码是添加的，所以他不会修改原来的状态。通过这个API，我们可以开发各种工具，例如监控的客户端，profiles，代码覆盖率分析工具以及事件的日志埋点工具。</p>
+<p>有两种方式来获取Instrumentation实例。一种是在java启动的时候添加参数-javaagent将你的增强包加载进来，另外一种是使用VirtualMachine的API来进行。具体的做法是调用VirtualMachine.attach(java pid). 前者会在permain里把Instrumentation传过来，后者会在agentmain方法里把Instrumentation实例传过来。</p>
+<p>一旦拿到了Instrumentation实例，你就可以在任何时候对原来的java代码进行代码增强。</p>
+<h2 id="xzOdu"><span>addTransformer</span>(ClassFileTransformer transformer,<span> </span><strong>boolean<span> </span></strong>canRetransform)</h2>
+<p>函数的作用是注册一段代码增强逻辑，他能对所有已定义的类生效<span>(除了通过依赖的</span><span>transformer进行定义的类?????)。当一个类被加载的时候，或者</span><span>是</span><span>redefineClasses方法被调用的时候，或者是</span><span>retransformClasses方法被调用的时候(前提是canRetransform的参数是true)，这个函数里注册的transformer就被调用了。至于transformer之间调用的顺序，则是由添加</span><span>的先后顺序来决定的的(假设有多个agent对同一个类的方法进行了增强，他们是按照先后顺序来执行的。)，可以想象一下管道命令，是一样的。</span></p>
+<p><span>异常问题，值得注意的是，如果这个方法在执行的时候发生了异常，jvm不会中断，他会继续进行下一个transformer的执行。</span></p>
+<p><span>重复add的问题，同一个transformer可能会被add多次，这个是不被推荐的，add多次最好new新的对象进行。</span></p>
+<p>当传入的transformer是null的时候，这个方法会抛出NullPointException的异常，当canRetransform被设为true，而JVM虚拟机被设置为不可被reTransfrom的时候(参见<span>isRetransformClassesSupported方法</span>)，会抛出<span>UnsupportedOperationException异常。</span></p>
+<h2 id="Gq9la"><span><br />
+</span><span>addTransformer</span>(ClassFileTransformer transformer)</h2>
+<p>等同于addTranformer(transformer,false);</p>
+<h2 id="waQUQ"><span>removeTransformer</span>(ClassFileTransformer transformer)</h2>
+<p><span>移除已注册的transformer。未来被定义的类将不会被应用这个transformer。由于类加载的多线程语义性，可能被移除的transformer还会依然生效，所以业务方在编写的时候要处理好，做好防御性编程。</span></p>
+<h2 id="Mys7v"><span>isRetransformClassesSupported</span>()</h2>
+<p>返回当前的JVM配置是否支持类的reTransform。这个取决于你的javaagent里manifest的配置项<span>的</span><span>Can-</span><span>Retransform-Classes配置，示例如下</span></p>
+<p><span>​<span data-card-element="center" contenteditable="false"><span class="lake-image"><span class="lake-image-content lake-image-content-isvalid"><span data-role="detail" class="lake-image-detail"><span class="lake-image-meta"><img data-role="image" src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/1831/1559554109168-85b8888a-e4ed-4c7d-91bf-4ae19d1b3ece.png" data-raw-src="" class="image lake-drag-image" alt="image.png" title="image.png" />                            </span>       </span>     </span>   </span></span>​</span></p>
+<h2 id="U0Gra"><span>retransformClasses</span>(Class&lt;?&gt;&#8230; classes) throws UnmodifiableClassException</h2>
+<p>函数的用途是对传入的classes执行transform，一般用于agentmain的方式。因为agentmain的方式是在class已经被加载完了之后attch到jvm上的，这个时候只有通过这种方式来修改原来的类的行为。</p>
+<p>所以在add的时候，canTransform设置为false的将会被忽略，只有设置为true的才会被执行。如果你的jvm的<span>Can-</span><span>Retransform-Classes被设置为false，会抛出异常。同时如果你的类有问题，可能会抛出ClassFormatError，NoClassDefFoundError，</span><span>ClassCircularityError，LinkageError异常，如果传入的是null，会报NullPointerException</span></p>
+<h2 id="CcbjG">isRedefineClassesSupported();</h2>
+<p><span>同</span><span>isRetransformClassesSupported，在manifest里配置的</span></p>
+<p><span>​<span data-card-element="center" contenteditable="false"><span class="lake-image"><span class="lake-image-content lake-image-content-isvalid"><span data-role="detail" class="lake-image-detail"><span class="lake-image-meta"><img data-role="image" src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/1831/1559555920501-e7da66a6-082e-487b-a8e8-10a3d901fd8a.png" data-raw-src="" class="image lake-drag-image" alt="image.png" title="image.png" />                            </span>       </span>     </span>   </span></span>​</span></p>
+<h2 id="vkc6n">redefineClasses(ClassDefinition&#8230; definitions) throws  ClassNotFoundException, UnmodifiableClassException;</h2>
+<p>这个和retransformClasses非常的相似。也有人在openjdk里问过这个问题，http://mail.openjdk.java.net/pipermail/serviceability-dev/2008-May/000131.html，大概的解释是，retransformClasses是fix-and-continues，而redefined则是直接替换掉了。尤其是有多个agent同时工作的时候，更加推荐retransform。</p>
+<h2 id="gXuF8">isModifiableClass(Class&lt;?&gt; theClass)</h2>
+<p>这个类是否能够被transform，如果可以则返回true。</p>
+<h2 id="QnROe">getAllLoadedClasses()</h2>
+<p>获取所有被JVM加载的类，这个是诊断的好帮手</p>
+<h2 id="lbkW8">getInitiatedClasses(ClassLoader loader)‘</h2>
+<p>获取所有被指定的classloader加载的类，如果传入null则返回由BootstrapClassl返回的类。</p>
+<h2 id="KOwfz">getObjectSize(Object objectToSize)</h2>
+<p>获取一个对象消耗的空间大小</p>
+<h2 id="I87RV">appendToBootstrapClassLoaderSearch(JarFile jarfile)</h2>
+<p>将指定的jar包加载给BootstrapClassLoader，可以被执行多次从而加载多个jar包。查找类的时候会先去BootStrapLoader里去找，如果找不到就到这个jar包里面去找。</p>
+<p>需要小心处理的是，包名不要重复。例如，在ClassLoader L里加载了一个类C，他有一个私有类是C$1，如果你的jar包里正好也有个类C$1，他会先去BootstrapClassLoader里去找，发现找到了，然后去load，接着发现没有权限，就会直接报出IllegalAccessError错误。</p>
+<h2 id="D2O9z">appendToSystemClassLoaderSearch(JarFile jarfile)</h2>
+<p>特性和appendToBootstrapClassLoader类似，不过区别是这个是用于SystemClassLoader的类的查找的(回忆一下双亲委派机制)。</p>
+<h2 id="4Gjci">isNativeMethodPrefixSupported()</h2>
+<p>是否设置了本地方法的拦截，由manifest设置的。Can-Set-Native-Method-Prefix属性，具体set native method prefix的用途参考nativeMethodPrefix()</p>
+<h2 id="sdkq9">setNativeMethodPrefix(ClassFileTransformer transformer, String prefix)</h2>
+<p>对本地方法进行代码增强。但是由于本地方法是没有字节码的，所以他的办法是重新定义一个同名的函数(原来native method)的名称，然后将原来的本地方法使用prefix进行重命名。</p>
+<p>举例，以前有一个本地方法 native boolean foo(String x),他的做法是先将native的方法重命名，例如改成</p>
+<p>native boolean wapped_foo(String x), 然后再定义一个方法叫 boolean foo(String x) { &#8212;你的代码&#8212; ; prefix_foo(x)}。为了防止重复，所以你的prefix最好考虑到方法重复的情况。</p>
+<p>正常情况下，按照上面顺序执行，但是如果有问题的时候他的执行顺序分别是</p>
+<ol start="1">
+<li><span>method(foo) -&gt; nativeImplementation(foo)</span></li>
+<li> method(wrapped_foo) -&gt; nativeImplementation(foo)</li>
+<li>method(wrapped_foo) -&gt; nativeImplementation(wrapped_foo)</li>
+<li> method(wrapped_foo) -&gt; nativeImplementation(foo）</li>
+</ol>
+<p>按照以上的顺序来尝试执行。</p>
+<h1 id="XvwqP">ClassFileTransformer类用途</h1>
+<p>用来让用户来实现代码增强逻辑的接口。他只有一个方法，方法的参数是原来的类的字节码以及这个类的classloader对象，返回值则是被增强之后的类的字节码。所以你的代码是通过已有的类信息，植入代码之后，形成新的代码(类的字节码)。</p>
+<h2 id="0SssK"> transform（ClassLoader,ClassName,classBeingRedefined,protectionDomain,classfileBuffer）</h2>
+<p>这里的来源有两个，分别是Instrumentation的两个addInstrumentation()方法。</p>
+<p>这个函数被调用的时机有如下几种情况</p>
+<ol start="1">
+<li>这个类第一次被加载，当ClassLoader的defineClass()方法(这个方法是classloader将字节码解析成类并且放入metaspace的过程)被调用的时候，这个方法会被call</li>
+<li>Instrumentation#redefineClasses被调用了这个方法的时候，这个方法也会被调用</li>
+<li>Instrumentation#retransformClasses当这个方法被调用的时候，这个方法也会被调用</li>
+</ol>
+<p>他们的执行是按照addInstrumentation的顺序来执行的。而reTransformClasses和redefineClasses被执行的时候，他们修改的字节码是在之前已经被增强的基础上进行的。</p>
+<p>例如原始方法是foo(String x), 然后在类加载的时候进行了一些增强，插入了一段代码，那么在下次retransformClasses执行，这个方法被调用的时候，增加的字节码是在上一次的基础上进行的。换句话说，classfileBuffer永远都是最后增强执行完成之后的版本。</p>
+<p>关于异常和返回值。如果返回值是null，代表这次调用什么都没做，没有任何增强代码加入。他的效果和抛出异常是一样的，如果在执行这个函数的过程中抛出了异常，则代表本次调用什么都不做，和返回null值的效果是一样的。</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/662.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>

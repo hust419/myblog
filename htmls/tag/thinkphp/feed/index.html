@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>ThinkPHP &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/tag/thinkphp/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>ThinkPHP &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>慎用preg_replace的/e修饰符</title>
+		<link>https://huster.top/htmls/157.html</link>
+		<comments>https://huster.top/htmls/157.html#respond</comments>
+		<pubDate>Tue, 10 Apr 2012 10:34:18 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[WEB安全]]></category>
+		<category><![CDATA[ThinkPHP]]></category>
+		<category><![CDATA[双引号]]></category>
+		<category><![CDATA[安全]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=157</guid>
+		<description><![CDATA[最近，wooyun上面爆了一个ThinkPHP的漏洞（最新版已经修复），以前也是我用过的第一个框架，<a class="moretag" href="https://huster.top/htmls/157.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>最近，wooyun上面爆了一个ThinkPHP的漏洞（最新版已经修复），以前也是我用过的第一个框架，昨晚花时间重现了一下，查阅了下程序的原理，原来这东西还得慎用。主要是由mixed preg_replace ( mixed pattern, mixed replacement, mixed subject [, int limit]) 这个函数引起的，在官方说明中，</p>
+<p>/e 修 正符使 preg_replace() 将 replacement 参数当作 PHP 代码（在适当的逆向引用替换完之后）。提示：要确 保 replacement 构成一个合法的 PHP 代码字符串，否则 PHP 会在报告在包含 preg_replace() 的行中出现语法解析错 误。</p>
+<p><span id="more-157"></span></p>
+<p>先看一下这个示例</p>
+<pre class="brush:php">preg_replace("/test/e",$_GET["h"],"jutst test");</pre>
+<p>如果我们提交?h=phpinfo()，phpinfo()将会被执行（使用/e修饰符，preg_replace会将 replacement 参数当作 PHP 代码执行）,这句话匹配到了</p>
+<p>just test 中的test ，在进行替换的时候，将$_GET[&#8220;h&#8221;]中的字符串当作了PHP代码执行。</p>
+<p>进而，我们进入ThinkPHP的源码，下载2.1版（2.1以后已经被修复）。在/ThinikPHP/Lib/ThinkPHP/Util/Dispatcher.class.php的dispatch函数中，找到这句话：</p>
+<pre class="brush:php"> $res = preg_replace('@(\w+)'.$depr.'([^'.$depr.'\/]+)@e', '$var[\'\\1\']="\\2";', implode($depr,$paths));</pre>
+<p>只要是没有定义路由规则，默认情况下，这个函数都能执行。显然，这个使用了/e函数，会导致第二个参数当作函数使用。这句话的意思是</p>
+<p>正则匹配的是 ：字母开头，加上“/”分隔符，后面跟一个非&#8221;/&#8221;的元素，被替换成$var[&#8220;分隔符前的字母&#8221;]=分隔符后的值；作者的本意是要将这么一对一对的</p>
+<p>参数/值的形式的url写入到 $var[$key] = $value的数组中，第二个替换参数实际上是一个php语法，因此使用了/e参数。但是在赋值的时候，使用的是双引号。危险的地方实际上在这里，在php中，双引号里面如果包含有变量，php解释器会将其替换为变量解释后的结果；单引号中的变量不会被处理。可以先做如下测试：<br />
+echo &#8220;{${phpinfo()}}&#8221;;   phpinfo会被成功执行了。</p>
+<p>因此，我们将第二个变量替换成我们需要的函数，构造出来的url大致如下：</p>
+<p>http://www.xxxx.com/index.php/Model/Action/par/<code>${@print(THINK_VERSION)}</code>  这个可以打印出ThinkPHP的版本，在页头的位置，我用2.1的实验了一下，成功了，这个相当于开启了一个PHP的一句话后门啊。这句话的/par/${@print(THINK_VERSION)}将匹配到正则表达式，将会执行第二个参数，具体语句是$var[&#8216;par&#8217;] = &#8220;<code>${@print(THINK_VERSION)}</code> &#8220;; 问题出在双引号上面，这个就会执行里面的语句，自然，想干什么就干什么了！</p>
+<p>防范的方法就是将双引号改为单引号。</p>
+<pre>'$var[\'\\1\']='\\2';'</pre>
+<p>&nbsp;</p>
+<p><img title="实例" src="https://public.bay.livefilestore.com/y1pyLf9-XFH9lB1kqayDWrA-bXg23EAptPUE-dGMnwt28loBEyhNK-1avHzkenFEW49Toq2dHfPDWE188KHppFA7w/1111.JPG?psid=1" alt="" width="956" height="418" /></p>
+<p>然后，我在谷歌上面搜索了下，受影响的站点不少，很多站点都能直接执行phpinfo（）信息，熟悉tp的，应该也能轻易拿到数据库密码。那么拿到webshell甚至系统shell也不是没有可能的！</p>
+<p>目前受影响的网站很多很多，只要找一个下使用了TP框架的网站，就能发现。所以，使用框架有好处，也有他的坏处，那就是漏洞都是公开的。</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/157.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>

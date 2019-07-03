@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>PHP &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/tag/php/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>PHP &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>WordPress的源码阅读笔记</title>
+		<link>https://huster.top/htmls/77.html</link>
+		<comments>https://huster.top/htmls/77.html#comments</comments>
+		<pubDate>Mon, 26 Mar 2012 16:51:55 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[学习笔记]]></category>
+		<category><![CDATA[PHP]]></category>
+		<category><![CDATA[wordpress源码]]></category>
+		<category><![CDATA[系统设计]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=77</guid>
+		<description><![CDATA[       上周研究了下Wordpress的源码，虽然源码写的不够精细，我们姑且不讨论其代码是否真<a class="moretag" href="https://huster.top/htmls/77.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p style="text-align: justify;">       上周研究了下Wordpress的源码，虽然源码写的不够精细，我们姑且不讨论其代码是否真的如其官网所说“代码如诗”，我们比较感兴趣的是，他的框架是怎样的，他是如何实现的MVC分层，又是如何很方便的扩展插件、主题，让其他人可以简单的参与到开发中来。</p>
+<p style="text-align: justify;">       我们从前台的Index.php入手，找到入口文件wp-blog-header.php文件,wp-load.php主要是一些判断和初始化工作，template-loader.php文件则主要是显示整个网站的内容。实际的初始化内容在wp-settings.php中，这个也是整个系统的核心所在。他进行了一系列的check,定义相应的类，最后加载模板文件的首页文件，交予模板文件处理。</p>
+<p style="text-align: justify;">     整个系统的实现自由扩展，很大程度“依赖于执行挂钩、动作和过滤器 ”,关于这个话题可以参考官方的说明，http://codex.wordpress.org/Plugin_API,这个理解了，才能更好的把握Wordpress的东西，因为整个系统都与他有关!</p>
+<p>WordPress 中有一种叫执行挂勾的机制，允许插件把一些功能“挂载”到 WordPress 当中。也就是说，在系统运行至某一个环节时，去调用插件内的一些函数。执行挂勾分为两种：</p>
+<ol>
+<li><a title="" href="http://codex.wordpress.org/zh-cn:%E6%8F%92%E4%BB%B6_API#Actions">动作 (Action)</a>： 动作是 WordPress 运行到某些环节，或者在某些事件发生时，就会被执行的一种挂钩。任何的插件都可以通过动作接口来指示系统在遇到这些环节或者事件的时候，就执行指定的 PHP 函数。</li>
+<li><a title="" href="http://codex.wordpress.org/zh-cn:%E6%8F%92%E4%BB%B6_API#Filters">过滤器 (Filter)</a>：过滤器的是 WordPress 用于修改即将要保存或者发送出去的数据的一种挂钩。任何的插件都可以通过过滤器接口来指示系统在遇到某些环节或者事件的时候，就执行指定的 PHP 函数去修改特定的数据。</li>
+</ol>
+<p>某些时候动作或过滤器可以达到相同的效果。比如要修改文章的内容，可以把插件挂载到动作 <tt>publish_post</tt> 上，在文章的内容保存到数据库前就修改它。也可以把插件挂载到过滤器 <tt>the_content</tt> 上，在文章的内容发送到浏览器前修改它。</p>
+<p><span id="more-77"></span></p>
+<p>这个很有意思，我们可以把一个网页（博客）想象成一张图纸，图纸被切分成了一块一块的区域，那么我们假设，我们默认的输出是怎么一个样子，然后，我们去改变他，例如，红色变成绿色，内容加上自己的标签，我们只需要使用过滤器，在内容输出的时候，会调用我们的方法，而我们的方法，就是hack显示的内容。而动作，则可以改变当前的行为，例如，插件是扩展系统原来没有的功能。那么我们添加钩子到事件中，这个事件(比如，输出通知信息？)的时候，就会触发我们自定义的函数，这个函数可以做你想要做的事情。</p>
+<p>系统提供了增、删、清理和执行和合并的基本功能，而系统事件则有Wordpress自身定义好的，就是说，整个网页怎么布局，我们给你定一个大体的框框，剩下的就完全靠你自己了。</p>
+<p>那么系统怎么实现的MVC层结构呢？我个人阅读了源码以后的理解是：</p>
+<p>一、V层（视图层）</p>
+<p>我认为Wordpress的视图层就是主题文件夹里面的一个一个文件，在老早以前，Wordpress的旧版本，使用的是自定义的模板语言（类似于风靡的smarty模板引擎），然后自己进行语法分析，后来干脆直接使用php语言，因此开发主体需要一定的php基础，当然不会太复杂，系统有定义的函数，供给用户取原始的数据，如此，他的所谓的模板层其实还是交给了PHP。在模板中，经常见到if:endif whiel :endwhile的语法，这个很少见，具体可以参考http://www.cnblogs.com/janoyu/archive/2010/05/04/sourcejoy_com_php_other_syntax.html，他只不过是一种不常见的php语法，跟常见的功能一样。</p>
+<p>二、M层（数据层）</p>
+<p>WordPress的数据层封装的不是很彻底，可能不能按照数据层来进行这样的划分，因为他的取数据的操作并不是封装的很完全，其实是按照功能定义在函数中，例如取option的时候，就调用的get_option的方法，在方法里进行了数据库操作，而取博客文章等数据的时候，主要是在query.php文件中进行，可以关注下&amp;get_posts这个函数，我认为这就是他的数据层。</p>
+<p>三、C层（控制层）</p>
+<p>WordPress的入口，我觉得可以作为他的控制层，我认为一个系统应该只能有一个入口比较合理，入口的流程也比较固定，先初始化，再取数据，最后输出V层，否则会带来代码重复，配置文件要多处修改的问题，因为入口多了以后，都有自己的配置文件，就不太好办了。</p>
+<p>我们可以看一下视图层的代码：</p>
+<pre class="brush:php">&lt;?php if (have_posts()) : while (have_posts()) : the_post(); update_post_caches($posts); ?&gt;
+&lt;div class="post" id="post-&lt;?php the_ID(); ?&gt;"&gt;
+&lt;h2&gt;&lt;a class="title" href="&lt;?php the_permalink() ?&gt;" rel="bookmark"&gt;&lt;?php the_title(); ?&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="info"&gt;&lt;span class="date"&gt;&lt;?php the_time(__('F jS, Y', 'inove')) ?&gt;&lt;/span&gt;
+&lt;?php if ($options['author']) : ?&gt;&lt;span class="author"&gt;&lt;?php the_author_posts_link(); ?&gt;&lt;/span&gt;&lt;?php endif; ?&gt;
+&lt;?php edit_post_link(__('Edit', 'inove'), '&lt;span class="editpost"&gt;', '&lt;/span&gt;'); ?&gt;
+&lt;span class="comments"&gt;&lt;?php comments_popup_link(__('No comments', 'inove'), __('1 comment', 'inove'), __('% comments', 'inove'), '', __('Comments off', 'inove')); ?&gt;&lt;/span&gt;
+&lt;div class="fixed"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="content"&gt;&lt;?php the_content(__('Read more...', 'inove')); ?&gt;
+&lt;div class="fixed"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="under"&gt;&lt;?php if ($options['categories']) : ?&gt;&lt;span
+	class="categories"&gt;&lt;?php _e('Categories: ', 'inove'); ?&gt;&lt;/span&gt;&lt;span&gt;&lt;?php the_category(', '); ?&gt;&lt;/span&gt;&lt;?php endif; ?&gt;
+&lt;?php if ($options['tags']) : ?&gt;&lt;span class="tags"&gt;&lt;?php _e('Tags: ', 'inove'); ?&gt;&lt;/span&gt;&lt;span&gt;&lt;?php the_tags('', ', ', ''); ?&gt;&lt;/span&gt;&lt;?php endif; ?&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;?php endwhile; else : ?&gt;</pre>
+<p>他是通过内置的函数，与系统的数据层进行交流，而插件的机制，可以看hello插件的实现方法。</p>
+<p>do_action和apply_filter的方法，执行系统事件下面挂载的自定义函数，当然，如果当前事件下面无挂载，那么就直接返回了。</p>
+<p>虽然，系统的代码并不完美，还有很多可以改进的地方，例如以下这段代码：</p>
+<pre class="brush:php">if ( file_exists( ABSPATH . 'wp-config.php') ) {
+
+	/** The config file resides in ABSPATH */
+	require_once( ABSPATH . 'wp-config.php' );
+
+} elseif ( file_exists( dirname(ABSPATH) . '/wp-config.php' ) &amp;&amp; ! file_exists( dirname(ABSPATH) . '/wp-settings.php' ) ) {
+
+	/** The config file resides one level above ABSPATH but is not part of another install*/
+	require_once( dirname(ABSPATH) . '/wp-config.php' );
+
+} else {
+
+	dosomething();
+}</pre>
+<p>我不知道第二个elseif是否会执行，以我的理解，他是永远都不会执行到的。但是对于系统的思想，就是假设一个网页的输出内容怎样的，如果有新的需求改变，你不需要动我本来的内容，只需要注入你自己的内容。这样做的好处是，无论你外部的需求怎么变，始终不会影响我主干的东西，而新人入手也比较容易，他只需要理解主干，其他人更不干涉，个人的需求的开发，只能当作是外部代码，当作插件，可以随时删除，减少系统的“侵入性”（学来的），比较适合系统较为复杂，更新迭代非常快的产品，比如淘宝主搜索。。。。</p>
+<p>这几天一直在忙于主搜的refine筛选区的代码重构，在以前是依靠数组来维持晒选项的checkbox的输出。先将需要的选项的html代码全部扔到一个数组里，然后根据条件，例如类目信息，让某个checkbox消失掉，就unset数组的值，最后，按照数组的顺序，输出，超出的部分，则截断。这样做的坏处是，如果我现在要调换某两个的位置，或则是加一个？那么我必须要了解以前的逻辑，知道以前这个位置是个什么东西，一共有几个，我加到数组的哪个地方才能保证一定会被输出，而不会因为位置有限（只输出12个checkbox），而数组有15个出现截断的情况。</p>
+<p>如果，我们把筛选区设置为固定的12个位置，上面6个下面6个，我只知道你要改变第几个的内容，那么我把第几个的内容改成你想要输出的html，我不用再去关心，你原来是什么内容。这样代码可以一直往后写，随便你怎么改，而新人去改的时候，也不用关心以前的逻辑，只需要关注你要的那个位置，是输出的啥玩意儿就行。而下一步则可以将多个refine进行合并，因为无非是输出的内容不同而已。</p>
+<p>按照这个思想走下去，无论逻辑多复杂，主分支的代码则始终不会怎么去更改。</p>
+<p>懒得画图，就这么记一下吧，避免以后忘记，返工！</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/77.html/feed</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+		<item>
+		<title>PHP工具之CodeSniffer</title>
+		<link>https://huster.top/htmls/68.html</link>
+		<comments>https://huster.top/htmls/68.html#comments</comments>
+		<pubDate>Sat, 17 Mar 2012 15:29:23 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[PHP的开发工具]]></category>
+		<category><![CDATA[CodeSniffer]]></category>
+		<category><![CDATA[PHP]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=68</guid>
+		<description><![CDATA[PHP编码有很多工具，为我们带来很多便利，比如IDE、Debug工具，PHP单元测试工具等，对于Co<a class="moretag" href="https://huster.top/htmls/68.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>PHP编码有很多工具，为我们带来很多便利，比如IDE、Debug工具，PHP单元测试工具等，对于CodeSniffer因为需要，有一定的研究，现在写出来，记录一下，以供以后需要。</p>
+<h4>工具简介</h4>
+<p>众所周知，统一的编码风格，不仅使你所写的代码清爽大气，也使无论是你本人，还是其他人，更容易阅读。那么一个统一的编码风格是怎么样的呢？他主要分为以 下几个方面，php标签、变量的命名、每一行的长度、缩进方式、控制语句以及函数的调用等等，具体的标准可以参考Expert PHP 5 Tools.pdf这本书的第一章，而对于我们团队来讲，也有自己的独有的风格，当前，Leapfrog中除了变量和函数命名方式与上书中第一章有所出入 外，其他的都是相同的。Leapfrog中使用的是下划线方式，zend一般采用驼峰方式。PHP_CodeSniffer能够自动检测你的源代码中的风 格为题，并给出具体的行号，告诉你这个与标准有什么出入，以提醒你改正。目前，该工具的安装环境是PHP version 5.1.2及以上。</p>
+<p><span id="more-68"></span></p>
+<h4>工具的安装</h4>
+<p>使用 sudo pear install PHP_CodeSniffer-1.3.0 自动安装</p>
+<h4> 工具的使用</h4>
+<p>Usage: phpcs [-nwlsapvi] [-d key[=value]]</p>
+<pre>   [--report=&lt;report&gt;] [--report-file=&lt;reportfile&gt;] [--report-&lt;report&gt;=&lt;reportfile&gt;] ...
+   [--report-width=&lt;reportWidth&gt;] [--generator=&lt;generator&gt;] [--tab-width=&lt;tabWidth&gt;]
+   [--severity=&lt;severity&gt;] [--error-severity=&lt;severity&gt;] [--warning-severity=&lt;severity&gt;]
+   [--config-set key value] [--config-delete key] [--config-show]
+   [--standard=&lt;standard&gt;] [--sniffs=&lt;sniffs&gt;] [--encoding=&lt;encoding&gt;]
+   [--extensions=&lt;extensions&gt;] [--ignore=&lt;patterns&gt;] &lt;file&gt; ...
+       -n            Do not print warnings (shortcut for --warning-severity=0)
+       -w            Print both warnings and errors (on by default)
+       -l            Local directory only, no recursion
+       -s            Show sniff codes in all reports
+       -a            Run interactively
+       -p            Show progress of the run
+       -v[v][v]      Print verbose output
+       -i            Show a list of installed coding standards
+       -d            Set the [key] php.ini value to [value] or [true] if value is omitted
+       --help        Print this help message
+       --version     Print version information
+       &lt;file&gt;        One or more files and/or directories to check
+       &lt;extensions&gt;  A comma separated list of file extensions to check
+                     (only valid if checking a directory)
+       &lt;patterns&gt;    A comma separated list of patterns to ignore files and directories
+       &lt;encoding&gt;    The encoding of the files being checked (default is iso-8859-1)
+       &lt;sniffs&gt;      A comma separated list of sniff codes to limit the check to
+                     (all sniffs must be part of the specified standard)
+       &lt;severity&gt;    The minimum severity required to display an error or warning
+       &lt;standard&gt;    The name or path of the coding standard to use
+       &lt;tabWidth&gt;    The number of spaces each tab represents
+       &lt;generator&gt;   The name of a doc generator to use
+                     (forces doc generation instead of checking)
+       &lt;report&gt;      Print either the "full", "xml", "checkstyle", "csv", "emacs"
+                     "source", "summary", "svnblame" or "gitblame" report
+                     (the "full" report is printed by default)
+       &lt;reportfile&gt;  Write the report to the specified file path
+       &lt;reportWidth&gt; How many columns wide screen reports should be printed</pre>
+<p>主要介绍的是，-i参数，用来显示当前的检测风格，系统（1.3.0）默认了PEAR, MySource, Zend, PHPCS and Squiz几种风格</p>
+<p>$ phpcs &#8211;report=summary /path/to/code 以汇总的方式，报告错误</p>
+<p>$ phpcs &#8211;standard=PEAR /path/to/code/myfile.inc 指定以特定的标准检测</p>
+<p>$ phpcs &#8211;extensions=php /path/to/code 仅仅检测php后缀文件</p>
+<p>$ phpcs &#8211;config-set default_standard Squiz 设置默认值</p>
+<p>忽略某些文件和文件夹的方法，有时候，我们要检测一个工程，但是呢，有时候因为文件太久，我们不想更改，而如果检测这些文件会带来很多问题这时候，我们可以选择忽略这些文件</p>
+<pre>$ phpcs --ignore=*/tests/*,*/data/* /path/to/code</pre>
+<p>所有的配置文件都写入了/home/renjun/php/lib/php/data/PHP_CodeSniffer/CodeSniffer.conf 因此要保证这个文件写权限，而且可以用vi进行编辑更改设置。 更多使用帮助请查看官方文档。</p>
+<p>配置文件长什么样？</p>
+<pre class="brush:php">$phpCodeSnifferConfig = array (
+'default_standard' =&gt; 'Leapfrog',
+'--extensions' =&gt; 'php',
+'--ignore'     =&gt; 'tools/,conf/config.inc.php',
+)</pre>
+<h4>自定义风格</h4>
+<p>一般情况下，使用自带的几种风格就已经足够用，但是针对Leapfrog这种情况，我们需要一种自定义的方式来进行检测，否则，很多东西都要被报有问题，影响我们真正的寻找有问题的地方，而且很多时候，我们需要有一种自己的定义的风格方式，这就需要研究这个工具了。 要新建一个风格必须在/home/renjun/php/lib/php/PHP/CodeSniffer/Standards这样的路径下，依照已有的风格，建一个目录，目录中包含ruleset.xml和Sniffs目录。 前者是告诉系统，当前使用哪写检测规则，后者则是自定义过滤规则目录。打开ruleset.xml文件可以看到是这样的样子：</p>
+<p>&lt;?xml version=&#8221;1.0&#8243;?&gt; &lt;ruleset name=&#8221;Leapfrog&#8221;&gt;</p>
+<p>&lt;description&gt;A coding standard based on an early Zend Framework coding standard. Note that this standard is out of date.&lt;/description&gt;</p>
+<p>&lt;rule ref=&#8221;Generic.Functions.FunctionCallArgumentSpacing&#8221;/&gt; &lt;rule ref=&#8221;Generic.Functions.OpeningFunctionBraceBsdAllman&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;Generic.PHP.DisallowShortOpenTag&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;Generic.WhiteSpace.DisallowTabIndent&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;PEAR.Classes.ClassDeclaration&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;PEAR.ControlStructures.ControlSignature&#8221;/&gt; &lt;rule ref=&#8221;PEAR.Functions.ValidDefaultValue&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;PEAR.WhiteSpace.ScopeClosingBrace&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;Generic.Files.LineLength&#8221;&gt;</p>
+<p>&lt;properties&gt; &lt;property name=&#8221;lineLimit&#8221; value=&#8221;80&#8243;/&gt;</p>
+<p>&lt;property name=&#8221;absoluteLineLimit&#8221; value=&#8221;120&#8243;/&gt;</p>
+<p>&lt;/properties&gt; &lt;/rule&gt; &lt;rule ref=&#8221;Generic.Files.LineEndings&#8221;&gt;</p>
+<p>&lt;properties&gt; &lt;property name=&#8221;eolChar&#8221; value=&#8221;\n&#8221;/&gt; &lt;/properties&gt;</p>
+<p>&lt;/rule&gt;</p>
+<p>&lt;/ruleset&gt;</p>
+<p>name:描述当前的检测标准的名称 description:描述信息 rule则是具体的检测规则，我们可以复用已有的规则，这样我们可以省去很多工作。 例如 &lt;rule ref=&#8221;Generic.Functions.FunctionCallArgumentSpacing&#8221;/&gt; 表示使用的是Generirc规则下面的.FunctionCallArgumentSpacing规则， 依据名称我们可以看出来，这是检测函数调用的时 候，参数与参数之间是否有空格用的。具体的文件在 /home/renjun/php/lib/php/PHP/CodeSniffer/Standards/Generic/Sniffs /Functions/FunctionCallArgumentSpacingSniff.php 下面我们看看这个文件。这个文件的命名规则，跟 rule中的必须对应。文件名必须是FunctionCallArgumentSpacing+Sniff，而这个文件中定义的类名称也是固定的，以下划 线分隔。并且必须是实现 PHP_CodeSniffer_Sniff接口的两个方法。</p>
+<pre class="brush:php">
+class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_CodeSniffer_Sniff {
+public function register()
+{
+return array(T_STRING);
+}
+public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+{
+$tokens = $phpcsFile-&gt;getTokens();
+$tokens = $phpcsFile-&gt;getTokens();
+$functionName = $stackPtr;
+$ignoreTokens = PHP_CodeSniffer_Tokens::$emptyTokens;
+$ignoreTokens[] = T_BITWISE_AND;
+$functionKeyword = $phpcsFile-&gt;findPrevious($ignoreTokens, ($stackPtr - 1), null, true);
+if ($tokens[$functionKeyword]['code'] === T_FUNCTION || $tokens[$functionKeyword]['code'] === T_CLASS) {
+return;
+}
+$openBracket = $phpcsFile-&gt;findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($functionName + 1), null, true);
+if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
+return;
+}
+$closeBracket = $tokens[$openBracket]['parenthesis_closer'];
+$nextSeperator = $openBracket;
+while (($nextSeperator = $phpcsFile-&gt;findNext(array(T_COMMA, T_VARIABLE), ($nextSeperator + 1), $closeBracket)) !== false) {
+$brackets = $tokens[$nextSeperator]['nested_parenthesis'];
+$lastBracket = array_pop($brackets);
+if ($lastBracket !== $closeBracket) {
+continue;
+}</pre>
+<p>我只摘取一部分，详细的阅读官方文档。具体的，我们必须实现接口的具体方法，并且实现两个方法， public function register()、 public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)，前者返回要处理的token。首先解释一下token，一个token是一个数组记录的是当前行的元素，例如，行号、这一行中的内 容，例如 : Array( [0] = &gt; 367 [1] = &gt;&lt;?php [2] = &gt;1 367是T_OPEN_TAG的值，表示php的开标签，而&lt;?php则是具体的内容，1表示行号。这样，我们就不难理解过滤规则的php文件中的 代码，其中涉及到api可以查阅参考资料中的官方文档。</p>
+<h4>其他功能</h4>
+<p>SVN Hook功能，可以在svn提交的时候进行检测，如果不符合标准，则不让通过。因为当前的Leapfrog比较复杂，难于严格的执行规则，可以在以后考虑。</p>
+<pre></pre>
+<h4>检测部署</h4>
+<p>现在已经将检测的程序部署到了search041058.sqa.cm4机器上，适合Leapfrog风格，并且默认为使用Leapfrog进行检测，使用方法为 /home/renjun/php/bin/phpcs search.php 检测search.php文件 /home/renjun/php/bin/phpcs /home/renjun/leapfrog/ 检测目录 等等。。。。。 如果移植到其他机器上，只需要复制/home/renjun/php/lib/php/data/PHP_CodeSniffer/CodeSniffer.conf到相应的目录以及 /home/renjun/php/lib/php/PHP/CodeSniffer/Standards/Leapfrog/目录到特定目录。</p>
+<pre></pre>
+<h4>参考资料</h4>
+<p><a title="http://pear.php.net/manual/en/package.php.php-codesniffer.config-options.php" href="http://pear.php.net/manual/en/package.php.php-codesniffer.config-options.php" rel="nofollow">http://pear.php.net/manual/en/package.php.php-codesniffer.config-options.php</a></p>
+<p>Expert PHP 5 Tools.pdf</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/68.html/feed</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+		<item>
+		<title>PHP中$GLOBALS变量和register_globals</title>
+		<link>https://huster.top/htmls/39.html</link>
+		<comments>https://huster.top/htmls/39.html#respond</comments>
+		<pubDate>Sat, 17 Mar 2012 05:03:54 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[PHP编程]]></category>
+		<category><![CDATA[GLOBALS]]></category>
+		<category><![CDATA[PHP]]></category>
+		<category><![CDATA[register_globals]]></category>
+		<category><![CDATA[wordpress源码]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=39</guid>
+		<description><![CDATA[最近，在阅wordpress的代码的时候，看到在设置环境的初期，有一些安全性和初始化的工作，其中，有<a class="moretag" href="https://huster.top/htmls/39.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p style="text-align: justify;">最近，在阅wordpress的代码的时候，看到在设置环境的初期，有一些安全性和初始化的工作，其中，有一个函数wp_unregister_GLOBALS()有点意思，函数的具体内容是：</p>
+<p style="text-align: justify;"><span id="more-39"></span></p>
+<pre class="brush:php">/**
+* Turn register globals off.
+*
+* @access private
+* @since 2.1.0
+* @return null Will return null if register_globals PHP directive was disabled
+*/
+function wp_unregister_GLOBALS() {
+if ( !ini_get( 'register_globals' ) )
+return;
+
+if ( isset( $_REQUEST['GLOBALS'] ) )
+die( /*WP_I18N_GLOBALS_OVERWRITE*/'检测到 GLOBALS 的改写尝试'/*/WP_I18N_GLOBALS_OVERWRITE*/ );
+
+// Variables that shouldn't be unset
+$no_unset = array( 'GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES', 'table_prefix' );
+
+$input = array_merge( $_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES, isset( $_SESSION ) &amp;&amp; is_array( $_SESSION ) ? $_SESSION : array() );
+foreach ( $input as $k =&gt; $v )
+if ( !in_array( $k, $no_unset ) &amp;&amp; isset( $GLOBALS[$k] ) ) {
+$GLOBALS[$k] = null;
+unset( $GLOBALS[$k] );
+}
+}</pre>
+<div>这个函数首先判断register_globals是不是打开了，那么这个是什么用途呢，如果这个变量打开了，则会产生如下效果，可以从url中获取变量值，例如$_GET[&#8220;var&#8221;] = &#8220;abc&#8221;; 那么打开以后默认$var = &#8220;abc&#8221;; 明白了吧</div>
+<div><span style="font-family: 'Courier New';">看看官方的说明,这个register_global打开了会导致什么问题 ：</span></div>
+<div>以下是取自官方的一个例子</div>
+<div>
+<pre class="brush:php">// 当用户合法的时候，赋值 $authorized = true
+if (authenticated_user()) {
+$authorized = true;
+}
+
+// 由于并没有事先把 $authorized 初始化为 false，
+// 当 register_globals 打开时，可能通过GET auth.php?authorized=1 来定义该变量值
+// 所以任何人都可以绕过身份验证
+if ($authorized) {
+include "/highly/sensitive/data.php";
+}</pre>
+</div>
+<div>可能导致在设计者不希望的情况下，改变变量的值，从而绕过安全认证。</div>
+<div>
+<pre class="brush:php">if ( isset( $_REQUEST['GLOBALS'] ) )
+die( /*WP_I18N_GLOBALS_OVERWRITE*/'检测到 GLOBALS 的改写尝试'/*/WP_I18N_GLOBALS_OVERWRITE*/ );</pre>
+</div>
+<div align="left">这段也很有意思，为什么有这一段呢，因为在php4以前,register_globals是默认打开，这本没问题，但是后来有些人滥用，导致很多安全问题，后来，这个开关就设置为默认关闭，上面的函数是为了防止GLOBALS 的改写尝试，$GLOBALS 是一个超级变量，他里面存储了所有的全局变量，包含$_GET这些，只要是不是函数内部的变量，在这个超级变量里面都能够找到（跟register_globals打不打开没什么关系），有兴趣可以var_dump($GLOBALS)看看他内部的构造,如果register_globals这个选项打开，如果我们通过GET auth.php?GLOBALS=1来“注入”，那么$GLOBALS变量内的所有值都会被替换，也就是说，代码里面所有的值都失效了？！这太可怕了，事实上，我使用php5.3.8来测试，这个现象并没有发生，说明php官方其实已经考虑过这个问题了，可能wordpress为了兼容低版本的php而做出的这样的判断。</div>
+<div align="left">
+<div>但是安全起见，还是最好关闭register_globals并且不要使用$GLOBALS，以免出现你想不到的事情。</div>
+<div>理解了$GLOBALS和register_globals就能理解这个函数是干嘛的了！</div>
+<div> wordpress有些地方的代码，写的很罗嗦，我想可能是由于历史原因，不停的更新，导致一些代码冗余下来，使得这个系统代码看起来没那么优美，这是没办法的，就像主搜一样，本来设计的想的很好，可是后来不停的更迭，不停的改动，结果到后来，也有很多冗余代码，没办法的事情</div>
+<div></div>
+</div>
+<p style="text-align: justify;">
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/39.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>

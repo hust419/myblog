@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>logback &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/tag/logback/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>logback &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>另一种使用Log4j的方式</title>
+		<link>https://huster.top/htmls/489.html</link>
+		<comments>https://huster.top/htmls/489.html#respond</comments>
+		<pubDate>Mon, 03 Jul 2017 10:14:09 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[Java学习]]></category>
+		<category><![CDATA[Java]]></category>
+		<category><![CDATA[log4j]]></category>
+		<category><![CDATA[logback]]></category>
+		<category><![CDATA[日志]]></category>
+
+		<guid isPermaLink="false">http://huster.top/?p=489</guid>
+		<description><![CDATA[一般情况下，我们不需要关注log4j的使用，只需要写配置文件就可以实现定制。例如在spring bo<a class="moretag" href="https://huster.top/htmls/489.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>一般情况下，我们不需要关注log4j的使用，只需要写配置文件就可以实现定制。例如在spring boot的工程中，我们只需要在resource中通过logback.xml文件来配置就可以使用日志系统，但是很多时候，我们需要自我定制日志的配置。例如，我们的程序是一个二方包提供给别人使用的时候，我们该怎么定制我们的二方包的日志呢? 本文要解决的就是这个问题</p>
+<p><span id="more-489"></span></p>
+<p>先回忆下基本概念，先分清楚java现有的几个log系统</p>
+<p>common-logging 是一个日志接口，背后可以接具体的实现，使得业务方只依赖于common-logging，而可以方便的更换背后的实现</p>
+<p>slf4j : 同common-logging也是日志的一个接口的封装</p>
+<p>log4j：日志的具体实现</p>
+<p>logback: 日志的另一个实现</p>
+<p>具体的详细的区别，网络上有很多资料，可以自行了解，不是本文的重点。</p>
+<p>&nbsp;</p>
+<p>我们看一下在一个spring boot中，配置一个每天回滚的日志是怎样的， 其中maxHistory是保留多少天的日志，日志每天凌晨会产出一份新文件。</p>
+<pre class="brush:xml">  &lt;appender name="SELECT" class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false"&gt;
+        &lt;file&gt;logs/select_task.log&lt;/file&gt;
+        &lt;rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"&gt;
+            &lt;fileNamePattern&gt;logs/select_task.log.%d{yyyy-MM-dd}&lt;/fileNamePattern&gt;
+            &lt;maxHistory&gt;30&lt;/maxHistory&gt;
+        &lt;/rollingPolicy&gt;
+        &lt;encoder&gt;
+            &lt;charset&gt;UTF-8&lt;/charset&gt;
+            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss} %-5p %c{0}.%M:%L # %m%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+        &lt;!-- append 是否接着往文件里写 --&gt;
+        &lt;append&gt;true&lt;/append&gt;
+    &lt;/appender&gt;
+ &lt;logger name="top.huster.service.strategy.Select" additivity="false"&gt;
+        &lt;level value="INFO"/&gt;
+        &lt;appender-ref ref="SELECT"/&gt;
+    &lt;/logger&gt;
+</pre>
+<p>&nbsp;</p>
+<p>具体的不详细解释，下面是本文的重点，如果你是以二方包的形式提供服务，那么怎么才能打自己的log而不依赖于别人项目工程的配置呢？ 这里就要解释这几个类了. FileAppender的类的职责就是把日志按照一定的格式，追加到日志文件中。</p>
+<p>&nbsp;</p>
+<p>RollingFileAppender: 可以按照大小将文件进行切割，当日志文件达到一定大小以后则重新创建新文件</p>
+<p>&nbsp;</p>
+<p>DailyRollingFileAppender: 逐日生成日志文件，具体的切换的时间也可以自定义</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>PatternLayout： 则是定义日志的输出格式</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>下面的表格解释了上面模式中用到的字符，以及所有定制模式时能用到的字符：</p>
+<table class="table table-bordered">
+<tbody>
+<tr>
+<th>转换字符</th>
+<th>含义</th>
+</tr>
+<tr>
+<td>c</td>
+<td>使用它为输出的日志事件分类，比如对于分类 &#8220;a.b.c&#8221;，模式 %c{2} 会输出 &#8220;b.c&#8221; 。</td>
+</tr>
+<tr>
+<td>C</td>
+<td>使用它输出发起记录日志请求的类的全名。比如对于类 &#8220;org.apache.xyz.SomeClass&#8221;，模式 %C{1} 会输出 &#8220;SomeClass&#8221;。</td>
+</tr>
+<tr>
+<td>d</td>
+<td>使用它输出记录日志的日期，比如 %d{HH:mm:ss,SSS} 或 %d{dd MMM yyyy HH:mm:ss,SSS}。</td>
+</tr>
+<tr>
+<td>F</td>
+<td>在记录日志时，使用它输出文件名。</td>
+</tr>
+<tr>
+<td>l</td>
+<td>用它输出生成日志的调用者的地域信息。</td>
+</tr>
+<tr>
+<td>L</td>
+<td>使用它输出发起日志请求的行号。</td>
+</tr>
+<tr>
+<td>m</td>
+<td>使用它输出和日志事件关联的，由应用提供的信息。</td>
+</tr>
+<tr>
+<td>M</td>
+<td>使用它输出发起日志请求的方法名。</td>
+</tr>
+<tr>
+<td>n</td>
+<td>输出平台相关的换行符。</td>
+</tr>
+<tr>
+<td>p</td>
+<td>输出日志事件的优先级。</td>
+</tr>
+<tr>
+<td>r</td>
+<td>使用它输出从构建布局到生成日志事件所花费的时间，以毫秒为单位。</td>
+</tr>
+<tr>
+<td>t</td>
+<td>输出生成日志事件的线程名。</td>
+</tr>
+<tr>
+<td>x</td>
+<td>输出和生成日志事件线程相关的 NDC (嵌套诊断上下文)。</td>
+</tr>
+<tr>
+<td>X</td>
+<td>该字符后跟 MDC 键，比如 X{clientIP} 会输出保存在 MDC 中键 clientIP 对应的值。</td>
+</tr>
+<tr>
+<td>%</td>
+<td>百分号， %% 会输出一个 %。</td>
+</tr>
+</tbody>
+</table>
+<p>详细的可以参考: http://wiki.jikexueyuan.com/project/log4j/log4j-patternlayout.html</p>
+<p>我们通过具体的代码来演示在你的二方包中如何打印自己的日志:</p>
+<pre class="brush:java">public class MyClassLog {
+//保证全局唯一
+  static public Logger logger() {
+		return MyClassLog.logger;
+   }
+   static final Logger logger;
+	static {
+		FileAppender appender = new DailyRollingFileAppender();
+		appender.setAppend(true);//不设置会覆盖
+		appender.setEncoding("GBK");//设置编码
+		appender.setFile("~/log");//设置路径
+		appender.setLayout(new PatternLayout("%d %-5p - %m%n%n"));//设置格式,格式参考上面的表格
+		appender.activateOptions();
+		logger = Logger.getLogger("top.huster.myTest");
+		logger.setLevel(Level.INFO);
+		logger.setAdditivity(false);
+		logger.addAppender(appender); //设置append，默认是覆盖
+	}
+}
+</pre>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/489.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>

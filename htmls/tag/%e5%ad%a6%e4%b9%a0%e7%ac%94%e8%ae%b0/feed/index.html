@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>学习笔记 &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>学习笔记 &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>HTTP/1.1阅读之请求</title>
+		<link>https://huster.top/htmls/163.html</link>
+		<comments>https://huster.top/htmls/163.html#respond</comments>
+		<pubDate>Mon, 16 Apr 2012 11:13:40 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[HTTP/1.1阅读笔记]]></category>
+		<category><![CDATA[学习笔记]]></category>
+		<category><![CDATA[HTTP/1.1]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=163</guid>
+		<description><![CDATA[5.1 请求消息的构成 在上一章，我们知道一个请求的消息应该由以下几部分组成： Request = <a class="moretag" href="https://huster.top/htmls/163.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>5.1 请求消息的构成</p>
+<p>在上一章，我们知道一个请求的消息应该由以下几部分组成：</p>
+<pre> Request       = Request-Line              ; Section 5.1
+                 *(( general-header        ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.5" rel="xref">4.5</a>
+                 | request-header         ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.3" rel="xref">5.3</a>
+                 | entity-header ) CRLF)  ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec7.html#sec7.1" rel="xref">7.1</a>
+                        CRLF
+                 [ message-body ]          ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.3" rel="xref">4.3</a>
+他们是请求头（由请求行、一般头、请求头和信息头）+信息主体构成。我们来看看请求行（Request-Line），他是由下面几部分构成的：
+Method sp URI sp HTTP-Version CRLF,我们来像教科书一样，看看各个部分都是干啥的</pre>
+<p><span id="more-163"></span></p>
+<pre>
+5.1.2 方法（Method）
+请求的方法一共有以下几种：</pre>
+<pre> Method         =     "OPTIONS"                ; Section 9.2
+                      | "GET"                    ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.3" rel="xref">9.3</a>
+                      | "HEAD"                   ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.4" rel="xref">9.4</a>
+                      | "POST"                   ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.5" rel="xref">9.5</a>
+                      | "PUT"                    ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.6" rel="xref">9.6</a>
+                      | "DELETE"                 ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.7" rel="xref">9.7</a>
+                      | "TRACE"                  ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.8" rel="xref">9.8</a>
+                      | "CONNECT"                ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.9" rel="xref">9.9</a>
+                      | extension-method
+       extension-method = token
+上图的意思是：OPTION是可选的（有那么多种），然后加上Token，我们比较熟悉的是GET、POST、HEAD方法。
+源服务器一般将这边能够接受的请求方法写在 Allow header field 这个域中，然后在返回的信息中通知到客户端，因为这些被允许的方法并不是一成不变的。
+如果一个方法是在列表，但是又没有允许的情况下，源服务器会返回405错误，如果完全不支持则返回501错误，这以上列表的方法中，GET和HEAD是必须能够支持的。
+
+<a id="sec5.1.2">5.1.2</a> Request-URI</pre>
+<pre>Request-URI    = "*" | absoluteURI | abs_path | authority 
+统一资源定位符，由以上四种形式构成，他会是他们其中的一种，他是用来定位资源的具体位置的。
+其中×定位符，表示这个请求并不定位到具体的资源，他在乎的仅仅是服务器本身，但是必须是方法不应用一个资源时。真心不知道他说的啥意思，平时太少见了。
+注意的是，使用代理访问的时候，发给代理的请求必须是absoluteURI这种格式的，代理可以根据需要从cache直接返给用户，或者是将请求发给源服务器。需要
+注意的是，代理有可能再发给另外一个代理服务器（不是源服务器），或者直接访问源服务器。为了避免代理间的循环请求。例如，有ABC三个代理，A从B拿数据，B
+又从C拿数据，C从A拿数据，这就形成了一个循环（我的理解如此），那么为了避免这个问题，代理必须要能识别出服务器的名字，不管你使用的是别名、数字ip还
+是别的啥玩意儿，这样，ABC三个人都互相认识，也就不会出现循环了。一个完整的Reques-line如下：</pre>
+<pre> GET http://www.w3.org/pub/WWW/TheProject.html HTTP/1.1
+所有的HTTP/1.1的服务器，必须能够接受和处理absoluteURI地址</pre>
+<pre>authority 这种形式，只能用于CONNECT方法。
+对于我们来说，大部分访问是向源服务器或是网管请求的，这时候，Request-URI必须表现成abs_path的形式，而这个时候的网络主机信息就必须以头域里的host轮胎体现了
+举例来说，一个访问主机host的请求类似于：</pre>
+<pre>  GET /pub/WWW/TheProject.html HTTP/1.1
+       Host: www.w3.org
+必须注意的是，第一行abs_path是不能缺少的，如果空的时候，应该写成“/”表示网站的根目录
+一个透明代理是不应该更改abs_path的，除非是把空的改写成"/"。
+如果是以absoluteURI 的形式来进行请求的，那么头域的host信息会被忽略。如果不是这种形式以外的其他形式，应该以头域的host域为准，如果host无效
+会返回400错误。（坏请求）
+缺少头域的host的http/1.0的请求，可能会使用启发是规则，就是去看，是不是特定的主机。
+5.3 请求头域
+请求头域能够让客户端添加附件的信息，来告之服务器。其中信息如下：</pre>
+<pre>       request-header = Accept                   ; Section 14.1
+                      | Accept-Charset           ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.2" rel="xref">14.2</a>
+                      | Accept-Encoding          ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3" rel="xref">14.3</a>
+                      | Accept-Language          ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" rel="xref">14.4</a>
+                      | Authorization            ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.8" rel="xref">14.8</a>
+                      | Expect                   ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.20" rel="xref">14.20</a>
+                      | From                     ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.22" rel="xref">14.22</a>
+                      | Host                     ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.23" rel="xref">14.23</a>
+                      | If-Match                 ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24" rel="xref">14.24</a></pre>
+<pre>                      | If-Modified-Since        ; Section 14.25
+                      | If-None-Match            ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26" rel="xref">14.26</a>
+                      | If-Range                 ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.27" rel="xref">14.27</a>
+                      | If-Unmodified-Since      ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.28" rel="xref">14.28</a>
+                      | Max-Forwards             ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.31" rel="xref">14.31</a>
+                      | Proxy-Authorization      ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.34" rel="xref">14.34</a>
+                      | Range                    ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.35" rel="xref">14.35</a>
+                      | Referer                  ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.36" rel="xref">14.36</a>
+                      | TE                       ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.39" rel="xref">14.39</a>
+                      | User-Agent               ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.43" rel="xref">14.43</a>
+
+这些个东西，是能够被扩展的。随着HTTP协议版本的增加，可能会增加新的东东，但是如果所有通信方都把他看做请求头域，那么其他不能识别的头域将被当
+信息头来处理。</pre>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/163.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>

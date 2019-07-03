@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>RFC2616 &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/tag/rfc2616/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>RFC2616 &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>RFC及标准性文档 RFC2616 HTTP/1.1阅读系列 (一)内容协商</title>
+		<link>https://huster.top/htmls/93.html</link>
+		<comments>https://huster.top/htmls/93.html#respond</comments>
+		<pubDate>Thu, 29 Mar 2012 11:17:36 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[HTTP/1.1阅读笔记]]></category>
+		<category><![CDATA[HTTP/1.1]]></category>
+		<category><![CDATA[RFC]]></category>
+		<category><![CDATA[RFC2616]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=93</guid>
+		<description><![CDATA[RFC文档，是搞WEB开发必读的文档，是英文版本的，但是后来网上找的中文版的，翻译的不是很好（孙进超<a class="moretag" href="https://huster.top/htmls/93.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>RFC文档，是搞WEB开发必读的文档，是英文版本的，但是后来网上找的中文版的，翻译的不是很好（孙进超译），很拗口，完全不知道他在说什么，还是老老实实看英文的吧，以下是阅读笔记，留下来，加深印象，也留个笔记。</p>
+<div>12.1 内容协商</p>
+<div>     为什么需要内容协商？大部分的HTTP响应消息，包含人类能够理解的信息主体，自然的，他使用本人最习惯的方式组织，但是人各有异，每个人都不一样，那么服务器怎么跟客户端协调最好的显示方式呢？那么就是内容协商了。有两种内容协商：服务器驱动和代理驱动协商（这里的代理只浏览器，而不是代理服务器，后面可能也用客户端来表示。）。这两种协商能够被联合使用，那时候叫透明协商；当缓存使用服务器提供的代理协商为后续的请求提供服务器驱动协商的时候。</div>
+<div><span id="more-93"></span></div>
+<div>服务器驱动协商的优点是，能够把代理驱动协商无法描述清楚的东西，搞清楚。另外，当他发给客户端一个最好猜测对于用户是适合的时候，能够避免后续请求的回路延迟（原因不明）。为了改善“最好猜测”，客户端应该包含请求头域，Accept，Accept-language，Accept-encoding 等，这些头域能够描述客户端对请求的喜好。既然是猜测，当然对用户的请求和目的不可能理解的那么透彻，另外当可选的方法很多，而请求很少时候，就得不偿失了（据说，也侵犯了用户的隐私，当然在国内，这个不存在），因为选择多，会使服务器的处理算法逻辑很复杂。</div>
+<div>接着说说代理协商，协商的过程发生在，第一个原始响应后，用户代理会从一系列可选的表现形式中选择的，而这些表现形式是包含在初始响应的头或实体主体内的，这一过程可以自动也可以手动。一般用于响应包含不常见的协商参数，或者通过检测请求信息，服务器无法确认最佳约定的时候。当然，他也有缺点，那就是，需要再次发送请求来进行协商，而这一过程只有当有cache的时候才会高效。同时，这个规范还无法自动完成协商。当出错的时候会返回406的状态码</div>
+<div>透明协商就是结合两者的优点，当一个缓存收到一个服务器的响应的时候，并且这个响应中包含了协商的信息（代理协商），且，缓存能够理解的时候，稍候的后续请求中，会自动带上这些信息执行服务器协商。他的优点就是结合了前两者的优点，能够清除代理协商第二次请求的延迟，因为缓存能自动的猜测出合适的响应并返回给请求端。</div>
+</div>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/93.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>

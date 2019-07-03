@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>PHP高效编程 &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/category/php%e5%b7%a5%e5%85%b7/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>PHP高效编程 &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>PHP知识总结 &#8212; 前端部分</title>
+		<link>https://huster.top/htmls/344.html</link>
+		<comments>https://huster.top/htmls/344.html#respond</comments>
+		<pubDate>Thu, 27 Jun 2013 15:56:59 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[PHP编程]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=344</guid>
+		<description><![CDATA[先写一个前端部分的总结，后续的知识体系需要慢慢梳理，因为最近写一个工具，bootstarp和jque<a class="moretag" href="https://huster.top/htmls/344.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>先写一个前端部分的总结，后续的知识体系需要慢慢梳理，因为最近写一个工具，bootstarp和jquery用的比较多，总结下：</p>
+<p><span id="more-344"></span></p>
+<p><a href="http://www.longant.com/wp-content/uploads/2013/06/front.png"><img class="alignnone size-full wp-image-345" title="front" src="http://www.longant.com/wp-content/uploads/2013/06/front.png" alt="" width="1082" height="750" srcset="https://huster.top/wp-content/uploads/2013/06/front.png 1082w, https://huster.top/wp-content/uploads/2013/06/front-300x207.png 300w, https://huster.top/wp-content/uploads/2013/06/front-1024x709.png 1024w" sizes="(max-width: 1082px) 100vw, 1082px" /></a></p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/344.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>利用jquery和bootstarp做一个好看的进度条</title>
+		<link>https://huster.top/htmls/342.html</link>
+		<comments>https://huster.top/htmls/342.html#respond</comments>
+		<pubDate>Sat, 22 Jun 2013 16:07:50 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[PHP的开发工具]]></category>
+		<category><![CDATA[系统架构学习]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=342</guid>
+		<description><![CDATA[安装软件有进度条指示我们安装了多少了。上传文件也能告诉我们上传了多少了，那么如果后台有一个非常耗时的<a class="moretag" href="https://huster.top/htmls/342.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>安装软件有进度条指示我们安装了多少了。上传文件也能告诉我们上传了多少了，那么如果后台有一个非常耗时的操作，能不能有这么一个进度条来告知我进行了多少了呢？答案是肯定的，<a href="/processbar.php">点击查看demo</a></p>
+<p><span id="more-342"></span></p>
+<p>我的做法是： 后端提供一个借口，告知我完成了多少，至于到底完成了多少，这个可以在大任务运行的时候，写入日志，或者是写入数据，或者是写入交换文件，总之，能让你读到的地方，然后将这个值由后台传到前台ajax请求的地方，再更新进度条。</p>
+<p>具体的代码如下：</p>
+<pre>&lt;!DOCTYPE html&gt;&lt;html lang="en"&gt;
+  &lt;head&gt;  
+  &lt;meta charset="utf-8"&gt;  
+  &lt;title&gt;测试一个好玩的东西,用jquery和bootstarp实现一个后台更新进度条&lt;/title&gt;  
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;   
+  &lt;meta name="description" content="用jquery和bootstarp实现一个后台更新进度条"&gt;   
+  &lt;meta name="author" content=""&gt;
+ &lt;link href="./bootstrap.css" rel="stylesheet"&gt;
+&lt;div class="hero-unit"&gt;
+    &lt;div class="progress progress-striped active"&gt;
+    &lt;div class="bar" style="width:1%;"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;button class="btn btn-large btn-primary"&gt;点的越快，增加的越快&lt;/button&gt;
+&lt;/div&gt;
+ &lt;script src="./jquery.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+$(document).ready(function(){
+    total = 100;
+    intervalId = setInterval(function(){ 
+     $.get("/rand.php", 
+        function(data){
+            $(".bar").width(Math.round(data/total*100)+"%");
+            if (total&lt;data){
+                clearInterval(intervalId);
+            } 
+        }); 
+ }, 200);
+});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+ 使用的是js的setInterval，他可以按照指定的间隔去执行一个函数，这里执行的函数则是一个ajax的请求。在执行这个周期函数前，可以通过一条ajax的请求，触发大任务的执行。
+
+后端我通过一个将a++值写入文件的方式增加数值。
+
+</pre>
+<pre class="brush:php">&lt;?php
+if (file_exists("./data")) {
+ $a = file_get_contents("./data");
+} else $a = 0;
+if ($a&gt;100) {
+    $a = 0;
+}
+echo $a; 
+$a++;
+file_put_contents("./data",$a);</pre>
+<p>&nbsp;</p>
+<p>从而实现了进度条不断滚动的功能。是不是很有趣呢？你也可以试试，并应用到自己的系统中去。</p>
+<pre>
+</pre>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/342.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>fastcgi_finish_request函数的妙用以及性能测试</title>
+		<link>https://huster.top/htmls/335.html</link>
+		<comments>https://huster.top/htmls/335.html#respond</comments>
+		<pubDate>Thu, 20 Jun 2013 15:56:18 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[PHP编程]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=335</guid>
+		<description><![CDATA[昨天无意中得知 fastcgi_finish_request这个函数以及对应的register_sh<a class="moretag" href="https://huster.top/htmls/335.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>昨天无意中得知 fastcgi_finish_request这个函数以及对应的register_shutdown_function，然后对他做了一个了解，用他可以实现一些非常巧妙而有趣的事情。首先，我们看下这个函数的注解：</p>
+<p>special function to finish request and flush all data while continuing to do something time-consuming (video converting, stats processing etc.);</p>
+<p>它能够让你结束你跟浏览器的交互，然后在后台再继续的运行这个线程，做一些不需要输出，不需要和浏览器交互的事情，例如，上传视频后，视频在转码的时候，不需要用户等待，可以先告诉用户成功，然后再到后台转码（优酷是不是这样？ 视频传成功以后，还需要等段时间，才能后台看到该视频的信息。，我们直接通过程序来说明吧。</p>
+<p><span id="more-335"></span></p>
+<p>test.php</p>
+<pre class="brush:php">$pid = getmygid();
+var_dump($pid);
+while(1) {
+sleep(1);
+file_put_contents("./data", $pid, FILE_APPEND);
+ }</pre>
+<p>在浏览器中打开上面一段程序，显然不会有任何输出，而且程序会一直运行，表现为，浏览器在转啊转，直到超时，当然，如果你打开后，关闭了浏览器，这等一会，程序也自动结束了。</p>
+<p>如果，我们稍微改一下：</p>
+<pre class="brush:php">$pid = getmypid();
+var_dump($pid);
+fastcgi_finish_request();
+while(1) {
+sleep(1);
+file_put_contents("./data", $pid, FILE_APPEND);
+ }</pre>
+<p>这一次他很快的返回了结果，然后，我们去后台看看去，通过文件的写入，发现程序还在运行，然后执行 ps aux | grep php</p>
+<pre class="brush:bash">longan    3448 26.8  0.7  40544  3596 ?        R    23:32   0:22 php-fpm: pool www</pre>
+<p>发现给出的进程号一直存在的，说明了其实是给nginx发送了信号，中断了与nginx的连接，然而进程其实还是同一个进程，继续运行，所以上面的数据，都可以继承下来。</p>
+<p>接下来，我对系统进行了改造，因为系统有写日志的动作，我将这一行为放到了页面渲染之后，并且加上了fastcgi_finish_request()，后面费时的操作越多，将越收益。</p>
+<p>实际的测试结果，当没有使用fastcgi_finish_request()这个函数的时候，使用100个并发， 机器基本上被打满，cpu到了100，全部是阻塞状态下：</p>
+<p><a href="http://www.longant.com/wp-content/uploads/2013/06/1.png"><img class="alignnone size-full wp-image-336" title="1" src="http://www.longant.com/wp-content/uploads/2013/06/1.png" alt="" width="973" height="403" srcset="https://huster.top/wp-content/uploads/2013/06/1.png 973w, https://huster.top/wp-content/uploads/2013/06/1-300x124.png 300w" sizes="(max-width: 973px) 100vw, 973px" /></a></p>
+<p>而使用了中断的方式以后：</p>
+<p><a href="http://www.longant.com/wp-content/uploads/2013/06/2.png"><img class="alignnone size-full wp-image-337" title="2" src="http://www.longant.com/wp-content/uploads/2013/06/2.png" alt="" width="950" height="400" srcset="https://huster.top/wp-content/uploads/2013/06/2.png 950w, https://huster.top/wp-content/uploads/2013/06/2-300x126.png 300w" sizes="(max-width: 950px) 100vw, 950px" /></a></p>
+<p>有一点点的降低，然后，我们使用并发5来测试，此时机器的负载大概在50%左右，</p>
+<p>没有使用中断前：</p>
+<p><a href="http://www.longant.com/wp-content/uploads/2013/06/3.png"><img class="alignnone size-full wp-image-338" title="3" src="http://www.longant.com/wp-content/uploads/2013/06/3.png" alt="" width="901" height="350" srcset="https://huster.top/wp-content/uploads/2013/06/3.png 901w, https://huster.top/wp-content/uploads/2013/06/3-300x116.png 300w" sizes="(max-width: 901px) 100vw, 901px" /></a></p>
+<p>使用中断以后：</p>
+<p><a href="http://www.longant.com/wp-content/uploads/2013/06/4.png"><img class="alignnone size-full wp-image-339" title="4" src="http://www.longant.com/wp-content/uploads/2013/06/4.png" alt="" width="903" height="402" srcset="https://huster.top/wp-content/uploads/2013/06/4.png 903w, https://huster.top/wp-content/uploads/2013/06/4-300x133.png 300w" sizes="(max-width: 903px) 100vw, 903px" /></a></p>
+<p>&nbsp;</p>
+<p>降低肯定是有所降低的，但是由于我这里只有一个error_log操作，所以获利不多，不过在有些场景下，则是相当有用的，大家不妨考虑一下.</p>
+<p>hope this can help you !</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/335.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>PHP工具之CodeSniffer</title>
+		<link>https://huster.top/htmls/68.html</link>
+		<comments>https://huster.top/htmls/68.html#comments</comments>
+		<pubDate>Sat, 17 Mar 2012 15:29:23 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[PHP的开发工具]]></category>
+		<category><![CDATA[CodeSniffer]]></category>
+		<category><![CDATA[PHP]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=68</guid>
+		<description><![CDATA[PHP编码有很多工具，为我们带来很多便利，比如IDE、Debug工具，PHP单元测试工具等，对于Co<a class="moretag" href="https://huster.top/htmls/68.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>PHP编码有很多工具，为我们带来很多便利，比如IDE、Debug工具，PHP单元测试工具等，对于CodeSniffer因为需要，有一定的研究，现在写出来，记录一下，以供以后需要。</p>
+<h4>工具简介</h4>
+<p>众所周知，统一的编码风格，不仅使你所写的代码清爽大气，也使无论是你本人，还是其他人，更容易阅读。那么一个统一的编码风格是怎么样的呢？他主要分为以 下几个方面，php标签、变量的命名、每一行的长度、缩进方式、控制语句以及函数的调用等等，具体的标准可以参考Expert PHP 5 Tools.pdf这本书的第一章，而对于我们团队来讲，也有自己的独有的风格，当前，Leapfrog中除了变量和函数命名方式与上书中第一章有所出入 外，其他的都是相同的。Leapfrog中使用的是下划线方式，zend一般采用驼峰方式。PHP_CodeSniffer能够自动检测你的源代码中的风 格为题，并给出具体的行号，告诉你这个与标准有什么出入，以提醒你改正。目前，该工具的安装环境是PHP version 5.1.2及以上。</p>
+<p><span id="more-68"></span></p>
+<h4>工具的安装</h4>
+<p>使用 sudo pear install PHP_CodeSniffer-1.3.0 自动安装</p>
+<h4> 工具的使用</h4>
+<p>Usage: phpcs [-nwlsapvi] [-d key[=value]]</p>
+<pre>   [--report=&lt;report&gt;] [--report-file=&lt;reportfile&gt;] [--report-&lt;report&gt;=&lt;reportfile&gt;] ...
+   [--report-width=&lt;reportWidth&gt;] [--generator=&lt;generator&gt;] [--tab-width=&lt;tabWidth&gt;]
+   [--severity=&lt;severity&gt;] [--error-severity=&lt;severity&gt;] [--warning-severity=&lt;severity&gt;]
+   [--config-set key value] [--config-delete key] [--config-show]
+   [--standard=&lt;standard&gt;] [--sniffs=&lt;sniffs&gt;] [--encoding=&lt;encoding&gt;]
+   [--extensions=&lt;extensions&gt;] [--ignore=&lt;patterns&gt;] &lt;file&gt; ...
+       -n            Do not print warnings (shortcut for --warning-severity=0)
+       -w            Print both warnings and errors (on by default)
+       -l            Local directory only, no recursion
+       -s            Show sniff codes in all reports
+       -a            Run interactively
+       -p            Show progress of the run
+       -v[v][v]      Print verbose output
+       -i            Show a list of installed coding standards
+       -d            Set the [key] php.ini value to [value] or [true] if value is omitted
+       --help        Print this help message
+       --version     Print version information
+       &lt;file&gt;        One or more files and/or directories to check
+       &lt;extensions&gt;  A comma separated list of file extensions to check
+                     (only valid if checking a directory)
+       &lt;patterns&gt;    A comma separated list of patterns to ignore files and directories
+       &lt;encoding&gt;    The encoding of the files being checked (default is iso-8859-1)
+       &lt;sniffs&gt;      A comma separated list of sniff codes to limit the check to
+                     (all sniffs must be part of the specified standard)
+       &lt;severity&gt;    The minimum severity required to display an error or warning
+       &lt;standard&gt;    The name or path of the coding standard to use
+       &lt;tabWidth&gt;    The number of spaces each tab represents
+       &lt;generator&gt;   The name of a doc generator to use
+                     (forces doc generation instead of checking)
+       &lt;report&gt;      Print either the "full", "xml", "checkstyle", "csv", "emacs"
+                     "source", "summary", "svnblame" or "gitblame" report
+                     (the "full" report is printed by default)
+       &lt;reportfile&gt;  Write the report to the specified file path
+       &lt;reportWidth&gt; How many columns wide screen reports should be printed</pre>
+<p>主要介绍的是，-i参数，用来显示当前的检测风格，系统（1.3.0）默认了PEAR, MySource, Zend, PHPCS and Squiz几种风格</p>
+<p>$ phpcs &#8211;report=summary /path/to/code 以汇总的方式，报告错误</p>
+<p>$ phpcs &#8211;standard=PEAR /path/to/code/myfile.inc 指定以特定的标准检测</p>
+<p>$ phpcs &#8211;extensions=php /path/to/code 仅仅检测php后缀文件</p>
+<p>$ phpcs &#8211;config-set default_standard Squiz 设置默认值</p>
+<p>忽略某些文件和文件夹的方法，有时候，我们要检测一个工程，但是呢，有时候因为文件太久，我们不想更改，而如果检测这些文件会带来很多问题这时候，我们可以选择忽略这些文件</p>
+<pre>$ phpcs --ignore=*/tests/*,*/data/* /path/to/code</pre>
+<p>所有的配置文件都写入了/home/renjun/php/lib/php/data/PHP_CodeSniffer/CodeSniffer.conf 因此要保证这个文件写权限，而且可以用vi进行编辑更改设置。 更多使用帮助请查看官方文档。</p>
+<p>配置文件长什么样？</p>
+<pre class="brush:php">$phpCodeSnifferConfig = array (
+'default_standard' =&gt; 'Leapfrog',
+'--extensions' =&gt; 'php',
+'--ignore'     =&gt; 'tools/,conf/config.inc.php',
+)</pre>
+<h4>自定义风格</h4>
+<p>一般情况下，使用自带的几种风格就已经足够用，但是针对Leapfrog这种情况，我们需要一种自定义的方式来进行检测，否则，很多东西都要被报有问题，影响我们真正的寻找有问题的地方，而且很多时候，我们需要有一种自己的定义的风格方式，这就需要研究这个工具了。 要新建一个风格必须在/home/renjun/php/lib/php/PHP/CodeSniffer/Standards这样的路径下，依照已有的风格，建一个目录，目录中包含ruleset.xml和Sniffs目录。 前者是告诉系统，当前使用哪写检测规则，后者则是自定义过滤规则目录。打开ruleset.xml文件可以看到是这样的样子：</p>
+<p>&lt;?xml version=&#8221;1.0&#8243;?&gt; &lt;ruleset name=&#8221;Leapfrog&#8221;&gt;</p>
+<p>&lt;description&gt;A coding standard based on an early Zend Framework coding standard. Note that this standard is out of date.&lt;/description&gt;</p>
+<p>&lt;rule ref=&#8221;Generic.Functions.FunctionCallArgumentSpacing&#8221;/&gt; &lt;rule ref=&#8221;Generic.Functions.OpeningFunctionBraceBsdAllman&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;Generic.PHP.DisallowShortOpenTag&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;Generic.WhiteSpace.DisallowTabIndent&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;PEAR.Classes.ClassDeclaration&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;PEAR.ControlStructures.ControlSignature&#8221;/&gt; &lt;rule ref=&#8221;PEAR.Functions.ValidDefaultValue&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;PEAR.WhiteSpace.ScopeClosingBrace&#8221;/&gt;</p>
+<p>&lt;rule ref=&#8221;Generic.Files.LineLength&#8221;&gt;</p>
+<p>&lt;properties&gt; &lt;property name=&#8221;lineLimit&#8221; value=&#8221;80&#8243;/&gt;</p>
+<p>&lt;property name=&#8221;absoluteLineLimit&#8221; value=&#8221;120&#8243;/&gt;</p>
+<p>&lt;/properties&gt; &lt;/rule&gt; &lt;rule ref=&#8221;Generic.Files.LineEndings&#8221;&gt;</p>
+<p>&lt;properties&gt; &lt;property name=&#8221;eolChar&#8221; value=&#8221;\n&#8221;/&gt; &lt;/properties&gt;</p>
+<p>&lt;/rule&gt;</p>
+<p>&lt;/ruleset&gt;</p>
+<p>name:描述当前的检测标准的名称 description:描述信息 rule则是具体的检测规则，我们可以复用已有的规则，这样我们可以省去很多工作。 例如 &lt;rule ref=&#8221;Generic.Functions.FunctionCallArgumentSpacing&#8221;/&gt; 表示使用的是Generirc规则下面的.FunctionCallArgumentSpacing规则， 依据名称我们可以看出来，这是检测函数调用的时 候，参数与参数之间是否有空格用的。具体的文件在 /home/renjun/php/lib/php/PHP/CodeSniffer/Standards/Generic/Sniffs /Functions/FunctionCallArgumentSpacingSniff.php 下面我们看看这个文件。这个文件的命名规则，跟 rule中的必须对应。文件名必须是FunctionCallArgumentSpacing+Sniff，而这个文件中定义的类名称也是固定的，以下划 线分隔。并且必须是实现 PHP_CodeSniffer_Sniff接口的两个方法。</p>
+<pre class="brush:php">
+class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_CodeSniffer_Sniff {
+public function register()
+{
+return array(T_STRING);
+}
+public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+{
+$tokens = $phpcsFile-&gt;getTokens();
+$tokens = $phpcsFile-&gt;getTokens();
+$functionName = $stackPtr;
+$ignoreTokens = PHP_CodeSniffer_Tokens::$emptyTokens;
+$ignoreTokens[] = T_BITWISE_AND;
+$functionKeyword = $phpcsFile-&gt;findPrevious($ignoreTokens, ($stackPtr - 1), null, true);
+if ($tokens[$functionKeyword]['code'] === T_FUNCTION || $tokens[$functionKeyword]['code'] === T_CLASS) {
+return;
+}
+$openBracket = $phpcsFile-&gt;findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($functionName + 1), null, true);
+if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
+return;
+}
+$closeBracket = $tokens[$openBracket]['parenthesis_closer'];
+$nextSeperator = $openBracket;
+while (($nextSeperator = $phpcsFile-&gt;findNext(array(T_COMMA, T_VARIABLE), ($nextSeperator + 1), $closeBracket)) !== false) {
+$brackets = $tokens[$nextSeperator]['nested_parenthesis'];
+$lastBracket = array_pop($brackets);
+if ($lastBracket !== $closeBracket) {
+continue;
+}</pre>
+<p>我只摘取一部分，详细的阅读官方文档。具体的，我们必须实现接口的具体方法，并且实现两个方法， public function register()、 public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)，前者返回要处理的token。首先解释一下token，一个token是一个数组记录的是当前行的元素，例如，行号、这一行中的内 容，例如 : Array( [0] = &gt; 367 [1] = &gt;&lt;?php [2] = &gt;1 367是T_OPEN_TAG的值，表示php的开标签，而&lt;?php则是具体的内容，1表示行号。这样，我们就不难理解过滤规则的php文件中的 代码，其中涉及到api可以查阅参考资料中的官方文档。</p>
+<h4>其他功能</h4>
+<p>SVN Hook功能，可以在svn提交的时候进行检测，如果不符合标准，则不让通过。因为当前的Leapfrog比较复杂，难于严格的执行规则，可以在以后考虑。</p>
+<pre></pre>
+<h4>检测部署</h4>
+<p>现在已经将检测的程序部署到了search041058.sqa.cm4机器上，适合Leapfrog风格，并且默认为使用Leapfrog进行检测，使用方法为 /home/renjun/php/bin/phpcs search.php 检测search.php文件 /home/renjun/php/bin/phpcs /home/renjun/leapfrog/ 检测目录 等等。。。。。 如果移植到其他机器上，只需要复制/home/renjun/php/lib/php/data/PHP_CodeSniffer/CodeSniffer.conf到相应的目录以及 /home/renjun/php/lib/php/PHP/CodeSniffer/Standards/Leapfrog/目录到特定目录。</p>
+<pre></pre>
+<h4>参考资料</h4>
+<p><a title="http://pear.php.net/manual/en/package.php.php-codesniffer.config-options.php" href="http://pear.php.net/manual/en/package.php.php-codesniffer.config-options.php" rel="nofollow">http://pear.php.net/manual/en/package.php.php-codesniffer.config-options.php</a></p>
+<p>Expert PHP 5 Tools.pdf</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/68.html/feed</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+		<item>
+		<title>PHP中$GLOBALS变量和register_globals</title>
+		<link>https://huster.top/htmls/39.html</link>
+		<comments>https://huster.top/htmls/39.html#respond</comments>
+		<pubDate>Sat, 17 Mar 2012 05:03:54 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[PHP编程]]></category>
+		<category><![CDATA[GLOBALS]]></category>
+		<category><![CDATA[PHP]]></category>
+		<category><![CDATA[register_globals]]></category>
+		<category><![CDATA[wordpress源码]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=39</guid>
+		<description><![CDATA[最近，在阅wordpress的代码的时候，看到在设置环境的初期，有一些安全性和初始化的工作，其中，有<a class="moretag" href="https://huster.top/htmls/39.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p style="text-align: justify;">最近，在阅wordpress的代码的时候，看到在设置环境的初期，有一些安全性和初始化的工作，其中，有一个函数wp_unregister_GLOBALS()有点意思，函数的具体内容是：</p>
+<p style="text-align: justify;"><span id="more-39"></span></p>
+<pre class="brush:php">/**
+* Turn register globals off.
+*
+* @access private
+* @since 2.1.0
+* @return null Will return null if register_globals PHP directive was disabled
+*/
+function wp_unregister_GLOBALS() {
+if ( !ini_get( 'register_globals' ) )
+return;
+
+if ( isset( $_REQUEST['GLOBALS'] ) )
+die( /*WP_I18N_GLOBALS_OVERWRITE*/'检测到 GLOBALS 的改写尝试'/*/WP_I18N_GLOBALS_OVERWRITE*/ );
+
+// Variables that shouldn't be unset
+$no_unset = array( 'GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES', 'table_prefix' );
+
+$input = array_merge( $_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES, isset( $_SESSION ) &amp;&amp; is_array( $_SESSION ) ? $_SESSION : array() );
+foreach ( $input as $k =&gt; $v )
+if ( !in_array( $k, $no_unset ) &amp;&amp; isset( $GLOBALS[$k] ) ) {
+$GLOBALS[$k] = null;
+unset( $GLOBALS[$k] );
+}
+}</pre>
+<div>这个函数首先判断register_globals是不是打开了，那么这个是什么用途呢，如果这个变量打开了，则会产生如下效果，可以从url中获取变量值，例如$_GET[&#8220;var&#8221;] = &#8220;abc&#8221;; 那么打开以后默认$var = &#8220;abc&#8221;; 明白了吧</div>
+<div><span style="font-family: 'Courier New';">看看官方的说明,这个register_global打开了会导致什么问题 ：</span></div>
+<div>以下是取自官方的一个例子</div>
+<div>
+<pre class="brush:php">// 当用户合法的时候，赋值 $authorized = true
+if (authenticated_user()) {
+$authorized = true;
+}
+
+// 由于并没有事先把 $authorized 初始化为 false，
+// 当 register_globals 打开时，可能通过GET auth.php?authorized=1 来定义该变量值
+// 所以任何人都可以绕过身份验证
+if ($authorized) {
+include "/highly/sensitive/data.php";
+}</pre>
+</div>
+<div>可能导致在设计者不希望的情况下，改变变量的值，从而绕过安全认证。</div>
+<div>
+<pre class="brush:php">if ( isset( $_REQUEST['GLOBALS'] ) )
+die( /*WP_I18N_GLOBALS_OVERWRITE*/'检测到 GLOBALS 的改写尝试'/*/WP_I18N_GLOBALS_OVERWRITE*/ );</pre>
+</div>
+<div align="left">这段也很有意思，为什么有这一段呢，因为在php4以前,register_globals是默认打开，这本没问题，但是后来有些人滥用，导致很多安全问题，后来，这个开关就设置为默认关闭，上面的函数是为了防止GLOBALS 的改写尝试，$GLOBALS 是一个超级变量，他里面存储了所有的全局变量，包含$_GET这些，只要是不是函数内部的变量，在这个超级变量里面都能够找到（跟register_globals打不打开没什么关系），有兴趣可以var_dump($GLOBALS)看看他内部的构造,如果register_globals这个选项打开，如果我们通过GET auth.php?GLOBALS=1来“注入”，那么$GLOBALS变量内的所有值都会被替换，也就是说，代码里面所有的值都失效了？！这太可怕了，事实上，我使用php5.3.8来测试，这个现象并没有发生，说明php官方其实已经考虑过这个问题了，可能wordpress为了兼容低版本的php而做出的这样的判断。</div>
+<div align="left">
+<div>但是安全起见，还是最好关闭register_globals并且不要使用$GLOBALS，以免出现你想不到的事情。</div>
+<div>理解了$GLOBALS和register_globals就能理解这个函数是干嘛的了！</div>
+<div> wordpress有些地方的代码，写的很罗嗦，我想可能是由于历史原因，不停的更新，导致一些代码冗余下来，使得这个系统代码看起来没那么优美，这是没办法的，就像主搜一样，本来设计的想的很好，可是后来不停的更迭，不停的改动，结果到后来，也有很多冗余代码，没办法的事情</div>
+<div></div>
+</div>
+<p style="text-align: justify;">
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/39.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>如何在visio中画虚线框以及将visio图形复制到word文档</title>
+		<link>https://huster.top/htmls/107.html</link>
+		<comments>https://huster.top/htmls/107.html#respond</comments>
+		<pubDate>Tue, 14 Dec 2010 08:26:43 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[PHP的开发工具]]></category>
+
+		<guid isPermaLink="false">http://blog.sina.com.cn/s/blog_4a1695ff0100nojz.html</guid>
+		<description><![CDATA[这两个问题都不是什么复杂的事情，但是如果对visio用的不多或者只是临时用起来碰到了这种问题还真是麻<a class="moretag" href="https://huster.top/htmls/107.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<div id="sina_keyword_ad_area2">
+<div>
+<p>这两个问题都不是什么复杂的事情，但是如果对visio用的不多或者只是临时用起来碰到了这种问题还真是麻烦事儿。</p>
+<p><span id="more-107"></span></p>
+<p>================================================================<br />
+问题1：如何在visio中画虚线框</p>
+<p>在上方的按钮中找到矩形工具那个按钮，对，点一下就可以在作图区画出来一个矩形了。可是这个矩形默认的一般都是实线白背景的。<br />
+如何将其改为虚线透明背景呢。在矩形上右击鼠标，在“格式”中选“线条”，把线条的样式改为虚线的就OK了，也可以根据需要修改线条的颜色、粗细等。<br />
+如何将背景改为透明使该矩形不会掩盖下面的其它图形呢。依旧右击鼠标，在“格式”中选择“填充”，在“样式”中选择“0无色”也就OK了。</p>
+<p>=================================================================<br />
+问题2：如何将visio图形复制到word文档中而使虚线继续为虚线呢（因为很容易出现虚线变为实线的问题）</p>
+<p>最简单的办法在word文档中的visio图形区域上双击，我们都知道双击后就进入了visio图形编辑模式（当然你的机器上需要装有visio软件），点击相应的虚线，单击右键，“格式”&#8212;“线条”，在这里调整线条的粗细，一般设置到“5”就可以变成虚线了。<br />
+也有其它解决办法但是麻烦一些。<br />
+=================================================================<br />
+很没有技术含量吧，但是往往这些没有技术含量的问题会难住人，大大降低文档编写效率。</p>
+<p>本文来自CSDN博客，转载请标明出处：<a href="http://blog.csdn.net/learngis/archive/2009/10/05/4634776.aspx">http://blog.csdn.net/learngis/archive/2009/10/05/4634776.aspx</a></p>
+</div>
+</div>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/107.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>

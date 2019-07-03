@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Plugin &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/tag/plugin/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>Plugin &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Apache Maven Shade Plugin的用途</title>
+		<link>https://huster.top/htmls/458.html</link>
+		<comments>https://huster.top/htmls/458.html#respond</comments>
+		<pubDate>Wed, 12 Oct 2016 14:49:28 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[Java学习]]></category>
+		<category><![CDATA[Java]]></category>
+		<category><![CDATA[Maven]]></category>
+		<category><![CDATA[maven-shade-plugin]]></category>
+		<category><![CDATA[Plugin]]></category>
+
+		<guid isPermaLink="false">http://huster.top/?p=458</guid>
+		<description><![CDATA[maven的shade插件,官方说明如下： 这个插件能把所有的依赖打进一个jar里，形成一个超级ja<a class="moretag" href="https://huster.top/htmls/458.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>maven的shade插件,官方说明如下：</p>
+<p>这个插件能把所有的依赖打进一个jar里，形成一个超级jar包，这样做的好处是你打出的jar包可以独立运行,就和你用spring boot打出的jar包一样，拷贝到任何机器上，只要有java环境，jar包就能运行. 还有一个重要作用则是解决冲突的重要手段. 他甚至能够将依赖的jar包里的类解压出来，打进超级jar包的classPath，所以你可以理解的是，他的作用就是把依赖打进jar包。</p>
+<p>&nbsp;</p>
+<p><span id="more-458"></span></p>
+<ol>
+<li>那么我们如何打出一个可执行的jar包呢，其实很简单, 只要指定mainClass就可以了</li>
+</ol>
+<pre class="brush:xml">&lt;project&gt;
+  ...
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
+        &lt;version&gt;2.4.3&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;shade&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;configuration&gt;
+              &lt;transformers&gt;
+                &lt;transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"&gt;
+                  &lt;mainClass&gt;org.sonatype.haven.HavenCli&lt;/mainClass&gt;
+                &lt;/transformer&gt;
+              &lt;/transformers&gt;
+            &lt;/configuration&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+  ...
+&lt;/project&gt;
+</pre>
+<p>2.  解决冲突</p>
+<p>这个也很容易理解, 如果是一个小工程，冲突很少可能你没遇到，但是一旦工程大了或者依赖的jar包多了，就会各种冲突，尤其是 log4j,logback各种冲突，就会导致你各种class找不到的问题.</p>
+<p>尤其是在A厂，写个jar包，恨不得把所有的jar包都引进来，而且还经常各种不兼容升级， 所以各种冲突不断。曾经为了解决一个jar包升级，弄了一下午，将这个jar包升级前后,通过mvn dependency:tree一行行的比对，才找到冲突所在.</p>
+<p>那么有了这个插件，你怎么解决冲突问题呢？那就要用到他的一个功能，叫<a href="http://maven.apache.org/plugins/maven-shade-plugin/examples/class-relocation.html">Relocating Classes</a> ，这个relocation可以将类改个package的名字，成为一个新的类，这不就解决了冲突的问题吗？</p>
+<p>举个例子，</p>
+<p>Dubbo 是一个分布式的服务框架，其中的一种 rpc 实现（dubbo 协议）使用 hessian 3.2.0 来做序列化，另外一种实现（hsf协议）同样使用了 hesssian，但使用的<strong>版本</strong>是 3.0.14。如果现在一个应用中同时使用了 dubbo 协议和 hsf 协议，这个时候应用使用哪个<strong>版本</strong>的 hessian 呢？使用 3.2.0 可能会影响 hsf 协议，如果使用 3.0.14 那么 dubbo 协议会受影响。</p>
+<p>maven shade plugin 能够把项目中依赖的 jar 包中的一些类文件打包到项目构建生成的 jar 包中，在打包的时候它有一个非常重要的特性是支持 relocation。relocation 的意思是把类重命名，比如把 com.caucho.hessian.io.HessianInput 重命名为 hidden.com.caucho.hessian.io.HessianInput，这样就不会出现<strong>冲突</strong>了。</p>
+<p>&nbsp;</p>
+<pre class="brush:xml">&lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
+                &lt;version&gt;1.7.1&lt;/version&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;id&gt;shade-hessian&lt;/id&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;shade&lt;/goal&gt;
+                        &lt;/goals&gt;
+                        &lt;configuration&gt;
+                            &lt;artifactSet&gt;
+                                &lt;includes&gt;
+                                    &lt;include&gt;hessian:hessian&lt;/include&gt;
+                                &lt;/includes&gt;
+                            &lt;/artifactSet&gt;
+                            &lt;createSourcesJar&gt;true&lt;/createSourcesJar&gt;
+                            &lt;relocations&gt;
+                                &lt;relocation&gt;
+                                    &lt;pattern&gt;com.caucho&lt;/pattern&gt;
+                                    &lt;shadedPattern&gt;com.alibaba.dubbo.hsf.hessian.v3_0_14_bugfix&lt;/shadedPattern&gt;
+                                &lt;/relocation&gt;
+                            &lt;/relocations&gt;
+                        &lt;/configuration&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/458.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>

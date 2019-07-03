@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>VSFTP &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/tag/vsftp/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>VSFTP &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>FTP服务器架设篇：VSFTP的安装和配置</title>
+		<link>https://huster.top/htmls/285.html</link>
+		<comments>https://huster.top/htmls/285.html#comments</comments>
+		<pubDate>Sun, 09 Sep 2012 14:49:37 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[系统架构学习]]></category>
+		<category><![CDATA[VSFTP]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=285</guid>
+		<description><![CDATA[Linux服务器下的FTP软件很多，有Wuftp、ProFtp和VSFtp，其中VSFtp以安全稳定<a class="moretag" href="https://huster.top/htmls/285.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>Linux服务器下的FTP软件很多，有Wuftp、ProFtp和VSFtp，其中VSFtp以安全稳定出名，因此这选择了VSFtp进行安装。VSFtp的安装比较简单，yum search vsftp，找到以后安装即可，但是配置就比较有点坑了，怎么说呢？</p>
+<p><span id="more-285"></span></p>
+<p>VSFtp的配置文件，默认在/etc/vsftpd/vsftpd.conf， 各个选项的配置说明如下：</p>
+<p>connect_from_port_20=yes</p>
+<p>别搞错，这个是主动连接ftp-data的内容，不是监听的端口。我们知道，ftp有两种传输数据的模式，一种是主动式，一种是被动式。主动式模式是服务器端，除了开出一个端口（一般21端口）监听命令外，还需要开一个端口用于传输数据。而被动模式，则是连接后，由客户端开出一个端口，让服务器去连接。没搞清楚这个的话，对于客户端在局域网的用户，就悲剧了，只能连接，不能传数据，还找不到原因。</p>
+<p>跟这个匹配的一个选项：pasv_enable=yes 也一定要打开。</p>
+<p>在默认配置文件中，我将匿名用户的功能关闭了。具体的是选项：</p>
+<p>annoymous_enable=no &#8212;&#8211;默认是yes</p>
+<p>然后所有带anno_的，全部关闭。</p>
+<p>还需要搞清楚的是用户和用户的权限。我们需要什么样的用户？ 给ftp的用户，需要什么权限？</p>
+<p>在Linux环境中，不同于在Windows中，Windows中只需要设置虚拟用户，虚拟目录即可。在Vsftp不需要这么麻烦，可以直接按照添加系统账户的方式，添加ftp用户（当然，也可以添加虚拟用户）。</p>
+<p>&#8212;- 我们为vsftp添加用户&#8212;&#8211;</p>
+<p>useradd -g ftp.user -d  /var/ftp  -s /sbin/nologin -M xxx_use</p>
+<p>-g 指定组</p>
+<p>-d 指定访问的文件夹</p>
+<p>-s 禁止登陆系统</p>
+<p>4、设置密码 passwd   xxx_user</p>
+<p>用户添加完了， 关于用户，还有几个需要说明的是，默认情况是，linux的账户都可以登录ftp，例如root等。</p>
+<p>所以我们要关闭他，因此有这么两个文件 ：/etc/vsftpd/ftpusers和/etc/vsftpd/user_list两者都是禁止名单（一开始，我搞混淆了）</p>
+<p>其中前者是 Users that are not allowed to login via ftp 禁止通过FTP登录系统的名单：</p>
+<p>If userlist_deny=NO, only allow users in this file<br />
+# If userlist_deny=YES (default), never allow users in this file, and<br />
+# do not even prompt for a password.</p>
+<p>看说明，我们知道，这个取决于userlist_deny的配置，默认情况是黑名单，这个名单的用户，连密码都不用认证，直接拒绝了。</p>
+<p>chroot_list 这个名单的意思是，锁定用户在自己的根目录（添加用户的时候可以指定）下面。</p>
+<p>关于Real user的设置：</p>
+<p>local_enable=yes</p>
+<p>write_enable=yes</p>
+<p>local_umask=022</p>
+<p>chroot_list_enable=yes</p>
+<p>chroot_list_file=/etc/vsftp.chroot_list</p>
+<p>.</p>
+<p>.</p>
+<p>.</p>
+<p>悲剧的是，一切配置好了以后，能连接上，但是不能上传、删除和新建目录，拷贝了一个文件过去，能下载，这个问题坑了我很久很久，花费了我一个下午的时间，让人抓狂，因为我用了搜索引擎。。。</p>
+<p>刚开始，我以为是/var/ftp这个目录的权限问题在干扰，我把owner改成了ftp 的用户，还不行。然后我干脆改成了777权限，居然还不行。</p>
+<p>然后，我用百度查询“vsftp 不能上传”，后来又搜了下错误代码。</p>
+<p>&nbsp;</p>
+<p>左] SIZE 2.png<br />
+[左] 550 Could not get file size.<br />
+[左] PASV<br />
+[左] 227 Entering Passive Mode ().<br />
+[左] 正在打开数据连接 IP: xxxxx 端口: 54286<br />
+[左] STOR 2.png<br />
+[左] 553 Could not create file.<br />
+[左] 传输失败!<br />
+[左] TYPE A<br />
+[左] 200 Switching to ASCII mode.<br />
+[左] PASV</p>
+<p>搜索出来的结果，大部分的结果是什么新版的vsftp的write_enable=yes默认被设置成了false，打开就可以了！f**K，这么低级的错误，我还看不到吗？我可是将每个设置选项都认真的看了一遍啊。并且内容是千篇一律的，再没有其他结果，这百度搜索真够可以的。国内的这种环境也是真够可以的。</p>
+<p>另外一种说法是，关闭Selinux，然后试了，发现，系统根本就没那玩意儿，当然，此种方法也就行不通了。</p>
+<p>还有的说，是因为关闭了匿名用户，我表示很怀疑。。。没办法，只能医治死马了，开了匿名用户的写权限，依然不行。。。</p>
+<p>在百度上，再也找不到其他答案，后来我越发觉得百度，真的只适合搜索娱乐周边，不适合搜索技术，当然这也跟当前国内的大环境有关，国人都不喜欢创新，喜欢复制粘贴嘛</p>
+<p>后来去爬了E文论坛，虽然英文不咋地，计算机类的还是比较容易的。</p>
+<p>发现国外人问问题会问，回答的人，也非常用心（http://www.linuxquestions.org/questions/linux-server-73/ftp-server-vsftpd-works-for-get-but-not-put-despite-settings-936414/）</p>
+<p>That is to say, I read through all the comments in the file vsftpd.conf concerning setting flags for enabling PUT, such as write_enable=YES, anon_upload_enable=YES, anon_mkdir_write_enable=YES</p>
+<p>and also:</p>
+<p>anon_root=/var/ftp/opendir<br />
+cmds_allowed=EPSV,PASV,RETR,QUIT,USER,PASS,QUIT,CWD,PORT,LIST,NLST,STOR,TYPE,PWD,SYST,FEAT<br />
+file_open_mode=0777<br />
+guest_enable=YES<br />
+dirlist_enable=YES<br />
+anon_other_write_enable=YES<br />
+no_anon_password=YES<br />
+log_ftp_protocol=YES<br />
+anon_umask=0777</p>
+<p>So I assume this is all the settings I need. Or am I missing some setting?</p>
+<p>Yes, I know these would be horribly insecure on the open internet, but this IS inside a firewall. But the big question is: why don&#8217;t these things work? Since I can do a GET, I assume the ports are open where they need to be, but I cannot do a PUT, nor can I create a directory from the FTP client.</p>
+<p>Strangely, it does not seem to be using the setting for opendir: the GET is working from the default anonymous user&#8217;s root.</p>
+<p>I had a Wireshark capture file showing what happens, but I can&#8217;t find it now. If this isn&#8217;t enough info to debug the problem, I can do another, but for now, is this enough info?</p>
+<p>BTW: the FTP server is running on a Fedora 14 machine, the client runs on a machine inside the same LAN. Version# for vsftpd is 2.3.4.</p>
+<p>人家都已经说了，我什么什么都试过，不会犯低级错误。</p>
+<p>当然，最后这个也没能解决，尽管当时给了我一些启发,现在我忘了是哪个E文的文章给了我启发，当时试了未果。因为时间太长，但是准备吐槽的，一直没有时间，也就错过了。</p>
+<p>后来的解决方法是，在用户的home目录下，再新建一个目录，这个目录是可以上传的。原因是vsftp出于安全性的考虑，在用户的home目录下是没有写权限的，原来如此。</p>
+<p>在/var/ftp下新建一个/var/ftp/pub问题解决了</p>
+<p>Q1 : 如果出现了 Login failure: 530 Login incorrect</p>
+<div>查看secure日志文件：</div>
+<div>tail -f /var/log/secure</div>
+<div>发现时pam限制了登录，因为/etc/vsftpd/ftpuser这列表里是被pam禁止的，删掉你写进去的用户就可以了</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/285.html/feed</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+	</channel>
+</rss>
