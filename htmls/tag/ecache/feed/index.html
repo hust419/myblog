@@ -1,0 +1,81 @@
+<br />
+<b>Warning</b>:  Use of undefined constant LC_ARCHIVERS_OPTION - assumed 'LC_ARCHIVERS_OPTION' (this will throw an Error in a future version of PHP) in <b>/usr/share/nginx/html/wordpress/wp-content/plugins/lc-archivers/Lc-archivers.php</b> on line <b>89</b><br />
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Ecache &#8211; 三两带走</title>
+	<atom:link href="http://192.168.1.7/htmls/tag/ecache/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>Ecache &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Spring + ehcache不生效的原因</title>
+		<link>https://huster.top/htmls/455.html</link>
+		<comments>https://huster.top/htmls/455.html#respond</comments>
+		<pubDate>Tue, 14 Jun 2016 11:29:13 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[Spring文档]]></category>
+		<category><![CDATA[Ecache]]></category>
+		<category><![CDATA[Java]]></category>
+
+		<guid isPermaLink="false">http://huster.top/?p=455</guid>
+		<description><![CDATA[在spring boot下尝试使用ehcache，没有看ecache官方文档，看的是spring的文<a class="moretag" href="https://huster.top/htmls/455.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>在spring boot下尝试使用ehcache，没有看ecache官方文档，看的是spring的文档和示例，一切都还顺利，遇到过以下问题</p>
+<p><span id="more-455"></span></p>
+<ol>
+<li>按照教程配置完成，结果在函数上增加之后，根本不生效。</li>
+</ol>
+<pre>@Cacheable(cacheNames="tesla-cache", key="'diamond' + #group + #key")</pre>
+<p>每一次都会执行方法上面的内容。为什么呢？</p>
+<p>你需要在你的main方法入口的地方，增加@EnableCaching&#8230;&#8230;</p>
+<p>2.  在一个方法上申明了</p>
+<pre class="brush:java">@Cacheable(cacheNames="tesla-cache", key="'diamond' + #group + #key") 
+public getcontent(String group, String key) {
+return key+group;
+if (something update) {
+updateConfig(group, key,content);
+}
+}
+
+</pre>
+<p>然后在另一个方法上设置更新缓存</p>
+<pre class="brush:java"></pre>
+<p>&nbsp;</p>
+<pre class="brush:java">@Cacheput(cacheNames="tesla-cache", key="'diamond' + #group + #key") 
+private updateConfig(String group, String key, String content) {
+return content;
+}</pre>
+<p>又是死活不生效，改成@CacheEvict也不行，搞了好久发现了这个：</p>
+<p>http://stackoverflow.com/questions/10343885/spring-3-1-cacheable-method-still-executed/10347208#10347208</p>
+<p>In proxy mode (which is the default), only external method calls coming in through the proxy are intercepted. This means that self-invocation, in effect, <strong>a method within the target object calling another method of the target object</strong>, <strong>will not lead to an actual caching</strong> at runtime even if the invoked method is marked with @Cacheable &#8211; considering using the aspectj mode in this case.</p>
+<p>&nbsp;</p>
+<p>第一、方法必须是public</p>
+<p>第二、你的updateConfig方法不能在同一个类里面，否则不生效。。。</p>
+<p>把他改到其他的类里面去，就好了。。。。</p>
+<p>&nbsp;</p>
+<p>以上是我查了好多资料也没找到原因而踩到的坑，希望你没有遇到</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/455.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>
