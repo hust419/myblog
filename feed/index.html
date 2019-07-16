@@ -9,10 +9,10 @@
 
 <channel>
 	<title>三两带走</title>
-	<atom:link href="http://rentb.vicp.net/feed" rel="self" type="application/rss+xml" />
-	<link>http://huster.top/</link>
+	<atom:link href="https://huster.top/feed" rel="self" type="application/rss+xml" />
+	<link>https://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 10 Jul 2019 11:03:48 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
@@ -21,11 +21,372 @@
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
 	<title>三两带走</title>
-	<link>http://huster.top/</link>
+	<link>https://huster.top/</link>
 	<width>32</width>
 	<height>32</height>
 </image> 
 	<item>
+		<title>Java字节码增强技术的应用</title>
+		<link>https://huster.top/htmls/665.html</link>
+		<comments>https://huster.top/htmls/665.html#respond</comments>
+		<pubDate>Wed, 10 Jul 2019 11:02:14 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[Java学习]]></category>
+
+		<guid isPermaLink="false">https://huster.top/?p=665</guid>
+		<description><![CDATA[Java字节码增强技术 认识Instrumentation &#160; 基本用法: 方法 作用 a [&#8230;]]]></description>
+				<content:encoded><![CDATA[<h1>Java字节码增强技术</h1>
+<h1 id="N9W6r">认识Instrumentation</h1>
+<p>&nbsp;</p>
+<p>基本用法:</p>
+<table class="lake-table" style="width: 722px;">
+<colgroup>
+<col width="240" />
+<col width="240" />
+<col width="241" /> </colgroup>
+<tbody>
+<tr>
+<td>方法</td>
+<td>作用</td>
+<td></td>
+</tr>
+<tr>
+<td>addTransformer</td>
+<td>织入一段代码</td>
+<td></td>
+</tr>
+<tr>
+<td>removeTransformer</td>
+<td>移除被织入的代码</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="1" style="background-color: #ffffff;">retransformClasses</td>
+<td colspan="1" style="background-color: #ffffff;">用于已经载入的类重新植入</td>
+<td colspan="1" style="background-color: #ffffff;">Class&lt;?&gt;&#8230; classes</td>
+</tr>
+</tbody>
+</table>
+<p>其他用法:</p>
+<p>&nbsp;</p>
+<table class="lake-table" style="width: 722px;">
+<colgroup>
+<col width="240" />
+<col width="240" />
+<col width="241" /> </colgroup>
+<tbody>
+<tr>
+<td>方法</td>
+<td>作用</td>
+<td></td>
+</tr>
+<tr>
+<td>appendToBootstrapClassLoaderSearch</td>
+<td>将指定路径的jar包用bootstrapclassloader查找路径</td>
+<td></td>
+</tr>
+<tr>
+<td>getAllLoadedClasses</td>
+<td>获取所有已加载的类</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="1" style="background-color: #ffffff;">getObjectSize</td>
+<td colspan="1" style="background-color: #ffffff;">获取指定的对象的大小</td>
+<td colspan="1" style="background-color: #ffffff;"></td>
+</tr>
+<tr>
+<td colspan="1" style="background-color: #ffffff;">isNativeMethodPrefixSupported</td>
+<td colspan="1" style="background-color: #ffffff;">是否拦截本地方法</td>
+<td colspan="1" style="background-color: #ffffff;"></td>
+</tr>
+</tbody>
+</table>
+<h1></h1>
+<p><span id="more-665"></span></p>
+<h1 id="txjJI">Permain的方式植入代码</h1>
+<h2 id="5KeNr">程序测试代码</h2>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>public class JavaAgentTest {
+
+    public String helloWorld() {
+        System.out.println("Hello world!");
+        return "ok";
+    }
+
+    public static void main(String[] args) {
+        JavaAgentTest javaAgentTest = new JavaAgentTest();
+        //循环一定要放在这个地方，否则放在helloWorld方法的话，这个方法永远没有结束,也就没有办法在return之后插入代码.
+        for (;;) {
+         try {
+             javaAgentTest.helloWorld();
+             Thread.sleep(5000);
+         } catch (InterruptedException e) {
+             e.printStackTrace();
+         }
+        }
+
+    }
+}
+
+</code></pre>
+<p>&nbsp;</p>
+<h2 id="5O1RN">Agent代码(permain方式)</h2>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>package huster.top;
+
+import java.lang.instrument.Instrumentation;
+
+/**
+ * Created by longan.rtb on 2019/7/8.
+ */
+public class AgentMain  {
+
+    public static void premain(String args, Instrumentation inst) {
+       System.out.println("permain has been called, arguments is : " + args);
+       inst.addTransformer(new AOPImplement());
+    }
+}
+</code></pre>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>public class AOPImplement implements ClassFileTransformer {
+
+    private final static String methodName = "helloWorld";
+
+    private final static String targetClassName = "huster.top.JavaAgentTest";
+
+   public byte[]
+    transform(  ClassLoader         loader,
+                String              className,
+                Class&lt;?&gt;            classBeingRedefined,
+                ProtectionDomain protectionDomain,
+                byte[]              classfileBuffer)
+            throws IllegalClassFormatException {
+       className = className.replace("/", ".");
+       if (!className.equals(targetClassName)) {
+           //只监控需要的类
+           return classfileBuffer;
+       }
+
+       CtClass ctclass = null;
+       try {
+           ctclass = ClassPool.getDefault().get(className);
+           //只监控需要的方法
+           CtMethod ctmethod = ctclass.getDeclaredMethod(methodName);
+           //旧方法改个名字
+           String oldMethod = methodName + "_____old____";
+           ctmethod.setName(oldMethod);
+           CtMethod newMethod = CtNewMethod.copy(ctmethod, methodName, ctclass, null);
+           String methodBody = "{" +
+                        "System.out.println(\"before called!!\");\n" +
+                        "String a = " + oldMethod + "($$);\n" +
+                        "System.out.println(\"after method called!!\");\n" +
+                        "return a;" +
+                   "}";
+           newMethod.setBody(methodBody);
+           ctclass.addMethod(newMethod);
+           return ctclass.toBytecode();
+       } catch (Exception e) {
+           e.printStackTrace();
+           return classfileBuffer;
+       }
+
+   }
+}</code></pre>
+<p>&nbsp;</p>
+<p>pom.xml , pom中比较关键的是要指定Permain-Class指定你的agent的类名</p>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;parent&gt;
+        &lt;artifactId&gt;javaagent-demo&lt;/artifactId&gt;
+        &lt;groupId&gt;huster.top&lt;/groupId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;artifactId&gt;original-agent&lt;/artifactId&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javassist&lt;/groupId&gt;
+            &lt;artifactId&gt;javassist&lt;/artifactId&gt;
+            &lt;version&gt;3.12.1.GA&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;finalName&gt;original-agent&lt;/finalName&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.8&lt;/source&gt;
+                    &lt;target&gt;1.8&lt;/target&gt;
+                    &lt;encoding&gt;utf-8&lt;/encoding&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+                &lt;version&gt;3.0.0&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;archive&gt;
+                        &lt;manifest&gt;
+                            &lt;addClasspath&gt;true&lt;/addClasspath&gt;
+                        &lt;/manifest&gt;
+                        &lt;manifestEntries&gt;
+                            &lt;Premain-Class&gt;huster.top.AgentMain&lt;/Premain-Class&gt;
+                        &lt;/manifestEntries&gt;
+                    &lt;/archive&gt;
+                    &lt;descriptorRefs&gt;
+                        &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;
+                    &lt;/descriptorRefs&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;id&gt;make-assembly&lt;/id&gt;
+                        &lt;phase&gt;package&lt;/phase&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;single&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;</code></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>然后在测试代码的vm参数里增加：</p>
+<p>-javaagent:/Users/longan.rtb/JavaProject/javaagentdemo/originalagent/target/original-agent-jar-with-dependencies.jar=args1;args2;args3</p>
+<p>等号后面为参数，支持一个字符串，最终会传入到permain方法里.</p>
+<p>运行结果如下：</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><a href="https://huster.top/wp-content/uploads/2019/07/123.png"><img src="https://huster.top/wp-content/uploads/2019/07/123.png" alt="" width="800" height="169" class="alignnone size-full wp-image-666" srcset="https://huster.top/wp-content/uploads/2019/07/123.png 800w, https://huster.top/wp-content/uploads/2019/07/123-300x63.png 300w, https://huster.top/wp-content/uploads/2019/07/123-768x162.png 768w" sizes="(max-width: 800px) 100vw, 800px" /></a></p>
+<p>&nbsp;</p>
+<h1 id="03SBv">Attach的方式植入代码</h1>
+<h2 id="7ste8">attach的程序</h2>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>public class AttachAgent {
+
+    public static void main(String[] args)  throws Exception {
+        String pid = args[0];
+        String jar = args[1];
+        if (jar == null  || "".equals(jar)) {
+            jar = "/Users/longan.rtb/JavaProject/javaagentdemo/originalagent/target/original-agent-jar-with-dependencies.jar";
+        }
+        VirtualMachine vmObj = null;
+        try {
+            vmObj = VirtualMachine.attach(pid);
+            vmObj.loadAgent(jar,
+                    "this is arguments");
+        } finally {
+            if (vmObj != null) {
+                vmObj.detach();
+            }
+
+        }
+    }
+}
+</code></pre>
+<p>&nbsp;</p>
+<h2 id="Fi6f1">agent的代码修改为</h2>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>public class AgentMain  {
+
+    public static void premain(String args, Instrumentation inst) {
+       System.out.println("permain has been called, arguments is : " + args);
+       inst.addTransformer(new AOPImplement());
+    }
+
+    //attach方式.
+    public static void agentmain(String args, Instrumentation inst){
+        System.out.println("444agentmain has been called, arguments is : " + args);
+        System.out.println("is enable :" + String.valueOf(inst.isRetransformClassesSupported()));
+        inst.addTransformer(new AOPImplement2(),true);
+        try {
+            inst.retransformClasses(Class.forName("huster.top.JavaAgentTest"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+}</code></pre>
+<p>&nbsp;</p>
+<h2 id="LrlOT">坑1: 始终报UnsupportedOperationException错误</h2>
+<p>是因为我们在植入代码的时候，使用了新增函数的方法，这种方法的是不允许的在Retrans的时候</p>
+<p>* Caused by: java.lang.UnsupportedOperationException: class redefinition failed: attempted to add a method* The retransformation may change method bodies, the constant pool and attributes.* The retransformation must not add, remove or rename fields or methods, change the* signatures of methods, or change inheritance.  These restrictions maybe be* lifted in future versions.  The class file bytes are not checked, verified and installed* until after the transformations have been applied, if the resultant bytes are in* error this method will throw an exception.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="ja8jv">将attach程序打包成jar运行</h2>
+<p>pom.xml 比较关键的是要指定mainClass，否则你的jar包没有办法使用jar -jar 运行起来.</p>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;parent&gt;
+        &lt;artifactId&gt;javaagent-demo&lt;/artifactId&gt;
+        &lt;groupId&gt;huster.top&lt;/groupId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+
+    &lt;artifactId&gt;attach-agent&lt;/artifactId&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.sun&lt;/groupId&gt;
+            &lt;artifactId&gt;tools&lt;/artifactId&gt;
+            &lt;version&gt;1.8&lt;/version&gt;
+            &lt;scope&gt;system&lt;/scope&gt;
+            &lt;systemPath&gt;${java.home}/../lib/tools.jar&lt;/systemPath&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;attached&lt;/goal&gt;
+                        &lt;/goals&gt;
+                        &lt;phase&gt;package&lt;/phase&gt;
+                        &lt;configuration&gt;
+                            &lt;descriptorRefs&gt;
+                                &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;
+                            &lt;/descriptorRefs&gt;
+                            &lt;archive&gt;
+                                &lt;manifest&gt;
+                                    &lt;mainClass&gt;huster.top.AttachAgent&lt;/mainClass&gt;
+                                &lt;/manifest&gt;
+                            &lt;/archive&gt;
+                        &lt;/configuration&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;</code></pre>
+<p>&nbsp;</p>
+<h2 id="Bs2jY">坑2: VirtualMachine找不到的问题</h2>
+<p>需要我们在运行的时候指明tool.jar的位置</p>
+<p>/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/bin/java -jar -Xbootclasspath/a:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/lib/tools.jar /Users/longan.rtb/JavaProject/javaagentdemo/attachagent/target/attach-agent-1.0-SNAPSHOT-jar-with-dependencies.jar 29808</p>
+<p>&nbsp;</p>
+<p>代码地址 : https://github.com/hust419/javaagentSample</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/665.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
 		<title>JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</title>
 		<link>https://huster.top/htmls/662.html</link>
 		<comments>https://huster.top/htmls/662.html#respond</comments>
@@ -35,7 +396,7 @@
 		<category><![CDATA[java agent]]></category>
 		<category><![CDATA[jvm sandbox]]></category>
 
-		<guid isPermaLink="false">http://huster.top/?p=662</guid>
+		<guid isPermaLink="false">https://huster.top/?p=662</guid>
 		<description><![CDATA[背景 jvm sandbox是一个开源项目https://github.com/alibaba/jv [&#8230;]]]></description>
 				<content:encoded><![CDATA[<h1>背景</h1>
 <p>jvm sandbox是一个开源项目https://github.com/alibaba/jvm-sandbox/wiki/FIRST-MODULE，他是对java agent的一个应用，他将agent发扬光大，让你可以不用用户改代码的情况下，进行代码增强，实现AOP，切面编程的功能，非常强大。但是他的代码量其实不大，文档清晰，所以读起来不是太费劲。他最最基础和核心的功能是使用了Java 提供的 Instrumenttation和ClassFileTransformer来实现的，我们先来了解下这个两个类的API，了解他们都提供了什么功能。</p>
@@ -118,7 +479,7 @@
 		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
 				<category><![CDATA[Java学习]]></category>
 
-		<guid isPermaLink="false">http://huster.top/?p=657</guid>
+		<guid isPermaLink="false">https://huster.top/?p=657</guid>
 		<description><![CDATA[Java日志框架现状 Java日志框架的故事说来话长，做过开发的一定遇到过slf4j,log4j,l [&#8230;]]]></description>
 				<content:encoded><![CDATA[<h4>Java日志框架现状</h4>
 <p>Java日志框架的故事说来话长，做过开发的一定遇到过slf4j,log4j,logback,commons-logging,log4j2。=也一定见过这些jar包，什么log4j.jar,slf4j-api.jar,slf4j-log4j12.jar,logback-classic.jar,logback-core.jar等等。以前看到他们就头大，傻傻分不清楚，到现在搞清楚了也就这么回事，可以具体看看slf4j的实现和适配是怎么做的。</p>
@@ -192,7 +553,7 @@ Embedded components such as libraries not only do not need to configure the unde
 		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
 				<category><![CDATA[Java学习]]></category>
 
-		<guid isPermaLink="false">http://huster.top/?p=649</guid>
+		<guid isPermaLink="false">https://huster.top/?p=649</guid>
 		<description><![CDATA[26） 如何写代码来解决生产者消费者问题？ 我们先尝试使用队列实现一个生产者和消费者模式。那么就需要 [&#8230;]]]></description>
 				<content:encoded><![CDATA[<h4><span>26） 如何写代码来解决生产者消费者问题？</span></h4>
 <div>我们先尝试使用队列实现一个生产者和消费者模式。那么就需要先了解队列，队里的接口定义如下</div>
@@ -361,7 +722,7 @@ Embedded components such as libraries not only do not need to configure the unde
 		<category><![CDATA[队列]]></category>
 		<category><![CDATA[阻塞队列]]></category>
 
-		<guid isPermaLink="false">http://huster.top/?p=645</guid>
+		<guid isPermaLink="false">https://huster.top/?p=645</guid>
 		<description><![CDATA[这个题目考验的实际上是线程间的通信和同步问题。我们再有一篇文章中，使用Object的wait和not [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p>这个题目考验的实际上是线程间的通信和同步问题。我们再有一篇文章中，使用Object的wait和notify实现了线程间的同步。参见 : https://huster.top/htmls/615.html</p>
 <p><span id="more-645"></span></p>
@@ -721,7 +1082,7 @@ public class ProductClient4 implements Runnable {
 		<category><![CDATA[Java]]></category>
 		<category><![CDATA[多线程]]></category>
 
-		<guid isPermaLink="false">http://huster.top/?p=642</guid>
+		<guid isPermaLink="false">https://huster.top/?p=642</guid>
 		<description><![CDATA[    自去年列下计划到现在一年有余，看了好几本书，以为已经过了很长时间，现在回头发现仅仅才过了一年 [&#8230;]]]></description>
 				<content:encoded><![CDATA[<div>    自去年列下计划到现在一年有余，看了好几本书，以为已经过了很长时间，现在回头发现仅仅才过了一年而已，已经积累了不少知识，看来有目的的去学习还是有一些成效的。正好今天看到一个关于多线程的面试题，所以来总结过去所学，也是对过去知识的一个考验。</div>
 <div></div>
@@ -889,7 +1250,7 @@ public class ProductClient4 implements Runnable {
 		<category><![CDATA[JMM]]></category>
 		<category><![CDATA[内存模型]]></category>
 
-		<guid isPermaLink="false">http://huster.top/?p=637</guid>
+		<guid isPermaLink="false">https://huster.top/?p=637</guid>
 		<description><![CDATA[    多线程之所以复杂，是因为在多线程环境下，稍有不慎就会导致诡异的问题。这个诡异表现在，他不是一 [&#8230;]]]></description>
 				<content:encoded><![CDATA[<div><span>    多线程之所以复杂，是因为在多线程环境下，稍有不慎就会导致诡异的问题。这个诡异表现在，他不是一定会出现，他不知道会在什么时候会以什么样的姿态出现在我们的生产环境中。为了避免犯错误，所以我们在所有可能出问题的地方都加上synchronize，那当然也是欠妥的，所以我们要搞清楚其中的细节，对我们写程序就有比较大的帮助了。</span></div>
 <div></div>
@@ -995,7 +1356,7 @@ public class ProductClient4 implements Runnable {
 		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
 				<category><![CDATA[Java学习]]></category>
 
-		<guid isPermaLink="false">http://huster.top/?p=633</guid>
+		<guid isPermaLink="false">https://huster.top/?p=633</guid>
 		<description><![CDATA[以前整理的几个面试题，主要是Java的基本语法，如下 &#160; String、StringBui [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p>以前整理的几个面试题，主要是Java的基本语法，如下</p>
 <p>&nbsp;</p>
@@ -1149,7 +1510,7 @@ public class ProductClient4 implements Runnable {
 		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
 				<category><![CDATA[Java学习]]></category>
 
-		<guid isPermaLink="false">http://huster.top/?p=629</guid>
+		<guid isPermaLink="false">https://huster.top/?p=629</guid>
 		<description><![CDATA[一、锁的使用 Java的多线程环境下，由于共享资源的竞态可能导致错误的结果。因此锁的使用就是保护临界 [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p>一、锁的使用<br />
 Java的多线程环境下，由于共享资源的竞态可能导致错误的结果。因此锁的使用就是保护临界代码，这个就不再赘述。<br />
@@ -1350,7 +1711,7 @@ java的读写锁实现，ReentrantReadWriteLock 使用起来也比较简单，�
 		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
 				<category><![CDATA[Java学习]]></category>
 
-		<guid isPermaLink="false">http://huster.top/?p=615</guid>
+		<guid isPermaLink="false">https://huster.top/?p=615</guid>
 		<description><![CDATA[多个线程间肯定是需要通信的，回忆一下我们的并发编程模型里的流水线工作模式(流水线工作模式)，我们的线 [&#8230;]]]></description>
 				<content:encoded><![CDATA[<p>多个线程间肯定是需要通信的，回忆一下我们的并发编程模型里的流水线工作模式(<a href="https://huster.top/htmls/557.html">流水线工作模式</a>)，我们的线程在遇到io阻塞的时候，肯定不能在那边一直等着，得出让自己的cpu资源，等到io完成了，再把任务交给下一个工作线程，我们试着来实现下看看。</p>
 <p><span id="more-615"></span><br />
@@ -1559,103 +1920,6 @@ public class LockTest {
 ]]></content:encoded>
 			<wfw:commentRss>https://huster.top/htmls/615.html/feed</wfw:commentRss>
 		<slash:comments>1</slash:comments>
-		</item>
-		<item>
-		<title>写给计算机专业毕业生的22条宝贵建议</title>
-		<link>https://huster.top/htmls/610.html</link>
-		<comments>https://huster.top/htmls/610.html#respond</comments>
-		<pubDate>Fri, 26 Oct 2018 06:59:35 +0000</pubDate>
-		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
-				<category><![CDATA[转载]]></category>
-
-		<guid isPermaLink="false">http://huster.top/?p=610</guid>
-		<description><![CDATA[自从毕业后，人们一直问我:“现在做什么?”我的回答是毫不含糊的:“我不知道。”“我曾经以为，当我完成 [&#8230;]]]></description>
-				<content:encoded><![CDATA[<p>自从毕业后，人们一直问我:“现在做什么?”我的回答是毫不含糊的:“我不知道。”“我曾经以为，当我完成硕士学位的时候，我就知道该怎么做了。”我以为我会成为一个“大师”。</p>
-<p>可是，我错了。学校并没有让我为毕业后的世界做好准备。学校的学术环境能够提供持续的反馈——你稍微偏离了轨道，有人肯定会告诉你，甚至引导你到正确的轨道上。在现实生活中，我害怕自己会做出一系列错误的决定，而当有人指正你的时候已经为时已晚。一个错误的工作选择可能会让我浪费几年的时间，甚至错过许多更好的发展机会。</p>
-<p><span id="more-610"></span></p>
-<p>当我在网上搜索应届毕业生的就业建议时，我发现大多数文章都是关于如何找工作的。我不想让自己看起来像个势利小人，但实际上，对于很多刚毕业的大学生来说，他们的问题不是“**我能得到什么样的工作**”，而是“**我应该得到什么工作**”。“选择的多样性并没有让决策变得更容易。如果说有什么不同的话，那就是它让像我这样有严重社交恐惧症的人陷入了恐慌。我反复思考了一系列问题：“我应该攻读博士学位吗?”，“我应该在大公司还是初创公司工作?”，“我应该自己创业吗?”，“我应该做工程还是更偏向市场一些?”，“我应该离开科技行业，去追求我的写作兴趣吗?”</p>
-<p>在过去的一年里，我向很多人询问了这些问题，无论是在工业界还是学术界，我很幸运，他们中的一些人能够坐下来和我分享他们的见解。因为他们的建议对我有很大的帮助，所以我认为这些可能对其他人也有用，因为他们有一天很可能会经历我做的事情。这篇文章试图用语言表达我经历过的深刻的思考过程和我得到的建议。如果你只是想得到建议而对故事过程不感兴趣的话，可以直接去看最后一部分。</p>
-<p>该不该读博士<br />
-我的家住在越南的一个小村庄，所以对美国学术界的认知很模糊。我不知道什么是博士学位，人们在博士申请中做些什么，或者如果我想申请的话我应该如何准备。直到去年年初我开始和博士生们一起玩的时候，我才意识到：“哇，这些人真的很聪明。他们研究有趣的问题。我想成为他们那样的人。</p>
-<p>我很快意识到，每个人对“考不考博士”这个话题似乎都有自己的看法。我还发现，与我交谈过的教授（也就是那些已经获得博士学位的教授）100%都告诉我应该攻读博士学位，而已经就业的人100%的都告诉我不应该读博了。</p>
-<p>支持攻读PhD的观点包括：</p>
-<p>你会有时间让自己沉浸在研究中。<br />
-如果你想成为一名教授，你就得去读博士。<br />
-许多顶尖的研究实验室，比如DeepMind只招聘博士生。<br />
-你会得到很好的薪水，人工智能实习生的薪水都很不错。<br />
-支持不读博士学位的观点包括:</p>
-<p>应该有更多的人加入到工业中来，把研究带到生产中去。<br />
-当你完成你的博士学位，你所学与所用的相关性可能不大。<br />
-很多情况下，许多教授在行业内都有兼职，所以你仍然可以和他们一起工作。<br />
-在接下来的五年里，你不会为钱发愁。<br />
-我决定攻读博士学位。由于我已经来不及准备我的博士应用程序了，我的教授建议我明年申请，在这一年的时间里完善我的应用程序，所以我安排了一些研究实习。</p>
-<p>我提前了一个季度毕业，接下来的三个月我都在旅行。我并没有刻意寻找我自己，但我偶然发现了它。在这段时间里，我每天都写些有趣的东西，但没有读一篇论文。我意识到**我想读博不是因为我想做人工智能研究，而是因为我想成为做人工智能研究的人**。当我和我的博士朋友们见面，看到他们在醒着的每一刻都在谈论、思考人工智能时，我的这种想法更加强烈了——我没有参与到他们的热情中。我想要不同的东西。有何不同?我还在想办法弄清楚。</p>
-<p>做一个违心的人或者追随自己的梦想<br />
-斯坦福大学提供CS +英语专业。我们曾经开玩笑说，这个专业是为那些既喜欢写作又想找工作的人开设的。一个朋友却说我就是那种人。</p>
-<p>我学计算机专业不是为了找份工作。我从第一节入门课就迷上了它，因为这门课很有趣。我热爱工程，但三个月的休假重新点燃了我的信念：写作是我一生中最大的爱好。由于我已经花了将近4年的时间来攻读CS的学位，我渴望在写作上投入一些时间。我也害怕成为硅谷的另一名软件工程师。</p>
-<p>事实证明，如果你是一名外国学生的话，在美国追求自己的理想有时就不太现实了。要留在美国，我必须找到一份与我的专业相关的工作。当然，我可以去另一个国家生活。在南美洲的海滩上生活和写作的想法是相当富有诗意的。但人工智能是一个瞬息万变的领域，我片刻思考后就已经有点迷失了方向——如果我在一年后不能回到这个领域了呢?此外，来回折腾以及搬家移民也将是一场噩梦。</p>
-<p>当我带着这样的困惑来到我的教授面前时，他很困惑：**“为什么你一定要在工作和写作之间做出选择?”为什么不两个都要呢?**“有很多人在他们的技术领域都有成就，但也有多产的作家。他对我的能力的坚定自信激发了我的自信：“你说得对。我两样都能做。“我可以全职从事科技工作，晚上或者周末则是写作。我过去在大学里花了大量的时间做作业和教学，所以我相信我可以每周抽出20多小时用来写作。</p>
-<p>我应该自己创业吗?<br />
-从斯坦福大学毕业，住在硅谷，我无法摆脱创业的刻板印象。有人说我是“创业型”。“有些人甚至邀请我成为他们的联合创始人。</p>
-<p>我不止一次受到诱惑。从头构建产品的想法很吸引人。毫无疑问我会学到很多，不仅仅包括我试图解决的问题也包括如何激励人们和我一起工作，如何筹集资金，如何管理一个组织，如何销售我的产品&#8230;&#8230;我有很多朋友做自己的事业，他们的生活中有很多事要做，但从来没有无聊。此外，他们成为亿万富翁的机会比我大得多。</p>
-<p>仅仅是阅读那些关于二十多岁年轻人动不动就获得数百万美元融资的新闻就让人心猿意马。就连Yo应用也筹集了150万美元！有人曾把这作为我应该创业的原因之一。但我也见过很多朋友，他们都知道创业的生活充满了压力、残酷，而且受到很多外部因素的制约。我朋友的创业公司中有相当一部分已经失败了，尽管他们非常聪明，有很好的想法，并且得到了著名投资者的支持。每当我感觉自己像个废物时，我就会打电话给我的创业朋友，看看他们的挣扎，并为自己不是他们而感到高兴。</p>
-<p>我可能是这里的少数人，但我认为仅仅为了创办一家公司而创办一家公司是没有理由的，是浪费每个人的时间。除非我做到了下面这至少三件事：</p>
-<p>这是一个我想用毕生精力去解决的问题。<br />
-相信我能解决它。<br />
-我可以和一个联合创始人一起工作很长一段时间，而不会感觉对彼此产生厌烦。<br />
-现在，这些问题我都没遇到，所以我就呆在这里。我还认为，为别人工作几年，会让我在财务和技能方面都做好为自己工作的准备。</p>
-<p>进入大公司还是创业公司<br />
-基于以上因素，我开始在英伟达实习。我取消了其他实习计划，开始寻找全职工作。这时，我的下一个大问题出现了：“我应该为一家大公司工作还是为一家初创公司工作?”</p>
-<p>我在大学期间曾分别在一家大公司和一家初创公司实习过。我的印象与人们通常所说的大公司稳定、初创公司高强度（高风险）非常一致。在我那些选择不攻读博士学位的朋友中，约有40%的人去了大公司，40%的人在创业公司工作，其余的人自己开了公司。他们都给了我有力的论据。当然，每个公司的优缺点各不相同，下面简单列了一些：</p>
-<p>当我与人分享这些思考时，许多人告诉我做让我快乐的事。虽然我很欣赏这种态度，但这个建议经常让我更加困惑。“快乐”到底是什么意思？我该怎么测量呢？“幸福”也是相对的。给自己足够的时间去适应，我们就能教会自己对任何事情都感到快乐。</p>
-<p>有两条建议我觉得很有帮助。第一个问题：“**哪一个能给你一个千载难逢的机会？**”“你认为你正在考虑的创业公司正在做一些真正重要的事情，这是你一生中唯一一次为之做出贡献的机会吗？”或者你认为为科技巨头工作是你一生中唯一的机会?</p>
-<p>第二个问题是：“**你想得到什么？**”一个最容易得到的东西就是金钱。我的一些朋友面试了多家公司，最终去了出价最高的公司。一些人为了新体验，选择一份能让他们旅行和结识很多人的工作。一些人为了提高自己的声誉，去了他们所在领域最知名的公司。</p>
-<p>在我人生的这个阶段，我追求个人成长。我想要一份能给我最大自由成长的工作。这意味着这份工作应该能让我与优秀的同事、导师一起工作，并尽可能地挑战自己。</p>
-<p>英伟达<br />
-最后，我选择留在英伟达，原因如下。</p>
-<p>1. 文化<br />
-我和许多公司聊过，英伟达作为一家感觉像是初创企业的大公司，脱颖而出。英伟达的文化信条之一是SOL——光速——你必须快速行动，比一般的大型组织快得多。有一天下午，我和我的经理谈了想全职留在公司工作的事情，第二天我就得到了工作机会。</p>
-<p>在Glassdoor上，一些人说，像创业一样的文化意味着更高的工作量。有时你会发现，英伟达缺乏组织架构，这很让人困惑。但我绝对喜欢这种形态。由于公司发展迅速，有很多事情要做。员工可以去有挑战的地方，根据自己的能力选择挑战性。</p>
-<p>扁平的等级制度。你可以接触到每一个人，他们会听你的。即使在实习期间，我也有机会与两位高级经理共事。黄仁勋曾经给我一杯啤酒。我的经历绝不是独一无二的。</p>
-<p>此外，黄仁勋是有史以来最酷的CEO。他的风格是热情的（皮夹克哟）和恰到好处的幽默感。他邀请所有的实习生来他家参加夏季晚会，每个人都很喜欢他。**一个很酷的CEO才能建立一个很酷的公司**。</p>
-<p>2. 工作<br />
-英伟达以硬件闻名，但他们也有强大的软件工程团队。我的经理让我选择我想做的工作。工作范围从研究到大规模生产，有很多项目供我选择。**我的工作并不局限于一小段代码，我可以成为一个项目的责任人。我也可以和其他团队的人一起工作**。有一次，我对某人的工作印象深刻，他在另一个团队。我联系了他，并一起做了一个项目。</p>
-<p>我发现我喜欢我在英伟达的工作，甚至在一个星期六，我突然有一种冲动，想去办公室完成一些实验。**我在工作中从未感到无聊**。总有事情要做，总有人要跟你说话。我学到了很多。</p>
-<p>3. 影响<br />
-英伟达的**管理人员与员工分享公司的战略**，这是不可思议的。即使作为一个低级别的工程师，我觉得我知道公司的发展方向。</p>
-<p>英伟达是雄心勃勃的。他们研究了许多具有巨大潜力的项目。我可以改变我正在做的项目。经理们关注你的工作，以确保员工得到应有的回馈。我曾经自愿为公司做一些事情，我的工作得到了一位副总裁和两位高级董事的详细反馈。其他大公司不太可能发生这种情况。</p>
-<p>4. 斗争<br />
-硬件竞争现在非常激烈。每个科技巨头似乎都想分一杯羹。在英伟达(NVIDIA)工作让我有机会坐在前排观看这场战斗。</p>
-<p>当我问我的经理为什么从苹果公司跳槽到这里时，他说这是因为“斗争”。由于某种原因，我还没有内化，成为英伟达的一员似乎是一种英雄。我想尽我最大的努力帮助英伟达赢得这场比赛。</p>
-<p>有些人可能会问：薪水怎么样？你的思维过程中真的没有考虑过金钱么？如果有人在硕士课程刚毕业的时候提到他们的奖金上有一张6位数的签名，说我没被诱惑，那是在撒谎。和许多同龄人一样，**我的目标是有一天拥有足够的钱，不再为钱而工作**。</p>
-<p>但就目前而言，在科技行业工作，我知道无论我选择什么工作，都可能给我足够的薪水。我相信，如果我选择个人成长，总有一天，我将拥有一套足够令人向往的技能，能够赚到比我花的多的多的钱。青春太珍贵，不能用钱衡量。</p>
-<p>供参考建议如下：</p>
-<p>知道你想要什么：金钱、新体验、声望、个人成长，还是别的什么?<br />
-如果你不知道你想做什么，关注你在空闲时间做什么。只有当没人看的时候你才会表现出真正的兴趣。<br />
-至少对人工智能来说，工业和学术界之间的界线越来越模糊。不要担心是否有博士学位。你可以开始读博，然后退学，或者在工业界工作几年后再申请博士学位。<br />
-在GitHub上发布你的代码，投入时间去构建一些像样的GitHub repos。我的GitHub就给我增加了不少印象分。<br />
-不要太在意你的GPA。如果你认为它很低（例如&lt; 3.3），那就不要写在简历上。只要你有良好的技术背景（比如过去的实习经验+项目+ GitHub），没人会在意你的GPA。<br />
-在大学期间，在大公司和创业公司实习，以了解你想加入什么样的组织。<br />
-早期你可以应聘“实习转全职”的职位。实习面试比全职面试容易3倍。<br />
-尽早开始找工作，最好是在大四开始。我的大多数朋友都提前2-3个季度拿到了offer。早期的工作机会能让你在面试中保持平和的心态，并在以后的面试中占据优势。<br />
-不要因为没有收到一些公司的回复就放弃。我认识一些人，他们在找到工作之前会把简历投给数百家公司。<br />
-技术面试是一种痛苦。至少提前一个月准备。<br />
-在面试过程中，询问你将在这个职位上做什么工作，你要向哪个经理汇报工作，以及你将得到什么样的指导。<br />
-不要回避谈判。即使你不是为了钱而工作，你也完全有权利得到你应得的报酬。<br />
-根据我的经验，公司总是会根据简历竞争力提供报价，即使他们说他们不会。我曾见过两位有类似经历的朋友加入同一家公司担任同一职位，但其中一位因为有竞争性的简历每年多赚5万美元。<br />
-向你钦佩的人请教经验和职业建议。<br />
-看看Glassdoor上的评论，你就会知道你要做什么了。<br />
-在大学结束后开始你的第一份全职工作之前先休息一段时间，因为在很长一段时间内你不太可能再去度假了。<br />
-如果你工作的唯一原因是薪水，那就辞职吧。<br />
-如果你发现自己没有在工作中学到东西，那就离开吧。<br />
-不要用不正当的竞争手段。<br />
-不要拿自己和别人比较。不管你有多优秀，总会有人在某方面比你强。你需要将你的今天和昨天进行比较。<br />
-做一个友善的人。<br />
-善待自己。你不需要在xx大学毕业，在xx年获得博士学位，或者在xx年成为百万富翁。要去探索这个世界。去了解你自己。享受这个过程。<br />
-查看英文原文：https://huyenchip.com/2018/10/08/career-advice-recent-cs-graduates.html</p>
-]]></content:encoded>
-			<wfw:commentRss>https://huster.top/htmls/610.html/feed</wfw:commentRss>
-		<slash:comments>0</slash:comments>
 		</item>
 	</channel>
 </rss>
