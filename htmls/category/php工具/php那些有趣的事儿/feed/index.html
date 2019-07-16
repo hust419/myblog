@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>PHP编程 &#8211; 三两带走</title>
+	<atom:link href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php%e9%82%a3%e4%ba%9b%e6%9c%89%e8%b6%a3%e7%9a%84%e4%ba%8b%e5%84%bf/feed" rel="self" type="application/rss+xml" />
+	<link>https://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Wed, 10 Jul 2019 11:03:48 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>PHP编程 &#8211; 三两带走</title>
+	<link>https://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>PHP知识总结 &#8212; 前端部分</title>
+		<link>https://huster.top/htmls/344.html</link>
+		<comments>https://huster.top/htmls/344.html#respond</comments>
+		<pubDate>Thu, 27 Jun 2013 15:56:59 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[PHP编程]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=344</guid>
+		<description><![CDATA[先写一个前端部分的总结，后续的知识体系需要慢慢梳理，因为最近写一个工具，bootstarp和jque<a class="moretag" href="https://huster.top/htmls/344.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>先写一个前端部分的总结，后续的知识体系需要慢慢梳理，因为最近写一个工具，bootstarp和jquery用的比较多，总结下：</p>
+<p><span id="more-344"></span></p>
+<p><a href="http://www.longant.com/wp-content/uploads/2013/06/front.png"><img class="alignnone size-full wp-image-345" title="front" src="http://www.longant.com/wp-content/uploads/2013/06/front.png" alt="" width="1082" height="750" srcset="https://huster.top/wp-content/uploads/2013/06/front.png 1082w, https://huster.top/wp-content/uploads/2013/06/front-300x207.png 300w, https://huster.top/wp-content/uploads/2013/06/front-1024x709.png 1024w" sizes="(max-width: 1082px) 100vw, 1082px" /></a></p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/344.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>fastcgi_finish_request函数的妙用以及性能测试</title>
+		<link>https://huster.top/htmls/335.html</link>
+		<comments>https://huster.top/htmls/335.html#respond</comments>
+		<pubDate>Thu, 20 Jun 2013 15:56:18 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[PHP编程]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=335</guid>
+		<description><![CDATA[昨天无意中得知 fastcgi_finish_request这个函数以及对应的register_sh<a class="moretag" href="https://huster.top/htmls/335.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p>昨天无意中得知 fastcgi_finish_request这个函数以及对应的register_shutdown_function，然后对他做了一个了解，用他可以实现一些非常巧妙而有趣的事情。首先，我们看下这个函数的注解：</p>
+<p>special function to finish request and flush all data while continuing to do something time-consuming (video converting, stats processing etc.);</p>
+<p>它能够让你结束你跟浏览器的交互，然后在后台再继续的运行这个线程，做一些不需要输出，不需要和浏览器交互的事情，例如，上传视频后，视频在转码的时候，不需要用户等待，可以先告诉用户成功，然后再到后台转码（优酷是不是这样？ 视频传成功以后，还需要等段时间，才能后台看到该视频的信息。，我们直接通过程序来说明吧。</p>
+<p><span id="more-335"></span></p>
+<p>test.php</p>
+<pre class="brush:php">$pid = getmygid();
+var_dump($pid);
+while(1) {
+sleep(1);
+file_put_contents("./data", $pid, FILE_APPEND);
+ }</pre>
+<p>在浏览器中打开上面一段程序，显然不会有任何输出，而且程序会一直运行，表现为，浏览器在转啊转，直到超时，当然，如果你打开后，关闭了浏览器，这等一会，程序也自动结束了。</p>
+<p>如果，我们稍微改一下：</p>
+<pre class="brush:php">$pid = getmypid();
+var_dump($pid);
+fastcgi_finish_request();
+while(1) {
+sleep(1);
+file_put_contents("./data", $pid, FILE_APPEND);
+ }</pre>
+<p>这一次他很快的返回了结果，然后，我们去后台看看去，通过文件的写入，发现程序还在运行，然后执行 ps aux | grep php</p>
+<pre class="brush:bash">longan    3448 26.8  0.7  40544  3596 ?        R    23:32   0:22 php-fpm: pool www</pre>
+<p>发现给出的进程号一直存在的，说明了其实是给nginx发送了信号，中断了与nginx的连接，然而进程其实还是同一个进程，继续运行，所以上面的数据，都可以继承下来。</p>
+<p>接下来，我对系统进行了改造，因为系统有写日志的动作，我将这一行为放到了页面渲染之后，并且加上了fastcgi_finish_request()，后面费时的操作越多，将越收益。</p>
+<p>实际的测试结果，当没有使用fastcgi_finish_request()这个函数的时候，使用100个并发， 机器基本上被打满，cpu到了100，全部是阻塞状态下：</p>
+<p><a href="http://www.longant.com/wp-content/uploads/2013/06/1.png"><img class="alignnone size-full wp-image-336" title="1" src="http://www.longant.com/wp-content/uploads/2013/06/1.png" alt="" width="973" height="403" srcset="https://huster.top/wp-content/uploads/2013/06/1.png 973w, https://huster.top/wp-content/uploads/2013/06/1-300x124.png 300w" sizes="(max-width: 973px) 100vw, 973px" /></a></p>
+<p>而使用了中断的方式以后：</p>
+<p><a href="http://www.longant.com/wp-content/uploads/2013/06/2.png"><img class="alignnone size-full wp-image-337" title="2" src="http://www.longant.com/wp-content/uploads/2013/06/2.png" alt="" width="950" height="400" srcset="https://huster.top/wp-content/uploads/2013/06/2.png 950w, https://huster.top/wp-content/uploads/2013/06/2-300x126.png 300w" sizes="(max-width: 950px) 100vw, 950px" /></a></p>
+<p>有一点点的降低，然后，我们使用并发5来测试，此时机器的负载大概在50%左右，</p>
+<p>没有使用中断前：</p>
+<p><a href="http://www.longant.com/wp-content/uploads/2013/06/3.png"><img class="alignnone size-full wp-image-338" title="3" src="http://www.longant.com/wp-content/uploads/2013/06/3.png" alt="" width="901" height="350" srcset="https://huster.top/wp-content/uploads/2013/06/3.png 901w, https://huster.top/wp-content/uploads/2013/06/3-300x116.png 300w" sizes="(max-width: 901px) 100vw, 901px" /></a></p>
+<p>使用中断以后：</p>
+<p><a href="http://www.longant.com/wp-content/uploads/2013/06/4.png"><img class="alignnone size-full wp-image-339" title="4" src="http://www.longant.com/wp-content/uploads/2013/06/4.png" alt="" width="903" height="402" srcset="https://huster.top/wp-content/uploads/2013/06/4.png 903w, https://huster.top/wp-content/uploads/2013/06/4-300x133.png 300w" sizes="(max-width: 903px) 100vw, 903px" /></a></p>
+<p>&nbsp;</p>
+<p>降低肯定是有所降低的，但是由于我这里只有一个error_log操作，所以获利不多，不过在有些场景下，则是相当有用的，大家不妨考虑一下.</p>
+<p>hope this can help you !</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/335.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>PHP中$GLOBALS变量和register_globals</title>
+		<link>https://huster.top/htmls/39.html</link>
+		<comments>https://huster.top/htmls/39.html#respond</comments>
+		<pubDate>Sat, 17 Mar 2012 05:03:54 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[PHP编程]]></category>
+		<category><![CDATA[GLOBALS]]></category>
+		<category><![CDATA[PHP]]></category>
+		<category><![CDATA[register_globals]]></category>
+		<category><![CDATA[wordpress源码]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=39</guid>
+		<description><![CDATA[最近，在阅wordpress的代码的时候，看到在设置环境的初期，有一些安全性和初始化的工作，其中，有<a class="moretag" href="https://huster.top/htmls/39.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<p style="text-align: justify;">最近，在阅wordpress的代码的时候，看到在设置环境的初期，有一些安全性和初始化的工作，其中，有一个函数wp_unregister_GLOBALS()有点意思，函数的具体内容是：</p>
+<p style="text-align: justify;"><span id="more-39"></span></p>
+<pre class="brush:php">/**
+* Turn register globals off.
+*
+* @access private
+* @since 2.1.0
+* @return null Will return null if register_globals PHP directive was disabled
+*/
+function wp_unregister_GLOBALS() {
+if ( !ini_get( 'register_globals' ) )
+return;
+
+if ( isset( $_REQUEST['GLOBALS'] ) )
+die( /*WP_I18N_GLOBALS_OVERWRITE*/'检测到 GLOBALS 的改写尝试'/*/WP_I18N_GLOBALS_OVERWRITE*/ );
+
+// Variables that shouldn't be unset
+$no_unset = array( 'GLOBALS', '_GET', '_POST', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES', 'table_prefix' );
+
+$input = array_merge( $_GET, $_POST, $_COOKIE, $_SERVER, $_ENV, $_FILES, isset( $_SESSION ) &amp;&amp; is_array( $_SESSION ) ? $_SESSION : array() );
+foreach ( $input as $k =&gt; $v )
+if ( !in_array( $k, $no_unset ) &amp;&amp; isset( $GLOBALS[$k] ) ) {
+$GLOBALS[$k] = null;
+unset( $GLOBALS[$k] );
+}
+}</pre>
+<div>这个函数首先判断register_globals是不是打开了，那么这个是什么用途呢，如果这个变量打开了，则会产生如下效果，可以从url中获取变量值，例如$_GET[&#8220;var&#8221;] = &#8220;abc&#8221;; 那么打开以后默认$var = &#8220;abc&#8221;; 明白了吧</div>
+<div><span style="font-family: 'Courier New';">看看官方的说明,这个register_global打开了会导致什么问题 ：</span></div>
+<div>以下是取自官方的一个例子</div>
+<div>
+<pre class="brush:php">// 当用户合法的时候，赋值 $authorized = true
+if (authenticated_user()) {
+$authorized = true;
+}
+
+// 由于并没有事先把 $authorized 初始化为 false，
+// 当 register_globals 打开时，可能通过GET auth.php?authorized=1 来定义该变量值
+// 所以任何人都可以绕过身份验证
+if ($authorized) {
+include "/highly/sensitive/data.php";
+}</pre>
+</div>
+<div>可能导致在设计者不希望的情况下，改变变量的值，从而绕过安全认证。</div>
+<div>
+<pre class="brush:php">if ( isset( $_REQUEST['GLOBALS'] ) )
+die( /*WP_I18N_GLOBALS_OVERWRITE*/'检测到 GLOBALS 的改写尝试'/*/WP_I18N_GLOBALS_OVERWRITE*/ );</pre>
+</div>
+<div align="left">这段也很有意思，为什么有这一段呢，因为在php4以前,register_globals是默认打开，这本没问题，但是后来有些人滥用，导致很多安全问题，后来，这个开关就设置为默认关闭，上面的函数是为了防止GLOBALS 的改写尝试，$GLOBALS 是一个超级变量，他里面存储了所有的全局变量，包含$_GET这些，只要是不是函数内部的变量，在这个超级变量里面都能够找到（跟register_globals打不打开没什么关系），有兴趣可以var_dump($GLOBALS)看看他内部的构造,如果register_globals这个选项打开，如果我们通过GET auth.php?GLOBALS=1来“注入”，那么$GLOBALS变量内的所有值都会被替换，也就是说，代码里面所有的值都失效了？！这太可怕了，事实上，我使用php5.3.8来测试，这个现象并没有发生，说明php官方其实已经考虑过这个问题了，可能wordpress为了兼容低版本的php而做出的这样的判断。</div>
+<div align="left">
+<div>但是安全起见，还是最好关闭register_globals并且不要使用$GLOBALS，以免出现你想不到的事情。</div>
+<div>理解了$GLOBALS和register_globals就能理解这个函数是干嘛的了！</div>
+<div> wordpress有些地方的代码，写的很罗嗦，我想可能是由于历史原因，不停的更新，导致一些代码冗余下来，使得这个系统代码看起来没那么优美，这是没办法的，就像主搜一样，本来设计的想的很好，可是后来不停的更迭，不停的改动，结果到后来，也有很多冗余代码，没办法的事情</div>
+<div></div>
+</div>
+<p style="text-align: justify;">
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/39.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>
