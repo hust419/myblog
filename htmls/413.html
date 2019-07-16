@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>[转载]git在git push之后无痕回滚到某一次提交的方法 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/413.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//fonts.googleapis.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="hestia-clients-bar-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/companion-legacy/assets/css/hestia/clients-bar.css" type="text/css" media="all"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="bootstrap-css" href="https://huster.top/wp-content/themes/hestia/assets/bootstrap/css/bootstrap.min.css" type="text/css" media="all"><link rel="stylesheet" id="orfeo_parent-css" href="https://huster.top/wp-content/themes/hestia/style.css" type="text/css" media="all"><style id="orfeo_parent-inline-css" type="text/css">
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>[è½¬è½½]gitå&#156;¨git pushä¹&#139;å&#144;&#142;æ&#151; ç&#151;&#149;å&#155;&#158;æ»&#154;å&#136;°æ&#159;&#144;ä¸&#128;æ¬¡æ&#143;&#144;äº¤ç&#154;&#132;æ&#150;¹æ³&#149; – ä¸&#137;ä¸¤å¸¦èµ°</title><link rel="amphtml" href="https://huster.top/htmls/413.html/amp"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//fonts.googleapis.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="hestia-clients-bar-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/companion-legacy/assets/css/hestia/clients-bar.css" type="text/css" media="all"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="bootstrap-css" href="https://huster.top/wp-content/themes/hestia/assets/bootstrap/css/bootstrap.min.css" type="text/css" media="all"><link rel="stylesheet" id="orfeo_parent-css" href="https://huster.top/wp-content/themes/hestia/style.css" type="text/css" media="all"><style id="orfeo_parent-inline-css" type="text/css">
 .hestia-pricing .hestia-table-one .card-pricing .category { color: #f5593d; }.hestia-pricing .hestia-table-two .card-pricing { background-color: #f5593d; }.pagination .nav-links .page-numbers { color: #f5593d; border-color: #f5593d; }.pagination .nav-links .page-numbers.current { border-color: #f5593d; }.pagination .nav-links .page-numbers:hover { background-color: #f5593d; }.pagination .nav-links .page-numbers:hover { border-color: #f5593d; }.woocommerce-pagination ul.page-numbers .page-numbers { color: #f5593d; border-color: #f5593d; } .woocommerce-pagination ul.page-numbers li > span.current { border-color: #f5593d !important; }.woocommerce-pagination ul.page-numbers .page-numbers:hover { background-color: #f5593d; }.woocommerce-pagination ul.page-numbers .page-numbers:hover { border-color: #f5593d; }.entry-categories .label { background-color: #f5593d;}.woocommerce .star-rating { color: #f5593d; }.woocommerce div.product p.stars span a:before { color: #f5593d; }.woocommerce-cart table.shop_table button { 
 		    background-color: #f5593d !important;
 		    border-color: #f5593d !important; 
@@ -226,67 +226,67 @@ h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in
 		<header class="header "><nav class="navbar navbar-default navbar-fixed-top  hestia_left navbar-not-transparent"><div class="container">
 						<div class="navbar-header">
 			<div class="title-logo-wrapper">
-				<a class="navbar-brand" href="https://huster.top/" title="三两带走">
-					<p>三两带走</p></a>
+				<a class="navbar-brand" href="https://huster.top/" title="ä¸&#137;ä¸¤å¸¦èµ°">
+					<p>ä¸&#137;ä¸¤å¸¦èµ°</p></a>
 			</div>
 								<div class="navbar-toggle-wrapper">
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navigation">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
-				<span class="sr-only">切换导航</span>
+				<span class="sr-only">å&#136;&#135;æ&#141;¢å¯¼è&#136;ª</span>
 			</button>
 					</div>
 				</div>
 					</div>
-					</nav><div style="display: none"></div>		</header><div id="primary" class="boxed-layout-header page-header header-small" data-parallax="active"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1 text-center"><h1 class="hestia-title entry-title">[转载]git在git push之后无痕回滚到某一次提交的方法</h1><h4 class="author">于<time class="date updated published" datetime="2015-01-21T17:00:56+00:00">2015 年 1 月 21 日</time>由<a href="https://huster.top/htmls/author/admin" class="vcard author"><strong class="fn">龙安_任天兵</strong></a>发布</h4></div></div></div><div class="header-filter header-filter-gradient"></div></div>
+					</nav><div style="display: none"></div>		</header><div id="primary" class="boxed-layout-header page-header header-small" data-parallax="active"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1 text-center"><h1 class="hestia-title entry-title">[è½¬è½½]gitå&#156;¨git pushä¹&#139;å&#144;&#142;æ&#151; ç&#151;&#149;å&#155;&#158;æ»&#154;å&#136;°æ&#159;&#144;ä¸&#128;æ¬¡æ&#143;&#144;äº¤ç&#154;&#132;æ&#150;¹æ³&#149;</h1><h4 class="author">äº&#142;<time class="date updated published" datetime="2015-01-21T17:00:56+00:00">2015 å¹´ 1 æ&#156;&#136; 21 æ&#151;¥</time>ç&#148;±<a href="https://huster.top/htmls/author/admin" class="vcard author"><strong class="fn">é¾&#153;å®&#137;_ä»»å¤©å&#133;µ</strong></a>å&#143;&#145;å¸&#131;</h4></div></div></div><div class="header-filter header-filter-gradient"></div></div>
 <div class="main  main-raised ">
 	<div class="blog-post blog-post-wrapper">
 		<div class="container">
 			<article id="post-413" class="section section-text"><div class="row">
 				<div class="col-md-8 single-post-container" data-layout="sidebar-right">
 			<div class="single-post-wrap">
-				<p>有一天，你高兴的改完了代码，并git push之后发现，哎呀，改错分支了。我的分支是xxxxx需要上线的，结果同时在开发另外一个项目，分支叫ssssss，这个尴尬的时候，有没有办法不留痕迹的将你的分支恢复到git push之前的状态呢？所谓的无痕是指在远程也没有记录，方法如下：</p>
-<p>git代码库回滚: 指的是将代码库某分支退回到以前的某个commit id</p>
+				<p>æ&#156;&#137;ä¸&#128;å¤©ï¼&#140;ä½ é«&#152;å&#133;´ç&#154;&#132;æ&#148;¹å®&#140;äº&#134;ä»£ç &#129;ï¼&#140;å¹¶git pushä¹&#139;å&#144;&#142;å&#143;&#145;ç&#142;°ï¼&#140;å&#147;&#142;å&#145;&#128;ï¼&#140;æ&#148;¹é&#148;&#153;å&#136;&#134;æ&#148;¯äº&#134;ã&#128;&#130;æ&#136;&#145;ç&#154;&#132;å&#136;&#134;æ&#148;¯æ&#152;¯xxxxxé&#156;&#128;è¦&#129;ä¸&#138;çº¿ç&#154;&#132;ï¼&#140;ç»&#147;æ&#158;&#156;å&#144;&#140;æ&#151;¶å&#156;¨å¼&#128;å&#143;&#145;å&#143;¦å¤&#150;ä¸&#128;ä¸ªé¡¹ç&#155;®ï¼&#140;å&#136;&#134;æ&#148;¯å&#143;«ssssssï¼&#140;è¿&#153;ä¸ªå°´å°¬ç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#140;æ&#156;&#137;æ²¡æ&#156;&#137;å&#138;&#158;æ³&#149;ä¸&#141;ç&#149;&#153;ç&#151;&#149;è¿¹ç&#154;&#132;å°&#134;ä½ ç&#154;&#132;å&#136;&#134;æ&#148;¯æ&#129;¢å¤&#141;å&#136;°git pushä¹&#139;å&#137;&#141;ç&#154;&#132;ç&#138;¶æ&#128;&#129;å&#145;¢ï¼&#159;æ&#137;&#128;è°&#147;ç&#154;&#132;æ&#151; ç&#151;&#149;æ&#152;¯æ&#140;&#135;å&#156;¨è¿&#156;ç¨&#139;ä¹&#159;æ²¡æ&#156;&#137;è®°å½&#149;ï¼&#140;æ&#150;¹æ³&#149;å¦&#130;ä¸&#139;ï¼&#154;</p>
+<p>gitä»£ç &#129;åº&#147;å&#155;&#158;æ»&#154;: æ&#140;&#135;ç&#154;&#132;æ&#152;¯å°&#134;ä»£ç &#129;åº&#147;æ&#159;&#144;å&#136;&#134;æ&#148;¯é&#128;&#128;å&#155;&#158;å&#136;°ä»¥å&#137;&#141;ç&#154;&#132;æ&#159;&#144;ä¸ªcommit id</p>
 <p><span id="more-413"></span></p>
-<p>【本地代码库回滚】：</p>
-<p>git reset –hard commit-id :回滚到commit-id，讲commit-id之后提交的commit都去除</p>
-<p>git reset –hard HEAD~3：将最近3次的提交回滚</p>
+<p>ã&#128;&#144;æ&#156;¬å&#156;°ä»£ç &#129;åº&#147;å&#155;&#158;æ»&#154;ã&#128;&#145;ï¼&#154;</p>
+<p>git reset –hard commit-id :å&#155;&#158;æ»&#154;å&#136;°commit-idï¼&#140;è®²commit-idä¹&#139;å&#144;&#142;æ&#143;&#144;äº¤ç&#154;&#132;commité&#131;½å&#142;»é&#153;¤</p>
+<p>git reset –hard HEAD~3ï¼&#154;å°&#134;æ&#156;&#128;è¿&#145;3æ¬¡ç&#154;&#132;æ&#143;&#144;äº¤å&#155;&#158;æ»&#154;</p>
 <p> </p>
-<p>【远程代码库回滚】：</p>
-<p>这个是重点要说的内容，过程比本地回滚要复杂</p>
-<p>应用场景：自动部署系统发布后发现问题，需要回滚到某一个commit，再重新发布</p>
-<p>原理：先将本地分支退回到某个commit，删除远程分支，再重新push本地分支</p>
-<p>操作步骤：</p>
-<p>1、git checkout the_branch</p>
-<p>2、git pull</p>
-<p>3、git branch the_branch_backup //备份一下这个分支当前的情况</p>
-<p>4、git reset –hard the_commit_id //把the_branch本地回滚到the_commit_id</p>
-<p>5、git push origin :the_branch //删除远程 the_branch</p>
-<p>6、git push origin the_branch //用回滚后的本地分支重新建立远程分支</p>
-<p>7、git push origin :the_branch_backup //如果前面都成功了，删除这个备份分支</p>
+<p>ã&#128;&#144;è¿&#156;ç¨&#139;ä»£ç &#129;åº&#147;å&#155;&#158;æ»&#154;ã&#128;&#145;ï¼&#154;</p>
+<p>è¿&#153;ä¸ªæ&#152;¯é&#135;&#141;ç&#130;¹è¦&#129;è¯´ç&#154;&#132;å&#134;&#133;å®¹ï¼&#140;è¿&#135;ç¨&#139;æ¯&#148;æ&#156;¬å&#156;°å&#155;&#158;æ»&#154;è¦&#129;å¤&#141;æ&#157;&#130;</p>
+<p>åº&#148;ç&#148;¨å&#156;ºæ&#153;¯ï¼&#154;è&#135;ªå&#138;¨é&#131;¨ç½²ç³»ç»&#159;å&#143;&#145;å¸&#131;å&#144;&#142;å&#143;&#145;ç&#142;°é&#151;®é¢&#152;ï¼&#140;é&#156;&#128;è¦&#129;å&#155;&#158;æ»&#154;å&#136;°æ&#159;&#144;ä¸&#128;ä¸ªcommitï¼&#140;å&#134;&#141;é&#135;&#141;æ&#150;°å&#143;&#145;å¸&#131;</p>
+<p>å&#142;&#159;ç&#144;&#134;ï¼&#154;å&#133;&#136;å°&#134;æ&#156;¬å&#156;°å&#136;&#134;æ&#148;¯é&#128;&#128;å&#155;&#158;å&#136;°æ&#159;&#144;ä¸ªcommitï¼&#140;å&#136; é&#153;¤è¿&#156;ç¨&#139;å&#136;&#134;æ&#148;¯ï¼&#140;å&#134;&#141;é&#135;&#141;æ&#150;°pushæ&#156;¬å&#156;°å&#136;&#134;æ&#148;¯</p>
+<p>æ&#147;&#141;ä½&#156;æ­¥éª¤ï¼&#154;</p>
+<p>1ã&#128;&#129;git checkout the_branch</p>
+<p>2ã&#128;&#129;git pull</p>
+<p>3ã&#128;&#129;git branch the_branch_backup //å¤&#135;ä»½ä¸&#128;ä¸&#139;è¿&#153;ä¸ªå&#136;&#134;æ&#148;¯å½&#147;å&#137;&#141;ç&#154;&#132;æ&#131;&#133;å&#134;µ</p>
+<p>4ã&#128;&#129;git reset –hard the_commit_id //æ&#138;&#138;the_branchæ&#156;¬å&#156;°å&#155;&#158;æ»&#154;å&#136;°the_commit_id</p>
+<p>5ã&#128;&#129;git push origin :the_branch //å&#136; é&#153;¤è¿&#156;ç¨&#139; the_branch</p>
+<p>6ã&#128;&#129;git push origin the_branch //ç&#148;¨å&#155;&#158;æ»&#154;å&#144;&#142;ç&#154;&#132;æ&#156;¬å&#156;°å&#136;&#134;æ&#148;¯é&#135;&#141;æ&#150;°å»ºç«&#139;è¿&#156;ç¨&#139;å&#136;&#134;æ&#148;¯</p>
+<p>7ã&#128;&#129;git push origin :the_branch_backup //å¦&#130;æ&#158;&#156;å&#137;&#141;é&#157;¢é&#131;½æ&#136;&#144;å&#138;&#159;äº&#134;ï¼&#140;å&#136; é&#153;¤è¿&#153;ä¸ªå¤&#135;ä»½å&#136;&#134;æ&#148;¯</p>
 <p> </p>
-<p>这个方法真是极秒啊</p>
-<p>参考资料：http://www.cnblogs.com/qualitysong/archive/2012/11/27/2791486.html</p>
+<p>è¿&#153;ä¸ªæ&#150;¹æ³&#149;ç&#156;&#159;æ&#152;¯æ&#158;&#129;ç§&#146;å&#149;&#138;</p>
+<p>å&#143;&#130;è&#128;&#131;èµ&#132;æ&#150;&#153;ï¼&#154;http://www.cnblogs.com/qualitysong/archive/2012/11/27/2791486.html</p>
 								</div>
 			
 		<div class="section section-blog-info">
 			<div class="row">
 				<div class="col-md-6">
-					<div class="entry-categories">分类：						<span class="label label-primary"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized">其他</a></span>					</div>
+					<div class="entry-categories">å&#136;&#134;ç±»ï¼&#154;						<span class="label label-primary"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized">å&#133;¶ä»&#150;</a></span>					</div>
 									</div>
 				
         <div class="col-md-6">
             <div class="entry-social">
-                <a target="_blank" rel="tooltip" data-original-title="分享到 Facebook" class="btn btn-just-icon btn-round btn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://huster.top/htmls/413.html">
+                <a target="_blank" rel="tooltip" data-original-title="å&#136;&#134;äº«å&#136;° Facebook" class="btn btn-just-icon btn-round btn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://huster.top/htmls/413.html">
                    <i class="fa fa-facebook"></i>
                 </a>
                 
-                <a target="_blank" rel="tooltip" data-original-title="分享至微博" class="btn btn-just-icon btn-round btn-twitter" href="https://twitter.com/home?status=%5B%E8%BD%AC%E8%BD%BD%5Dgit%E5%9C%A8git%20push%E4%B9%8B%E5%90%8E%E6%97%A0%E7%97%95%E5%9B%9E%E6%BB%9A%E5%88%B0%E6%9F%90%E4%B8%80%E6%AC%A1%E6%8F%90%E4%BA%A4%E7%9A%84%E6%96%B9%E6%B3%95%20-%20https://huster.top/htmls/413.html">
+                <a target="_blank" rel="tooltip" data-original-title="å&#136;&#134;äº«è&#135;³å¾®å&#141;&#154;" class="btn btn-just-icon btn-round btn-twitter" href="https://twitter.com/home?status=%5B%C3%A8%C2%BD%C2%AC%C3%A8%C2%BD%C2%BD%5Dgit%C3%A5%C2%9C%C2%A8git%20push%C3%A4%C2%B9%C2%8B%C3%A5%C2%90%C2%8E%C3%A6%C2%97%C2%A0%C3%A7%C2%97%C2%95%C3%A5%C2%9B%C2%9E%C3%A6%C2%BB%C2%9A%C3%A5%C2%88%C2%B0%C3%A6%C2%9F%C2%90%C3%A4%C2%B8%C2%80%C3%A6%C2%AC%C2%A1%C3%A6%C2%8F%C2%90%C3%A4%C2%BA%C2%A4%C3%A7%C2%9A%C2%84%C3%A6%C2%96%C2%B9%C3%A6%C2%B3%C2%95%20-%20https://huster.top/htmls/413.html">
                    <i class="fa fa-twitter"></i>
                 </a>
                 
-                <a target="_blank" rel="tooltip" data-original-title=" 分享到 Google+" class="btn btn-just-icon btn-round btn-google" href="https://plus.google.com/share?url=https://huster.top/htmls/413.html">
+                <a target="_blank" rel="tooltip" data-original-title=" å&#136;&#134;äº«å&#136;° Google+" class="btn btn-just-icon btn-round btn-google" href="https://plus.google.com/share?url=https://huster.top/htmls/413.html">
                    <i class="fa fa-google"></i>
                </a>
             </div>
@@ -295,12 +295,12 @@ h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in
 			<div class="row">
 				<div class="col-md-2">
 					<div class="card-avatar">
-						<a href="https://huster.top/htmls/author/admin" title="龙安_任天兵"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=100&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=200&r=g 2x" class="avatar avatar-100 photo" height="100" width="100"></a>
+						<a href="https://huster.top/htmls/author/admin" title="é¾&#153;å®&#137;_ä»»å¤©å&#133;µ"><img alt="" src="https://secure.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=100&r=g" srcset="https://secure.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=200&r=g 2x" class="avatar avatar-100 photo" height="100" width="100"></a>
 					</div>
 				</div>
 				<div class="col-md-10">
-					<h4 class="card-title">龙安_任天兵</h4>
-					<p class="description">不忘初心，方得始终!</p>
+					<h4 class="card-title">é¾&#153;å®&#137;_ä»»å¤©å&#133;µ</h4>
+					<p class="description">ä¸&#141;å¿&#152;å&#136;&#157;å¿&#131;ï¼&#140;æ&#150;¹å¾&#151;å§&#139;ç»&#136;!</p>
 				</div>
 			</div>
 		</div>
@@ -314,11 +314,11 @@ h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in
 							</div>
 			<div class="media-body">
 					<div id="respond" class="comment-respond">
-		<h3 class="hestia-title text-center">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="/htmls/413.html#respond" style="display:none;">取消回复</a></small></h3> <span class="pull-left author"> <div class="avatar"><img src="https://huster.top/wp-content/themes/hestia/assets/img/placeholder.jpg" height="64" width="64"></div> </span>			<form action="https://huster.top/wp-comments-post.php" method="post" id="commentform" class="form media-body">
-				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><div class="row"> <div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">名称</label><input id="author" name="author" class="form-control" type="text"><span class="hestia-input"></span> </div> </div>
-<div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">电子邮件</label><input id="email" name="email" class="form-control" type="email"><span class="hestia-input"></span> </div> </div>
-<div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">网站</label><input id="url" name="url" class="form-control" type="url"><span class="hestia-input"></span> </div> </div> </div>
-<div class="form-group label-floating is-empty"> <label class="control-label">在想些什么？</label><textarea id="comment" name="comment" class="form-control" rows="6" aria-required="true"></textarea><span class="hestia-input"></span> </div><p class="form-submit"><input name="submit" type="submit" id="submit" class="btn btn-primary pull-right" value="发表评论"><input type="hidden" name="comment_post_ID" value="413" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="bc97270ce0"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="81"></p>			</form>
+		<h3 class="hestia-title text-center">å&#143;&#145;è¡¨è¯&#132;è®º <small><a rel="nofollow" id="cancel-comment-reply-link" href="/htmls/413.html#respond" style="display:none;">å&#143;&#150;æ¶&#136;å&#155;&#158;å¤&#141;</a></small></h3> <span class="pull-left author"> <div class="avatar"><img src="https://huster.top/wp-content/themes/hestia/assets/img/placeholder.jpg" height="64" width="64"></div> </span>			<form action="https://huster.top/wp-comments-post.php" method="post" id="commentform" class="form media-body">
+				<p class="comment-notes"><span id="email-notes">ç&#148;µå­&#144;é&#130;®ä»¶å&#156;°å&#157;&#128;ä¸&#141;ä¼&#154;è¢«å&#133;¬å¼&#128;ã&#128;&#130;</span></p><div class="row"> <div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">å&#144;&#141;ç§°</label><input id="author" name="author" class="form-control" type="text"><span class="hestia-input"></span> </div> </div>
+<div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">ç&#148;µå­&#144;é&#130;®ä»¶</label><input id="email" name="email" class="form-control" type="email"><span class="hestia-input"></span> </div> </div>
+<div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">ç½&#145;ç«&#153;</label><input id="url" name="url" class="form-control" type="url"><span class="hestia-input"></span> </div> </div> </div>
+<div class="form-group label-floating is-empty"> <label class="control-label">å&#156;¨æ&#131;³äº&#155;ä»&#128;ä¹&#136;ï¼&#159;</label><textarea id="comment" name="comment" class="form-control" rows="6" aria-required="true"></textarea><span class="hestia-input"></span> </div><p class="form-submit"><input name="submit" type="submit" id="submit" class="btn btn-primary pull-right" value="å&#143;&#145;è¡¨è¯&#132;è®º"><input type="hidden" name="comment_post_ID" value="413" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="501c1ab7ca"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="186"></p>			</form>
 			</div>
 								</div>
 		</div>
@@ -326,185 +326,186 @@ h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in
 </div>
 		</div>
 		</div>	<div class="col-md-3 blog-sidebar-wrapper col-md-offset-1 ">
-		<aside id="secondary" class="blog-sidebar" role="complementary"><div id="recent-posts-2" class="widget widget_recent_entries">		<h5>近期文章</h5>		<ul><li>
-					<a href="https://huster.top/htmls/662.html">JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</a>
+		<aside id="secondary" class="blog-sidebar" role="complementary"><div id="recent-posts-2" class="widget widget_recent_entries">		<h5>è¿&#145;æ&#156;&#159;æ&#150;&#135;ç« </h5>		<ul><li>
+					<a href="https://huster.top/htmls/665.html">Javaå­&#151;è&#138;&#130;ç &#129;å¢&#158;å¼ºæ&#138;&#128;æ&#156;¯ç&#154;&#132;åº&#148;ç&#148;¨</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/657.html">Java类库设计之日志框架选择</a>
+					<a href="https://huster.top/htmls/662.html">JVM Sandbox æº&#144;ç &#129;å&#136;&#134;æ&#158;&#144;ï¼&#136;ä¸&#128;ï¼&#137;å&#159;ºç¡&#128;ç¯&#135;: Instrumentationå&#146;&#140;ClassFileTransformerä½&#156;ç&#148;¨</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/649.html">Java多线程知识点（下）</a>
+					<a href="https://huster.top/htmls/657.html">Javaç±»åº&#147;è®¾è®¡ä¹&#139;æ&#151;¥å¿&#151;æ¡&#134;æ&#158;¶é&#128;&#137;æ&#139;©</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/645.html">如何写代码来解决生产者消费者问题？</a>
+					<a href="https://huster.top/htmls/649.html">Javaå¤&#154;çº¿ç¨&#139;ç&#159;¥è¯&#134;ç&#130;¹ï¼&#136;ä¸&#139;ï¼&#137;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/642.html">Java多线程总结(上部分)面试题解答</a>
+					<a href="https://huster.top/htmls/645.html">å¦&#130;ä½&#149;å&#134;&#153;ä»£ç &#129;æ&#157;¥è§£å&#134;³ç&#148;&#159;äº§è&#128;&#133;æ¶&#136;è´¹è&#128;&#133;é&#151;®é¢&#152;ï¼&#159;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/637.html">细说Java的内存模型</a>
+					<a href="https://huster.top/htmls/642.html">Javaå¤&#154;çº¿ç¨&#139;æ&#128;»ç»&#147;(ä¸&#138;é&#131;¨å&#136;&#134;)é&#157;¢è¯&#149;é¢&#152;è§£ç­&#148;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/633.html">Java面试题之Java语法的基础知识</a>
+					<a href="https://huster.top/htmls/637.html">ç»&#134;è¯´Javaç&#154;&#132;å&#134;&#133;å­&#152;æ¨¡å&#158;&#139;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/629.html">Java的锁</a>
+					<a href="https://huster.top/htmls/633.html">Javaé&#157;¢è¯&#149;é¢&#152;ä¹&#139;Javaè¯­æ³&#149;ç&#154;&#132;å&#159;ºç¡&#128;ç&#159;¥è¯&#134;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
+					<a href="https://huster.top/htmls/629.html">Javaç&#154;&#132;é&#148;&#129;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/610.html">写给计算机专业毕业生的22条宝贵建议</a>
+					<a href="https://huster.top/htmls/615.html">ç&#144;&#134;è§£Javaçº¿ç¨&#139;é&#151;´ç&#154;&#132;é&#128;&#154;ä¿¡</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
+					<a href="https://huster.top/htmls/610.html">å&#134;&#153;ç»&#153;è®¡ç®&#151;æ&#156;ºä¸&#147;ä¸&#154;æ¯&#149;ä¸&#154;ç&#148;&#159;ç&#154;&#132;22æ&#157;¡å®&#157;è´µå»ºè®®</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/573.html">spring boot应用在 POST请求的Invalid CORS request的问题</a>
+					<a href="https://huster.top/htmls/599.html">tensortFlowå®&#137;è£&#133;å&#146;&#140;å¼&#128;å&#143;&#145;ç&#142;¯å¢&#131;é&#133;&#141;ç½®</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/568.html">Mac下Pip的报错问题</a>
+					<a href="https://huster.top/htmls/573.html">spring bootåº&#148;ç&#148;¨å&#156;¨ POSTè¯·æ±&#130;ç&#154;&#132;Invalid CORS requestç&#154;&#132;é&#151;®é¢&#152;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/557.html">并发编程模型(转载)</a>
+					<a href="https://huster.top/htmls/568.html">Macä¸&#139;Pipç&#154;&#132;æ&#138;¥é&#148;&#153;é&#151;®é¢&#152;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/552.html">从ThreadPoolExecutor的invokeAll方法说开去:如何等待多个并发任务结束并收集结果</a>
+					<a href="https://huster.top/htmls/557.html">å¹¶å&#143;&#145;ç¼&#150;ç¨&#139;æ¨¡å&#158;&#139;(è½¬è½½)</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/548.html">认识ExecutorCompletionService返回最快的结果</a>
+					<a href="https://huster.top/htmls/552.html">ä»&#142;ThreadPoolExecutorç&#154;&#132;invokeAllæ&#150;¹æ³&#149;è¯´å¼&#128;å&#142;»:å¦&#130;ä½&#149;ç­&#137;å¾&#133;å¤&#154;ä¸ªå¹¶å&#143;&#145;ä»»å&#138;¡ç»&#147;æ&#157;&#159;å¹¶æ&#148;¶é&#155;&#134;ç»&#147;æ&#158;&#156;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/543.html">Java里的Join的执行顺序问题</a>
+					<a href="https://huster.top/htmls/548.html">è®¤è¯&#134;ExecutorCompletionServiceè¿&#148;å&#155;&#158;æ&#156;&#128;å¿«ç&#154;&#132;ç»&#147;æ&#158;&#156;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/538.html">spring boot cache踩到的坑</a>
+					<a href="https://huster.top/htmls/543.html">Javaé&#135;&#140;ç&#154;&#132;Joinç&#154;&#132;æ&#137;§è¡&#140;é¡ºåº&#143;é&#151;®é¢&#152;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/530.html">Hessian的使用</a>
+					<a href="https://huster.top/htmls/538.html">spring boot cacheè¸©å&#136;°ç&#154;&#132;å&#157;&#145;</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/524.html">通过文件覆盖类里面的属性–一种配置文件的另类实现方式</a>
+					<a href="https://huster.top/htmls/530.html">Hessianç&#154;&#132;ä½¿ç&#148;¨</a>
 									</li>
-					</ul></div><div id="archives-2" class="widget widget_archive"><h5>文章归档</h5>		<ul><li><a href="https://huster.top/htmls/date/2019/06">2019年六月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2019/05">2019年五月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/12">2018年十二月</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2018/11">2018年十一月</a> (5)</li>
-	<li><a href="https://huster.top/htmls/date/2018/10">2018年十月</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2018/08">2018年八月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/07">2018年七月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/06">2018年六月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/04">2018年四月</a> (3)</li>
-	<li><a href="https://huster.top/htmls/date/2018/01">2018年一月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2017/10">2017年十月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2017/08">2017年八月</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2017/07">2017年七月</a> (6)</li>
-	<li><a href="https://huster.top/htmls/date/2017/06">2017年六月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2017/04">2017年四月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/12">2016年十二月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/11">2016年十一月</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2016/10">2016年十月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/06">2016年六月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/03">2016年三月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2015/11">2015年十一月</a> (4)</li>
-	<li><a href="https://huster.top/htmls/date/2015/01">2015年一月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2014/10">2014年十月</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2013/08">2013年八月</a> (4)</li>
-	<li><a href="https://huster.top/htmls/date/2013/06">2013年六月</a> (4)</li>
-	<li><a href="https://huster.top/htmls/date/2013/05">2013年五月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2013/03">2013年三月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/12">2012年十二月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/09">2012年九月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/08">2012年八月</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2012/07">2012年七月</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2012/06">2012年六月</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2012/05">2012年五月</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/04">2012年四月</a> (10)</li>
-	<li><a href="https://huster.top/htmls/date/2012/03">2012年三月</a> (8)</li>
-	<li><a href="https://huster.top/htmls/date/2010/12">2010年十二月</a> (1)</li>
-		</ul></div><div id="categories-2" class="widget widget_categories"><h5>分类目录</h5>		<ul><li class="cat-item cat-item-57"><a href="https://huster.top/htmls/category/nas-%e7%be%a4%e6%99%96">nas-群晖</a> (2)
+					</ul></div><div id="archives-2" class="widget widget_archive"><h5>æ&#150;&#135;ç« å½&#146;æ¡£</h5>		<ul><li><a href="https://huster.top/htmls/date/2019/07">2019å¹´ä¸&#131;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/06">2019å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/05">2019å¹´äº&#148;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/12">2018å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2018/11">2018å¹´å&#141;&#129;ä¸&#128;æ&#156;&#136;</a> (5)</li>
+	<li><a href="https://huster.top/htmls/date/2018/10">2018å¹´å&#141;&#129;æ&#156;&#136;</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2018/08">2018å¹´å&#133;«æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/07">2018å¹´ä¸&#131;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/06">2018å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/04">2018å¹´å&#155;&#155;æ&#156;&#136;</a> (3)</li>
+	<li><a href="https://huster.top/htmls/date/2018/01">2018å¹´ä¸&#128;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/10">2017å¹´å&#141;&#129;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/08">2017å¹´å&#133;«æ&#156;&#136;</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2017/07">2017å¹´ä¸&#131;æ&#156;&#136;</a> (6)</li>
+	<li><a href="https://huster.top/htmls/date/2017/06">2017å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/04">2017å¹´å&#155;&#155;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/12">2016å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/11">2016å¹´å&#141;&#129;ä¸&#128;æ&#156;&#136;</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2016/10">2016å¹´å&#141;&#129;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/06">2016å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/03">2016å¹´ä¸&#137;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2015/11">2015å¹´å&#141;&#129;ä¸&#128;æ&#156;&#136;</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2015/01">2015å¹´ä¸&#128;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2014/10">2014å¹´å&#141;&#129;æ&#156;&#136;</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2013/08">2013å¹´å&#133;«æ&#156;&#136;</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2013/06">2013å¹´å&#133;­æ&#156;&#136;</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2013/05">2013å¹´äº&#148;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2013/03">2013å¹´ä¸&#137;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/12">2012å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/09">2012å¹´ä¹&#157;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/08">2012å¹´å&#133;«æ&#156;&#136;</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/07">2012å¹´ä¸&#131;æ&#156;&#136;</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/06">2012å¹´å&#133;­æ&#156;&#136;</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/05">2012å¹´äº&#148;æ&#156;&#136;</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/04">2012å¹´å&#155;&#155;æ&#156;&#136;</a> (10)</li>
+	<li><a href="https://huster.top/htmls/date/2012/03">2012å¹´ä¸&#137;æ&#156;&#136;</a> (8)</li>
+	<li><a href="https://huster.top/htmls/date/2010/12">2010å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (1)</li>
+		</ul></div><div id="categories-2" class="widget widget_categories"><h5>å&#136;&#134;ç±»ç&#155;®å½&#149;</h5>		<ul><li class="cat-item cat-item-57"><a href="https://huster.top/htmls/category/nas-%e7%be%a4%e6%99%96">nas-ç¾¤æ&#153;&#150;</a> (2)
 </li>
-	<li class="cat-item cat-item-11"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7">PHP高效编程</a> (6)
-<ul class="children"><li class="cat-item cat-item-53"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php-tools">PHP的开发工具</a> (3)
+	<li class="cat-item cat-item-11"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7">PHPé«&#152;æ&#149;&#136;ç¼&#150;ç¨&#139;</a> (6)
+<ul class="children"><li class="cat-item cat-item-53"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php-tools">PHPç&#154;&#132;å¼&#128;å&#143;&#145;å·¥å&#133;·</a> (3)
 </li>
-	<li class="cat-item cat-item-6"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php%e9%82%a3%e4%ba%9b%e6%9c%89%e8%b6%a3%e7%9a%84%e4%ba%8b%e5%84%bf" title="php那些以前没注意到的，或者很少注意到事情">PHP编程</a> (3)
+	<li class="cat-item cat-item-6"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php%e9%82%a3%e4%ba%9b%e6%9c%89%e8%b6%a3%e7%9a%84%e4%ba%8b%e5%84%bf" title="phpé&#130;£äº&#155;ä»¥å&#137;&#141;æ²¡æ³¨æ&#132;&#143;å&#136;°ç&#154;&#132;ï¼&#140;æ&#136;&#150;è&#128;&#133;å¾&#136;å°&#145;æ³¨æ&#132;&#143;å&#136;°äº&#139;æ&#131;&#133;">PHPç¼&#150;ç¨&#139;</a> (3)
 </li>
 </ul></li>
 	<li class="cat-item cat-item-74"><a href="https://huster.top/htmls/category/tensortflow">TensortFlow</a> (2)
 </li>
-	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
+	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEBå®&#137;å&#133;¨</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (57)
-<ul class="children"><li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">å­¦ä¹ ç¬&#148;è®°</a> (58)
+<ul class="children"><li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1é&#152;&#133;è¯»ç¬&#148;è®°</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (34)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Javaå­¦ä¹ </a> (35)
 </li>
-	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
+	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linuxå­¦ä¹ ç¬&#148;è®°</a> (1)
 </li>
-	<li class="cat-item cat-item-23"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/%e6%9c%8d%e5%8a%a1">PHP编写服务的研究</a> (1)
+	<li class="cat-item cat-item-23"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/%e6%9c%8d%e5%8a%a1">PHPç¼&#150;å&#134;&#153;æ&#156;&#141;å&#138;¡ç&#154;&#132;ç &#148;ç©¶</a> (1)
 </li>
-	<li class="cat-item cat-item-40"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/rfc793-tcp%e6%8e%a7%e5%88%b6%e5%8d%8f%e8%ae%ae">RFC793-TCP控制协议</a> (1)
+	<li class="cat-item cat-item-40"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/rfc793-tcp%e6%8e%a7%e5%88%b6%e5%8d%8f%e8%ae%ae">RFC793-TCPæ&#142;§å&#136;¶å&#141;&#143;è®®</a> (1)
 </li>
-	<li class="cat-item cat-item-56"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/spring%e6%96%87%e6%a1%a3">Spring文档</a> (3)
+	<li class="cat-item cat-item-56"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/spring%e6%96%87%e6%a1%a3">Springæ&#150;&#135;æ¡£</a> (3)
 </li>
-	<li class="cat-item cat-item-1"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized">其他</a> (5)
+	<li class="cat-item cat-item-1"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized">å&#133;¶ä»&#150;</a> (5)
 </li>
 </ul></li>
-	<li class="cat-item cat-item-16"><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84">系统架构学习</a> (13)
+	<li class="cat-item cat-item-16"><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84">ç³»ç»&#159;æ&#158;¶æ&#158;&#132;å­¦ä¹ </a> (13)
 </li>
-	<li class="cat-item cat-item-75"><a href="https://huster.top/htmls/category/%e8%bd%ac%e8%bd%bd">转载</a> (2)
+	<li class="cat-item cat-item-75"><a href="https://huster.top/htmls/category/%e8%bd%ac%e8%bd%bd">è½¬è½½</a> (2)
 </li>
-		</ul></div><div id="tag_cloud-2" class="widget widget_tag_cloud"><h5>标签</h5><div class="tagcloud"><a href="https://huster.top/htmls/tag/apache" class="tag-cloud-link tag-link-31 tag-link-position-1" style="font-size: 8pt;" aria-label="Apache (1个项目)">Apache</a>
-<a href="https://huster.top/htmls/tag/codesniffer" class="tag-cloud-link tag-link-12 tag-link-position-2" style="font-size: 8pt;" aria-label="CodeSniffer (1个项目)">CodeSniffer</a>
-<a href="https://huster.top/htmls/tag/ecache" class="tag-cloud-link tag-link-67 tag-link-position-3" style="font-size: 8pt;" aria-label="Ecache (1个项目)">Ecache</a>
-<a href="https://huster.top/htmls/tag/globals" class="tag-cloud-link tag-link-10 tag-link-position-4" style="font-size: 8pt;" aria-label="GLOBALS (1个项目)">GLOBALS</a>
-<a href="https://huster.top/htmls/tag/hessian" class="tag-cloud-link tag-link-73 tag-link-position-5" style="font-size: 8pt;" aria-label="Hessian (1个项目)">Hessian</a>
-<a href="https://huster.top/htmls/tag/http1-1" class="tag-cloud-link tag-link-22 tag-link-position-6" style="font-size: 15.905882352941pt;" aria-label="HTTP/1.1 (5个项目)">HTTP/1.1</a>
-<a href="https://huster.top/htmls/tag/httpurlconnection" class="tag-cloud-link tag-link-71 tag-link-position-7" style="font-size: 8pt;" aria-label="HttpURLConnection (1个项目)">HttpURLConnection</a>
-<a href="https://huster.top/htmls/tag/http%e8%af%b7%e6%b1%82" class="tag-cloud-link tag-link-70 tag-link-position-8" style="font-size: 8pt;" aria-label="Http请求 (1个项目)">Http请求</a>
-<a href="https://huster.top/htmls/tag/ioc" class="tag-cloud-link tag-link-17 tag-link-position-9" style="font-size: 8pt;" aria-label="IoC (1个项目)">IoC</a>
-<a href="https://huster.top/htmls/tag/java" class="tag-cloud-link tag-link-58 tag-link-position-10" style="font-size: 22pt;" aria-label="Java (13个项目)">Java</a>
-<a href="https://huster.top/htmls/tag/java-spring-petclinic" class="tag-cloud-link tag-link-55 tag-link-position-11" style="font-size: 8pt;" aria-label="Java spring-petclinic (1个项目)">Java spring-petclinic</a>
-<a href="https://huster.top/htmls/tag/log4j" class="tag-cloud-link tag-link-68 tag-link-position-12" style="font-size: 8pt;" aria-label="log4j (1个项目)">log4j</a>
-<a href="https://huster.top/htmls/tag/logback" class="tag-cloud-link tag-link-69 tag-link-position-13" style="font-size: 8pt;" aria-label="logback (1个项目)">logback</a>
-<a href="https://huster.top/htmls/tag/maven" class="tag-cloud-link tag-link-64 tag-link-position-14" style="font-size: 8pt;" aria-label="Maven (1个项目)">Maven</a>
-<a href="https://huster.top/htmls/tag/maven-shade-plugin" class="tag-cloud-link tag-link-66 tag-link-position-15" style="font-size: 8pt;" aria-label="maven-shade-plugin (1个项目)">maven-shade-plugin</a>
-<a href="https://huster.top/htmls/tag/mybatis" class="tag-cloud-link tag-link-72 tag-link-position-16" style="font-size: 8pt;" aria-label="mybatis (1个项目)">mybatis</a>
-<a href="https://huster.top/htmls/tag/php" class="tag-cloud-link tag-link-7 tag-link-position-17" style="font-size: 12.941176470588pt;" aria-label="PHP (3个项目)">PHP</a>
-<a href="https://huster.top/htmls/tag/plugin" class="tag-cloud-link tag-link-65 tag-link-position-18" style="font-size: 8pt;" aria-label="Plugin (1个项目)">Plugin</a>
-<a href="https://huster.top/htmls/tag/register_globals" class="tag-cloud-link tag-link-9 tag-link-position-19" style="font-size: 8pt;" aria-label="register_globals (1个项目)">register_globals</a>
-<a href="https://huster.top/htmls/tag/rfc" class="tag-cloud-link tag-link-20 tag-link-position-20" style="font-size: 8pt;" aria-label="RFC (1个项目)">RFC</a>
-<a href="https://huster.top/htmls/tag/rfc2616" class="tag-cloud-link tag-link-21 tag-link-position-21" style="font-size: 8pt;" aria-label="RFC2616 (1个项目)">RFC2616</a>
-<a href="https://huster.top/htmls/tag/serializable" class="tag-cloud-link tag-link-59 tag-link-position-22" style="font-size: 8pt;" aria-label="Serializable (1个项目)">Serializable</a>
-<a href="https://huster.top/htmls/tag/spring" class="tag-cloud-link tag-link-63 tag-link-position-23" style="font-size: 10.964705882353pt;" aria-label="Spring (2个项目)">Spring</a>
-<a href="https://huster.top/htmls/tag/spring-boot" class="tag-cloud-link tag-link-62 tag-link-position-24" style="font-size: 10.964705882353pt;" aria-label="Spring boot (2个项目)">Spring boot</a>
-<a href="https://huster.top/htmls/tag/thinkphp" class="tag-cloud-link tag-link-34 tag-link-position-25" style="font-size: 8pt;" aria-label="ThinkPHP (1个项目)">ThinkPHP</a>
-<a href="https://huster.top/htmls/tag/vsftp" class="tag-cloud-link tag-link-43 tag-link-position-26" style="font-size: 8pt;" aria-label="VSFTP (1个项目)">VSFTP</a>
-<a href="https://huster.top/htmls/tag/wordpress%e6%ba%90%e7%a0%81" class="tag-cloud-link tag-link-8 tag-link-position-27" style="font-size: 10.964705882353pt;" aria-label="wordpress源码 (2个项目)">wordpress源码</a>
-<a href="https://huster.top/htmls/tag/zeromq" class="tag-cloud-link tag-link-29 tag-link-position-28" style="font-size: 14.588235294118pt;" aria-label="ZeroMQ (4个项目)">ZeroMQ</a>
-<a href="https://huster.top/htmls/tag/zmq" class="tag-cloud-link tag-link-41 tag-link-position-29" style="font-size: 12.941176470588pt;" aria-label="zmq (3个项目)">zmq</a>
-<a href="https://huster.top/htmls/tag/zmq%e7%9a%84%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-42 tag-link-position-30" style="font-size: 8pt;" aria-label="ZMQ的学习笔记 (1个项目)">ZMQ的学习笔记</a>
-<a href="https://huster.top/htmls/tag/%e4%ba%92%e8%81%94%e7%bd%91" class="tag-cloud-link tag-link-14 tag-link-position-31" style="font-size: 12.941176470588pt;" aria-label="互联网 (3个项目)">互联网</a>
-<a href="https://huster.top/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86" class="tag-cloud-link tag-link-61 tag-link-position-32" style="font-size: 8pt;" aria-label="动态代理 (1个项目)">动态代理</a>
-<a href="https://huster.top/htmls/tag/%e5%8f%8c%e5%bc%95%e5%8f%b7" class="tag-cloud-link tag-link-36 tag-link-position-33" style="font-size: 8pt;" aria-label="双引号 (1个项目)">双引号</a>
-<a href="https://huster.top/htmls/tag/%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="tag-cloud-link tag-link-78 tag-link-position-34" style="font-size: 10.964705882353pt;" aria-label="多线程 (2个项目)">多线程</a>
-<a href="https://huster.top/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-28 tag-link-position-35" style="font-size: 8pt;" aria-label="学习笔记 (1个项目)">学习笔记</a>
-<a href="https://huster.top/htmls/tag/%e5%ae%89%e5%85%a8" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 8pt;" aria-label="安全 (1个项目)">安全</a>
-<a href="https://huster.top/htmls/tag/%e6%8a%80%e6%9c%af%e5%80%ba%e5%8a%a1" class="tag-cloud-link tag-link-30 tag-link-position-37" style="font-size: 8pt;" aria-label="技术债务 (1个项目)">技术债务</a>
-<a href="https://huster.top/htmls/tag/%e6%97%a5%e5%bf%97" class="tag-cloud-link tag-link-32 tag-link-position-38" style="font-size: 10.964705882353pt;" aria-label="日志 (2个项目)">日志</a>
-<a href="https://huster.top/htmls/tag/%e6%9d%83%e5%88%a9" class="tag-cloud-link tag-link-49 tag-link-position-39" style="font-size: 8pt;" aria-label="权利 (1个项目)">权利</a>
-<a href="https://huster.top/htmls/tag/%e6%9f%b4%e9%9d%99" class="tag-cloud-link tag-link-48 tag-link-position-40" style="font-size: 8pt;" aria-label="柴静 (1个项目)">柴静</a>
-<a href="https://huster.top/htmls/tag/%e6%b3%9b%e5%9e%8b" class="tag-cloud-link tag-link-60 tag-link-position-41" style="font-size: 8pt;" aria-label="泛型 (1个项目)">泛型</a>
-<a href="https://huster.top/htmls/tag/%e6%b5%8f%e8%a7%88%e5%99%a8" class="tag-cloud-link tag-link-15 tag-link-position-42" style="font-size: 8pt;" aria-label="浏览器 (1个项目)">浏览器</a>
-<a href="https://huster.top/htmls/tag/%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-13 tag-link-position-43" style="font-size: 8pt;" aria-label="系统设计 (1个项目)">系统设计</a>
-<a href="https://huster.top/htmls/tag/%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-47 tag-link-position-44" style="font-size: 8pt;" aria-label="读书笔记 (1个项目)">读书笔记</a>
-<a href="https://huster.top/htmls/tag/%e8%bd%af%e4%bb%b6%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-18 tag-link-position-45" style="font-size: 8pt;" aria-label="软件设计 (1个项目)">软件设计</a></div>
-</div><div id="linkcat-2" class="widget widget_links"><h5>链接表</h5>
-	<ul class="xoxo blogroll"><li><a href="http://blog.sina.com.cn/rentb" rel="me" title="原来的博客地址" target="_blank">博客老地址</a></li>
-<li><a href="http://blog.csdn.net/heiyeshuwu" rel="colleague" target="_blank">黑夜路人</a></li>
+		</ul></div><div id="tag_cloud-2" class="widget widget_tag_cloud"><h5>æ &#135;ç­¾</h5><div class="tagcloud"><a href="https://huster.top/htmls/tag/apache" class="tag-cloud-link tag-link-31 tag-link-position-1" style="font-size: 8pt;" aria-label="Apache (1ä¸ªé¡¹ç&#155;®)">Apache</a>
+<a href="https://huster.top/htmls/tag/codesniffer" class="tag-cloud-link tag-link-12 tag-link-position-2" style="font-size: 8pt;" aria-label="CodeSniffer (1ä¸ªé¡¹ç&#155;®)">CodeSniffer</a>
+<a href="https://huster.top/htmls/tag/ecache" class="tag-cloud-link tag-link-67 tag-link-position-3" style="font-size: 8pt;" aria-label="Ecache (1ä¸ªé¡¹ç&#155;®)">Ecache</a>
+<a href="https://huster.top/htmls/tag/globals" class="tag-cloud-link tag-link-10 tag-link-position-4" style="font-size: 8pt;" aria-label="GLOBALS (1ä¸ªé¡¹ç&#155;®)">GLOBALS</a>
+<a href="https://huster.top/htmls/tag/hessian" class="tag-cloud-link tag-link-73 tag-link-position-5" style="font-size: 8pt;" aria-label="Hessian (1ä¸ªé¡¹ç&#155;®)">Hessian</a>
+<a href="https://huster.top/htmls/tag/http1-1" class="tag-cloud-link tag-link-22 tag-link-position-6" style="font-size: 15.905882352941pt;" aria-label="HTTP/1.1 (5ä¸ªé¡¹ç&#155;®)">HTTP/1.1</a>
+<a href="https://huster.top/htmls/tag/httpurlconnection" class="tag-cloud-link tag-link-71 tag-link-position-7" style="font-size: 8pt;" aria-label="HttpURLConnection (1ä¸ªé¡¹ç&#155;®)">HttpURLConnection</a>
+<a href="https://huster.top/htmls/tag/http%e8%af%b7%e6%b1%82" class="tag-cloud-link tag-link-70 tag-link-position-8" style="font-size: 8pt;" aria-label="Httpè¯·æ±&#130; (1ä¸ªé¡¹ç&#155;®)">Httpè¯·æ±&#130;</a>
+<a href="https://huster.top/htmls/tag/ioc" class="tag-cloud-link tag-link-17 tag-link-position-9" style="font-size: 8pt;" aria-label="IoC (1ä¸ªé¡¹ç&#155;®)">IoC</a>
+<a href="https://huster.top/htmls/tag/java" class="tag-cloud-link tag-link-58 tag-link-position-10" style="font-size: 22pt;" aria-label="Java (13ä¸ªé¡¹ç&#155;®)">Java</a>
+<a href="https://huster.top/htmls/tag/java-spring-petclinic" class="tag-cloud-link tag-link-55 tag-link-position-11" style="font-size: 8pt;" aria-label="Java spring-petclinic (1ä¸ªé¡¹ç&#155;®)">Java spring-petclinic</a>
+<a href="https://huster.top/htmls/tag/log4j" class="tag-cloud-link tag-link-68 tag-link-position-12" style="font-size: 8pt;" aria-label="log4j (1ä¸ªé¡¹ç&#155;®)">log4j</a>
+<a href="https://huster.top/htmls/tag/logback" class="tag-cloud-link tag-link-69 tag-link-position-13" style="font-size: 8pt;" aria-label="logback (1ä¸ªé¡¹ç&#155;®)">logback</a>
+<a href="https://huster.top/htmls/tag/maven" class="tag-cloud-link tag-link-64 tag-link-position-14" style="font-size: 8pt;" aria-label="Maven (1ä¸ªé¡¹ç&#155;®)">Maven</a>
+<a href="https://huster.top/htmls/tag/maven-shade-plugin" class="tag-cloud-link tag-link-66 tag-link-position-15" style="font-size: 8pt;" aria-label="maven-shade-plugin (1ä¸ªé¡¹ç&#155;®)">maven-shade-plugin</a>
+<a href="https://huster.top/htmls/tag/mybatis" class="tag-cloud-link tag-link-72 tag-link-position-16" style="font-size: 8pt;" aria-label="mybatis (1ä¸ªé¡¹ç&#155;®)">mybatis</a>
+<a href="https://huster.top/htmls/tag/php" class="tag-cloud-link tag-link-7 tag-link-position-17" style="font-size: 12.941176470588pt;" aria-label="PHP (3ä¸ªé¡¹ç&#155;®)">PHP</a>
+<a href="https://huster.top/htmls/tag/plugin" class="tag-cloud-link tag-link-65 tag-link-position-18" style="font-size: 8pt;" aria-label="Plugin (1ä¸ªé¡¹ç&#155;®)">Plugin</a>
+<a href="https://huster.top/htmls/tag/register_globals" class="tag-cloud-link tag-link-9 tag-link-position-19" style="font-size: 8pt;" aria-label="register_globals (1ä¸ªé¡¹ç&#155;®)">register_globals</a>
+<a href="https://huster.top/htmls/tag/rfc" class="tag-cloud-link tag-link-20 tag-link-position-20" style="font-size: 8pt;" aria-label="RFC (1ä¸ªé¡¹ç&#155;®)">RFC</a>
+<a href="https://huster.top/htmls/tag/rfc2616" class="tag-cloud-link tag-link-21 tag-link-position-21" style="font-size: 8pt;" aria-label="RFC2616 (1ä¸ªé¡¹ç&#155;®)">RFC2616</a>
+<a href="https://huster.top/htmls/tag/serializable" class="tag-cloud-link tag-link-59 tag-link-position-22" style="font-size: 8pt;" aria-label="Serializable (1ä¸ªé¡¹ç&#155;®)">Serializable</a>
+<a href="https://huster.top/htmls/tag/spring" class="tag-cloud-link tag-link-63 tag-link-position-23" style="font-size: 10.964705882353pt;" aria-label="Spring (2ä¸ªé¡¹ç&#155;®)">Spring</a>
+<a href="https://huster.top/htmls/tag/spring-boot" class="tag-cloud-link tag-link-62 tag-link-position-24" style="font-size: 10.964705882353pt;" aria-label="Spring boot (2ä¸ªé¡¹ç&#155;®)">Spring boot</a>
+<a href="https://huster.top/htmls/tag/thinkphp" class="tag-cloud-link tag-link-34 tag-link-position-25" style="font-size: 8pt;" aria-label="ThinkPHP (1ä¸ªé¡¹ç&#155;®)">ThinkPHP</a>
+<a href="https://huster.top/htmls/tag/vsftp" class="tag-cloud-link tag-link-43 tag-link-position-26" style="font-size: 8pt;" aria-label="VSFTP (1ä¸ªé¡¹ç&#155;®)">VSFTP</a>
+<a href="https://huster.top/htmls/tag/wordpress%e6%ba%90%e7%a0%81" class="tag-cloud-link tag-link-8 tag-link-position-27" style="font-size: 10.964705882353pt;" aria-label="wordpressæº&#144;ç &#129; (2ä¸ªé¡¹ç&#155;®)">wordpressæº&#144;ç &#129;</a>
+<a href="https://huster.top/htmls/tag/zeromq" class="tag-cloud-link tag-link-29 tag-link-position-28" style="font-size: 14.588235294118pt;" aria-label="ZeroMQ (4ä¸ªé¡¹ç&#155;®)">ZeroMQ</a>
+<a href="https://huster.top/htmls/tag/zmq" class="tag-cloud-link tag-link-41 tag-link-position-29" style="font-size: 12.941176470588pt;" aria-label="zmq (3ä¸ªé¡¹ç&#155;®)">zmq</a>
+<a href="https://huster.top/htmls/tag/zmq%e7%9a%84%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-42 tag-link-position-30" style="font-size: 8pt;" aria-label="ZMQç&#154;&#132;å­¦ä¹ ç¬&#148;è®° (1ä¸ªé¡¹ç&#155;®)">ZMQç&#154;&#132;å­¦ä¹ ç¬&#148;è®°</a>
+<a href="https://huster.top/htmls/tag/%e4%ba%92%e8%81%94%e7%bd%91" class="tag-cloud-link tag-link-14 tag-link-position-31" style="font-size: 12.941176470588pt;" aria-label="äº&#146;è&#129;&#148;ç½&#145; (3ä¸ªé¡¹ç&#155;®)">äº&#146;è&#129;&#148;ç½&#145;</a>
+<a href="https://huster.top/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86" class="tag-cloud-link tag-link-61 tag-link-position-32" style="font-size: 8pt;" aria-label="å&#138;¨æ&#128;&#129;ä»£ç&#144;&#134; (1ä¸ªé¡¹ç&#155;®)">å&#138;¨æ&#128;&#129;ä»£ç&#144;&#134;</a>
+<a href="https://huster.top/htmls/tag/%e5%8f%8c%e5%bc%95%e5%8f%b7" class="tag-cloud-link tag-link-36 tag-link-position-33" style="font-size: 8pt;" aria-label="å&#143;&#140;å¼&#149;å&#143;· (1ä¸ªé¡¹ç&#155;®)">å&#143;&#140;å¼&#149;å&#143;·</a>
+<a href="https://huster.top/htmls/tag/%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="tag-cloud-link tag-link-78 tag-link-position-34" style="font-size: 10.964705882353pt;" aria-label="å¤&#154;çº¿ç¨&#139; (2ä¸ªé¡¹ç&#155;®)">å¤&#154;çº¿ç¨&#139;</a>
+<a href="https://huster.top/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-28 tag-link-position-35" style="font-size: 8pt;" aria-label="å­¦ä¹ ç¬&#148;è®° (1ä¸ªé¡¹ç&#155;®)">å­¦ä¹ ç¬&#148;è®°</a>
+<a href="https://huster.top/htmls/tag/%e5%ae%89%e5%85%a8" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 8pt;" aria-label="å®&#137;å&#133;¨ (1ä¸ªé¡¹ç&#155;®)">å®&#137;å&#133;¨</a>
+<a href="https://huster.top/htmls/tag/%e6%8a%80%e6%9c%af%e5%80%ba%e5%8a%a1" class="tag-cloud-link tag-link-30 tag-link-position-37" style="font-size: 8pt;" aria-label="æ&#138;&#128;æ&#156;¯å&#128;ºå&#138;¡ (1ä¸ªé¡¹ç&#155;®)">æ&#138;&#128;æ&#156;¯å&#128;ºå&#138;¡</a>
+<a href="https://huster.top/htmls/tag/%e6%97%a5%e5%bf%97" class="tag-cloud-link tag-link-32 tag-link-position-38" style="font-size: 10.964705882353pt;" aria-label="æ&#151;¥å¿&#151; (2ä¸ªé¡¹ç&#155;®)">æ&#151;¥å¿&#151;</a>
+<a href="https://huster.top/htmls/tag/%e6%9d%83%e5%88%a9" class="tag-cloud-link tag-link-49 tag-link-position-39" style="font-size: 8pt;" aria-label="æ&#157;&#131;å&#136;© (1ä¸ªé¡¹ç&#155;®)">æ&#157;&#131;å&#136;©</a>
+<a href="https://huster.top/htmls/tag/%e6%9f%b4%e9%9d%99" class="tag-cloud-link tag-link-48 tag-link-position-40" style="font-size: 8pt;" aria-label="æ&#159;´é&#157;&#153; (1ä¸ªé¡¹ç&#155;®)">æ&#159;´é&#157;&#153;</a>
+<a href="https://huster.top/htmls/tag/%e6%b3%9b%e5%9e%8b" class="tag-cloud-link tag-link-60 tag-link-position-41" style="font-size: 8pt;" aria-label="æ³&#155;å&#158;&#139; (1ä¸ªé¡¹ç&#155;®)">æ³&#155;å&#158;&#139;</a>
+<a href="https://huster.top/htmls/tag/%e6%b5%8f%e8%a7%88%e5%99%a8" class="tag-cloud-link tag-link-15 tag-link-position-42" style="font-size: 8pt;" aria-label="æµ&#143;è§&#136;å&#153;¨ (1ä¸ªé¡¹ç&#155;®)">æµ&#143;è§&#136;å&#153;¨</a>
+<a href="https://huster.top/htmls/tag/%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-13 tag-link-position-43" style="font-size: 8pt;" aria-label="ç³»ç»&#159;è®¾è®¡ (1ä¸ªé¡¹ç&#155;®)">ç³»ç»&#159;è®¾è®¡</a>
+<a href="https://huster.top/htmls/tag/%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-47 tag-link-position-44" style="font-size: 8pt;" aria-label="è¯»ä¹¦ç¬&#148;è®° (1ä¸ªé¡¹ç&#155;®)">è¯»ä¹¦ç¬&#148;è®°</a>
+<a href="https://huster.top/htmls/tag/%e8%bd%af%e4%bb%b6%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-18 tag-link-position-45" style="font-size: 8pt;" aria-label="è½¯ä»¶è®¾è®¡ (1ä¸ªé¡¹ç&#155;®)">è½¯ä»¶è®¾è®¡</a></div>
+</div><div id="linkcat-2" class="widget widget_links"><h5>é&#147;¾æ&#142;¥è¡¨</h5>
+	<ul class="xoxo blogroll"><li><a href="http://blog.sina.com.cn/rentb" rel="me" title="å&#142;&#159;æ&#157;¥ç&#154;&#132;å&#141;&#154;å®¢å&#156;°å&#157;&#128;" target="_blank">å&#141;&#154;å®¢è&#128;&#129;å&#156;°å&#157;&#128;</a></li>
+<li><a href="http://blog.csdn.net/heiyeshuwu" rel="colleague" target="_blank">é»&#145;å¤&#156;è·¯äºº</a></li>
 
 	</ul></div>
-<div id="recent-comments-2" class="widget widget_recent_comments"><h5>近期评论</h5><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/645.html" rel="external nofollow" class="url">如何写代码来解决生产者消费者问题？ – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/615.html#comment-24314">理解Java线程间的通信</a>》</li><li class="recentcomments"><span class="comment-author-link">龙安_任天兵</span>发表在《<a href="https://huster.top/htmls/557.html#comment-24313">并发编程模型(转载)</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Java多线程总结(上部分)面试题解答 – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/637.html#comment-24312">细说Java的内存模型</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Java多线程总结(上部分)面试题解答 – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/557.html#comment-24311">并发编程模型(转载)</a>》</li><li class="recentcomments"><span class="comment-author-link">shanchao</span>发表在《<a href="https://huster.top/htmls/573.html#comment-24309">spring boot应用在 POST请求的Invalid CORS request的问题</a>》</li><li class="recentcomments"><span class="comment-author-link">adimin</span>发表在《<a href="https://huster.top/htmls/462.html#comment-24307">介绍spring的两个接口ApplicationContextAware和ApplicationListener</a>》</li><li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a href="https://huster.top/htmls/462.html#comment-24306">介绍spring的两个接口ApplicationContextAware和ApplicationListener</a>》</li><li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a href="https://huster.top/htmls/472.html#comment-24276">Spring boot访问js、css、图片(img)访问404无法访问的问题</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="http://kailin.li" rel="external nofollow" class="url">kailin</a></span>发表在《<a href="https://huster.top/htmls/472.html#comment-24275">Spring boot访问js、css、图片(img)访问404无法访问的问题</a>》</li><li class="recentcomments"><span class="comment-author-link">基地华科男</span>发表在《<a href="https://huster.top/about-me#comment-24271">关于我</a>》</li></ul></div>		</aside></div>
+<div id="recent-comments-2" class="widget widget_recent_comments"><h5>è¿&#145;æ&#156;&#159;è¯&#132;è®º</h5><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/645.html" rel="external nofollow" class="url">å¦&#130;ä½&#149;å&#134;&#153;ä»£ç &#129;æ&#157;¥è§£å&#134;³ç&#148;&#159;äº§è&#128;&#133;æ¶&#136;è´¹è&#128;&#133;é&#151;®é¢&#152;ï¼&#159; – ä¸&#137;ä¸¤å¸¦èµ°</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/615.html#comment-24314">ç&#144;&#134;è§£Javaçº¿ç¨&#139;é&#151;´ç&#154;&#132;é&#128;&#154;ä¿¡</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">é¾&#153;å®&#137;_ä»»å¤©å&#133;µ</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/557.html#comment-24313">å¹¶å&#143;&#145;ç¼&#150;ç¨&#139;æ¨¡å&#158;&#139;(è½¬è½½)</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Javaå¤&#154;çº¿ç¨&#139;æ&#128;»ç»&#147;(ä¸&#138;é&#131;¨å&#136;&#134;)é&#157;¢è¯&#149;é¢&#152;è§£ç­&#148; – ä¸&#137;ä¸¤å¸¦èµ°</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/637.html#comment-24312">ç»&#134;è¯´Javaç&#154;&#132;å&#134;&#133;å­&#152;æ¨¡å&#158;&#139;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Javaå¤&#154;çº¿ç¨&#139;æ&#128;»ç»&#147;(ä¸&#138;é&#131;¨å&#136;&#134;)é&#157;¢è¯&#149;é¢&#152;è§£ç­&#148; – ä¸&#137;ä¸¤å¸¦èµ°</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/557.html#comment-24311">å¹¶å&#143;&#145;ç¼&#150;ç¨&#139;æ¨¡å&#158;&#139;(è½¬è½½)</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">shanchao</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/573.html#comment-24309">spring bootåº&#148;ç&#148;¨å&#156;¨ POSTè¯·æ±&#130;ç&#154;&#132;Invalid CORS requestç&#154;&#132;é&#151;®é¢&#152;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">adimin</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/462.html#comment-24307">ä»&#139;ç»&#141;springç&#154;&#132;ä¸¤ä¸ªæ&#142;¥å&#143;£ApplicationContextAwareå&#146;&#140;ApplicationListener</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">å&#140;¿å&#144;&#141;</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/462.html#comment-24306">ä»&#139;ç»&#141;springç&#154;&#132;ä¸¤ä¸ªæ&#142;¥å&#143;£ApplicationContextAwareå&#146;&#140;ApplicationListener</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">å&#140;¿å&#144;&#141;</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/472.html#comment-24276">Spring bootè®¿é&#151;®jsã&#128;&#129;cssã&#128;&#129;å&#155;¾ç&#137;&#135;(img)è®¿é&#151;®404æ&#151; æ³&#149;è®¿é&#151;®ç&#154;&#132;é&#151;®é¢&#152;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link"><a href="http://kailin.li" rel="external nofollow" class="url">kailin</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/472.html#comment-24275">Spring bootè®¿é&#151;®jsã&#128;&#129;cssã&#128;&#129;å&#155;¾ç&#137;&#135;(img)è®¿é&#151;®404æ&#151; æ³&#149;è®¿é&#151;®ç&#154;&#132;é&#151;®é¢&#152;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">å&#159;ºå&#156;°å&#141;&#142;ç§&#145;ç&#148;·</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/about-me#comment-24271">å&#133;³äº&#142;æ&#136;&#145;</a>ã&#128;&#139;</li></ul></div>		</aside></div>
 			</div>
 </article></div>
 	</div>
@@ -514,41 +515,41 @@ h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">
-							<h2 class="hestia-title text-center">相关文章</h2>
+							<h2 class="hestia-title text-center">ç&#155;¸å&#133;³æ&#150;&#135;ç« </h2>
 							<div class="row">
 																	<div class="col-md-4">
 										<div class="card card-blog">
 																						<div class="content">
-												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" title="查看Java学习中的全部文章">Java学习</a> </h6>
+												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" title="æ&#159;¥ç&#156;&#139;Javaå­¦ä¹ ä¸­ç&#154;&#132;å&#133;¨é&#131;¨æ&#150;&#135;ç« ">Javaå­¦ä¹ </a> </h6>
 												<h4 class="card-title">
-													<a class="blog-item-title-link" href="https://huster.top/htmls/504.html" title="如何在Mybatis注解中使用枚举类型" rel="bookmark">
-														如何在Mybatis注解中使用枚举类型													</a>
+													<a class="blog-item-title-link" href="https://huster.top/htmls/504.html" title="å¦&#130;ä½&#149;å&#156;¨Mybatisæ³¨è§£ä¸­ä½¿ç&#148;¨æ&#158;&#154;ä¸¾ç±»å&#158;&#139;" rel="bookmark">
+														å¦&#130;ä½&#149;å&#156;¨Mybatisæ³¨è§£ä¸­ä½¿ç&#148;¨æ&#158;&#154;ä¸¾ç±»å&#158;&#139;													</a>
 												</h4>
-												<p class="card-description">当下我们都在使用spring boot，配合注解的使用，我们彻底抛弃了<a class="moretag" href="https://huster.top/htmls/504.html"> 阅读更多…</a></p>
+												<p class="card-description">å½&#147;ä¸&#139;æ&#136;&#145;ä»¬é&#131;½å&#156;¨ä½¿ç&#148;¨spring bootï¼&#140;é&#133;&#141;å&#144;&#136;æ³¨è§£ç&#154;&#132;ä½¿ç&#148;¨ï¼&#140;æ&#136;&#145;ä»¬å½»åº&#149;æ&#138;&#155;å¼&#131;äº&#134;<a class="moretag" href="https://huster.top/htmls/504.html"> é&#152;&#133;è¯»æ&#155;´å¤&#154;…</a></p>
 											</div>
 										</div>
 									</div>
 																	<div class="col-md-4">
 										<div class="card card-blog">
 																						<div class="content">
-												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized" title="查看其他中的全部文章">其他</a> </h6>
+												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized" title="æ&#159;¥ç&#156;&#139;å&#133;¶ä»&#150;ä¸­ç&#154;&#132;å&#133;¨é&#131;¨æ&#150;&#135;ç« ">å&#133;¶ä»&#150;</a> </h6>
 												<h4 class="card-title">
-													<a class="blog-item-title-link" href="https://huster.top/htmls/446.html" title="Spring boot的controller无法生效404的原因" rel="bookmark">
-														Spring boot的controller无法生效404的原因													</a>
+													<a class="blog-item-title-link" href="https://huster.top/htmls/446.html" title="Spring bootç&#154;&#132;controlleræ&#151; æ³&#149;ç&#148;&#159;æ&#149;&#136;404ç&#154;&#132;å&#142;&#159;å&#155; " rel="bookmark">
+														Spring bootç&#154;&#132;controlleræ&#151; æ³&#149;ç&#148;&#159;æ&#149;&#136;404ç&#154;&#132;å&#142;&#159;å&#155; 													</a>
 												</h4>
-												<p class="card-description">我记得我不止一次遇到这个问题了，按照要求定义了controller，始<a class="moretag" href="https://huster.top/htmls/446.html"> 阅读更多…</a></p>
+												<p class="card-description">æ&#136;&#145;è®°å¾&#151;æ&#136;&#145;ä¸&#141;æ­¢ä¸&#128;æ¬¡é&#129;&#135;å&#136;°è¿&#153;ä¸ªé&#151;®é¢&#152;äº&#134;ï¼&#140;æ&#140;&#137;ç&#133;§è¦&#129;æ±&#130;å®&#154;ä¹&#137;äº&#134;controllerï¼&#140;å§&#139;<a class="moretag" href="https://huster.top/htmls/446.html"> é&#152;&#133;è¯»æ&#155;´å¤&#154;…</a></p>
 											</div>
 										</div>
 									</div>
 																	<div class="col-md-4">
 										<div class="card card-blog">
 																						<div class="content">
-												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized" title="查看其他中的全部文章">其他</a> </h6>
+												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized" title="æ&#159;¥ç&#156;&#139;å&#133;¶ä»&#150;ä¸­ç&#154;&#132;å&#133;¨é&#131;¨æ&#150;&#135;ç« ">å&#133;¶ä»&#150;</a> </h6>
 												<h4 class="card-title">
-													<a class="blog-item-title-link" href="https://huster.top/htmls/430.html" title="Spring Boot 在Tomcat容器中的启动办法" rel="bookmark">
-														Spring Boot 在Tomcat容器中的启动办法													</a>
+													<a class="blog-item-title-link" href="https://huster.top/htmls/430.html" title="Spring Boot å&#156;¨Tomcatå®¹å&#153;¨ä¸­ç&#154;&#132;å&#144;¯å&#138;¨å&#138;&#158;æ³&#149;" rel="bookmark">
+														Spring Boot å&#156;¨Tomcatå®¹å&#153;¨ä¸­ç&#154;&#132;å&#144;¯å&#138;¨å&#138;&#158;æ³&#149;													</a>
 												</h4>
-												<p class="card-description">使用Spring boot的官方tutorials可以非常方便的完成s<a class="moretag" href="https://huster.top/htmls/430.html"> 阅读更多…</a></p>
+												<p class="card-description">ä½¿ç&#148;¨Spring bootç&#154;&#132;å®&#152;æ&#150;¹tutorialså&#143;¯ä»¥é&#157;&#158;å¸¸æ&#150;¹ä¾¿ç&#154;&#132;å®&#140;æ&#136;&#144;s<a class="moretag" href="https://huster.top/htmls/430.html"> é&#152;&#133;è¯»æ&#155;´å¤&#154;…</a></p>
 											</div>
 										</div>
 									</div>
@@ -564,14 +565,14 @@ h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in
 			<div class="row">
 				<div class="col-md-4"><div id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script src="https://s22.cnzz.com/z_stat.php?id=3943131&web_id=3943131" language="JavaScript"></script></div></div></div>			</div>
 		</div>
-		<hr><div class="hestia-bottom-footer-content"><ul class="footer-menu pull-left"><li class="page_item page-item-50"><a href="https://huster.top/books">那些年，那些书</a></li>
-<li class="page_item page-item-52"><a href="https://huster.top/music">那些年，那些音乐</a></li>
-<li class="page_item page-item-54"><a href="https://huster.top/movie">那些年，那些电影</a></li>
-<li class="page_item page-item-60"><a href="https://huster.top/myworkspac">我的开发环境</a></li>
-<li class="page_item page-item-5"><a href="https://huster.top/about-me">关于我</a></li>
-<li class="page_item page-item-89"><a href="https://huster.top/notebook">留言本</a></li>
+		<hr><div class="hestia-bottom-footer-content"><ul class="footer-menu pull-left"><li class="page_item page-item-50"><a href="https://huster.top/books">é&#130;£äº&#155;å¹´ï¼&#140;é&#130;£äº&#155;ä¹¦</a></li>
+<li class="page_item page-item-52"><a href="https://huster.top/music">é&#130;£äº&#155;å¹´ï¼&#140;é&#130;£äº&#155;é&#159;³ä¹&#144;</a></li>
+<li class="page_item page-item-54"><a href="https://huster.top/movie">é&#130;£äº&#155;å¹´ï¼&#140;é&#130;£äº&#155;ç&#148;µå½±</a></li>
+<li class="page_item page-item-60"><a href="https://huster.top/myworkspac">æ&#136;&#145;ç&#154;&#132;å¼&#128;å&#143;&#145;ç&#142;¯å¢&#131;</a></li>
+<li class="page_item page-item-5"><a href="https://huster.top/about-me">å&#133;³äº&#142;æ&#136;&#145;</a></li>
+<li class="page_item page-item-89"><a href="https://huster.top/notebook">ç&#149;&#153;è¨&#128;æ&#156;¬</a></li>
 </ul><div class="copyright pull-right">
-				Hestia |由<a href="https://themeisle.com" rel="nofollow">ThemeIsle</a>开发			</div>
+				Hestia |ç&#148;±<a href="https://themeisle.com" rel="nofollow">ThemeIsle</a>å¼&#128;å&#143;&#145;			</div>
 			</div>			</div>
 					</footer></div>
 	</div>
