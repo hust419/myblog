@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>RFC793-TCP控制协议 &#8211; 三两带走</title>
+	<atom:link href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/rfc793-tcp%e6%8e%a7%e5%88%b6%e5%8d%8f%e8%ae%ae/feed" rel="self" type="application/rss+xml" />
+	<link>https://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Wed, 10 Jul 2019 11:03:48 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>RFC793-TCP控制协议 &#8211; 三两带走</title>
+	<link>https://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>TCP控制协议（一）</title>
+		<link>https://huster.top/htmls/248.html</link>
+		<comments>https://huster.top/htmls/248.html#respond</comments>
+		<pubDate>Mon, 04 Jun 2012 09:36:50 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[RFC793-TCP控制协议]]></category>
+
+		<guid isPermaLink="false">http://www.longant.com/?p=248</guid>
+		<description><![CDATA[The TCP is assumed to be a module in an operating <a class="moretag" href="https://huster.top/htmls/248.html"> 阅读更多&#8230;</a>]]></description>
+				<content:encoded><![CDATA[<div>
+<pre>The TCP is assumed to be a module in an operating system.  The users access the TCP much like they would access the file system.</pre>
+<pre>TCP是操作系统内置的一种模型，他的目的是为了让像访问本地文件系统一样，访问网络数据。</pre>
+<p><span id="more-248"></span></p>
+<pre></pre>
+<pre>The TCP/user interface provides for calls made by the user on the TCP to OPEN or CLOSE a connection, to SEND or RECEIVE data, or to obtain
+ STATUS about a connection</pre>
+<pre>TCP的接口为了让用户去打开、关闭一个连接，发送、接受数据或是去了解当前的访问状态
+
+</pre>
+<p><img src="https://public.bay.livefilestore.com/y1pcrGzTIhnAf8qJX7savsrrifn1KKcbiUJxnF2oVKmajKaE4V-B7oXbSl_oSxkGFyC3erhC0RNMxPYaGperIrPHw/2%201.JPG?psid=1" alt="" /></p>
+<pre>这个图很好的展现了 TCP所在的位置</pre>
+<pre>It is expected that the TCP will be able to support higher level protocols efficiently.  It should be easy to interface higher level protocols like the ARPANET Telnet or AUTODIN II THP to the TCP.</pre>
+<pre>他要求tcp要能够很easy的同上层的应用层协议进行“交流”。</pre>
+<pre>A socket address might be reserved for access to a "Look-Up" service which would return the specific socket at which a newly created service would be provided.</pre>
+<pre>Look up的意思是这个端口将会用于未来的服务</pre>
+<pre></pre>
+<pre>The procedures to establish connections utilize the synchronize (SYN) control flag and involves an exchange of three messages.  This exchange has been termed a three-way hand shake [3].</pre>
+<pre>这个规程通过SYN的标识来进行连接，包含了三次信息交换，这种交换就是大名鼎鼎的三次握手。</pre>
+<pre>The data that flows on a connection may be thought of as a stream of octets.</pre>
+<pre>数据通过Stream来进行传输，这就是Socket编程里常用的流。。</pre>
+<pre> The purpose of push function and the PUSH flag is to push data through from the sending user to the receiving user.  It does not provide a record service.</pre>
+<pre>Not all TCP modules will necessarily function in a multilevel secure environment; some may be limited to unclassified use only, and others may operate at only one security level and compartment.</pre>
+<pre>接口函数有不同的安全级别</pre>
+<pre>Transmission is made reliable via the use of sequence numbers and
+  acknowledgments. 通过一个序列号，tcp保证了数据的可靠性，当然发送端不负责保证数据的完整性，这个由接收端的tcp来做。</pre>
+<pre> To govern the flow of data between TCPs, a flow control mechanism is employed.  The receiving TCP reports a "window" to the sending TCP.This window specifies the number of octets, starting with the acknowledgment number, that the receiving TCP is currently prepared to receive.</pre>
+</div>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/248.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>
