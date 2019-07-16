@@ -9,10 +9,10 @@
 
 <channel>
 	<title>Spring boot &#8211; 三两带走</title>
-	<atom:link href="http://rentb.vicp.net/htmls/tag/spring-boot/feed" rel="self" type="application/rss+xml" />
-	<link>http://huster.top/</link>
+	<atom:link href="https://huster.top/htmls/tag/spring-boot/feed" rel="self" type="application/rss+xml" />
+	<link>https://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 10 Jul 2019 11:03:48 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
@@ -21,7 +21,7 @@
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
 	<title>Spring boot &#8211; 三两带走</title>
-	<link>http://huster.top/</link>
+	<link>https://huster.top/</link>
 	<width>32</width>
 	<height>32</height>
 </image> 
@@ -35,7 +35,7 @@
 		<category><![CDATA[Spring]]></category>
 		<category><![CDATA[Spring boot]]></category>
 
-		<guid isPermaLink="false">http://huster.top/?p=573</guid>
+		<guid isPermaLink="false">https://huster.top/?p=573</guid>
 		<description><![CDATA[继上一篇遇到的Invalid CORS request之后，很久没有遇到这个问题了，今天又遇到了这个<a class="moretag" href="https://huster.top/htmls/573.html"> 阅读更多&#8230;</a>]]></description>
 				<content:encoded><![CDATA[<p>继上一篇遇到的Invalid CORS request之后，很久没有遇到这个问题了，今天又遇到了这个问题。上次问题是因为nginx没有把host信息代理给后面的java应用导致的，https://huster.top/htmls/511.html，而这次居然不是这个问题，检查了下 proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;该有的配置都有。</p>
 <p>这就奇怪了，就是为什么呢？</p>
@@ -166,7 +166,7 @@ public class CORS {
 <p>&nbsp;</p>
 <p>通过调试发现，因为GET的时候并没有在header头里带origin，所以在方法的第一行就返回了。</p>
 <p>为了验证我的想法，我在get的时候，也通过postman发送了header，结果出现了post一样的报错，证实了我的想法。</p>
-<p><a href="http://huster.top/wp-content/uploads/2018/08/图片.png"><img class="alignnone size-full wp-image-575" src="http://huster.top/wp-content/uploads/2018/08/图片.png" alt="" width="1120" height="361" srcset="https://huster.top/wp-content/uploads/2018/08/图片.png 1120w, https://huster.top/wp-content/uploads/2018/08/图片-300x97.png 300w, https://huster.top/wp-content/uploads/2018/08/图片-768x248.png 768w, https://huster.top/wp-content/uploads/2018/08/图片-1024x330.png 1024w" sizes="(max-width: 1120px) 100vw, 1120px" /></a></p>
+<p><a href="https://huster.top/wp-content/uploads/2018/08/图片.png"><img class="alignnone size-full wp-image-575" src="https://huster.top/wp-content/uploads/2018/08/图片.png" alt="" width="1120" height="361" srcset="https://huster.top/wp-content/uploads/2018/08/图片.png 1120w, https://huster.top/wp-content/uploads/2018/08/图片-300x97.png 300w, https://huster.top/wp-content/uploads/2018/08/图片-768x248.png 768w, https://huster.top/wp-content/uploads/2018/08/图片-1024x330.png 1024w" sizes="(max-width: 1120px) 100vw, 1120px" /></a></p>
 <p>&nbsp;</p>
 <ol>
 <li>为什么相同的域名还会出现跨域的问题</li>
@@ -198,13 +198,13 @@ if you want to enable cell logic, you must change your proxy_pass conf to follow
 		<category><![CDATA[Java]]></category>
 		<category><![CDATA[Spring boot]]></category>
 
-		<guid isPermaLink="false">http://huster.top/?p=472</guid>
+		<guid isPermaLink="false">https://huster.top/?p=472</guid>
 		<description><![CDATA[问题： 今天在使用spring boot的时候，我按照spring boot的要求将css、js、图<a class="moretag" href="https://huster.top/htmls/472.html"> 阅读更多&#8230;</a>]]></description>
 				<content:encoded><![CDATA[<p>问题： 今天在使用spring boot的时候，我按照spring boot的要求将css、js、图片放在规定的/src/main/resource/public/js下面，却怎么也访问不到，报的是404错误，在查找资料无果后，经过反复的实验，终于找到了问题的解决方法.</p>
 <p><span id="more-472"></span></p>
 <p>首先网上的解决方法千篇一律的都是怎么使用spring boot static content，一点有价值的信息也没有。偶尔有几个老外遇到了404的问题，也是因为他的资源放错了目录，有的放到了templates下面，有的直接放到了resource下面，这跟我遇到的情况都不相同。</p>
 <p>我的目录结构如下：</p>
-<p><a href="http://huster.top/wp-content/uploads/2016/12/mulu.png"><img class="alignnone size-full wp-image-473" src="http://huster.top/wp-content/uploads/2016/12/mulu.png" alt="mulu" width="348" height="287" srcset="https://huster.top/wp-content/uploads/2016/12/mulu.png 348w, https://huster.top/wp-content/uploads/2016/12/mulu-300x247.png 300w" sizes="(max-width: 348px) 100vw, 348px" /></a></p>
+<p><a href="https://huster.top/wp-content/uploads/2016/12/mulu.png"><img class="alignnone size-full wp-image-473" src="https://huster.top/wp-content/uploads/2016/12/mulu.png" alt="mulu" width="348" height="287" srcset="https://huster.top/wp-content/uploads/2016/12/mulu.png 348w, https://huster.top/wp-content/uploads/2016/12/mulu-300x247.png 300w" sizes="(max-width: 348px) 100vw, 348px" /></a></p>
 <p>按照道理来说，是没问题的，但是访问时候却是404，我好奇怪，于是将public改成static，还是不行。</p>
 <p>接着，我从spring boot的官网，重新生成了一个新的项目，也是添加的这样的目录结构，访问确实正常的，那么就可以肯定是某个地方配置或者是冲突导致的，我先怀疑是引入的某个jar包导致的冲突，尤其是mybatis的引入，以及@MapperScan(&#8220;huster.top.mapper&#8221;)的配置（具体原因是因为观察到info信息）于是我将正常的pom.xml拷贝过去，结果不行，把MapperScan去掉也不行，把ComponentScan也同时去掉还是不行&#8230;</p>
 <p>然后我观察到正常的时候，有输出这样的info信息:</p>
