@@ -1,265 +1,93 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>HTTP/1.1é&#152;&#133;è¯»ä¹&#139;è¯·æ±&#130; – ä¸&#137;ä¸¤å¸¦èµ°</title><link rel="amphtml" href="https://huster.top/htmls/163.html/amp"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//fonts.googleapis.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="hestia-clients-bar-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/companion-legacy/assets/css/hestia/clients-bar.css" type="text/css" media="all"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="bootstrap-css" href="https://huster.top/wp-content/themes/hestia/assets/bootstrap/css/bootstrap.min.css" type="text/css" media="all"><link rel="stylesheet" id="orfeo_parent-css" href="https://huster.top/wp-content/themes/hestia/style.css" type="text/css" media="all"><style id="orfeo_parent-inline-css" type="text/css">
-.hestia-pricing .hestia-table-one .card-pricing .category { color: #f5593d; }.hestia-pricing .hestia-table-two .card-pricing { background-color: #f5593d; }.pagination .nav-links .page-numbers { color: #f5593d; border-color: #f5593d; }.pagination .nav-links .page-numbers.current { border-color: #f5593d; }.pagination .nav-links .page-numbers:hover { background-color: #f5593d; }.pagination .nav-links .page-numbers:hover { border-color: #f5593d; }.woocommerce-pagination ul.page-numbers .page-numbers { color: #f5593d; border-color: #f5593d; } .woocommerce-pagination ul.page-numbers li > span.current { border-color: #f5593d !important; }.woocommerce-pagination ul.page-numbers .page-numbers:hover { background-color: #f5593d; }.woocommerce-pagination ul.page-numbers .page-numbers:hover { border-color: #f5593d; }.entry-categories .label { background-color: #f5593d;}.woocommerce .star-rating { color: #f5593d; }.woocommerce div.product p.stars span a:before { color: #f5593d; }.woocommerce-cart table.shop_table button { 
-		    background-color: #f5593d !important;
-		    border-color: #f5593d !important; 
-        }.woocommerce-cart table.shop_table button:hover { 
-		    background-color: #f5593d !important; 
-		    border-color: #f5593d !important;
-        }.woocommerce-page .woocommerce-message { background-color: #f5593d; }.track_order input[type=submit] { background-color: #f5593d; }.track_order input[type=submit]:hover { background-color: #f5593d; }div[id^=woocommerce_product_tag_cloud].widget a { background-color: #f5593d; }.woocommerce.widget_shopping_cart .buttons > a.button { background-color: #f5593d; }.woocommerce.widget_shopping_cart .buttons > a.button:hover { background-color: #f5593d; }
-</style><link rel="stylesheet" id="hestia-font-sizes-css" href="https://huster.top/wp-content/themes/hestia/assets/css/font-sizes.min.css" type="text/css" media="all"><link rel="stylesheet" id="font-awesome-css" href="https://huster.top/wp-content/themes/hestia/assets/font-awesome/css/font-awesome.min.css" type="text/css" media="all"><link rel="stylesheet" id="hestia_style-css" href="https://huster.top/wp-content/themes/orfeo/style.css" type="text/css" media="all"><style id="hestia_style-inline-css" type="text/css">
-.hestia-top-bar, .hestia-top-bar .widget.widget_shopping_cart .cart_list {
-			background-color: #363537
+<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>HTTP/1.1阅读之请求 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/163.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
+	    
+		body.page-template-builder-fullwidth.elementor-page,
+		body.page-template-builder-fullwidth-std.elementor-page {
+			background: transparent;
 		}
-		.hestia-top-bar .widget .label-floating input[type=search]:-webkit-autofill {
-			-webkit-box-shadow: inset 0 0 0px 9999px #363537
-		}.hestia-top-bar, .hestia-top-bar .widget .label-floating input[type=search], .hestia-top-bar .widget.widget_search form.form-group:before, .hestia-top-bar .widget.widget_product_search form.form-group:before, .hestia-top-bar .widget.widget_shopping_cart:before {
-			color: #ffffff
-		} 
-		.hestia-top-bar .widget .label-floating input[type=search]{
-			-webkit-text-fill-color:#ffffff !important 
-		}.hestia-top-bar a, .hestia-top-bar .top-bar-nav li a {
-			color: #ffffff
-		}.hestia-top-bar a:hover, .hestia-top-bar .top-bar-nav li a:hover {
-			color: #eeeeee
+		.page-template-builder-fullwidth-std .site {
+			margin: 0;
 		}
+		.page-template-builder-fullwidth .elementor-page,
+        .page-template-builder-fullwidth-std .elementor-page {
+	        overflow: hidden;
+        }
+		.page-template-builder-fullwidth .full-width,
+        .page-template-builder-fullwidth-std .full-width {
+	        width: 100%;
+        }
+        .page-template-builder-fullwidth .site-inner,
+        .page-template-builder-fullwidth-std .site-inner {
+            max-width: 100%;
+        }
+        .page-template-builder-fullwidth .site-content,
+        .page-template-builder-fullwidth-std .site-content {
+            padding: 0;
+        }
+        .page-template-builder-fullwidth header#masthead,
+        .page-template-builder-fullwidth footer#colophon,
+        .page-template-builder-fullwidth-std header#masthead,
+        .page-template-builder-fullwidth-std footer#colophon {
+	        margin: 0 auto;
+	        max-width: 1320px;
+        } 
+        .page-template-builder-fullwidth .entry-content,
+        .page-template-builder-fullwidth-std .entry-content {
+	        margin-right: auto;
+	        margin-left: auto;
+        }
+        @media screen and (min-width: 56.875em) {
+	        .admin-bar .anchor-menu {
+		        top: 20px;
+	        }	
+			.admin-bar .anchor-menu-fixed.anchor-menu, .admin-bar .anchor-menu-fixed.elementor-widget-wp-widget-nav_menu {
+				top: 54px !important;
+			}			
+			.page-template-builder-fullwidth .entry-content,
+            .page-template-builder-fullwidth-std .entry-content	{
+	            margin-right: auto;
+	            margin-left: auto;
+	        }
+        }
+        @media screen and (min-width: 44.375em) {	        
+			.page-template-builder-fullwidth .entry-content,
+            .page-template-builder-fullwidth-std .entry-content {
+	            margin-right: auto;;
+	        }
+        }
 	
-		a, 
-		.navbar .dropdown-menu li:hover > a,
-		.navbar .dropdown-menu li:focus > a,
-		.navbar .dropdown-menu li:active > a,
-		.navbar .navbar-nav > li .dropdown-menu li:hover > a,
-		body:not(.home) .navbar-default .navbar-nav > .active:not(.btn) > a,
-		body:not(.home) .navbar-default .navbar-nav > .active:not(.btn) > a:hover,
-		body:not(.home) .navbar-default .navbar-nav > .active:not(.btn) > a:focus,
-		a:hover, 
-		.card-blog a.moretag:hover, 
-		.card-blog a.more-link:hover, 
-		.widget a:hover {
-		    color:#f5593d;
-		}
-		
-		.pagination span.current, .pagination span.current:focus, .pagination span.current:hover {
-			border-color:#f5593d
-		}
-		
-		button,
-		button:hover,
-		.woocommerce .track_order button[type="submit"],     
-		.woocommerce .track_order button[type="submit"]:hover,     
-		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit,
-		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit:hover,
-		input[type="button"],
-		input[type="button"]:hover,
-		input[type="submit"],
-		input[type="submit"]:hover,
-		input#searchsubmit, 
-		.pagination span.current, 
-		.pagination span.current:focus, 
-		.pagination span.current:hover,
-		.btn.btn-primary,
-		.btn.btn-primary:link,
-		.btn.btn-primary:hover, 
-		.btn.btn-primary:focus, 
-		.btn.btn-primary:active, 
-		.btn.btn-primary.active, 
-		.btn.btn-primary.active:focus, 
-		.btn.btn-primary.active:hover,
-		.btn.btn-primary:active:hover, 
-		.btn.btn-primary:active:focus, 
-		.btn.btn-primary:active:hover,
-		.hestia-sidebar-open.btn.btn-rose,
-		.hestia-sidebar-close.btn.btn-rose,
-		.hestia-sidebar-open.btn.btn-rose:hover,
-		.hestia-sidebar-close.btn.btn-rose:hover,
-		.hestia-sidebar-open.btn.btn-rose:focus,
-		.hestia-sidebar-close.btn.btn-rose:focus,
-		.label.label-primary,
-		.hestia-work .portfolio-item:nth-child(6n+1) .label,
-		.nav-cart .nav-cart-content .widget .buttons .button{
-		    background-color: #f5593d;
-		}
-		
-		@media (max-width: 768px) { 
-	
-			.navbar-default .navbar-nav>li>a:hover,
-			.navbar-default .navbar-nav>li>a:focus,
-			.navbar .navbar-nav .dropdown .dropdown-menu li a:hover,
-			.navbar .navbar-nav .dropdown .dropdown-menu li a:focus,
-			.navbar button.navbar-toggle:hover,
-			.navbar .navbar-nav li:hover > a i {
-			    color: #f5593d;
-			}
-		}
-		
-		body:not(.woocommerce-page) button:not([class^="fl-"]):not(.hestia-scroll-to-top):not(.navbar-toggle),
-		body:not(.woocommerce-page) .button:not([class^="fl-"]):not(hestia-scroll-to-top):not(.navbar-toggle):not(.add_to_cart_button),
-		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit,
-		input[type="submit"], 
-		input[type="button"], 
-		.btn.btn-primary,
-		.widget_product_search button[type="submit"],
-		.hestia-sidebar-open.btn.btn-rose,
-		.hestia-sidebar-close.btn.btn-rose {
-		    -webkit-box-shadow: 0 2px 2px 0 rgba(245,89,61,0.14),0 3px 1px -2px rgba(245,89,61,0.2),0 1px 5px 0 rgba(245,89,61,0.12);
-		    box-shadow: 0 2px 2px 0 rgba(245,89,61,0.14),0 3px 1px -2px rgba(245,89,61,0.2),0 1px 5px 0 rgba(245,89,61,0.12);
-		}
-		
-		.card .header-primary, .card .content-primary {
-		    background: #f5593d;
-		}
-		
-		body:not(.woocommerce-page) .button:not([class^="fl-"]):not(.hestia-scroll-to-top):not(.navbar-toggle):not(.add_to_cart_button):hover,
-		body:not(.woocommerce-page) button:not([class^="fl-"]):not(.hestia-scroll-to-top):not(.navbar-toggle):hover,
-		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit:hover,
-		input[type="submit"]:hover,
-		input[type="button"]:hover,
-		input#searchsubmit:hover, 
-		.widget_product_search button[type="submit"]:hover,
-		.pagination span.current, 
-		.btn.btn-primary:hover, 
-		.btn.btn-primary:focus, 
-		.btn.btn-primary:active, 
-		.btn.btn-primary.active, 
-		.btn.btn-primary:active:focus, 
-		.btn.btn-primary:active:hover, 
-		.hestia-sidebar-open.btn.btn-rose:hover,
-		.hestia-sidebar-close.btn.btn-rose:hover,
-		.pagination span.current:hover{
-			-webkit-box-shadow: 0 14px 26px -12pxrgba(245,89,61,0.42),0 4px 23px 0 rgba(0,0,0,0.12),0 8px 10px -5px rgba(245,89,61,0.2);
-		    box-shadow: 0 14px 26px -12px rgba(245,89,61,0.42),0 4px 23px 0 rgba(0,0,0,0.12),0 8px 10px -5px rgba(245,89,61,0.2);
-			color: #fff;
-		}
-		
-		.form-group.is-focused .form-control {
-		background-image: -webkit-gradient(linear,left top, left bottom,from(#f5593d),to(#f5593d)),-webkit-gradient(linear,left top, left bottom,from(#d2d2d2),to(#d2d2d2));
-			background-image: -webkit-linear-gradient(#f5593d),to(#f5593d),-webkit-linear-gradient(#d2d2d2,#d2d2d2);
-			background-image: linear-gradient(#f5593d),to(#f5593d),linear-gradient(#d2d2d2,#d2d2d2);
-		}
-		
-		.navbar:not(.navbar-transparent) li:not(.btn):hover > a,
-		.navbar li.on-section > a, 
-		.navbar.full-screen-menu.navbar-transparent li:not(.btn):hover > a,
-		.navbar.full-screen-menu .navbar-toggle:hover,
-		.navbar:not(.navbar-transparent) .nav-cart:hover, 
-		.navbar:not(.navbar-transparent) .hestia-toggle-search:hover {
-				color:#f5593d}
-		
-		.header-filter-gradient { 
-			background: linear-gradient(45deg, rgba(81,188,218,1) 0%, rgb(147,216,197) 100%); 
-		} 
-.btn.btn-primary:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item), input[type="submit"]:not(.search-submit), body:not(.woocommerce-account) .woocommerce .button.woocommerce-Button, .woocommerce .product button.button, .woocommerce .product button.button.alt, .woocommerce .product #respond input#submit, .woocommerce-cart .blog-post .woocommerce .cart-collaterals .cart_totals .checkout-button, .woocommerce-checkout #payment #place_order, .woocommerce-account.woocommerce-page button.button, .woocommerce .track_order button[type="submit"], .nav-cart .nav-cart-content .widget .buttons .button, .woocommerce a.button.wc-backward, body.woocommerce .wccm-catalog-item a.button, body.woocommerce a.wccm-button.button, form.woocommerce-form-coupon button.button, div.wpforms-container .wpforms-form button[type=submit].wpforms-submit, div.woocommerce a.button.alt, div.woocommerce table.my_account_orders .button, .btn.colored-button, .btn.btn-left, .btn.btn-right, .btn:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item):not(.hestia-sidebar-open):not(.hestia-sidebar-close){ padding-top:15px;  padding-bottom:15px;  padding-left:33px;  padding-right:33px; }
-.btn.btn-primary:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item), input[type="submit"]:not(.search-submit), body:not(.woocommerce-account) .woocommerce .button.woocommerce-Button, .woocommerce .product button.button, .woocommerce .product button.button.alt, .woocommerce .product #respond input#submit, .woocommerce-cart .blog-post .woocommerce .cart-collaterals .cart_totals .checkout-button, .woocommerce-checkout #payment #place_order, .woocommerce-account.woocommerce-page button.button, .woocommerce .track_order button[type="submit"], .nav-cart .nav-cart-content .widget .buttons .button, .woocommerce a.button.wc-backward, body.woocommerce .wccm-catalog-item a.button, body.woocommerce a.wccm-button.button, form.woocommerce-form-coupon button.button, div.wpforms-container .wpforms-form button[type=submit].wpforms-submit, div.woocommerce a.button.alt, div.woocommerce table.my_account_orders .button, input[type="submit"].search-submit, .hestia-view-cart-wrapper .added_to_cart.wc-forward, .woocommerce-product-search button, .woocommerce-cart .actions .button, #secondary div[id^=woocommerce_price_filter] .button, .woocommerce div[id^=woocommerce_widget_cart].widget .buttons .button, .searchform input[type=submit], .searchform button, .search-form:not(.media-toolbar-primary) input[type=submit], .search-form:not(.media-toolbar-primary) button, .woocommerce-product-search input[type=submit], .btn.colored-button, .btn.btn-left, .btn.btn-right, .btn:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item):not(.hestia-sidebar-open):not(.hestia-sidebar-close){border-radius:3px;}
-h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in-content , .info-title, .card-title,
-		.page-header.header-small .hestia-title, .page-header.header-small .title, .widget h5, .hestia-title, 
-		.title, .card-title, .info-title, .footer-brand, .footer-big h4, .footer-big h5, .media .media-heading, 
-		.carousel h1.hestia-title, .carousel h2.title, 
-		.carousel span.sub-title, .woocommerce.single-product h1.product_title, .woocommerce section.related.products h2, .hestia-about h1, .hestia-about h2, .hestia-about h3, .hestia-about h4, .hestia-about h5 {
-			font-family: Montserrat;
-		}
-		body, ul, .tooltip-inner {
-			font-family: Montserrat;
-		}
+</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-163 single-format-standard">
+<div id="page" class="site">
+	<div class="site-inner">
+		<a class="skip-link screen-reader-text" href="#content">跳至内容</a>
 
-			.home.blog .hestia-blogs {
-				background-color: #fff !important;
-			}
-		
-			.woocommerce-checkout #hestia-checkout-coupon .woocommerce-message,
-			.woocommerce-checkout #hestia-checkout-coupon .woocommerce-error {
-				margin-left: auto;
-				margin-right: auto;
-			}
-		
-			.btn,
-			button,
-			.button {
-				box-shadow: none !important;
-			}
-			
-			.btn:hover,
-			button:hover,
-			.button:hover {
-				opacity: 0.75;
-			}
-		
-			.carousel .buttons .btn-primary + .btn-right {
-				margin-left: 15px;
-			}		
-			.carousel .buttons .btn,
-			.carousel .buttons .btn-right {
-				margin: 15px;
-			}
-		
-			.carousel .hestia-big-title-content .hestia-title {
-				font-weight: 800;
-			}
-			.carousel .hestia-big-title-content .sub-title {
-				font-family: inherit;
-				font-size: 19px;
-				font-weight: 300;
-				line-height: 26px;
-				margin: 0 0 8px;
-			}
-			.carousel .hestia-big-title-content .buttons .btn,
-			.carousel .hestia-big-title-content .buttons .btn-right {
-				border-radius: 30px;
-				font-family: inherit;
-				font-size: 14px;
-				font-weight: 600;
-				line-height: 24px;
-				padding: 11px 30px;
-			}
-			.carousel .hestia-big-title-content .buttons .btn-right {
-				background-color: transparent;
-				border: 2px solid #fff;
-				padding: 9px 28px;
-			}
-		
+		<header id="masthead" class="site-header" role="banner"><div class="site-header-main">
+				<div class="site-branding">
+					
+											<p class="site-title"><a href="https://huster.top/" rel="home">三两带走</a></p>
+											<p class="site-description">(任天兵)龙安的博客</p>
+									</div>
 
-		.page-template-builder-fullwidth-std .header > .elementor {
-			padding-top: 70px;
-		}
+							</div>
 
-</style><link rel="stylesheet" id="hestia_fonts-css" href="https://fonts.googleapis.com/css?family=Roboto+Slab%3A400%2C700&subset=latin%2Clatin-ext&ver=2.0.4" type="text/css" media="all"><link rel="stylesheet" id="hestia-google-font-montserrat-css" href="//fonts.googleapis.com/css?family=Montserrat%3A300%2C400%2C500%2C700&subset=latin&ver=4.9.10" type="text/css" media="all"><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-163 single-format-standard blog-post header-layout-default">
-	<div class="wrapper post-163 post type-post status-publish format-standard hentry category-http1-1 category-28 tag-http1-1 tag-28 default ">
-		<header class="header "><nav class="navbar navbar-default navbar-fixed-top  hestia_left navbar-not-transparent"><div class="container">
-						<div class="navbar-header">
-			<div class="title-logo-wrapper">
-				<a class="navbar-brand" href="https://huster.top/" title="ä¸&#137;ä¸¤å¸¦èµ°">
-					<p>ä¸&#137;ä¸¤å¸¦èµ°</p></a>
-			</div>
-								<div class="navbar-toggle-wrapper">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navigation">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="sr-only">å&#136;&#135;æ&#141;¢å¯¼è&#136;ª</span>
-			</button>
-					</div>
-				</div>
-					</div>
-					</nav><div style="display: none"></div>		</header><div id="primary" class="boxed-layout-header page-header header-small" data-parallax="active"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1 text-center"><h1 class="hestia-title entry-title">HTTP/1.1é&#152;&#133;è¯»ä¹&#139;è¯·æ±&#130;</h1><h4 class="author">äº&#142;<time class="date updated published" datetime="2012-04-16T19:13:40+00:00">2012 å¹´ 4 æ&#156;&#136; 16 æ&#151;¥</time>ç&#148;±<a href="https://huster.top/htmls/author/admin" class="vcard author"><strong class="fn">é¾&#153;å®&#137;_ä»»å¤©å&#133;µ</strong></a>å&#143;&#145;å¸&#131;</h4></div></div></div><div class="header-filter header-filter-gradient"></div></div>
-<div class="main  main-raised ">
-	<div class="blog-post blog-post-wrapper">
-		<div class="container">
-			<article id="post-163" class="section section-text"><div class="row">
-				<div class="col-md-8 single-post-container" data-layout="sidebar-right">
-			<div class="single-post-wrap">
-				<p>5.1 è¯·æ±&#130;æ¶&#136;æ&#129;¯ç&#154;&#132;æ&#158;&#132;æ&#136;&#144;</p>
-<p>å&#156;¨ä¸&#138;ä¸&#128;ç« ï¼&#140;æ&#136;&#145;ä»¬ç&#159;¥é&#129;&#147;ä¸&#128;ä¸ªè¯·æ±&#130;ç&#154;&#132;æ¶&#136;æ&#129;¯åº&#148;è¯¥ç&#148;±ä»¥ä¸&#139;å&#135; é&#131;¨å&#136;&#134;ç»&#132;æ&#136;&#144;ï¼&#154;</p>
+					</header><div id="content" class="site-content">
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main"><article id="post-163" class="post-163 post type-post status-publish format-standard hentry category-http1-1 category-28 tag-http1-1 tag-28"><header class="entry-header"><h1 class="entry-title">HTTP/1.1阅读之请求</h1>	</header><div class="entry-content">
+		<p>5.1 请求消息的构成</p>
+<p>在上一章，我们知道一个请求的消息应该由以下几部分组成：</p>
 <pre> Request       = Request-Line              ; Section 5.1
                  *(( general-header        ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.5" rel="xref">4.5</a>
                  | request-header         ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.3" rel="xref">5.3</a>
                  | entity-header ) CRLF)  ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec7.html#sec7.1" rel="xref">7.1</a>
                         CRLF
                  [ message-body ]          ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.3" rel="xref">4.3</a>
-ä»&#150;ä»¬æ&#152;¯è¯·æ±&#130;å¤´ï¼&#136;ç&#148;±è¯·æ±&#130;è¡&#140;ã&#128;&#129;ä¸&#128;è&#136;¬å¤´ã&#128;&#129;è¯·æ±&#130;å¤´å&#146;&#140;ä¿¡æ&#129;¯å¤´ï¼&#137;+ä¿¡æ&#129;¯ä¸»ä½&#147;æ&#158;&#132;æ&#136;&#144;ã&#128;&#130;æ&#136;&#145;ä»¬æ&#157;¥ç&#156;&#139;ç&#156;&#139;è¯·æ±&#130;è¡&#140;ï¼&#136;Request-Lineï¼&#137;ï¼&#140;ä»&#150;æ&#152;¯ç&#148;±ä¸&#139;é&#157;¢å&#135; é&#131;¨å&#136;&#134;æ&#158;&#132;æ&#136;&#144;ç&#154;&#132;ï¼&#154;
-Method sp URI sp HTTP-Version CRLF,æ&#136;&#145;ä»¬æ&#157;¥å&#131;&#143;æ&#149;&#153;ç§&#145;ä¹¦ä¸&#128;æ ·ï¼&#140;ç&#156;&#139;ç&#156;&#139;å&#144;&#132;ä¸ªé&#131;¨å&#136;&#134;é&#131;½æ&#152;¯å¹²å&#149;¥ç&#154;&#132;</pre>
+他们是请求头（由请求行、一般头、请求头和信息头）+信息主体构成。我们来看看请求行（Request-Line），他是由下面几部分构成的：
+Method sp URI sp HTTP-Version CRLF,我们来像教科书一样，看看各个部分都是干啥的</pre>
 <p><span id="more-163"></span></p>
 <pre>
-5.1.2 æ&#150;¹æ³&#149;ï¼&#136;Methodï¼&#137;
-è¯·æ±&#130;ç&#154;&#132;æ&#150;¹æ³&#149;ä¸&#128;å&#133;±æ&#156;&#137;ä»¥ä¸&#139;å&#135; ç§&#141;ï¼&#154;</pre>
+5.1.2 方法（Method）
+请求的方法一共有以下几种：</pre>
 <pre> Method         =     "OPTIONS"                ; Section 9.2
                       | "GET"                    ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.3" rel="xref">9.3</a>
                       | "HEAD"                   ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.4" rel="xref">9.4</a>
@@ -270,32 +98,32 @@ Method sp URI sp HTTP-Version CRLF,æ&#136;&#145;ä»¬æ&#157;¥å&#131;&#143;�
                       | "CONNECT"                ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.9" rel="xref">9.9</a>
                       | extension-method
        extension-method = token
-ä¸&#138;å&#155;¾ç&#154;&#132;æ&#132;&#143;æ&#128;&#157;æ&#152;¯ï¼&#154;OPTIONæ&#152;¯å&#143;¯é&#128;&#137;ç&#154;&#132;ï¼&#136;æ&#156;&#137;é&#130;£ä¹&#136;å¤&#154;ç§&#141;ï¼&#137;ï¼&#140;ç&#132;¶å&#144;&#142;å&#138; ä¸&#138;Tokenï¼&#140;æ&#136;&#145;ä»¬æ¯&#148;è¾&#131;ç&#134;&#159;æ&#130;&#137;ç&#154;&#132;æ&#152;¯GETã&#128;&#129;POSTã&#128;&#129;HEADæ&#150;¹æ³&#149;ã&#128;&#130;
-æº&#144;æ&#156;&#141;å&#138;¡å&#153;¨ä¸&#128;è&#136;¬å°&#134;è¿&#153;è¾¹è&#131;½å¤&#159;æ&#142;¥å&#143;&#151;ç&#154;&#132;è¯·æ±&#130;æ&#150;¹æ³&#149;å&#134;&#153;å&#156;¨ Allow header field è¿&#153;ä¸ªå&#159;&#159;ä¸­ï¼&#140;ç&#132;¶å&#144;&#142;å&#156;¨è¿&#148;å&#155;&#158;ç&#154;&#132;ä¿¡æ&#129;¯ä¸­é&#128;&#154;ç&#159;¥å&#136;°å®¢æ&#136;·ç«¯ï¼&#140;å&#155; ä¸ºè¿&#153;äº&#155;è¢«å&#133;&#129;è®¸ç&#154;&#132;æ&#150;¹æ³&#149;å¹¶ä¸&#141;æ&#152;¯ä¸&#128;æ&#136;&#144;ä¸&#141;å&#143;&#152;ç&#154;&#132;ã&#128;&#130;
-å¦&#130;æ&#158;&#156;ä¸&#128;ä¸ªæ&#150;¹æ³&#149;æ&#152;¯å&#156;¨å&#136;&#151;è¡¨ï¼&#140;ä½&#134;æ&#152;¯å&#143;&#136;æ²¡æ&#156;&#137;å&#133;&#129;è®¸ç&#154;&#132;æ&#131;&#133;å&#134;µä¸&#139;ï¼&#140;æº&#144;æ&#156;&#141;å&#138;¡å&#153;¨ä¼&#154;è¿&#148;å&#155;&#158;405é&#148;&#153;è¯¯ï¼&#140;å¦&#130;æ&#158;&#156;å®&#140;å&#133;¨ä¸&#141;æ&#148;¯æ&#140;&#129;å&#136;&#153;è¿&#148;å&#155;&#158;501é&#148;&#153;è¯¯ï¼&#140;è¿&#153;ä»¥ä¸&#138;å&#136;&#151;è¡¨ç&#154;&#132;æ&#150;¹æ³&#149;ä¸­ï¼&#140;GETå&#146;&#140;HEADæ&#152;¯å¿&#133;é¡»è&#131;½å¤&#159;æ&#148;¯æ&#140;&#129;ç&#154;&#132;ã&#128;&#130;
+上图的意思是：OPTION是可选的（有那么多种），然后加上Token，我们比较熟悉的是GET、POST、HEAD方法。
+源服务器一般将这边能够接受的请求方法写在 Allow header field 这个域中，然后在返回的信息中通知到客户端，因为这些被允许的方法并不是一成不变的。
+如果一个方法是在列表，但是又没有允许的情况下，源服务器会返回405错误，如果完全不支持则返回501错误，这以上列表的方法中，GET和HEAD是必须能够支持的。
 
 <a id="sec5.1.2">5.1.2</a> Request-URI</pre>
 <pre>Request-URI    = "*" | absoluteURI | abs_path | authority 
-ç»&#159;ä¸&#128;èµ&#132;æº&#144;å®&#154;ä½&#141;ç¬¦ï¼&#140;ç&#148;±ä»¥ä¸&#138;å&#155;&#155;ç§&#141;å½¢å¼&#143;æ&#158;&#132;æ&#136;&#144;ï¼&#140;ä»&#150;ä¼&#154;æ&#152;¯ä»&#150;ä»¬å&#133;¶ä¸­ç&#154;&#132;ä¸&#128;ç§&#141;ï¼&#140;ä»&#150;æ&#152;¯ç&#148;¨æ&#157;¥å®&#154;ä½&#141;èµ&#132;æº&#144;ç&#154;&#132;å&#133;·ä½&#147;ä½&#141;ç½®ç&#154;&#132;ã&#128;&#130;
-å&#133;¶ä¸­Ã&#151;å®&#154;ä½&#141;ç¬¦ï¼&#140;è¡¨ç¤ºè¿&#153;ä¸ªè¯·æ±&#130;å¹¶ä¸&#141;å®&#154;ä½&#141;å&#136;°å&#133;·ä½&#147;ç&#154;&#132;èµ&#132;æº&#144;ï¼&#140;ä»&#150;å&#156;¨ä¹&#142;ç&#154;&#132;ä»&#133;ä»&#133;æ&#152;¯æ&#156;&#141;å&#138;¡å&#153;¨æ&#156;¬èº«ï¼&#140;ä½&#134;æ&#152;¯å¿&#133;é¡»æ&#152;¯æ&#150;¹æ³&#149;ä¸&#141;åº&#148;ç&#148;¨ä¸&#128;ä¸ªèµ&#132;æº&#144;æ&#151;¶ã&#128;&#130;ç&#156;&#159;å¿&#131;ä¸&#141;ç&#159;¥é&#129;&#147;ä»&#150;è¯´ç&#154;&#132;å&#149;¥æ&#132;&#143;æ&#128;&#157;ï¼&#140;å¹³æ&#151;¶å¤ªå°&#145;è§&#129;äº&#134;ã&#128;&#130;
-æ³¨æ&#132;&#143;ç&#154;&#132;æ&#152;¯ï¼&#140;ä½¿ç&#148;¨ä»£ç&#144;&#134;è®¿é&#151;®ç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#140;å&#143;&#145;ç»&#153;ä»£ç&#144;&#134;ç&#154;&#132;è¯·æ±&#130;å¿&#133;é¡»æ&#152;¯absoluteURIè¿&#153;ç§&#141;æ ¼å¼&#143;ç&#154;&#132;ï¼&#140;ä»£ç&#144;&#134;å&#143;¯ä»¥æ ¹æ&#141;®é&#156;&#128;è¦&#129;ä»&#142;cacheç&#155;´æ&#142;¥è¿&#148;ç»&#153;ç&#148;¨æ&#136;·ï¼&#140;æ&#136;&#150;è&#128;&#133;æ&#152;¯å°&#134;è¯·æ±&#130;å&#143;&#145;ç»&#153;æº&#144;æ&#156;&#141;å&#138;¡å&#153;¨ã&#128;&#130;é&#156;&#128;è¦&#129;
-æ³¨æ&#132;&#143;ç&#154;&#132;æ&#152;¯ï¼&#140;ä»£ç&#144;&#134;æ&#156;&#137;å&#143;¯è&#131;½å&#134;&#141;å&#143;&#145;ç»&#153;å&#143;¦å¤&#150;ä¸&#128;ä¸ªä»£ç&#144;&#134;æ&#156;&#141;å&#138;¡å&#153;¨ï¼&#136;ä¸&#141;æ&#152;¯æº&#144;æ&#156;&#141;å&#138;¡å&#153;¨ï¼&#137;ï¼&#140;æ&#136;&#150;è&#128;&#133;ç&#155;´æ&#142;¥è®¿é&#151;®æº&#144;æ&#156;&#141;å&#138;¡å&#153;¨ã&#128;&#130;ä¸ºäº&#134;é&#129;¿å&#133;&#141;ä»£ç&#144;&#134;é&#151;´ç&#154;&#132;å¾ªç&#142;¯è¯·æ±&#130;ã&#128;&#130;ä¾&#139;å¦&#130;ï¼&#140;æ&#156;&#137;ABCä¸&#137;ä¸ªä»£ç&#144;&#134;ï¼&#140;Aä»&#142;Bæ&#139;¿æ&#149;°æ&#141;®ï¼&#140;B
-å&#143;&#136;ä»&#142;Cæ&#139;¿æ&#149;°æ&#141;®ï¼&#140;Cä»&#142;Aæ&#139;¿æ&#149;°æ&#141;®ï¼&#140;è¿&#153;å°±å½¢æ&#136;&#144;äº&#134;ä¸&#128;ä¸ªå¾ªç&#142;¯ï¼&#136;æ&#136;&#145;ç&#154;&#132;ç&#144;&#134;è§£å¦&#130;æ­¤ï¼&#137;ï¼&#140;é&#130;£ä¹&#136;ä¸ºäº&#134;é&#129;¿å&#133;&#141;è¿&#153;ä¸ªé&#151;®é¢&#152;ï¼&#140;ä»£ç&#144;&#134;å¿&#133;é¡»è¦&#129;è&#131;½è¯&#134;å&#136;«å&#135;ºæ&#156;&#141;å&#138;¡å&#153;¨ç&#154;&#132;å&#144;&#141;å­&#151;ï¼&#140;ä¸&#141;ç®¡ä½ ä½¿ç&#148;¨ç&#154;&#132;æ&#152;¯å&#136;«å&#144;&#141;ã&#128;&#129;æ&#149;°å­&#151;ipè¿&#152;
-æ&#152;¯å&#136;«ç&#154;&#132;å&#149;¥ç&#142;©æ&#132;&#143;å&#132;¿ï¼&#140;è¿&#153;æ ·ï¼&#140;ABCä¸&#137;ä¸ªäººé&#131;½äº&#146;ç&#155;¸è®¤è¯&#134;ï¼&#140;ä¹&#159;å°±ä¸&#141;ä¼&#154;å&#135;ºç&#142;°å¾ªç&#142;¯äº&#134;ã&#128;&#130;ä¸&#128;ä¸ªå®&#140;æ&#149;´ç&#154;&#132;Reques-lineå¦&#130;ä¸&#139;ï¼&#154;</pre>
+统一资源定位符，由以上四种形式构成，他会是他们其中的一种，他是用来定位资源的具体位置的。
+其中×定位符，表示这个请求并不定位到具体的资源，他在乎的仅仅是服务器本身，但是必须是方法不应用一个资源时。真心不知道他说的啥意思，平时太少见了。
+注意的是，使用代理访问的时候，发给代理的请求必须是absoluteURI这种格式的，代理可以根据需要从cache直接返给用户，或者是将请求发给源服务器。需要
+注意的是，代理有可能再发给另外一个代理服务器（不是源服务器），或者直接访问源服务器。为了避免代理间的循环请求。例如，有ABC三个代理，A从B拿数据，B
+又从C拿数据，C从A拿数据，这就形成了一个循环（我的理解如此），那么为了避免这个问题，代理必须要能识别出服务器的名字，不管你使用的是别名、数字ip还
+是别的啥玩意儿，这样，ABC三个人都互相认识，也就不会出现循环了。一个完整的Reques-line如下：</pre>
 <pre> GET http://www.w3.org/pub/WWW/TheProject.html HTTP/1.1
-æ&#137;&#128;æ&#156;&#137;ç&#154;&#132;HTTP/1.1ç&#154;&#132;æ&#156;&#141;å&#138;¡å&#153;¨ï¼&#140;å¿&#133;é¡»è&#131;½å¤&#159;æ&#142;¥å&#143;&#151;å&#146;&#140;å¤&#132;ç&#144;&#134;absoluteURIå&#156;°å&#157;&#128;</pre>
-<pre>authority è¿&#153;ç§&#141;å½¢å¼&#143;ï¼&#140;å&#143;ªè&#131;½ç&#148;¨äº&#142;CONNECTæ&#150;¹æ³&#149;ã&#128;&#130;
-å¯¹äº&#142;æ&#136;&#145;ä»¬æ&#157;¥è¯´ï¼&#140;å¤§é&#131;¨å&#136;&#134;è®¿é&#151;®æ&#152;¯å&#144;&#145;æº&#144;æ&#156;&#141;å&#138;¡å&#153;¨æ&#136;&#150;æ&#152;¯ç½&#145;ç®¡è¯·æ±&#130;ç&#154;&#132;ï¼&#140;è¿&#153;æ&#151;¶å&#128;&#153;ï¼&#140;Request-URIå¿&#133;é¡»è¡¨ç&#142;°æ&#136;&#144;abs_pathç&#154;&#132;å½¢å¼&#143;ï¼&#140;è&#128;&#140;è¿&#153;ä¸ªæ&#151;¶å&#128;&#153;ç&#154;&#132;ç½&#145;ç»&#156;ä¸»æ&#156;ºä¿¡æ&#129;¯å°±å¿&#133;é¡»ä»¥å¤´å&#159;&#159;é&#135;&#140;ç&#154;&#132;hostè½®è&#131;&#142;ä½&#147;ç&#142;°äº&#134;
-ä¸¾ä¾&#139;æ&#157;¥è¯´ï¼&#140;ä¸&#128;ä¸ªè®¿é&#151;®ä¸»æ&#156;ºhostç&#154;&#132;è¯·æ±&#130;ç±»ä¼¼äº&#142;ï¼&#154;</pre>
+所有的HTTP/1.1的服务器，必须能够接受和处理absoluteURI地址</pre>
+<pre>authority 这种形式，只能用于CONNECT方法。
+对于我们来说，大部分访问是向源服务器或是网管请求的，这时候，Request-URI必须表现成abs_path的形式，而这个时候的网络主机信息就必须以头域里的host轮胎体现了
+举例来说，一个访问主机host的请求类似于：</pre>
 <pre>  GET /pub/WWW/TheProject.html HTTP/1.1
        Host: www.w3.org
-å¿&#133;é¡»æ³¨æ&#132;&#143;ç&#154;&#132;æ&#152;¯ï¼&#140;ç¬¬ä¸&#128;è¡&#140;abs_pathæ&#152;¯ä¸&#141;è&#131;½ç¼ºå°&#145;ç&#154;&#132;ï¼&#140;å¦&#130;æ&#158;&#156;ç©ºç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#140;åº&#148;è¯¥å&#134;&#153;æ&#136;&#144;â&#128;&#156;/â&#128;&#157;è¡¨ç¤ºç½&#145;ç«&#153;ç&#154;&#132;æ ¹ç&#155;®å½&#149;
-ä¸&#128;ä¸ªé&#128;&#143;æ&#152;&#142;ä»£ç&#144;&#134;æ&#152;¯ä¸&#141;åº&#148;è¯¥æ&#155;´æ&#148;¹abs_pathç&#154;&#132;ï¼&#140;é&#153;¤é&#157;&#158;æ&#152;¯æ&#138;&#138;ç©ºç&#154;&#132;æ&#148;¹å&#134;&#153;æ&#136;&#144;"/"ã&#128;&#130;
-å¦&#130;æ&#158;&#156;æ&#152;¯ä»¥absoluteURI ç&#154;&#132;å½¢å¼&#143;æ&#157;¥è¿&#155;è¡&#140;è¯·æ±&#130;ç&#154;&#132;ï¼&#140;é&#130;£ä¹&#136;å¤´å&#159;&#159;ç&#154;&#132;hostä¿¡æ&#129;¯ä¼&#154;è¢«å¿½ç&#149;¥ã&#128;&#130;å¦&#130;æ&#158;&#156;ä¸&#141;æ&#152;¯è¿&#153;ç§&#141;å½¢å¼&#143;ä»¥å¤&#150;ç&#154;&#132;å&#133;¶ä»&#150;å½¢å¼&#143;ï¼&#140;åº&#148;è¯¥ä»¥å¤´å&#159;&#159;ç&#154;&#132;hostå&#159;&#159;ä¸ºå&#135;&#134;ï¼&#140;å¦&#130;æ&#158;&#156;hostæ&#151; æ&#149;&#136;
-ä¼&#154;è¿&#148;å&#155;&#158;400é&#148;&#153;è¯¯ã&#128;&#130;ï¼&#136;å&#157;&#143;è¯·æ±&#130;ï¼&#137;
-ç¼ºå°&#145;å¤´å&#159;&#159;ç&#154;&#132;hostç&#154;&#132;http/1.0ç&#154;&#132;è¯·æ±&#130;ï¼&#140;å&#143;¯è&#131;½ä¼&#154;ä½¿ç&#148;¨å&#144;¯å&#143;&#145;æ&#152;¯è§&#132;å&#136;&#153;ï¼&#140;å°±æ&#152;¯å&#142;»ç&#156;&#139;ï¼&#140;æ&#152;¯ä¸&#141;æ&#152;¯ç&#137;¹å®&#154;ç&#154;&#132;ä¸»æ&#156;ºã&#128;&#130;
-5.3 è¯·æ±&#130;å¤´å&#159;&#159;
-è¯·æ±&#130;å¤´å&#159;&#159;è&#131;½å¤&#159;è®©å®¢æ&#136;·ç«¯æ·»å&#138; é&#153;&#132;ä»¶ç&#154;&#132;ä¿¡æ&#129;¯ï¼&#140;æ&#157;¥å&#145;&#138;ä¹&#139;æ&#156;&#141;å&#138;¡å&#153;¨ã&#128;&#130;å&#133;¶ä¸­ä¿¡æ&#129;¯å¦&#130;ä¸&#139;ï¼&#154;</pre>
+必须注意的是，第一行abs_path是不能缺少的，如果空的时候，应该写成“/”表示网站的根目录
+一个透明代理是不应该更改abs_path的，除非是把空的改写成"/"。
+如果是以absoluteURI 的形式来进行请求的，那么头域的host信息会被忽略。如果不是这种形式以外的其他形式，应该以头域的host域为准，如果host无效
+会返回400错误。（坏请求）
+缺少头域的host的http/1.0的请求，可能会使用启发是规则，就是去看，是不是特定的主机。
+5.3 请求头域
+请求头域能够让客户端添加附件的信息，来告之服务器。其中信息如下：</pre>
 <pre>       request-header = Accept                   ; Section 14.1
                       | Accept-Charset           ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.2" rel="xref">14.2</a>
                       | Accept-Encoding          ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3" rel="xref">14.3</a>
@@ -316,316 +144,233 @@ Method sp URI sp HTTP-Version CRLF,æ&#136;&#145;ä»¬æ&#157;¥å&#131;&#143;�
                       | TE                       ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.39" rel="xref">14.39</a>
                       | User-Agent               ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.43" rel="xref">14.43</a>
 
-è¿&#153;äº&#155;ä¸ªä¸&#156;è¥¿ï¼&#140;æ&#152;¯è&#131;½å¤&#159;è¢«æ&#137;©å±&#149;ç&#154;&#132;ã&#128;&#130;é&#154;&#143;ç&#157;&#128;HTTPå&#141;&#143;è®®ç&#137;&#136;æ&#156;¬ç&#154;&#132;å¢&#158;å&#138; ï¼&#140;å&#143;¯è&#131;½ä¼&#154;å¢&#158;å&#138; æ&#150;°ç&#154;&#132;ä¸&#156;ä¸&#156;ï¼&#140;ä½&#134;æ&#152;¯å¦&#130;æ&#158;&#156;æ&#137;&#128;æ&#156;&#137;é&#128;&#154;ä¿¡æ&#150;¹é&#131;½æ&#138;&#138;ä»&#150;ç&#156;&#139;å&#129;&#154;è¯·æ±&#130;å¤´å&#159;&#159;ï¼&#140;é&#130;£ä¹&#136;å&#133;¶ä»&#150;ä¸&#141;è&#131;½è¯&#134;å&#136;«ç&#154;&#132;å¤´å&#159;&#159;å°&#134;è¢«å½&#147;
-ä¿¡æ&#129;¯å¤´æ&#157;¥å¤&#132;ç&#144;&#134;ã&#128;&#130;</pre>
-								</div>
-			
-		<div class="section section-blog-info">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="entry-categories">å&#136;&#134;ç±»ï¼&#154;						<span class="label label-primary"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1é&#152;&#133;è¯»ç¬&#148;è®°</a></span><span class="label label-primary"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">å­¦ä¹ ç¬&#148;è®°</a></span>					</div>
-					<div class="entry-tags">æ &#135;ç­¾ï¼&#154;<span class="entry-tag"><a href="https://huster.top/htmls/tag/http1-1" rel="tag">HTTP/1.1</a></span><span class="entry-tag"><a href="https://huster.top/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" rel="tag">å­¦ä¹ ç¬&#148;è®°</a></span></div>				</div>
-				
-        <div class="col-md-6">
-            <div class="entry-social">
-                <a target="_blank" rel="tooltip" data-original-title="å&#136;&#134;äº«å&#136;° Facebook" class="btn btn-just-icon btn-round btn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://huster.top/htmls/163.html">
-                   <i class="fa fa-facebook"></i>
-                </a>
-                
-                <a target="_blank" rel="tooltip" data-original-title="å&#136;&#134;äº«è&#135;³å¾®å&#141;&#154;" class="btn btn-just-icon btn-round btn-twitter" href="https://twitter.com/home?status=HTTP/1.1%C3%A9%C2%98%C2%85%C3%A8%C2%AF%C2%BB%C3%A4%C2%B9%C2%8B%C3%A8%C2%AF%C2%B7%C3%A6%C2%B1%C2%82%20-%20https://huster.top/htmls/163.html">
-                   <i class="fa fa-twitter"></i>
-                </a>
-                
-                <a target="_blank" rel="tooltip" data-original-title=" å&#136;&#134;äº«å&#136;° Google+" class="btn btn-just-icon btn-round btn-google" href="https://plus.google.com/share?url=https://huster.top/htmls/163.html">
-                   <i class="fa fa-google"></i>
-               </a>
-            </div>
-		</div>			</div>
-			<hr><div class="card card-profile card-plain">
-			<div class="row">
-				<div class="col-md-2">
-					<div class="card-avatar">
-						<a href="https://huster.top/htmls/author/admin" title="é¾&#153;å®&#137;_ä»»å¤©å&#133;µ"><img alt="" src="https://secure.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=100&r=g" srcset="https://secure.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=200&r=g 2x" class="avatar avatar-100 photo" height="100" width="100"></a>
-					</div>
-				</div>
-				<div class="col-md-10">
-					<h4 class="card-title">é¾&#153;å®&#137;_ä»»å¤©å&#133;µ</h4>
-					<p class="description">ä¸&#141;å¿&#152;å&#136;&#157;å¿&#131;ï¼&#140;æ&#150;¹å¾&#151;å§&#139;ç»&#136;!</p>
-				</div>
-			</div>
-		</div>
-		
-<div id="comments" class="section section-comments">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="media-area">
-				<h3 class="hestia-title text-center">
-									</h3>
-							</div>
-			<div class="media-body">
-					<div id="respond" class="comment-respond">
-		<h3 class="hestia-title text-center">å&#143;&#145;è¡¨è¯&#132;è®º <small><a rel="nofollow" id="cancel-comment-reply-link" href="/htmls/163.html#respond" style="display:none;">å&#143;&#150;æ¶&#136;å&#155;&#158;å¤&#141;</a></small></h3> <span class="pull-left author"> <div class="avatar"><img src="https://huster.top/wp-content/themes/hestia/assets/img/placeholder.jpg" height="64" width="64"></div> </span>			<form action="https://huster.top/wp-comments-post.php" method="post" id="commentform" class="form media-body">
-				<p class="comment-notes"><span id="email-notes">ç&#148;µå­&#144;é&#130;®ä»¶å&#156;°å&#157;&#128;ä¸&#141;ä¼&#154;è¢«å&#133;¬å¼&#128;ã&#128;&#130;</span></p><div class="row"> <div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">å&#144;&#141;ç§°</label><input id="author" name="author" class="form-control" type="text"><span class="hestia-input"></span> </div> </div>
-<div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">ç&#148;µå­&#144;é&#130;®ä»¶</label><input id="email" name="email" class="form-control" type="email"><span class="hestia-input"></span> </div> </div>
-<div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">ç½&#145;ç«&#153;</label><input id="url" name="url" class="form-control" type="url"><span class="hestia-input"></span> </div> </div> </div>
-<div class="form-group label-floating is-empty"> <label class="control-label">å&#156;¨æ&#131;³äº&#155;ä»&#128;ä¹&#136;ï¼&#159;</label><textarea id="comment" name="comment" class="form-control" rows="6" aria-required="true"></textarea><span class="hestia-input"></span> </div><p class="form-submit"><input name="submit" type="submit" id="submit" class="btn btn-primary pull-right" value="å&#143;&#145;è¡¨è¯&#132;è®º"><input type="hidden" name="comment_post_ID" value="163" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="0c1e2647c5"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="33"></p>			</form>
-			</div>
-								</div>
-		</div>
+这些个东西，是能够被扩展的。随着HTTP协议版本的增加，可能会增加新的东东，但是如果所有通信方都把他看做请求头域，那么其他不能识别的头域将被当
+信息头来处理。</pre>
+
+<div class="author-info">
+	<div class="author-avatar">
+		<img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=42&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=84&r=g 2x" class="avatar avatar-42 photo" height="42" width="42"></div>
+
+	<div class="author-description">
+		<h2 class="author-title"><span class="author-heading">作者：</span> 龙安_任天兵</h2>
+
+		<p class="author-bio">
+			不忘初心，方得始终!			<a class="author-link" href="https://huster.top/htmls/author/admin" rel="author">
+				查看龙安_任天兵的所有文章			</a>
+		</p>
 	</div>
 </div>
-		</div>
-		</div>	<div class="col-md-3 blog-sidebar-wrapper col-md-offset-1 ">
-		<aside id="secondary" class="blog-sidebar" role="complementary"><div id="recent-posts-2" class="widget widget_recent_entries">		<h5>è¿&#145;æ&#156;&#159;æ&#150;&#135;ç« </h5>		<ul><li>
-					<a href="https://huster.top/htmls/665.html">Javaå­&#151;è&#138;&#130;ç &#129;å¢&#158;å¼ºæ&#138;&#128;æ&#156;¯ç&#154;&#132;åº&#148;ç&#148;¨</a>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/163.html" rel="bookmark"><time class="entry-date published updated" datetime="2012-04-16T19:13:40+00:00">2012 年 4 月 16 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0" rel="category tag">HTTP/1.1阅读笔记</a>、<a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" rel="category tag">学习笔记</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/http1-1" rel="tag">HTTP/1.1</a>、<a href="https://huster.top/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" rel="tag">学习笔记</a></span>			</footer></article><div id="comments" class="comments-area">
+
+	
+	
+		<div id="respond" class="comment-respond">
+		<h2 id="reply-title" class="comment-reply-title">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="/htmls/163.html#respond" style="display:none;">取消回复</a></small></h2>			<form action="https://huster.top/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
+<p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes"></p>
+<p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="163" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="ed0ef6f37f"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="142"></p>			</form>
+			</div>
+	
+</div>
+
+	<nav class="navigation post-navigation" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://huster.top/htmls/157.html" rel="prev"><span class="meta-nav" aria-hidden="true">上一</span> <span class="screen-reader-text">上篇文章：</span> <span class="post-title">慎用preg_replace的/e修饰符</span></a></div><div class="nav-next"><a href="https://huster.top/htmls/166.html" rel="next"><span class="meta-nav" aria-hidden="true">下一</span> <span class="screen-reader-text">下篇文章：</span> <span class="post-title">HTTP/1.1阅读之响应</span></a></div></div>
+	</nav></main><aside id="content-bottom-widgets" class="content-bottom-widgets" role="complementary"><div class="widget-area">
+			<section id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script src="https://s22.cnzz.com/z_stat.php?id=3943131&web_id=3943131" language="JavaScript"></script></div></section></div>
+	
+	</aside></div>
+
+
+	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/686.html">Java字节码增强应用</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/662.html">JVM Sandbox æº&#144;ç &#129;å&#136;&#134;æ&#158;&#144;ï¼&#136;ä¸&#128;ï¼&#137;å&#159;ºç¡&#128;ç¯&#135;: Instrumentationå&#146;&#140;ClassFileTransformerä½&#156;ç&#148;¨</a>
+					<a href="https://huster.top/htmls/662.html">JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/657.html">Javaç±»åº&#147;è®¾è®¡ä¹&#139;æ&#151;¥å¿&#151;æ¡&#134;æ&#158;¶é&#128;&#137;æ&#139;©</a>
+					<a href="https://huster.top/htmls/657.html">Java类库设计之日志框架选择</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/649.html">Javaå¤&#154;çº¿ç¨&#139;ç&#159;¥è¯&#134;ç&#130;¹ï¼&#136;ä¸&#139;ï¼&#137;</a>
+					<a href="https://huster.top/htmls/649.html">Java多线程知识点（下）</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/645.html">å¦&#130;ä½&#149;å&#134;&#153;ä»£ç &#129;æ&#157;¥è§£å&#134;³ç&#148;&#159;äº§è&#128;&#133;æ¶&#136;è´¹è&#128;&#133;é&#151;®é¢&#152;ï¼&#159;</a>
+					<a href="https://huster.top/htmls/645.html">如何写代码来解决生产者消费者问题？</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/642.html">Javaå¤&#154;çº¿ç¨&#139;æ&#128;»ç»&#147;(ä¸&#138;é&#131;¨å&#136;&#134;)é&#157;¢è¯&#149;é¢&#152;è§£ç­&#148;</a>
+					<a href="https://huster.top/htmls/642.html">Java多线程总结(上部分)面试题解答</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/637.html">ç»&#134;è¯´Javaç&#154;&#132;å&#134;&#133;å­&#152;æ¨¡å&#158;&#139;</a>
+					<a href="https://huster.top/htmls/637.html">细说Java的内存模型</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/633.html">Javaé&#157;¢è¯&#149;é¢&#152;ä¹&#139;Javaè¯­æ³&#149;ç&#154;&#132;å&#159;ºç¡&#128;ç&#159;¥è¯&#134;</a>
+					<a href="https://huster.top/htmls/633.html">Java面试题之Java语法的基础知识</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/629.html">Javaç&#154;&#132;é&#148;&#129;</a>
+					<a href="https://huster.top/htmls/629.html">Java的锁</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/615.html">ç&#144;&#134;è§£Javaçº¿ç¨&#139;é&#151;´ç&#154;&#132;é&#128;&#154;ä¿¡</a>
+					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/610.html">å&#134;&#153;ç»&#153;è®¡ç®&#151;æ&#156;ºä¸&#147;ä¸&#154;æ¯&#149;ä¸&#154;ç&#148;&#159;ç&#154;&#132;22æ&#157;¡å®&#157;è´µå»ºè®®</a>
+					<a href="https://huster.top/htmls/610.html">写给计算机专业毕业生的22条宝贵建议</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/599.html">tensortFlowå®&#137;è£&#133;å&#146;&#140;å¼&#128;å&#143;&#145;ç&#142;¯å¢&#131;é&#133;&#141;ç½®</a>
+					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/573.html">spring bootåº&#148;ç&#148;¨å&#156;¨ POSTè¯·æ±&#130;ç&#154;&#132;Invalid CORS requestç&#154;&#132;é&#151;®é¢&#152;</a>
+					<a href="https://huster.top/htmls/573.html">spring boot应用在 POST请求的Invalid CORS request的问题</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/568.html">Macä¸&#139;Pipç&#154;&#132;æ&#138;¥é&#148;&#153;é&#151;®é¢&#152;</a>
+					<a href="https://huster.top/htmls/568.html">Mac下Pip的报错问题</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/557.html">å¹¶å&#143;&#145;ç¼&#150;ç¨&#139;æ¨¡å&#158;&#139;(è½¬è½½)</a>
+					<a href="https://huster.top/htmls/557.html">并发编程模型(转载)</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/552.html">ä»&#142;ThreadPoolExecutorç&#154;&#132;invokeAllæ&#150;¹æ³&#149;è¯´å¼&#128;å&#142;»:å¦&#130;ä½&#149;ç­&#137;å¾&#133;å¤&#154;ä¸ªå¹¶å&#143;&#145;ä»»å&#138;¡ç»&#147;æ&#157;&#159;å¹¶æ&#148;¶é&#155;&#134;ç»&#147;æ&#158;&#156;</a>
+					<a href="https://huster.top/htmls/552.html">从ThreadPoolExecutor的invokeAll方法说开去:如何等待多个并发任务结束并收集结果</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/548.html">è®¤è¯&#134;ExecutorCompletionServiceè¿&#148;å&#155;&#158;æ&#156;&#128;å¿«ç&#154;&#132;ç»&#147;æ&#158;&#156;</a>
+					<a href="https://huster.top/htmls/548.html">认识ExecutorCompletionService返回最快的结果</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/543.html">Javaé&#135;&#140;ç&#154;&#132;Joinç&#154;&#132;æ&#137;§è¡&#140;é¡ºåº&#143;é&#151;®é¢&#152;</a>
+					<a href="https://huster.top/htmls/543.html">Java里的Join的执行顺序问题</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/538.html">spring boot cacheè¸©å&#136;°ç&#154;&#132;å&#157;&#145;</a>
+					<a href="https://huster.top/htmls/538.html">spring boot cache踩到的坑</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/530.html">Hessianç&#154;&#132;ä½¿ç&#148;¨</a>
+					<a href="https://huster.top/htmls/530.html">Hessian的使用</a>
 									</li>
-					</ul></div><div id="archives-2" class="widget widget_archive"><h5>æ&#150;&#135;ç« å½&#146;æ¡£</h5>		<ul><li><a href="https://huster.top/htmls/date/2019/07">2019å¹´ä¸&#131;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2019/06">2019å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2019/05">2019å¹´äº&#148;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/12">2018å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2018/11">2018å¹´å&#141;&#129;ä¸&#128;æ&#156;&#136;</a> (5)</li>
-	<li><a href="https://huster.top/htmls/date/2018/10">2018å¹´å&#141;&#129;æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2018/08">2018å¹´å&#133;«æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/07">2018å¹´ä¸&#131;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/06">2018å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/04">2018å¹´å&#155;&#155;æ&#156;&#136;</a> (3)</li>
-	<li><a href="https://huster.top/htmls/date/2018/01">2018å¹´ä¸&#128;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2017/10">2017å¹´å&#141;&#129;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2017/08">2017å¹´å&#133;«æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2017/07">2017å¹´ä¸&#131;æ&#156;&#136;</a> (6)</li>
-	<li><a href="https://huster.top/htmls/date/2017/06">2017å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2017/04">2017å¹´å&#155;&#155;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/12">2016å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/11">2016å¹´å&#141;&#129;ä¸&#128;æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2016/10">2016å¹´å&#141;&#129;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/06">2016å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/03">2016å¹´ä¸&#137;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2015/11">2015å¹´å&#141;&#129;ä¸&#128;æ&#156;&#136;</a> (4)</li>
-	<li><a href="https://huster.top/htmls/date/2015/01">2015å¹´ä¸&#128;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2014/10">2014å¹´å&#141;&#129;æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2013/08">2013å¹´å&#133;«æ&#156;&#136;</a> (4)</li>
-	<li><a href="https://huster.top/htmls/date/2013/06">2013å¹´å&#133;­æ&#156;&#136;</a> (4)</li>
-	<li><a href="https://huster.top/htmls/date/2013/05">2013å¹´äº&#148;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2013/03">2013å¹´ä¸&#137;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/12">2012å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/09">2012å¹´ä¹&#157;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/08">2012å¹´å&#133;«æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2012/07">2012å¹´ä¸&#131;æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2012/06">2012å¹´å&#133;­æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2012/05">2012å¹´äº&#148;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/04">2012å¹´å&#155;&#155;æ&#156;&#136;</a> (10)</li>
-	<li><a href="https://huster.top/htmls/date/2012/03">2012å¹´ä¸&#137;æ&#156;&#136;</a> (8)</li>
-	<li><a href="https://huster.top/htmls/date/2010/12">2010å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (1)</li>
-		</ul></div><div id="categories-2" class="widget widget_categories"><h5>å&#136;&#134;ç±»ç&#155;®å½&#149;</h5>		<ul><li class="cat-item cat-item-57"><a href="https://huster.top/htmls/category/nas-%e7%be%a4%e6%99%96">nas-ç¾¤æ&#153;&#150;</a> (2)
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2019/07">2019年七月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/06">2019年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/05">2019年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/12">2018年十二月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2018/11">2018年十一月</a> (5)</li>
+	<li><a href="https://huster.top/htmls/date/2018/10">2018年十月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2018/08">2018年八月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/07">2018年七月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/06">2018年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/04">2018年四月</a> (3)</li>
+	<li><a href="https://huster.top/htmls/date/2018/01">2018年一月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/10">2017年十月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/08">2017年八月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2017/07">2017年七月</a> (6)</li>
+	<li><a href="https://huster.top/htmls/date/2017/06">2017年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/04">2017年四月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/12">2016年十二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/11">2016年十一月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2016/10">2016年十月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/06">2016年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/03">2016年三月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2015/11">2015年十一月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2015/01">2015年一月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2014/10">2014年十月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2013/08">2013年八月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2013/06">2013年六月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2013/05">2013年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2013/03">2013年三月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/12">2012年十二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/09">2012年九月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/08">2012年八月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/07">2012年七月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/06">2012年六月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/05">2012年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/04">2012年四月</a> (10)</li>
+	<li><a href="https://huster.top/htmls/date/2012/03">2012年三月</a> (8)</li>
+	<li><a href="https://huster.top/htmls/date/2010/12">2010年十二月</a> (1)</li>
+		</ul></section><section id="categories-2" class="widget widget_categories"><h2 class="widget-title">分类目录</h2>		<ul><li class="cat-item cat-item-57"><a href="https://huster.top/htmls/category/nas-%e7%be%a4%e6%99%96">nas-群晖</a> (2)
 </li>
-	<li class="cat-item cat-item-11"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7">PHPé«&#152;æ&#149;&#136;ç¼&#150;ç¨&#139;</a> (6)
-<ul class="children"><li class="cat-item cat-item-53"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php-tools">PHPç&#154;&#132;å¼&#128;å&#143;&#145;å·¥å&#133;·</a> (3)
+	<li class="cat-item cat-item-11"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7">PHP高效编程</a> (6)
+<ul class="children"><li class="cat-item cat-item-53"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php-tools">PHP的开发工具</a> (3)
 </li>
-	<li class="cat-item cat-item-6"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php%e9%82%a3%e4%ba%9b%e6%9c%89%e8%b6%a3%e7%9a%84%e4%ba%8b%e5%84%bf" title="phpé&#130;£äº&#155;ä»¥å&#137;&#141;æ²¡æ³¨æ&#132;&#143;å&#136;°ç&#154;&#132;ï¼&#140;æ&#136;&#150;è&#128;&#133;å¾&#136;å°&#145;æ³¨æ&#132;&#143;å&#136;°äº&#139;æ&#131;&#133;">PHPç¼&#150;ç¨&#139;</a> (3)
+	<li class="cat-item cat-item-6"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php%e9%82%a3%e4%ba%9b%e6%9c%89%e8%b6%a3%e7%9a%84%e4%ba%8b%e5%84%bf" title="php那些以前没注意到的，或者很少注意到事情">PHP编程</a> (3)
 </li>
 </ul></li>
 	<li class="cat-item cat-item-74"><a href="https://huster.top/htmls/category/tensortflow">TensortFlow</a> (2)
 </li>
-	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEBå®&#137;å&#133;¨</a> (3)
+	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">å­¦ä¹ ç¬&#148;è®°</a> (58)
-<ul class="children"><li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1é&#152;&#133;è¯»ç¬&#148;è®°</a> (11)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (58)
+<ul class="children"><li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Javaå­¦ä¹ </a> (35)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (35)
 </li>
-	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linuxå­¦ä¹ ç¬&#148;è®°</a> (1)
+	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
-	<li class="cat-item cat-item-23"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/%e6%9c%8d%e5%8a%a1">PHPç¼&#150;å&#134;&#153;æ&#156;&#141;å&#138;¡ç&#154;&#132;ç &#148;ç©¶</a> (1)
+	<li class="cat-item cat-item-23"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/%e6%9c%8d%e5%8a%a1">PHP编写服务的研究</a> (1)
 </li>
-	<li class="cat-item cat-item-40"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/rfc793-tcp%e6%8e%a7%e5%88%b6%e5%8d%8f%e8%ae%ae">RFC793-TCPæ&#142;§å&#136;¶å&#141;&#143;è®®</a> (1)
+	<li class="cat-item cat-item-40"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/rfc793-tcp%e6%8e%a7%e5%88%b6%e5%8d%8f%e8%ae%ae">RFC793-TCP控制协议</a> (1)
 </li>
-	<li class="cat-item cat-item-56"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/spring%e6%96%87%e6%a1%a3">Springæ&#150;&#135;æ¡£</a> (3)
+	<li class="cat-item cat-item-56"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/spring%e6%96%87%e6%a1%a3">Spring文档</a> (3)
 </li>
-	<li class="cat-item cat-item-1"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized">å&#133;¶ä»&#150;</a> (5)
+	<li class="cat-item cat-item-1"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized">其他</a> (5)
 </li>
 </ul></li>
-	<li class="cat-item cat-item-16"><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84">ç³»ç»&#159;æ&#158;¶æ&#158;&#132;å­¦ä¹ </a> (13)
+	<li class="cat-item cat-item-16"><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84">系统架构学习</a> (13)
 </li>
-	<li class="cat-item cat-item-75"><a href="https://huster.top/htmls/category/%e8%bd%ac%e8%bd%bd">è½¬è½½</a> (2)
+	<li class="cat-item cat-item-75"><a href="https://huster.top/htmls/category/%e8%bd%ac%e8%bd%bd">转载</a> (2)
 </li>
-		</ul></div><div id="tag_cloud-2" class="widget widget_tag_cloud"><h5>æ &#135;ç­¾</h5><div class="tagcloud"><a href="https://huster.top/htmls/tag/apache" class="tag-cloud-link tag-link-31 tag-link-position-1" style="font-size: 8pt;" aria-label="Apache (1ä¸ªé¡¹ç&#155;®)">Apache</a>
-<a href="https://huster.top/htmls/tag/codesniffer" class="tag-cloud-link tag-link-12 tag-link-position-2" style="font-size: 8pt;" aria-label="CodeSniffer (1ä¸ªé¡¹ç&#155;®)">CodeSniffer</a>
-<a href="https://huster.top/htmls/tag/ecache" class="tag-cloud-link tag-link-67 tag-link-position-3" style="font-size: 8pt;" aria-label="Ecache (1ä¸ªé¡¹ç&#155;®)">Ecache</a>
-<a href="https://huster.top/htmls/tag/globals" class="tag-cloud-link tag-link-10 tag-link-position-4" style="font-size: 8pt;" aria-label="GLOBALS (1ä¸ªé¡¹ç&#155;®)">GLOBALS</a>
-<a href="https://huster.top/htmls/tag/hessian" class="tag-cloud-link tag-link-73 tag-link-position-5" style="font-size: 8pt;" aria-label="Hessian (1ä¸ªé¡¹ç&#155;®)">Hessian</a>
-<a href="https://huster.top/htmls/tag/http1-1" class="tag-cloud-link tag-link-22 tag-link-position-6" style="font-size: 15.905882352941pt;" aria-label="HTTP/1.1 (5ä¸ªé¡¹ç&#155;®)">HTTP/1.1</a>
-<a href="https://huster.top/htmls/tag/httpurlconnection" class="tag-cloud-link tag-link-71 tag-link-position-7" style="font-size: 8pt;" aria-label="HttpURLConnection (1ä¸ªé¡¹ç&#155;®)">HttpURLConnection</a>
-<a href="https://huster.top/htmls/tag/http%e8%af%b7%e6%b1%82" class="tag-cloud-link tag-link-70 tag-link-position-8" style="font-size: 8pt;" aria-label="Httpè¯·æ±&#130; (1ä¸ªé¡¹ç&#155;®)">Httpè¯·æ±&#130;</a>
-<a href="https://huster.top/htmls/tag/ioc" class="tag-cloud-link tag-link-17 tag-link-position-9" style="font-size: 8pt;" aria-label="IoC (1ä¸ªé¡¹ç&#155;®)">IoC</a>
-<a href="https://huster.top/htmls/tag/java" class="tag-cloud-link tag-link-58 tag-link-position-10" style="font-size: 22pt;" aria-label="Java (13ä¸ªé¡¹ç&#155;®)">Java</a>
-<a href="https://huster.top/htmls/tag/java-spring-petclinic" class="tag-cloud-link tag-link-55 tag-link-position-11" style="font-size: 8pt;" aria-label="Java spring-petclinic (1ä¸ªé¡¹ç&#155;®)">Java spring-petclinic</a>
-<a href="https://huster.top/htmls/tag/log4j" class="tag-cloud-link tag-link-68 tag-link-position-12" style="font-size: 8pt;" aria-label="log4j (1ä¸ªé¡¹ç&#155;®)">log4j</a>
-<a href="https://huster.top/htmls/tag/logback" class="tag-cloud-link tag-link-69 tag-link-position-13" style="font-size: 8pt;" aria-label="logback (1ä¸ªé¡¹ç&#155;®)">logback</a>
-<a href="https://huster.top/htmls/tag/maven" class="tag-cloud-link tag-link-64 tag-link-position-14" style="font-size: 8pt;" aria-label="Maven (1ä¸ªé¡¹ç&#155;®)">Maven</a>
-<a href="https://huster.top/htmls/tag/maven-shade-plugin" class="tag-cloud-link tag-link-66 tag-link-position-15" style="font-size: 8pt;" aria-label="maven-shade-plugin (1ä¸ªé¡¹ç&#155;®)">maven-shade-plugin</a>
-<a href="https://huster.top/htmls/tag/mybatis" class="tag-cloud-link tag-link-72 tag-link-position-16" style="font-size: 8pt;" aria-label="mybatis (1ä¸ªé¡¹ç&#155;®)">mybatis</a>
-<a href="https://huster.top/htmls/tag/php" class="tag-cloud-link tag-link-7 tag-link-position-17" style="font-size: 12.941176470588pt;" aria-label="PHP (3ä¸ªé¡¹ç&#155;®)">PHP</a>
-<a href="https://huster.top/htmls/tag/plugin" class="tag-cloud-link tag-link-65 tag-link-position-18" style="font-size: 8pt;" aria-label="Plugin (1ä¸ªé¡¹ç&#155;®)">Plugin</a>
-<a href="https://huster.top/htmls/tag/register_globals" class="tag-cloud-link tag-link-9 tag-link-position-19" style="font-size: 8pt;" aria-label="register_globals (1ä¸ªé¡¹ç&#155;®)">register_globals</a>
-<a href="https://huster.top/htmls/tag/rfc" class="tag-cloud-link tag-link-20 tag-link-position-20" style="font-size: 8pt;" aria-label="RFC (1ä¸ªé¡¹ç&#155;®)">RFC</a>
-<a href="https://huster.top/htmls/tag/rfc2616" class="tag-cloud-link tag-link-21 tag-link-position-21" style="font-size: 8pt;" aria-label="RFC2616 (1ä¸ªé¡¹ç&#155;®)">RFC2616</a>
-<a href="https://huster.top/htmls/tag/serializable" class="tag-cloud-link tag-link-59 tag-link-position-22" style="font-size: 8pt;" aria-label="Serializable (1ä¸ªé¡¹ç&#155;®)">Serializable</a>
-<a href="https://huster.top/htmls/tag/spring" class="tag-cloud-link tag-link-63 tag-link-position-23" style="font-size: 10.964705882353pt;" aria-label="Spring (2ä¸ªé¡¹ç&#155;®)">Spring</a>
-<a href="https://huster.top/htmls/tag/spring-boot" class="tag-cloud-link tag-link-62 tag-link-position-24" style="font-size: 10.964705882353pt;" aria-label="Spring boot (2ä¸ªé¡¹ç&#155;®)">Spring boot</a>
-<a href="https://huster.top/htmls/tag/thinkphp" class="tag-cloud-link tag-link-34 tag-link-position-25" style="font-size: 8pt;" aria-label="ThinkPHP (1ä¸ªé¡¹ç&#155;®)">ThinkPHP</a>
-<a href="https://huster.top/htmls/tag/vsftp" class="tag-cloud-link tag-link-43 tag-link-position-26" style="font-size: 8pt;" aria-label="VSFTP (1ä¸ªé¡¹ç&#155;®)">VSFTP</a>
-<a href="https://huster.top/htmls/tag/wordpress%e6%ba%90%e7%a0%81" class="tag-cloud-link tag-link-8 tag-link-position-27" style="font-size: 10.964705882353pt;" aria-label="wordpressæº&#144;ç &#129; (2ä¸ªé¡¹ç&#155;®)">wordpressæº&#144;ç &#129;</a>
-<a href="https://huster.top/htmls/tag/zeromq" class="tag-cloud-link tag-link-29 tag-link-position-28" style="font-size: 14.588235294118pt;" aria-label="ZeroMQ (4ä¸ªé¡¹ç&#155;®)">ZeroMQ</a>
-<a href="https://huster.top/htmls/tag/zmq" class="tag-cloud-link tag-link-41 tag-link-position-29" style="font-size: 12.941176470588pt;" aria-label="zmq (3ä¸ªé¡¹ç&#155;®)">zmq</a>
-<a href="https://huster.top/htmls/tag/zmq%e7%9a%84%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-42 tag-link-position-30" style="font-size: 8pt;" aria-label="ZMQç&#154;&#132;å­¦ä¹ ç¬&#148;è®° (1ä¸ªé¡¹ç&#155;®)">ZMQç&#154;&#132;å­¦ä¹ ç¬&#148;è®°</a>
-<a href="https://huster.top/htmls/tag/%e4%ba%92%e8%81%94%e7%bd%91" class="tag-cloud-link tag-link-14 tag-link-position-31" style="font-size: 12.941176470588pt;" aria-label="äº&#146;è&#129;&#148;ç½&#145; (3ä¸ªé¡¹ç&#155;®)">äº&#146;è&#129;&#148;ç½&#145;</a>
-<a href="https://huster.top/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86" class="tag-cloud-link tag-link-61 tag-link-position-32" style="font-size: 8pt;" aria-label="å&#138;¨æ&#128;&#129;ä»£ç&#144;&#134; (1ä¸ªé¡¹ç&#155;®)">å&#138;¨æ&#128;&#129;ä»£ç&#144;&#134;</a>
-<a href="https://huster.top/htmls/tag/%e5%8f%8c%e5%bc%95%e5%8f%b7" class="tag-cloud-link tag-link-36 tag-link-position-33" style="font-size: 8pt;" aria-label="å&#143;&#140;å¼&#149;å&#143;· (1ä¸ªé¡¹ç&#155;®)">å&#143;&#140;å¼&#149;å&#143;·</a>
-<a href="https://huster.top/htmls/tag/%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="tag-cloud-link tag-link-78 tag-link-position-34" style="font-size: 10.964705882353pt;" aria-label="å¤&#154;çº¿ç¨&#139; (2ä¸ªé¡¹ç&#155;®)">å¤&#154;çº¿ç¨&#139;</a>
-<a href="https://huster.top/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-28 tag-link-position-35" style="font-size: 8pt;" aria-label="å­¦ä¹ ç¬&#148;è®° (1ä¸ªé¡¹ç&#155;®)">å­¦ä¹ ç¬&#148;è®°</a>
-<a href="https://huster.top/htmls/tag/%e5%ae%89%e5%85%a8" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 8pt;" aria-label="å®&#137;å&#133;¨ (1ä¸ªé¡¹ç&#155;®)">å®&#137;å&#133;¨</a>
-<a href="https://huster.top/htmls/tag/%e6%8a%80%e6%9c%af%e5%80%ba%e5%8a%a1" class="tag-cloud-link tag-link-30 tag-link-position-37" style="font-size: 8pt;" aria-label="æ&#138;&#128;æ&#156;¯å&#128;ºå&#138;¡ (1ä¸ªé¡¹ç&#155;®)">æ&#138;&#128;æ&#156;¯å&#128;ºå&#138;¡</a>
-<a href="https://huster.top/htmls/tag/%e6%97%a5%e5%bf%97" class="tag-cloud-link tag-link-32 tag-link-position-38" style="font-size: 10.964705882353pt;" aria-label="æ&#151;¥å¿&#151; (2ä¸ªé¡¹ç&#155;®)">æ&#151;¥å¿&#151;</a>
-<a href="https://huster.top/htmls/tag/%e6%9d%83%e5%88%a9" class="tag-cloud-link tag-link-49 tag-link-position-39" style="font-size: 8pt;" aria-label="æ&#157;&#131;å&#136;© (1ä¸ªé¡¹ç&#155;®)">æ&#157;&#131;å&#136;©</a>
-<a href="https://huster.top/htmls/tag/%e6%9f%b4%e9%9d%99" class="tag-cloud-link tag-link-48 tag-link-position-40" style="font-size: 8pt;" aria-label="æ&#159;´é&#157;&#153; (1ä¸ªé¡¹ç&#155;®)">æ&#159;´é&#157;&#153;</a>
-<a href="https://huster.top/htmls/tag/%e6%b3%9b%e5%9e%8b" class="tag-cloud-link tag-link-60 tag-link-position-41" style="font-size: 8pt;" aria-label="æ³&#155;å&#158;&#139; (1ä¸ªé¡¹ç&#155;®)">æ³&#155;å&#158;&#139;</a>
-<a href="https://huster.top/htmls/tag/%e6%b5%8f%e8%a7%88%e5%99%a8" class="tag-cloud-link tag-link-15 tag-link-position-42" style="font-size: 8pt;" aria-label="æµ&#143;è§&#136;å&#153;¨ (1ä¸ªé¡¹ç&#155;®)">æµ&#143;è§&#136;å&#153;¨</a>
-<a href="https://huster.top/htmls/tag/%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-13 tag-link-position-43" style="font-size: 8pt;" aria-label="ç³»ç»&#159;è®¾è®¡ (1ä¸ªé¡¹ç&#155;®)">ç³»ç»&#159;è®¾è®¡</a>
-<a href="https://huster.top/htmls/tag/%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-47 tag-link-position-44" style="font-size: 8pt;" aria-label="è¯»ä¹¦ç¬&#148;è®° (1ä¸ªé¡¹ç&#155;®)">è¯»ä¹¦ç¬&#148;è®°</a>
-<a href="https://huster.top/htmls/tag/%e8%bd%af%e4%bb%b6%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-18 tag-link-position-45" style="font-size: 8pt;" aria-label="è½¯ä»¶è®¾è®¡ (1ä¸ªé¡¹ç&#155;®)">è½¯ä»¶è®¾è®¡</a></div>
-</div><div id="linkcat-2" class="widget widget_links"><h5>é&#147;¾æ&#142;¥è¡¨</h5>
-	<ul class="xoxo blogroll"><li><a href="http://blog.sina.com.cn/rentb" rel="me" title="å&#142;&#159;æ&#157;¥ç&#154;&#132;å&#141;&#154;å®¢å&#156;°å&#157;&#128;" target="_blank">å&#141;&#154;å®¢è&#128;&#129;å&#156;°å&#157;&#128;</a></li>
-<li><a href="http://blog.csdn.net/heiyeshuwu" rel="colleague" target="_blank">é»&#145;å¤&#156;è·¯äºº</a></li>
+		</ul></section><section id="tag_cloud-2" class="widget widget_tag_cloud"><h2 class="widget-title">标签</h2><div class="tagcloud"><a href="https://huster.top/htmls/tag/apache" class="tag-cloud-link tag-link-31 tag-link-position-1" style="font-size: 1em;">Apache</a>
+<a href="https://huster.top/htmls/tag/codesniffer" class="tag-cloud-link tag-link-12 tag-link-position-2" style="font-size: 1em;">CodeSniffer</a>
+<a href="https://huster.top/htmls/tag/ecache" class="tag-cloud-link tag-link-67 tag-link-position-3" style="font-size: 1em;">Ecache</a>
+<a href="https://huster.top/htmls/tag/globals" class="tag-cloud-link tag-link-10 tag-link-position-4" style="font-size: 1em;">GLOBALS</a>
+<a href="https://huster.top/htmls/tag/hessian" class="tag-cloud-link tag-link-73 tag-link-position-5" style="font-size: 1em;">Hessian</a>
+<a href="https://huster.top/htmls/tag/http1-1" class="tag-cloud-link tag-link-22 tag-link-position-6" style="font-size: 1em;">HTTP/1.1</a>
+<a href="https://huster.top/htmls/tag/httpurlconnection" class="tag-cloud-link tag-link-71 tag-link-position-7" style="font-size: 1em;">HttpURLConnection</a>
+<a href="https://huster.top/htmls/tag/http%e8%af%b7%e6%b1%82" class="tag-cloud-link tag-link-70 tag-link-position-8" style="font-size: 1em;">Http请求</a>
+<a href="https://huster.top/htmls/tag/ioc" class="tag-cloud-link tag-link-17 tag-link-position-9" style="font-size: 1em;">IoC</a>
+<a href="https://huster.top/htmls/tag/java" class="tag-cloud-link tag-link-58 tag-link-position-10" style="font-size: 1em;">Java</a>
+<a href="https://huster.top/htmls/tag/java-spring-petclinic" class="tag-cloud-link tag-link-55 tag-link-position-11" style="font-size: 1em;">Java spring-petclinic</a>
+<a href="https://huster.top/htmls/tag/log4j" class="tag-cloud-link tag-link-68 tag-link-position-12" style="font-size: 1em;">log4j</a>
+<a href="https://huster.top/htmls/tag/logback" class="tag-cloud-link tag-link-69 tag-link-position-13" style="font-size: 1em;">logback</a>
+<a href="https://huster.top/htmls/tag/maven" class="tag-cloud-link tag-link-64 tag-link-position-14" style="font-size: 1em;">Maven</a>
+<a href="https://huster.top/htmls/tag/maven-shade-plugin" class="tag-cloud-link tag-link-66 tag-link-position-15" style="font-size: 1em;">maven-shade-plugin</a>
+<a href="https://huster.top/htmls/tag/mybatis" class="tag-cloud-link tag-link-72 tag-link-position-16" style="font-size: 1em;">mybatis</a>
+<a href="https://huster.top/htmls/tag/php" class="tag-cloud-link tag-link-7 tag-link-position-17" style="font-size: 1em;">PHP</a>
+<a href="https://huster.top/htmls/tag/plugin" class="tag-cloud-link tag-link-65 tag-link-position-18" style="font-size: 1em;">Plugin</a>
+<a href="https://huster.top/htmls/tag/register_globals" class="tag-cloud-link tag-link-9 tag-link-position-19" style="font-size: 1em;">register_globals</a>
+<a href="https://huster.top/htmls/tag/rfc" class="tag-cloud-link tag-link-20 tag-link-position-20" style="font-size: 1em;">RFC</a>
+<a href="https://huster.top/htmls/tag/rfc2616" class="tag-cloud-link tag-link-21 tag-link-position-21" style="font-size: 1em;">RFC2616</a>
+<a href="https://huster.top/htmls/tag/serializable" class="tag-cloud-link tag-link-59 tag-link-position-22" style="font-size: 1em;">Serializable</a>
+<a href="https://huster.top/htmls/tag/spring" class="tag-cloud-link tag-link-63 tag-link-position-23" style="font-size: 1em;">Spring</a>
+<a href="https://huster.top/htmls/tag/spring-boot" class="tag-cloud-link tag-link-62 tag-link-position-24" style="font-size: 1em;">Spring boot</a>
+<a href="https://huster.top/htmls/tag/thinkphp" class="tag-cloud-link tag-link-34 tag-link-position-25" style="font-size: 1em;">ThinkPHP</a>
+<a href="https://huster.top/htmls/tag/vsftp" class="tag-cloud-link tag-link-43 tag-link-position-26" style="font-size: 1em;">VSFTP</a>
+<a href="https://huster.top/htmls/tag/wordpress%e6%ba%90%e7%a0%81" class="tag-cloud-link tag-link-8 tag-link-position-27" style="font-size: 1em;">wordpress源码</a>
+<a href="https://huster.top/htmls/tag/zeromq" class="tag-cloud-link tag-link-29 tag-link-position-28" style="font-size: 1em;">ZeroMQ</a>
+<a href="https://huster.top/htmls/tag/zmq" class="tag-cloud-link tag-link-41 tag-link-position-29" style="font-size: 1em;">zmq</a>
+<a href="https://huster.top/htmls/tag/zmq%e7%9a%84%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-42 tag-link-position-30" style="font-size: 1em;">ZMQ的学习笔记</a>
+<a href="https://huster.top/htmls/tag/%e4%ba%92%e8%81%94%e7%bd%91" class="tag-cloud-link tag-link-14 tag-link-position-31" style="font-size: 1em;">互联网</a>
+<a href="https://huster.top/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86" class="tag-cloud-link tag-link-61 tag-link-position-32" style="font-size: 1em;">动态代理</a>
+<a href="https://huster.top/htmls/tag/%e5%8f%8c%e5%bc%95%e5%8f%b7" class="tag-cloud-link tag-link-36 tag-link-position-33" style="font-size: 1em;">双引号</a>
+<a href="https://huster.top/htmls/tag/%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="tag-cloud-link tag-link-78 tag-link-position-34" style="font-size: 1em;">多线程</a>
+<a href="https://huster.top/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-28 tag-link-position-35" style="font-size: 1em;">学习笔记</a>
+<a href="https://huster.top/htmls/tag/%e5%ae%89%e5%85%a8" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 1em;">安全</a>
+<a href="https://huster.top/htmls/tag/%e6%8a%80%e6%9c%af%e5%80%ba%e5%8a%a1" class="tag-cloud-link tag-link-30 tag-link-position-37" style="font-size: 1em;">技术债务</a>
+<a href="https://huster.top/htmls/tag/%e6%97%a5%e5%bf%97" class="tag-cloud-link tag-link-32 tag-link-position-38" style="font-size: 1em;">日志</a>
+<a href="https://huster.top/htmls/tag/%e6%9d%83%e5%88%a9" class="tag-cloud-link tag-link-49 tag-link-position-39" style="font-size: 1em;">权利</a>
+<a href="https://huster.top/htmls/tag/%e6%9f%b4%e9%9d%99" class="tag-cloud-link tag-link-48 tag-link-position-40" style="font-size: 1em;">柴静</a>
+<a href="https://huster.top/htmls/tag/%e6%b3%9b%e5%9e%8b" class="tag-cloud-link tag-link-60 tag-link-position-41" style="font-size: 1em;">泛型</a>
+<a href="https://huster.top/htmls/tag/%e6%b5%8f%e8%a7%88%e5%99%a8" class="tag-cloud-link tag-link-15 tag-link-position-42" style="font-size: 1em;">浏览器</a>
+<a href="https://huster.top/htmls/tag/%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-13 tag-link-position-43" style="font-size: 1em;">系统设计</a>
+<a href="https://huster.top/htmls/tag/%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-47 tag-link-position-44" style="font-size: 1em;">读书笔记</a>
+<a href="https://huster.top/htmls/tag/%e8%bd%af%e4%bb%b6%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-18 tag-link-position-45" style="font-size: 1em;">软件设计</a></div>
+</section><section id="linkcat-2" class="widget widget_links"><h2 class="widget-title">链接表</h2>
+	<ul class="xoxo blogroll"><li><a href="http://blog.sina.com.cn/rentb" rel="me" title="原来的博客地址" target="_blank">博客老地址</a></li>
+<li><a href="http://blog.csdn.net/heiyeshuwu" rel="colleague" target="_blank">黑夜路人</a></li>
 
-	</ul></div>
-<div id="recent-comments-2" class="widget widget_recent_comments"><h5>è¿&#145;æ&#156;&#159;è¯&#132;è®º</h5><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/645.html" rel="external nofollow" class="url">å¦&#130;ä½&#149;å&#134;&#153;ä»£ç &#129;æ&#157;¥è§£å&#134;³ç&#148;&#159;äº§è&#128;&#133;æ¶&#136;è´¹è&#128;&#133;é&#151;®é¢&#152;ï¼&#159; – ä¸&#137;ä¸¤å¸¦èµ°</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/615.html#comment-24314">ç&#144;&#134;è§£Javaçº¿ç¨&#139;é&#151;´ç&#154;&#132;é&#128;&#154;ä¿¡</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">é¾&#153;å®&#137;_ä»»å¤©å&#133;µ</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/557.html#comment-24313">å¹¶å&#143;&#145;ç¼&#150;ç¨&#139;æ¨¡å&#158;&#139;(è½¬è½½)</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Javaå¤&#154;çº¿ç¨&#139;æ&#128;»ç»&#147;(ä¸&#138;é&#131;¨å&#136;&#134;)é&#157;¢è¯&#149;é¢&#152;è§£ç­&#148; – ä¸&#137;ä¸¤å¸¦èµ°</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/637.html#comment-24312">ç»&#134;è¯´Javaç&#154;&#132;å&#134;&#133;å­&#152;æ¨¡å&#158;&#139;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Javaå¤&#154;çº¿ç¨&#139;æ&#128;»ç»&#147;(ä¸&#138;é&#131;¨å&#136;&#134;)é&#157;¢è¯&#149;é¢&#152;è§£ç­&#148; – ä¸&#137;ä¸¤å¸¦èµ°</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/557.html#comment-24311">å¹¶å&#143;&#145;ç¼&#150;ç¨&#139;æ¨¡å&#158;&#139;(è½¬è½½)</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">shanchao</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/573.html#comment-24309">spring bootåº&#148;ç&#148;¨å&#156;¨ POSTè¯·æ±&#130;ç&#154;&#132;Invalid CORS requestç&#154;&#132;é&#151;®é¢&#152;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">adimin</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/462.html#comment-24307">ä»&#139;ç»&#141;springç&#154;&#132;ä¸¤ä¸ªæ&#142;¥å&#143;£ApplicationContextAwareå&#146;&#140;ApplicationListener</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">å&#140;¿å&#144;&#141;</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/462.html#comment-24306">ä»&#139;ç»&#141;springç&#154;&#132;ä¸¤ä¸ªæ&#142;¥å&#143;£ApplicationContextAwareå&#146;&#140;ApplicationListener</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">å&#140;¿å&#144;&#141;</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/472.html#comment-24276">Spring bootè®¿é&#151;®jsã&#128;&#129;cssã&#128;&#129;å&#155;¾ç&#137;&#135;(img)è®¿é&#151;®404æ&#151; æ³&#149;è®¿é&#151;®ç&#154;&#132;é&#151;®é¢&#152;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link"><a href="http://kailin.li" rel="external nofollow" class="url">kailin</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/472.html#comment-24275">Spring bootè®¿é&#151;®jsã&#128;&#129;cssã&#128;&#129;å&#155;¾ç&#137;&#135;(img)è®¿é&#151;®404æ&#151; æ³&#149;è®¿é&#151;®ç&#154;&#132;é&#151;®é¢&#152;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">å&#159;ºå&#156;°å&#141;&#142;ç§&#145;ç&#148;·</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/about-me#comment-24271">å&#133;³äº&#142;æ&#136;&#145;</a>ã&#128;&#139;</li></ul></div>		</aside></div>
+	</ul></section><section id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widget-title">近期评论</h2><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/645.html" rel="external nofollow" class="url">如何写代码来解决生产者消费者问题？ – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/615.html/comment-page-1#comment-24314">理解Java线程间的通信</a>》</li><li class="recentcomments"><span class="comment-author-link">龙安_任天兵</span>发表在《<a href="https://huster.top/htmls/557.html/comment-page-1#comment-24313">并发编程模型(转载)</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Java多线程总结(上部分)面试题解答 – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/637.html/comment-page-1#comment-24312">细说Java的内存模型</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Java多线程总结(上部分)面试题解答 – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/557.html/comment-page-1#comment-24311">并发编程模型(转载)</a>》</li><li class="recentcomments"><span class="comment-author-link">shanchao</span>发表在《<a href="https://huster.top/htmls/573.html/comment-page-1#comment-24309">spring boot应用在 POST请求的Invalid CORS request的问题</a>》</li><li class="recentcomments"><span class="comment-author-link">adimin</span>发表在《<a href="https://huster.top/htmls/462.html/comment-page-1#comment-24307">介绍spring的两个接口ApplicationContextAware和ApplicationListener</a>》</li><li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a href="https://huster.top/htmls/462.html/comment-page-1#comment-24306">介绍spring的两个接口ApplicationContextAware和ApplicationListener</a>》</li><li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a href="https://huster.top/htmls/472.html/comment-page-1#comment-24276">Spring boot访问js、css、图片(img)访问404无法访问的问题</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="http://kailin.li" rel="external nofollow" class="url">kailin</a></span>发表在《<a href="https://huster.top/htmls/472.html/comment-page-1#comment-24275">Spring boot访问js、css、图片(img)访问404无法访问的问题</a>》</li><li class="recentcomments"><span class="comment-author-link">基地华科男</span>发表在《<a href="https://huster.top/about-me/comment-page-2#comment-24271">关于我</a>》</li></ul></section></aside></div>
+
+		<footer id="colophon" class="site-footer" role="contentinfo"><div class="site-info">
+								<span class="site-title"><a href="https://huster.top/" rel="home">三两带走</a></span>
+				<a href="https://cn.wordpress.org/">自豪地采用WordPress</a>
 			</div>
-</article></div>
-	</div>
+		</footer></div>
 </div>
 
-			<div class="section related-posts">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<h2 class="hestia-title text-center">ç&#155;¸å&#133;³æ&#150;&#135;ç« </h2>
-							<div class="row">
-																	<div class="col-md-4">
-										<div class="card card-blog">
-																						<div class="content">
-												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" title="æ&#159;¥ç&#156;&#139;Javaå­¦ä¹ ä¸­ç&#154;&#132;å&#133;¨é&#131;¨æ&#150;&#135;ç« ">Javaå­¦ä¹ </a> </h6>
-												<h4 class="card-title">
-													<a class="blog-item-title-link" href="https://huster.top/htmls/665.html" title="Javaå­&#151;è&#138;&#130;ç &#129;å¢&#158;å¼ºæ&#138;&#128;æ&#156;¯ç&#154;&#132;åº&#148;ç&#148;¨" rel="bookmark">
-														Javaå­&#151;è&#138;&#130;ç &#129;å¢&#158;å¼ºæ&#138;&#128;æ&#156;¯ç&#154;&#132;åº&#148;ç&#148;¨													</a>
-												</h4>
-												<p class="card-description">Javaå­&#151;è&#138;&#130;ç &#129;å¢&#158;å¼ºæ&#138;&#128;æ&#156;¯ è®¤è¯&#134;Instrumentation &nbsp<a class="moretag" href="https://huster.top/htmls/665.html"> é&#152;&#133;è¯»æ&#155;´å¤&#154;…</a></p>
-											</div>
-										</div>
-									</div>
-																	<div class="col-md-4">
-										<div class="card card-blog">
-																						<div class="content">
-												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" title="æ&#159;¥ç&#156;&#139;Javaå­¦ä¹ ä¸­ç&#154;&#132;å&#133;¨é&#131;¨æ&#150;&#135;ç« ">Javaå­¦ä¹ </a> </h6>
-												<h4 class="card-title">
-													<a class="blog-item-title-link" href="https://huster.top/htmls/662.html" title="JVM Sandbox æº&#144;ç &#129;å&#136;&#134;æ&#158;&#144;ï¼&#136;ä¸&#128;ï¼&#137;å&#159;ºç¡&#128;ç¯&#135;: Instrumentationå&#146;&#140;ClassFileTransformerä½&#156;ç&#148;¨" rel="bookmark">
-														JVM Sandbox æº&#144;ç &#129;å&#136;&#134;æ&#158;&#144;ï¼&#136;ä¸&#128;ï¼&#137;å&#159;ºç¡&#128;ç¯&#135;: Instrumentationå&#146;&#140;ClassFileTransformerä½&#156;ç&#148;¨													</a>
-												</h4>
-												<p class="card-description">è&#131;&#140;æ&#153;¯ jvm sandboxæ&#152;¯ä¸&#128;ä¸ªå¼&#128;æº&#144;é¡¹ç&#155;®https://github<a class="moretag" href="https://huster.top/htmls/662.html"> é&#152;&#133;è¯»æ&#155;´å¤&#154;…</a></p>
-											</div>
-										</div>
-									</div>
-																	<div class="col-md-4">
-										<div class="card card-blog">
-																						<div class="content">
-												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" title="æ&#159;¥ç&#156;&#139;Javaå­¦ä¹ ä¸­ç&#154;&#132;å&#133;¨é&#131;¨æ&#150;&#135;ç« ">Javaå­¦ä¹ </a> </h6>
-												<h4 class="card-title">
-													<a class="blog-item-title-link" href="https://huster.top/htmls/657.html" title="Javaç±»åº&#147;è®¾è®¡ä¹&#139;æ&#151;¥å¿&#151;æ¡&#134;æ&#158;¶é&#128;&#137;æ&#139;©" rel="bookmark">
-														Javaç±»åº&#147;è®¾è®¡ä¹&#139;æ&#151;¥å¿&#151;æ¡&#134;æ&#158;¶é&#128;&#137;æ&#139;©													</a>
-												</h4>
-												<p class="card-description">Javaæ&#151;¥å¿&#151;æ¡&#134;æ&#158;¶ç&#142;°ç&#138;¶ Javaæ&#151;¥å¿&#151;æ¡&#134;æ&#158;¶ç&#154;&#132;æ&#149;&#133;äº&#139;è¯´æ&#157;¥è¯&#157;é&#149;¿ï¼&#140;å&#129;&#154;è¿&#135;å¼&#128;å&#143;&#145;ç&#154;&#132;ä¸&#128;å®&#154;é&#129;&#135;<a class="moretag" href="https://huster.top/htmls/657.html"> é&#152;&#133;è¯»æ&#155;´å¤&#154;…</a></p>
-											</div>
-										</div>
-									</div>
-																							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="footer-wrapper">
-						<footer class="footer footer-black footer-big"><div class="container">
-								
-		<div class="content">
-			<div class="row">
-				<div class="col-md-4"><div id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script src="https://s22.cnzz.com/z_stat.php?id=3943131&web_id=3943131" language="JavaScript"></script></div></div></div>			</div>
-		</div>
-		<hr><div class="hestia-bottom-footer-content"><ul class="footer-menu pull-left"><li class="page_item page-item-50"><a href="https://huster.top/books">é&#130;£äº&#155;å¹´ï¼&#140;é&#130;£äº&#155;ä¹¦</a></li>
-<li class="page_item page-item-52"><a href="https://huster.top/music">é&#130;£äº&#155;å¹´ï¼&#140;é&#130;£äº&#155;é&#159;³ä¹&#144;</a></li>
-<li class="page_item page-item-54"><a href="https://huster.top/movie">é&#130;£äº&#155;å¹´ï¼&#140;é&#130;£äº&#155;ç&#148;µå½±</a></li>
-<li class="page_item page-item-60"><a href="https://huster.top/myworkspac">æ&#136;&#145;ç&#154;&#132;å¼&#128;å&#143;&#145;ç&#142;¯å¢&#131;</a></li>
-<li class="page_item page-item-5"><a href="https://huster.top/about-me">å&#133;³äº&#142;æ&#136;&#145;</a></li>
-<li class="page_item page-item-89"><a href="https://huster.top/notebook">ç&#149;&#153;è¨&#128;æ&#156;¬</a></li>
-</ul><div class="copyright pull-right">
-				Hestia |ç&#148;±<a href="https://themeisle.com" rel="nofollow">ThemeIsle</a>å¼&#128;å&#143;&#145;			</div>
-			</div>			</div>
-					</footer></div>
-	</div>
 <script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shCore.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushAS3.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushBash.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushColdFusion.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushClojure.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCpp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCSharp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCss.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushDelphi.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushDiff.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushErlang.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushFSharp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushGroovy.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJava.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJavaFX.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJScript.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushLatex.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushMatlabKey.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushObjC.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPerl.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPhp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPlain.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPowerShell.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPython.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushR.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushRuby.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushScala.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushSql.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushVb.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushXml.js"></script><script type="text/javascript">
 	(function(){
 		var corecss = document.createElement('link');
@@ -674,8 +419,8 @@ Method sp URI sp HTTP-Version CRLF,æ&#136;&#145;ä»¬æ&#157;¥å&#131;&#143;�
 			} );
 		} );
 	}
-</script><script type="text/javascript" src="https://huster.top/wp-content/themes/hestia/assets/bootstrap/js/bootstrap.min.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/ui/core.min.js"></script><script type="text/javascript">
+</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
 /* <![CDATA[ */
-var requestpost = {"ajaxurl":"https:\/\/huster.top\/wp-admin\/admin-ajax.php","disable_autoslide":"","masonry":""};
+var screenReaderText = {"expand":"\u5c55\u5f00\u5b50\u83dc\u5355","collapse":"\u6298\u53e0\u5b50\u83dc\u5355"};
 /* ]]> */
-</script><script type="text/javascript" src="https://huster.top/wp-content/themes/hestia/assets/js/script.min.js"></script><script async="async" type="text/javascript" src="https://huster.top/wp-content/plugins/akismet/_inc/form.js"></script></body></html>
+</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/functions.js"></script><script async="async" type="text/javascript" src="https://huster.top/wp-content/plugins/akismet/_inc/form.js"></script></body></html>

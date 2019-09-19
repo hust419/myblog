@@ -12,7 +12,7 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 09 Jul 2019 12:57:27 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
@@ -35,7 +35,7 @@
 		<category><![CDATA[其他]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=504</guid>
-		<description><![CDATA[当下我们都在使用spring boot，配合注解的使用，我们彻底抛弃了xml的配置。在使用sprin<a class="moretag" href="https://huster.top/htmls/504.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[当下我们都在使用spring boot，配合注解的使用，我们彻底抛弃了xml的配置。在使用spring boo &#8230; <a href="https://huster.top/htmls/504.html" class="more-link">继续阅读<span class="screen-reader-text">“如何在Mybatis注解中使用枚举类型”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>当下我们都在使用spring boot，配合注解的使用，我们彻底抛弃了xml的配置。在使用spring boot mybatis的时候，关于使用spring boot mybatis注解使用的文档却不清不楚。官网大部分的例子和使用都是叫你如何写mapper.xml。很多时候，一些特别的需求关于注解如何实现这个功能都是一句话带过，很多地方连一句话都没有。在使用spring boot mybatis的过程中，我遇到过很多特殊的需求。例如动态sql的使用，通过插件来注入修改用户的sql语句，枚举类型的使用等。很多case当时搞明白了，过了段时间再用又忘记了，去寻找解决方法的时候又没有靠谱答案，所以这里把用过的一些case写一个序列的文章，方便自己和后来者。</p>
 <p><span id="more-504"></span></p>
 <p>这篇文章是关于mybatis使用注解处理枚举类型的情况。很多时候，我们定义一个类型的时候数据库里存储的往往是int类型，而我们希望在代码中还是能保持和使用枚举类型，这个时候就要针对枚举类型做出一些处理了。官网关于使用xml的时候处理枚举类型描述[文档](http://www.mybatis.org/mybatis-3/zh/configuration.html#typeHandlers)。 举例说明，我们有一个描述数据类型的枚举类。</p>
@@ -123,7 +123,7 @@ int saveConfigInfo(ConfigInfo infoDO);</pre>
 				<category><![CDATA[其他]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=446</guid>
-		<description><![CDATA[我记得我不止一次遇到这个问题了，按照要求定义了controller，始终就是404，上一次的原因我已<a class="moretag" href="https://huster.top/htmls/446.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[我记得我不止一次遇到这个问题了，按照要求定义了controller，始终就是404，上一次的原因我已经不大记得 &#8230; <a href="https://huster.top/htmls/446.html" class="more-link">继续阅读<span class="screen-reader-text">“Spring boot的controller无法生效404的原因”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>我记得我不止一次遇到这个问题了，按照要求定义了controller，始终就是404，上一次的原因我已经不大记得了，这次又遇到就好好查一查。</p>
 <p>先搜索引擎一遍，发现大家都遇到过404的问题，各种原因都有，这里面当然有各种原因，最关键的是没有任何错误日志导致问题非常的难查。</p>
 <p>一般情况，如果有内部错误或者有致命的异常都会导致404.但是我一个Controller非常的简单，没有任何逻辑，也没有任何错误日志，让人非常的迷茫。</p>
@@ -142,7 +142,7 @@ public ApiStatus publishOrange (HttpServletRequest request) {
 关键代码是：
 RequestMappingHandlerAdapter 打出来的日志里，会记录所有的control，我没有发现我定义的controller，所以得看看是什么原因。
 
-<a href="http://huster.top/wp-content/uploads/2016/03/mapped.png"><img class="alignnone size-full wp-image-447" src="http://huster.top/wp-content/uploads/2016/03/mapped.png" alt="mapped" width="1335" height="334" srcset="https://huster.top/wp-content/uploads/2016/03/mapped.png 1335w, https://huster.top/wp-content/uploads/2016/03/mapped-300x75.png 300w, https://huster.top/wp-content/uploads/2016/03/mapped-1024x256.png 1024w" sizes="(max-width: 1335px) 100vw, 1335px" />
+<a href="http://huster.top/wp-content/uploads/2016/03/mapped.png"><img class="alignnone size-full wp-image-447" src="http://huster.top/wp-content/uploads/2016/03/mapped.png" alt="mapped" width="1335" height="334" srcset="https://huster.top/wp-content/uploads/2016/03/mapped.png 1335w, https://huster.top/wp-content/uploads/2016/03/mapped-300x75.png 300w, https://huster.top/wp-content/uploads/2016/03/mapped-1024x256.png 1024w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" />
 
 </a>找到这个函数：</pre>
 <pre>ControllerAdviceBean.findAnnotatedBeans
@@ -164,7 +164,7 @@ RequestMappingHandlerAdapter 打出来的日志里，会记录所有的control�
 				<category><![CDATA[其他]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=430</guid>
-		<description><![CDATA[使用Spring boot的官方tutorials可以非常方便的完成spring的示例，示例也非常简<a class="moretag" href="https://huster.top/htmls/430.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[使用Spring boot的官方tutorials可以非常方便的完成spring的示例，示例也非常简单，使用注 &#8230; <a href="https://huster.top/htmls/430.html" class="more-link">继续阅读<span class="screen-reader-text">“Spring Boot 在Tomcat容器中的启动办法”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>使用Spring boot的官方<a href="http://spring.io/guides#tutorials" target="_blank">tutorials</a>可以非常方便的完成spring的示例，示例也非常简单，使用注解直接就完成了RESTful API的开发。但是当这个应用使用tomcat来启动的时候，却产生了404错误。加之使用的是淘宝改动过的tomcat（<a href="http://tomcat.alibaba-inc.com/" target="_blank">主页地址</a>），使得寻找问题变得复杂起来。最后，在阅读了官方文档后，饶了几个页面，终于找到了问题所在。无论你是使用的<a class="guide--title" href="http://spring.io/guides/gs/rest-service/">Building a RESTful Web Service</a>的代码，还是使用的官方https://start.spring.io/生成的代码，都是同样的解法。</p>
 <p><span id="more-430"></span></p>
 <p>在pom中进行如下修改，请注意红色部分。</p>
@@ -211,7 +211,7 @@ public class AdminApplication  extends SpringBootServletInitializer {
 }
 </pre>
 <p>到这里，再打成war包，放到你的tomcat容器里，就能跑起来了。我的IDEA的配置如下：</p>
-<p><a href="http://huster.top/wp-content/uploads/2015/11/idea.png"><img class="alignnone size-full wp-image-431" src="http://huster.top/wp-content/uploads/2015/11/idea.png" alt="idea" width="979" height="609" srcset="https://huster.top/wp-content/uploads/2015/11/idea.png 979w, https://huster.top/wp-content/uploads/2015/11/idea-300x187.png 300w" sizes="(max-width: 979px) 100vw, 979px" /></a></p>
+<p><a href="http://huster.top/wp-content/uploads/2015/11/idea.png"><img class="alignnone size-full wp-image-431" src="http://huster.top/wp-content/uploads/2015/11/idea.png" alt="idea" width="979" height="609" srcset="https://huster.top/wp-content/uploads/2015/11/idea.png 979w, https://huster.top/wp-content/uploads/2015/11/idea-300x187.png 300w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /></a></p>
 <p>&nbsp;</p>
 <p>下面我们试着分析下，为什么？</p>
 <p>1. Spring boot 项目里已经在内嵌了tomcat容器，所以你如果要使用外部的tomcat容器，则需要在pom文件中，将内嵌的tomcat容器写成provided范围。之所以内嵌容器，spring 是为了一个jar文件也能启动一个http服务，而抛弃了繁杂的配置。同时为了让tomcat能够识别，我们把打成的包改成传统的war，默认是jar。这个是我们修改pom的原因。</p>
@@ -250,7 +250,7 @@ public class AdminApplication  extends SpringBootServletInitializer {
 				<category><![CDATA[其他]]></category>
 
 		<guid isPermaLink="false">http://www.longant.com/?p=413</guid>
-		<description><![CDATA[有一天，你高兴的改完了代码，并git push之后发现，哎呀，改错分支了。我的分支是xxxxx需要上<a class="moretag" href="https://huster.top/htmls/413.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[有一天，你高兴的改完了代码，并git push之后发现，哎呀，改错分支了。我的分支是xxxxx需要上线的，结果 &#8230; <a href="https://huster.top/htmls/413.html" class="more-link">继续阅读<span class="screen-reader-text">“[转载]git在git push之后无痕回滚到某一次提交的方法”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>有一天，你高兴的改完了代码，并git push之后发现，哎呀，改错分支了。我的分支是xxxxx需要上线的，结果同时在开发另外一个项目，分支叫ssssss，这个尴尬的时候，有没有办法不留痕迹的将你的分支恢复到git push之前的状态呢？所谓的无痕是指在远程也没有记录，方法如下：</p>
 <p>git代码库回滚: 指的是将代码库某分支退回到以前的某个commit id</p>
 <p><span id="more-413"></span></p>
@@ -289,7 +289,7 @@ public class AdminApplication  extends SpringBootServletInitializer {
 		<category><![CDATA[读书笔记]]></category>
 
 		<guid isPermaLink="false">http://www.longant.com/?p=322</guid>
-		<description><![CDATA[柴静的这篇文章，内容非常丰富， 里面穿插了很多历史上，以及过去发生的事情。讲述了美国争取种族平等的事<a class="moretag" href="https://huster.top/htmls/322.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[柴静的这篇文章，内容非常丰富， 里面穿插了很多历史上，以及过去发生的事情。讲述了美国争取种族平等的事件起因，讲 &#8230; <a href="https://huster.top/htmls/322.html" class="more-link">继续阅读<span class="screen-reader-text">“读书笔记：我只是讨厌屈服（柴静）”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>柴静的这篇文章，内容非常丰富， 里面穿插了很多历史上，以及过去发生的事情。讲述了美国争取种族平等的事件起因，讲述了国内发生的为了争取权利，个人对抗“权威”的事情。然而，可悲的是，目前，在中国，这种做法让人觉得很难理解。这种做法没用，不可取，或者是5毛钱的事情，跟我没关系。然后，正如书中所说，你觉得今天的拆迁跟我没关系，我不想去关心，明天的征税跟我没关系，我不去关心，但是总有一天，跟你有关系的时候，也没有人去争取，自身的权利。</p>
 <p><span id="more-322"></span></p>
 <p>&nbsp;</p>

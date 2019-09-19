@@ -9,10 +9,10 @@
 
 <channel>
 	<title>Spring &#8211; 三两带走</title>
-	<atom:link href="https://huster.top/htmls/tag/spring/feed" rel="self" type="application/rss+xml" />
-	<link>https://huster.top/</link>
+	<atom:link href="http://rentb.vicp.net/htmls/tag/spring/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Wed, 10 Jul 2019 11:03:48 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 09 Jul 2019 12:57:27 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
@@ -21,7 +21,7 @@
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
 	<title>Spring &#8211; 三两带走</title>
-	<link>https://huster.top/</link>
+	<link>http://huster.top/</link>
 	<width>32</width>
 	<height>32</height>
 </image> 
@@ -35,8 +35,8 @@
 		<category><![CDATA[Spring]]></category>
 		<category><![CDATA[Spring boot]]></category>
 
-		<guid isPermaLink="false">https://huster.top/?p=573</guid>
-		<description><![CDATA[继上一篇遇到的Invalid CORS request之后，很久没有遇到这个问题了，今天又遇到了这个<a class="moretag" href="https://huster.top/htmls/573.html"> 阅读更多&#8230;</a>]]></description>
+		<guid isPermaLink="false">http://huster.top/?p=573</guid>
+		<description><![CDATA[继上一篇遇到的Invalid CORS request之后，很久没有遇到这个问题了，今天又遇到了这个问题。上次 &#8230; <a href="https://huster.top/htmls/573.html" class="more-link">继续阅读<span class="screen-reader-text">“spring boot应用在 POST请求的Invalid CORS request的问题”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>继上一篇遇到的Invalid CORS request之后，很久没有遇到这个问题了，今天又遇到了这个问题。上次问题是因为nginx没有把host信息代理给后面的java应用导致的，https://huster.top/htmls/511.html，而这次居然不是这个问题，检查了下 proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;该有的配置都有。</p>
 <p>这就奇怪了，就是为什么呢？</p>
 <p>现象： GET请求没有问题。POST请求下在http下是好的，在https报403 Invalid CORS request错误。刚开始，我并没有意识到是http和https的问题，而是集团有日常、预发环境。日常验证是http验证的，一切正常。上到预发就发生了这个问题，排查其他配置、差异什么的走了一些弯路。</p>
@@ -166,7 +166,7 @@ public class CORS {
 <p>&nbsp;</p>
 <p>通过调试发现，因为GET的时候并没有在header头里带origin，所以在方法的第一行就返回了。</p>
 <p>为了验证我的想法，我在get的时候，也通过postman发送了header，结果出现了post一样的报错，证实了我的想法。</p>
-<p><a href="https://huster.top/wp-content/uploads/2018/08/图片.png"><img class="alignnone size-full wp-image-575" src="https://huster.top/wp-content/uploads/2018/08/图片.png" alt="" width="1120" height="361" srcset="https://huster.top/wp-content/uploads/2018/08/图片.png 1120w, https://huster.top/wp-content/uploads/2018/08/图片-300x97.png 300w, https://huster.top/wp-content/uploads/2018/08/图片-768x248.png 768w, https://huster.top/wp-content/uploads/2018/08/图片-1024x330.png 1024w" sizes="(max-width: 1120px) 100vw, 1120px" /></a></p>
+<p><a href="http://huster.top/wp-content/uploads/2018/08/图片.png"><img class="alignnone size-full wp-image-575" src="http://huster.top/wp-content/uploads/2018/08/图片.png" alt="" width="1120" height="361" srcset="https://huster.top/wp-content/uploads/2018/08/图片.png 1120w, https://huster.top/wp-content/uploads/2018/08/图片-300x97.png 300w, https://huster.top/wp-content/uploads/2018/08/图片-768x248.png 768w, https://huster.top/wp-content/uploads/2018/08/图片-1024x330.png 1024w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 62vw, 840px" /></a></p>
 <p>&nbsp;</p>
 <ol>
 <li>为什么相同的域名还会出现跨域的问题</li>
@@ -198,8 +198,8 @@ if you want to enable cell logic, you must change your proxy_pass conf to follow
 		<category><![CDATA[Java]]></category>
 		<category><![CDATA[Spring]]></category>
 
-		<guid isPermaLink="false">https://huster.top/?p=462</guid>
-		<description><![CDATA[最近忙于双11的项目，没日没夜的，慌于学业，实在是惭愧，今天好不容易有点时间，看了些源码，有了些新的<a class="moretag" href="https://huster.top/htmls/462.html"> 阅读更多&#8230;</a>]]></description>
+		<guid isPermaLink="false">http://huster.top/?p=462</guid>
+		<description><![CDATA[最近忙于双11的项目，没日没夜的，慌于学业，实在是惭愧，今天好不容易有点时间，看了些源码，有了些新的知识，记录 &#8230; <a href="https://huster.top/htmls/462.html" class="more-link">继续阅读<span class="screen-reader-text">“介绍spring的两个接口ApplicationContextAware和ApplicationListener”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>最近忙于双11的项目，没日没夜的，慌于学业，实在是惭愧，今天好不容易有点时间，看了些源码，有了些新的知识，记录下来，以备以后使用.</p>
 <p>今天要介绍的是spring的org.springframework.context包里的两个接口。spring真是强大，不仅为我们提供了基本的脚手架，并且针对特殊的需求，也开放了很多的接口以满足你特殊的需求。今天要介绍的这两位，一个可以让你在任何时候得到当前的容器，另外一位则可以让你在bean初始化完成之后来做一些自己的业务逻辑。</p>
 <p><span id="more-462"></span></p>

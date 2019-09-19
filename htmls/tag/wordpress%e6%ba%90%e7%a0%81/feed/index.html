@@ -12,7 +12,7 @@
 	<atom:link href="http://rentb.vicp.net/htmls/tag/wordpress%e6%ba%90%e7%a0%81/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 09 Jul 2019 12:57:27 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
@@ -37,7 +37,7 @@
 		<category><![CDATA[系统设计]]></category>
 
 		<guid isPermaLink="false">http://www.longant.com/?p=77</guid>
-		<description><![CDATA[       上周研究了下Wordpress的源码，虽然源码写的不够精细，我们姑且不讨论其代码是否真<a class="moretag" href="https://huster.top/htmls/77.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[       上周研究了下Wordpress的源码，虽然源码写的不够精细，我们姑且不讨论其代码是否真的如其官网 &#8230; <a href="https://huster.top/htmls/77.html" class="more-link">继续阅读<span class="screen-reader-text">“WordPress的源码阅读笔记”</span></a>]]></description>
 				<content:encoded><![CDATA[<p style="text-align: justify;">       上周研究了下Wordpress的源码，虽然源码写的不够精细，我们姑且不讨论其代码是否真的如其官网所说“代码如诗”，我们比较感兴趣的是，他的框架是怎样的，他是如何实现的MVC分层，又是如何很方便的扩展插件、主题，让其他人可以简单的参与到开发中来。</p>
 <p style="text-align: justify;">       我们从前台的Index.php入手，找到入口文件wp-blog-header.php文件,wp-load.php主要是一些判断和初始化工作，template-loader.php文件则主要是显示整个网站的内容。实际的初始化内容在wp-settings.php中，这个也是整个系统的核心所在。他进行了一系列的check,定义相应的类，最后加载模板文件的首页文件，交予模板文件处理。</p>
 <p style="text-align: justify;">     整个系统的实现自由扩展，很大程度“依赖于执行挂钩、动作和过滤器 ”,关于这个话题可以参考官方的说明，http://codex.wordpress.org/Plugin_API,这个理解了，才能更好的把握Wordpress的东西，因为整个系统都与他有关!</p>
@@ -117,7 +117,7 @@
 		<category><![CDATA[wordpress源码]]></category>
 
 		<guid isPermaLink="false">http://www.longant.com/?p=39</guid>
-		<description><![CDATA[最近，在阅wordpress的代码的时候，看到在设置环境的初期，有一些安全性和初始化的工作，其中，有<a class="moretag" href="https://huster.top/htmls/39.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[最近，在阅wordpress的代码的时候，看到在设置环境的初期，有一些安全性和初始化的工作，其中，有一个函数w &#8230; <a href="https://huster.top/htmls/39.html" class="more-link">继续阅读<span class="screen-reader-text">“PHP中$GLOBALS变量和register_globals”</span></a>]]></description>
 				<content:encoded><![CDATA[<p style="text-align: justify;">最近，在阅wordpress的代码的时候，看到在设置环境的初期，有一些安全性和初始化的工作，其中，有一个函数wp_unregister_GLOBALS()有点意思，函数的具体内容是：</p>
 <p style="text-align: justify;"><span id="more-39"></span></p>
 <pre class="brush:php">/**

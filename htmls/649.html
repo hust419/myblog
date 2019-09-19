@@ -1,320 +1,148 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Javaå¤&#154;çº¿ç¨&#139;ç&#159;¥è¯&#134;ç&#130;¹ï¼&#136;ä¸&#139;ï¼&#137; – ä¸&#137;ä¸¤å¸¦èµ°</title><link rel="amphtml" href="https://huster.top/htmls/649.html/amp"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//fonts.googleapis.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="hestia-clients-bar-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/companion-legacy/assets/css/hestia/clients-bar.css" type="text/css" media="all"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="bootstrap-css" href="https://huster.top/wp-content/themes/hestia/assets/bootstrap/css/bootstrap.min.css" type="text/css" media="all"><link rel="stylesheet" id="orfeo_parent-css" href="https://huster.top/wp-content/themes/hestia/style.css" type="text/css" media="all"><style id="orfeo_parent-inline-css" type="text/css">
-.hestia-pricing .hestia-table-one .card-pricing .category { color: #f5593d; }.hestia-pricing .hestia-table-two .card-pricing { background-color: #f5593d; }.pagination .nav-links .page-numbers { color: #f5593d; border-color: #f5593d; }.pagination .nav-links .page-numbers.current { border-color: #f5593d; }.pagination .nav-links .page-numbers:hover { background-color: #f5593d; }.pagination .nav-links .page-numbers:hover { border-color: #f5593d; }.woocommerce-pagination ul.page-numbers .page-numbers { color: #f5593d; border-color: #f5593d; } .woocommerce-pagination ul.page-numbers li > span.current { border-color: #f5593d !important; }.woocommerce-pagination ul.page-numbers .page-numbers:hover { background-color: #f5593d; }.woocommerce-pagination ul.page-numbers .page-numbers:hover { border-color: #f5593d; }.entry-categories .label { background-color: #f5593d;}.woocommerce .star-rating { color: #f5593d; }.woocommerce div.product p.stars span a:before { color: #f5593d; }.woocommerce-cart table.shop_table button { 
-		    background-color: #f5593d !important;
-		    border-color: #f5593d !important; 
-        }.woocommerce-cart table.shop_table button:hover { 
-		    background-color: #f5593d !important; 
-		    border-color: #f5593d !important;
-        }.woocommerce-page .woocommerce-message { background-color: #f5593d; }.track_order input[type=submit] { background-color: #f5593d; }.track_order input[type=submit]:hover { background-color: #f5593d; }div[id^=woocommerce_product_tag_cloud].widget a { background-color: #f5593d; }.woocommerce.widget_shopping_cart .buttons > a.button { background-color: #f5593d; }.woocommerce.widget_shopping_cart .buttons > a.button:hover { background-color: #f5593d; }
-</style><link rel="stylesheet" id="hestia-font-sizes-css" href="https://huster.top/wp-content/themes/hestia/assets/css/font-sizes.min.css" type="text/css" media="all"><link rel="stylesheet" id="font-awesome-css" href="https://huster.top/wp-content/themes/hestia/assets/font-awesome/css/font-awesome.min.css" type="text/css" media="all"><link rel="stylesheet" id="hestia_style-css" href="https://huster.top/wp-content/themes/orfeo/style.css" type="text/css" media="all"><style id="hestia_style-inline-css" type="text/css">
-.hestia-top-bar, .hestia-top-bar .widget.widget_shopping_cart .cart_list {
-			background-color: #363537
+<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>Java多线程知识点（下） – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/649.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
+	    
+		body.page-template-builder-fullwidth.elementor-page,
+		body.page-template-builder-fullwidth-std.elementor-page {
+			background: transparent;
 		}
-		.hestia-top-bar .widget .label-floating input[type=search]:-webkit-autofill {
-			-webkit-box-shadow: inset 0 0 0px 9999px #363537
-		}.hestia-top-bar, .hestia-top-bar .widget .label-floating input[type=search], .hestia-top-bar .widget.widget_search form.form-group:before, .hestia-top-bar .widget.widget_product_search form.form-group:before, .hestia-top-bar .widget.widget_shopping_cart:before {
-			color: #ffffff
-		} 
-		.hestia-top-bar .widget .label-floating input[type=search]{
-			-webkit-text-fill-color:#ffffff !important 
-		}.hestia-top-bar a, .hestia-top-bar .top-bar-nav li a {
-			color: #ffffff
-		}.hestia-top-bar a:hover, .hestia-top-bar .top-bar-nav li a:hover {
-			color: #eeeeee
+		.page-template-builder-fullwidth-std .site {
+			margin: 0;
 		}
+		.page-template-builder-fullwidth .elementor-page,
+        .page-template-builder-fullwidth-std .elementor-page {
+	        overflow: hidden;
+        }
+		.page-template-builder-fullwidth .full-width,
+        .page-template-builder-fullwidth-std .full-width {
+	        width: 100%;
+        }
+        .page-template-builder-fullwidth .site-inner,
+        .page-template-builder-fullwidth-std .site-inner {
+            max-width: 100%;
+        }
+        .page-template-builder-fullwidth .site-content,
+        .page-template-builder-fullwidth-std .site-content {
+            padding: 0;
+        }
+        .page-template-builder-fullwidth header#masthead,
+        .page-template-builder-fullwidth footer#colophon,
+        .page-template-builder-fullwidth-std header#masthead,
+        .page-template-builder-fullwidth-std footer#colophon {
+	        margin: 0 auto;
+	        max-width: 1320px;
+        } 
+        .page-template-builder-fullwidth .entry-content,
+        .page-template-builder-fullwidth-std .entry-content {
+	        margin-right: auto;
+	        margin-left: auto;
+        }
+        @media screen and (min-width: 56.875em) {
+	        .admin-bar .anchor-menu {
+		        top: 20px;
+	        }	
+			.admin-bar .anchor-menu-fixed.anchor-menu, .admin-bar .anchor-menu-fixed.elementor-widget-wp-widget-nav_menu {
+				top: 54px !important;
+			}			
+			.page-template-builder-fullwidth .entry-content,
+            .page-template-builder-fullwidth-std .entry-content	{
+	            margin-right: auto;
+	            margin-left: auto;
+	        }
+        }
+        @media screen and (min-width: 44.375em) {	        
+			.page-template-builder-fullwidth .entry-content,
+            .page-template-builder-fullwidth-std .entry-content {
+	            margin-right: auto;;
+	        }
+        }
 	
-		a, 
-		.navbar .dropdown-menu li:hover > a,
-		.navbar .dropdown-menu li:focus > a,
-		.navbar .dropdown-menu li:active > a,
-		.navbar .navbar-nav > li .dropdown-menu li:hover > a,
-		body:not(.home) .navbar-default .navbar-nav > .active:not(.btn) > a,
-		body:not(.home) .navbar-default .navbar-nav > .active:not(.btn) > a:hover,
-		body:not(.home) .navbar-default .navbar-nav > .active:not(.btn) > a:focus,
-		a:hover, 
-		.card-blog a.moretag:hover, 
-		.card-blog a.more-link:hover, 
-		.widget a:hover {
-		    color:#f5593d;
-		}
-		
-		.pagination span.current, .pagination span.current:focus, .pagination span.current:hover {
-			border-color:#f5593d
-		}
-		
-		button,
-		button:hover,
-		.woocommerce .track_order button[type="submit"],     
-		.woocommerce .track_order button[type="submit"]:hover,     
-		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit,
-		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit:hover,
-		input[type="button"],
-		input[type="button"]:hover,
-		input[type="submit"],
-		input[type="submit"]:hover,
-		input#searchsubmit, 
-		.pagination span.current, 
-		.pagination span.current:focus, 
-		.pagination span.current:hover,
-		.btn.btn-primary,
-		.btn.btn-primary:link,
-		.btn.btn-primary:hover, 
-		.btn.btn-primary:focus, 
-		.btn.btn-primary:active, 
-		.btn.btn-primary.active, 
-		.btn.btn-primary.active:focus, 
-		.btn.btn-primary.active:hover,
-		.btn.btn-primary:active:hover, 
-		.btn.btn-primary:active:focus, 
-		.btn.btn-primary:active:hover,
-		.hestia-sidebar-open.btn.btn-rose,
-		.hestia-sidebar-close.btn.btn-rose,
-		.hestia-sidebar-open.btn.btn-rose:hover,
-		.hestia-sidebar-close.btn.btn-rose:hover,
-		.hestia-sidebar-open.btn.btn-rose:focus,
-		.hestia-sidebar-close.btn.btn-rose:focus,
-		.label.label-primary,
-		.hestia-work .portfolio-item:nth-child(6n+1) .label,
-		.nav-cart .nav-cart-content .widget .buttons .button{
-		    background-color: #f5593d;
-		}
-		
-		@media (max-width: 768px) { 
-	
-			.navbar-default .navbar-nav>li>a:hover,
-			.navbar-default .navbar-nav>li>a:focus,
-			.navbar .navbar-nav .dropdown .dropdown-menu li a:hover,
-			.navbar .navbar-nav .dropdown .dropdown-menu li a:focus,
-			.navbar button.navbar-toggle:hover,
-			.navbar .navbar-nav li:hover > a i {
-			    color: #f5593d;
-			}
-		}
-		
-		body:not(.woocommerce-page) button:not([class^="fl-"]):not(.hestia-scroll-to-top):not(.navbar-toggle),
-		body:not(.woocommerce-page) .button:not([class^="fl-"]):not(hestia-scroll-to-top):not(.navbar-toggle):not(.add_to_cart_button),
-		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit,
-		input[type="submit"], 
-		input[type="button"], 
-		.btn.btn-primary,
-		.widget_product_search button[type="submit"],
-		.hestia-sidebar-open.btn.btn-rose,
-		.hestia-sidebar-close.btn.btn-rose {
-		    -webkit-box-shadow: 0 2px 2px 0 rgba(245,89,61,0.14),0 3px 1px -2px rgba(245,89,61,0.2),0 1px 5px 0 rgba(245,89,61,0.12);
-		    box-shadow: 0 2px 2px 0 rgba(245,89,61,0.14),0 3px 1px -2px rgba(245,89,61,0.2),0 1px 5px 0 rgba(245,89,61,0.12);
-		}
-		
-		.card .header-primary, .card .content-primary {
-		    background: #f5593d;
-		}
-		
-		body:not(.woocommerce-page) .button:not([class^="fl-"]):not(.hestia-scroll-to-top):not(.navbar-toggle):not(.add_to_cart_button):hover,
-		body:not(.woocommerce-page) button:not([class^="fl-"]):not(.hestia-scroll-to-top):not(.navbar-toggle):hover,
-		div.wpforms-container .wpforms-form button[type=submit].wpforms-submit:hover,
-		input[type="submit"]:hover,
-		input[type="button"]:hover,
-		input#searchsubmit:hover, 
-		.widget_product_search button[type="submit"]:hover,
-		.pagination span.current, 
-		.btn.btn-primary:hover, 
-		.btn.btn-primary:focus, 
-		.btn.btn-primary:active, 
-		.btn.btn-primary.active, 
-		.btn.btn-primary:active:focus, 
-		.btn.btn-primary:active:hover, 
-		.hestia-sidebar-open.btn.btn-rose:hover,
-		.hestia-sidebar-close.btn.btn-rose:hover,
-		.pagination span.current:hover{
-			-webkit-box-shadow: 0 14px 26px -12pxrgba(245,89,61,0.42),0 4px 23px 0 rgba(0,0,0,0.12),0 8px 10px -5px rgba(245,89,61,0.2);
-		    box-shadow: 0 14px 26px -12px rgba(245,89,61,0.42),0 4px 23px 0 rgba(0,0,0,0.12),0 8px 10px -5px rgba(245,89,61,0.2);
-			color: #fff;
-		}
-		
-		.form-group.is-focused .form-control {
-		background-image: -webkit-gradient(linear,left top, left bottom,from(#f5593d),to(#f5593d)),-webkit-gradient(linear,left top, left bottom,from(#d2d2d2),to(#d2d2d2));
-			background-image: -webkit-linear-gradient(#f5593d),to(#f5593d),-webkit-linear-gradient(#d2d2d2,#d2d2d2);
-			background-image: linear-gradient(#f5593d),to(#f5593d),linear-gradient(#d2d2d2,#d2d2d2);
-		}
-		
-		.navbar:not(.navbar-transparent) li:not(.btn):hover > a,
-		.navbar li.on-section > a, 
-		.navbar.full-screen-menu.navbar-transparent li:not(.btn):hover > a,
-		.navbar.full-screen-menu .navbar-toggle:hover,
-		.navbar:not(.navbar-transparent) .nav-cart:hover, 
-		.navbar:not(.navbar-transparent) .hestia-toggle-search:hover {
-				color:#f5593d}
-		
-		.header-filter-gradient { 
-			background: linear-gradient(45deg, rgba(81,188,218,1) 0%, rgb(147,216,197) 100%); 
-		} 
-.btn.btn-primary:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item), input[type="submit"]:not(.search-submit), body:not(.woocommerce-account) .woocommerce .button.woocommerce-Button, .woocommerce .product button.button, .woocommerce .product button.button.alt, .woocommerce .product #respond input#submit, .woocommerce-cart .blog-post .woocommerce .cart-collaterals .cart_totals .checkout-button, .woocommerce-checkout #payment #place_order, .woocommerce-account.woocommerce-page button.button, .woocommerce .track_order button[type="submit"], .nav-cart .nav-cart-content .widget .buttons .button, .woocommerce a.button.wc-backward, body.woocommerce .wccm-catalog-item a.button, body.woocommerce a.wccm-button.button, form.woocommerce-form-coupon button.button, div.wpforms-container .wpforms-form button[type=submit].wpforms-submit, div.woocommerce a.button.alt, div.woocommerce table.my_account_orders .button, .btn.colored-button, .btn.btn-left, .btn.btn-right, .btn:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item):not(.hestia-sidebar-open):not(.hestia-sidebar-close){ padding-top:15px;  padding-bottom:15px;  padding-left:33px;  padding-right:33px; }
-.btn.btn-primary:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item), input[type="submit"]:not(.search-submit), body:not(.woocommerce-account) .woocommerce .button.woocommerce-Button, .woocommerce .product button.button, .woocommerce .product button.button.alt, .woocommerce .product #respond input#submit, .woocommerce-cart .blog-post .woocommerce .cart-collaterals .cart_totals .checkout-button, .woocommerce-checkout #payment #place_order, .woocommerce-account.woocommerce-page button.button, .woocommerce .track_order button[type="submit"], .nav-cart .nav-cart-content .widget .buttons .button, .woocommerce a.button.wc-backward, body.woocommerce .wccm-catalog-item a.button, body.woocommerce a.wccm-button.button, form.woocommerce-form-coupon button.button, div.wpforms-container .wpforms-form button[type=submit].wpforms-submit, div.woocommerce a.button.alt, div.woocommerce table.my_account_orders .button, input[type="submit"].search-submit, .hestia-view-cart-wrapper .added_to_cart.wc-forward, .woocommerce-product-search button, .woocommerce-cart .actions .button, #secondary div[id^=woocommerce_price_filter] .button, .woocommerce div[id^=woocommerce_widget_cart].widget .buttons .button, .searchform input[type=submit], .searchform button, .search-form:not(.media-toolbar-primary) input[type=submit], .search-form:not(.media-toolbar-primary) button, .woocommerce-product-search input[type=submit], .btn.colored-button, .btn.btn-left, .btn.btn-right, .btn:not(.colored-button):not(.btn-left):not(.btn-right):not(.btn-just-icon):not(.menu-item):not(.hestia-sidebar-open):not(.hestia-sidebar-close){border-radius:3px;}
-h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in-content , .info-title, .card-title,
-		.page-header.header-small .hestia-title, .page-header.header-small .title, .widget h5, .hestia-title, 
-		.title, .card-title, .info-title, .footer-brand, .footer-big h4, .footer-big h5, .media .media-heading, 
-		.carousel h1.hestia-title, .carousel h2.title, 
-		.carousel span.sub-title, .woocommerce.single-product h1.product_title, .woocommerce section.related.products h2, .hestia-about h1, .hestia-about h2, .hestia-about h3, .hestia-about h4, .hestia-about h5 {
-			font-family: Montserrat;
-		}
-		body, ul, .tooltip-inner {
-			font-family: Montserrat;
-		}
+</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-649 single-format-standard">
+<div id="page" class="site">
+	<div class="site-inner">
+		<a class="skip-link screen-reader-text" href="#content">跳至内容</a>
 
-			.home.blog .hestia-blogs {
-				background-color: #fff !important;
-			}
-		
-			.woocommerce-checkout #hestia-checkout-coupon .woocommerce-message,
-			.woocommerce-checkout #hestia-checkout-coupon .woocommerce-error {
-				margin-left: auto;
-				margin-right: auto;
-			}
-		
-			.btn,
-			button,
-			.button {
-				box-shadow: none !important;
-			}
-			
-			.btn:hover,
-			button:hover,
-			.button:hover {
-				opacity: 0.75;
-			}
-		
-			.carousel .buttons .btn-primary + .btn-right {
-				margin-left: 15px;
-			}		
-			.carousel .buttons .btn,
-			.carousel .buttons .btn-right {
-				margin: 15px;
-			}
-		
-			.carousel .hestia-big-title-content .hestia-title {
-				font-weight: 800;
-			}
-			.carousel .hestia-big-title-content .sub-title {
-				font-family: inherit;
-				font-size: 19px;
-				font-weight: 300;
-				line-height: 26px;
-				margin: 0 0 8px;
-			}
-			.carousel .hestia-big-title-content .buttons .btn,
-			.carousel .hestia-big-title-content .buttons .btn-right {
-				border-radius: 30px;
-				font-family: inherit;
-				font-size: 14px;
-				font-weight: 600;
-				line-height: 24px;
-				padding: 11px 30px;
-			}
-			.carousel .hestia-big-title-content .buttons .btn-right {
-				background-color: transparent;
-				border: 2px solid #fff;
-				padding: 9px 28px;
-			}
-		
+		<header id="masthead" class="site-header" role="banner"><div class="site-header-main">
+				<div class="site-branding">
+					
+											<p class="site-title"><a href="https://huster.top/" rel="home">三两带走</a></p>
+											<p class="site-description">(任天兵)龙安的博客</p>
+									</div>
 
-		.page-template-builder-fullwidth-std .header > .elementor {
-			padding-top: 70px;
-		}
+							</div>
 
-</style><link rel="stylesheet" id="hestia_fonts-css" href="https://fonts.googleapis.com/css?family=Roboto+Slab%3A400%2C700&subset=latin%2Clatin-ext&ver=2.0.4" type="text/css" media="all"><link rel="stylesheet" id="hestia-google-font-montserrat-css" href="//fonts.googleapis.com/css?family=Montserrat%3A300%2C400%2C500%2C700&subset=latin&ver=4.9.10" type="text/css" media="all"><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-649 single-format-standard blog-post header-layout-default">
-	<div class="wrapper post-649 post type-post status-publish format-standard hentry category-java default ">
-		<header class="header "><nav class="navbar navbar-default navbar-fixed-top  hestia_left navbar-not-transparent"><div class="container">
-						<div class="navbar-header">
-			<div class="title-logo-wrapper">
-				<a class="navbar-brand" href="https://huster.top/" title="ä¸&#137;ä¸¤å¸¦èµ°">
-					<p>ä¸&#137;ä¸¤å¸¦èµ°</p></a>
-			</div>
-								<div class="navbar-toggle-wrapper">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navigation">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="sr-only">å&#136;&#135;æ&#141;¢å¯¼è&#136;ª</span>
-			</button>
-					</div>
-				</div>
-					</div>
-					</nav><div style="display: none"></div>		</header><div id="primary" class="boxed-layout-header page-header header-small" data-parallax="active"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1 text-center"><h1 class="hestia-title entry-title">Javaå¤&#154;çº¿ç¨&#139;ç&#159;¥è¯&#134;ç&#130;¹ï¼&#136;ä¸&#139;ï¼&#137;</h1><h4 class="author">äº&#142;<time class="date updated published" datetime="2018-12-20T19:29:20+00:00">2018 å¹´ 12 æ&#156;&#136; 20 æ&#151;¥</time>ç&#148;±<a href="https://huster.top/htmls/author/admin" class="vcard author"><strong class="fn">é¾&#153;å®&#137;_ä»»å¤©å&#133;µ</strong></a>å&#143;&#145;å¸&#131;</h4></div></div></div><div class="header-filter header-filter-gradient"></div></div>
-<div class="main  main-raised ">
-	<div class="blog-post blog-post-wrapper">
-		<div class="container">
-			<article id="post-649" class="section section-text"><div class="row">
-				<div class="col-md-8 single-post-container" data-layout="sidebar-right">
-			<div class="single-post-wrap">
-				<h4><span>26ï¼&#137; å¦&#130;ä½&#149;å&#134;&#153;ä»£ç &#129;æ&#157;¥è§£å&#134;³ç&#148;&#159;äº§è&#128;&#133;æ¶&#136;è´¹è&#128;&#133;é&#151;®é¢&#152;ï¼&#159;</span></h4>
-<div>æ&#136;&#145;ä»¬å&#133;&#136;å°&#157;è¯&#149;ä½¿ç&#148;¨é&#152;&#159;å&#136;&#151;å®&#158;ç&#142;°ä¸&#128;ä¸ªç&#148;&#159;äº§è&#128;&#133;å&#146;&#140;æ¶&#136;è´¹è&#128;&#133;æ¨¡å¼&#143;ã&#128;&#130;é&#130;£ä¹&#136;å°±é&#156;&#128;è¦&#129;å&#133;&#136;äº&#134;è§£é&#152;&#159;å&#136;&#151;ï¼&#140;é&#152;&#159;é&#135;&#140;ç&#154;&#132;æ&#142;¥å&#143;£å®&#154;ä¹&#137;å¦&#130;ä¸&#139;</div>
-<div>Â  Â  Queue.</div>
-<div>Â  Â  Â  Â  Â æ·»å&#138; :</div>
-<div>Â Â  Â Â Â  Â Â Â  Â Â Â  Â Â Â add(E element) æ·»å&#138; ä¸&#128;ä¸ªï¼&#140;å¦&#130;æ&#158;&#156;è¶&#133;å&#135;ºäº&#134;ç&#149;&#140;é&#153;&#144;ï¼&#140;å&#136;&#153;æ&#138;&#155;å&#135;ºå¼&#130;å¸¸</div>
-<div>Â  Â  Â  Â  Â  Â  Â  Â  Â  Offer(E element) æ·»å&#138; ä¸&#128;ä¸ªï¼&#140;å¦&#130;æ&#158;&#156;è¶&#133;å&#135;ºäº&#134;ç&#149;&#140;é&#153;&#144;ï¼&#140;å&#136;&#153;è¿&#148;å&#155;&#158;false</div>
-<div>Â  Â  Â  Â  è&#142;·å&#143;&#150;å¹¶å&#136; é&#153;¤</div>
-<div>Â Â  Â Â Â  Â Â Â  Â Â  Â  Â  remove() è&#142;·å&#143;&#150;å¹¶å&#136; é&#153;¤é&#152;&#159;å¤´ï¼&#140;å¦&#130;æ&#158;&#156;é&#152;&#159;å&#136;&#151;ä¸ºç©ºï¼&#140;å&#136;&#153;æ&#138;&#155;å&#135;ºå¼&#130;å¸¸</div>
-<div>Â  Â  Â  Â  Â  Â  Â  Â  Â  Poll() è&#142;·å&#143;&#150;å¹¶å&#136; é&#153;¤é&#152;&#159;å¤´ï¼&#140; å¦&#130;æ&#158;&#156;é&#152;&#159;å&#136;&#151;ä¸ºç©ºï¼&#140;å&#136;&#153;è¿&#148;å&#155;&#158;null</div>
-<div>Â  Â  Â  Â  è&#142;·å&#143;&#150;ä½&#134;ä¸&#141;å&#136; é&#153;¤</div>
-<div>Â  Â  Â  Â  Â  Â  Â  Â  Â  Â element() è&#142;·å&#143;&#150;ä½&#134;æ&#152;¯å¹¶ä¸&#141;å&#136; é&#153;¤ï¼&#140;å¦&#130;æ&#158;&#156;é&#152;&#159;å&#136;&#151;ä¸ºç©ºï¼&#140;å&#136;&#153;æ&#138;&#155;å&#135;ºå¼&#130;å¸¸</div>
-<div>Â  Â  Â  Â  Â  Â  Â  Â  Â  peek() è&#142;·å&#143;&#150;ä½&#134;æ&#152;¯å¹¶ä¸&#141;å&#136; é&#153;¤ï¼&#140;å¦&#130;æ&#158;&#156;é&#152;&#159;å&#136;&#151;ä¸ºç©ºï¼&#140;å&#136;&#153;è¿&#148;å&#155;&#158;null.</div>
-<div>Â è&#128;&#140;é&#152;»å¡&#158;é&#152;&#159;å&#136;&#151;å&#136;&#153;å¤&#154;äº&#134;ä¸¤ä¸ªé&#152;»å¡&#158;ç&#154;&#132;æ&#150;¹æ³&#149;ï¼&#140;put å&#146;&#140; takeï¼&#140;å&#143;&#130;è§&#129;ä¸&#139;è¡¨</div>
+					</header><div id="content" class="site-content">
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main"><article id="post-649" class="post-649 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h1 class="entry-title">Java多线程知识点（下）</h1>	</header><div class="entry-content">
+		<h4><span>26） 如何写代码来解决生产者消费者问题？</span></h4>
+<div>我们先尝试使用队列实现一个生产者和消费者模式。那么就需要先了解队列，队里的接口定义如下</div>
+<div>    Queue.</div>
+<div>         添加:</div>
+<div>                  add(E element) 添加一个，如果超出了界限，则抛出异常</div>
+<div>                  Offer(E element) 添加一个，如果超出了界限，则返回false</div>
+<div>        获取并删除</div>
+<div>                  remove() 获取并删除队头，如果队列为空，则抛出异常</div>
+<div>                  Poll() 获取并删除队头， 如果队列为空，则返回null</div>
+<div>        获取但不删除</div>
+<div>                   element() 获取但是并不删除，如果队列为空，则抛出异常</div>
+<div>                  peek() 获取但是并不删除，如果队列为空，则返回null.</div>
+<div> 而阻塞队列则多了两个阻塞的方法，put 和 take，参见下表</div>
 <div><img src="data:image/png;base64,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0YEHHqgLkFaU72X0DwIff/yx8tKsB8stt1yYYYYZwnHHHdc/BQ7wXD/77LOWIuD8bSncDReW5xMZleorY401Vhh++OEbLqdTEk4wwQRZVX788cfwzTffZM/coPDdcccd4Z577ikI7/SHpip9aWNR+EYeeWTVjtNwBPX0008f6BhYAt99993s9frrrx9YSey///66lcM2DpZC/qnwqquuqmnmnnvu8OSTT2ZpuDnzzDMDq9NRRx1VrQEnnHBCthf/5z//Oeywww4F8R988EHdIsJEC1HGvPPOG0YbbbQw33zzhXvvvbcgfi8/gDl4oRyxqmGVBmHiX3HFFcOYY46p/AJjo2OOOUa37y+//PIw22yzhcknn1wnYLbntt1224DyP+WUU4YLL7zQkuj1rbfeCuuss46+xwq3yiqrhFdeeUXfnXbaaWHRRRcNbC0Z4WMCP/773/9q0Lfffhu23HLLMNFEE+lKC76yJWF0+umnhz/96U9hpJFG0qCFF15Y41166aUWxa9NRAAhyBhF8G233XZh0kkn1T50yCGHZOOP4irxvZbq/Oc//wmzzjprmH322bPo22yzTddbE7LGdMgNvlzw8/333w+McZO/VI+xjKxgIlxhhRUCY78c4WLB4j+VGZVkrPO3HJK1hdc6Dtma3HnnndXthblugQUWqGsnLs+nRRZZJFx99dU6/ukrhx9+uFaYbdETTzxR761uN9xwg/Yf5P4yyyyjMuHuu+8Ov//973WbdPXVVy9QIKvJ+krIIIv222+/gij4DO+4445ZmM17xx57bJh22mm1X6N3GOGXSJtQ9v7973+HlVZaSV+RjnB2MtnexY2NeaebqF+UPjrXUUcdpX4hMNPosMMOC0wICGyECCuHNddc014HhA7WGZS8M844Q5WwDTfcMKy11lphnnnm0bAvv/xSJ35LRJ4wc7PNNgt0LDoiGrhZBVAGzzrrrIKtIPyFUEox0dLxEGKLL754uO6668JMM80UsCR89NFHVkRPX8EcPHCe32OPPVRJx58HgTB48OBwxRVXhE033VR5Bj4Qijr3dHb4zCDeaaedwsorr6wD9x//+IcOJBRuWwmSJzyEfwyio48+OrzxxhthoYUW0jAUtLvuuqtg1YSV+KmnngqLLbaYlosFGYUcJ3/4jjK377776jv+YHpnCzAlnp9//vk0yO+bhAAKOhM8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"></div>
 <div></div>
 <p><span id="more-649"></span></p>
-<h4><span>27ï¼&#137; å¦&#130;ä½&#149;é&#129;¿å&#133;&#141;æ­»é&#148;&#129;ï¼&#159;</span></h4>
-<div><span>Â Â  Â é¦&#150;å&#133;&#136;ï¼&#140;æ­»é&#148;&#129;æ&#152;¯ä»&#128;ä¹&#136;ã&#128;&#130;æ­»é&#148;&#129;å&#143;&#145;ç&#148;&#159;å&#156;¨Javaç&#154;&#132;å¤&#154;çº¿ç¨&#139;é&#135;&#140;ï¼&#140;é&#128;&#154;å¸¸æ&#152;¯ä¸&#128;ä¸ªçº¿ç¨&#139;æ&#140;&#129;æ&#156;&#137;äº&#134;é&#148;&#129;Aï¼&#140;å°&#157;è¯&#149;è&#142;·å&#143;&#150;é&#148;&#129;B;äº&#142;æ­¤å&#144;&#140;æ&#151;¶ï¼&#140;å&#143;¦å¤&#150;ä¸&#128;ä¸ªçº¿ç¨&#139;æ&#140;&#129;æ&#156;&#137;äº&#134;é&#148;&#129;Bï¼&#140;å°&#157;è¯&#149;è&#142;·å&#143;&#150;é&#148;&#129;Aã&#128;&#130;ä¸¤ä¸ªçº¿ç¨&#139;å&#143;&#145;ç&#148;&#159;äº&#134;å¾ªç&#142;¯ç­&#137;å¾&#133;ç&#154;&#132;é&#151;®é¢&#152;ã&#128;&#130;</span></div>
-<div>ä¾&#157;ç&#133;§æ&#136;&#145;ç&#154;&#132;ç»&#143;éª&#140;ï¼&#140;æ&#136;&#145;ä¸&#128;è&#136;¬ä½¿ç&#148;¨jstackæ&#157;¥æ&#137;&#147;å&#141;°çº¿ç¨&#139;ä¿¡æ&#129;¯ï¼&#140;ç&#132;¶å&#144;&#142;æ&#144;&#156;ç´¢deadlockæ&#157;¥æ&#159;¥ç&#156;&#139;ç&#148;&#159;äº§ç&#142;¯å¢&#131;ä¸&#139;ç&#154;&#132;æ­»é&#148;&#129;å&#143;&#145;ç&#148;&#159;å&#156;¨ä»&#128;ä¹&#136;å&#156;°æ&#150;¹ã&#128;&#130;é&#129;¿å&#133;&#141;æ­»é&#148;&#129;ç&#154;&#132;æ&#150;¹æ³&#149;ä¹&#159;å¾&#136;ç®&#128;å&#141;&#149;ï¼&#140;é&#130;£å°±æ&#152;¯è&#142;·å&#143;&#150;é&#148;&#129;ç&#154;&#132;é¡ºåº&#143;ï¼&#140;ä¿&#157;æ&#140;&#129;ä¸&#128;è&#135;´å&#141;³å&#143;¯ã&#128;&#130;</div>
+<h4><span>27） 如何避免死锁？</span></h4>
+<div><span>    首先，死锁是什么。死锁发生在Java的多线程里，通常是一个线程持有了锁A，尝试获取锁B;于此同时，另外一个线程持有了锁B，尝试获取锁A。两个线程发生了循环等待的问题。</span></div>
+<div>依照我的经验，我一般使用jstack来打印线程信息，然后搜索deadlock来查看生产环境下的死锁发生在什么地方。避免死锁的方法也很简单，那就是获取锁的顺序，保持一致即可。</div>
 <div></div>
-<div>æ&#142;¨è&#141;&#144;ä¸&#128;ç¯&#135;æ&#150;&#135;ç« ï¼&#140;æ&#128;»ç»&#147;ç&#154;&#132;å¾&#136;å¥½Â <a href="https://javarevisited.blogspot.com/2018/08/how-to-avoid-deadlock-in-java-threads.html">https://javarevisited.blogspot.com/2018/08/how-to-avoid-deadlock-in-java-threads.html</a></div>
-<div></div>
-<div></div>
-<h4><span>28) Javaä¸­æ´»é&#148;&#129;å&#146;&#140;æ­»é&#148;&#129;æ&#156;&#137;ä»&#128;ä¹&#136;å&#140;ºå&#136;«ï¼&#159;</span></h4>
-<div>Â  Â  æ´»é&#148;&#129;è¿&#152;æ&#152;¯æ&#136;&#145;ç¬¬ä¸&#128;æ¬¡å&#144;¬å&#136;°ï¼&#140;å¤§æ¦&#130;ç&#154;&#132;æ&#132;&#143;æ&#128;&#157;å°±æ&#152;¯è®²ï¼&#140;ä¸¤ä¸ªçº¿ç¨&#139;å&#156;¨ç«&#158;äº&#137;å&#144;&#140;ä¸&#128;ä¸ªèµ&#132;æº&#144;ç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#140;é&#131;½ä¸&#141;ç&#155;´æ&#142;¥è&#142;·å&#143;&#150;èµ&#132;æº&#144;ï¼&#140;ä¸&#139;ä¸&#128;æ¬¡è&#142;·å&#143;&#150;ç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#140;æ&#129;°å¥½å&#143;&#136;å&#143;&#145;ç&#148;&#159;äº&#134;ç¢°æ&#146;&#158;ã&#128;&#130;è¿&#153;æ ·ï¼&#140;æ¯&#143;æ¬¡é&#131;½å&#156;¨ç¢°æ&#146;&#158;ï¼&#140;å¯¼è&#135;´æ&#128;»æ&#152;¯æ&#139;¿ä¸&#141;å&#136;°é&#148;&#129;ã&#128;&#130;è§£å&#134;³ç&#154;&#132;å&#138;&#158;æ³&#149;å°±æ&#152;¯é&#135;&#141;è¯&#149;æ&#156;ºå&#136;¶ç&#154;&#132;é&#154;&#143;æ&#156;ºæ&#137;°å&#138;¨ï¼&#140;æ¯&#148;å¦&#130;ç­&#137;å¾&#133;ç&#154;&#132;æ&#151;¶é&#151;´é&#154;&#143;æ&#156;ºä¸&#128;ä¸&#139;ï¼&#140;å°±ä¸&#141;ä¼&#154;å&#143;&#145;ç&#148;&#159;æ&#128;»æ&#152;¯é&#129;&#135;å&#136;°ç&#154;&#132;æ&#131;&#133;å&#134;µã&#128;&#130;</div>
+<div>推荐一篇文章，总结的很好 <a href="https://javarevisited.blogspot.com/2018/08/how-to-avoid-deadlock-in-java-threads.html">https://javarevisited.blogspot.com/2018/08/how-to-avoid-deadlock-in-java-threads.html</a></div>
 <div></div>
 <div></div>
-<h4><span>29ï¼&#137; æ&#128;&#142;ä¹&#136;æ£&#128;æµ&#139;ä¸&#128;ä¸ªçº¿ç¨&#139;æ&#152;¯å&#144;¦æ&#139;¥æ&#156;&#137;é&#148;&#129;ï¼&#159;</span></h4>
-<div><span>Â Â  Â Â  Â  å¦&#130;ä½&#149;æ£&#128;éª&#140;ä¸&#128;ä¸ªçº¿ç¨&#139;æ&#152;¯å&#144;¦æ&#139;¥æ&#156;&#137;é&#148;&#129;ï¼&#140;æ­£ç¡®ç&#154;&#132;å&#138;&#158;æ³&#149;æ&#152;¯å&#156;¨Threadä¸&#138;æ&#156;&#137;ä¸&#128;ä¸ªæ&#150;¹æ³&#149;holdLocksï¼&#136;Object oï¼&#137; å&#143;¯ä»¥å&#136;¤æ&#150;­ã&#128;&#130;å&#133;¶å®&#158;æ&#136;&#145;è§&#137;å¾&#151;è¿&#153;ä¸ªè&#128;&#129;å¤&#150;ç&#154;&#132;æ&#150;¹æ³&#149;ä¹&#159;æ&#140;ºæ&#156;&#137;æ&#132;&#143;æ&#128;&#157;ç&#154;&#132;ï¼&#140;ä»&#150;æ&#152;¯æ&#128;&#142;ä¹&#136;å&#129;&#154;ç&#154;&#132;å&#145;¢ï¼&#159;ä»&#150;ä¼&#154;è°&#131;ç&#148;¨objectç&#154;&#132;waitæ&#150;¹æ³&#149;ï¼&#140;å¦&#130;æ&#158;&#156;å½&#147;å&#137;&#141;çº¿ç¨&#139;æ²¡æ&#156;&#137;é&#148;&#129;ï¼&#140;ä¼&#154;æ&#138;&#155;å&#135;º</span><span>IllegalMonitorStateExceptionï¼&#140;é&#128;&#154;è¿&#135;æ£&#128;éª&#140;è¿&#153;ä¸ªå¼&#130;å¸¸å°±å&#143;¯ä»¥äº&#134;ã&#128;&#130;</span></div>
+<h4><span>28) Java中活锁和死锁有什么区别？</span></h4>
+<div>    活锁还是我第一次听到，大概的意思就是讲，两个线程在竞争同一个资源的时候，都不直接获取资源，下一次获取的时候，恰好又发生了碰撞。这样，每次都在碰撞，导致总是拿不到锁。解决的办法就是重试机制的随机扰动，比如等待的时间随机一下，就不会发生总是遇到的情况。</div>
 <div></div>
-<h4><span>30) ä½ å¦&#130;ä½&#149;å&#156;¨Javaä¸­è&#142;·å&#143;&#150;çº¿ç¨&#139;å &#134;æ &#136;ï¼&#159;</span></h4>
-<div><span>Â Â  Â å½&#147;ç&#132;¶æ&#152;¯ä½¿ç&#148;¨Jstackå&#145;½ä»¤æ&#157;¥æ&#159;¥ç&#156;&#139;å½&#147;å&#137;&#141;JVMä¸­ç&#154;&#132;æ&#137;&#128;æ&#156;&#137;çº¿ç¨&#139;ç&#154;&#132;æ&#131;&#133;å&#134;µã&#128;&#130;å&#144;&#140;æ ·ç&#154;&#132;java/binç&#155;®å½&#149;ä¸&#139;è¿&#152;æ&#156;&#137;å¾&#136;å¤&#154;å·¥å&#133;·</span></div>
+<div></div>
+<h4><span>29） 怎么检测一个线程是否拥有锁？</span></h4>
+<div><span>        如何检验一个线程是否拥有锁，正确的办法是在Thread上有一个方法holdLocks（Object o） 可以判断。其实我觉得这个老外的方法也挺有意思的，他是怎么做的呢？他会调用object的wait方法，如果当前线程没有锁，会抛出</span><span>IllegalMonitorStateException，通过检验这个异常就可以了。</span></div>
+<div></div>
+<h4><span>30) 你如何在Java中获取线程堆栈？</span></h4>
+<div><span>    当然是使用Jstack命令来查看当前JVM中的所有线程的情况。同样的java/bin目录下还有很多工具</span></div>
 <div></div>
 <div>
 <div></div>
 <table><colgroup><col><col></colgroup><tbody><tr><td>
 <div>jstack</div>
 </td>
-<td>æ&#159;¥ç&#156;&#139;çº¿ç¨&#139;ã&#128;&#129;æ­»é&#148;&#129;ç­&#137;æ&#131;&#133;å&#134;µ</td>
+<td>查看线程、死锁等情况</td>
 </tr><tr><td>
 <div>jstat</div>
 </td>
-<td>æ&#159;¥ç&#156;&#139;gcå&#146;&#140;å&#134;&#133;å­&#152;æ&#131;&#133;å&#134;µ</td>
+<td>查看gc和内存情况</td>
 </tr><tr><td>
 <div>jmap</div>
 </td>
-<td>å&#143;¯ä»¥æ&#137;&#147;å&#141;°å &#134;ä¿¡æ&#129;¯dump</td>
-</tr></tbody></table><h4><span>31) JVMä¸­å&#147;ªä¸ªå&#143;&#130;æ&#149;°æ&#152;¯ç&#148;¨æ&#157;¥æ&#142;§å&#136;¶çº¿ç¨&#139;ç&#154;&#132;æ &#136;å &#134;æ &#136;å°&#143;ç&#154;&#132;</span></h4>
-<div>Â Â Â  Â å&#143;¯ä»¥è°&#131;æ&#149;´å &#134;å¤§å°&#143;ã&#128;&#129;gcç®&#151;æ³&#149;ã&#128;&#129;ä¼&#138;ç&#148;¸å&#140;ºç©ºé&#151;´å¤§å°&#143;ç­&#137;å&#143;&#130;æ&#149;°</div>
-<h4><span>32ï¼&#137; Javaä¸­synchronized å&#146;&#140; ReentrantLock æ&#156;&#137;ä»&#128;ä¹&#136;ä¸&#141;å&#144;&#140;ï¼&#159;</span></h4>
-<div>Â Â Â  Â å&#137;&#141;è&#128;&#133;æ&#152;¯ä¸&#128;ä¸ªé&#154;&#144;å¼&#143;ç&#154;&#132;é&#148;&#129;ï¼&#140;æ¯&#148;è¾&#131;é&#135;&#141;ã&#128;&#130;å&#144;&#142;è&#128;&#133;æ&#152;¯ä¸&#128;ä¸ªå&#143;¯é&#135;&#141;å&#133;¥é&#148;&#129;ï¼&#140;ç&#148;¨æ&#136;·å&#143;¯ä»¥æ&#147;&#141;æ&#142;§ï¼&#140;å&#134;³å®&#154;ä»&#128;ä¹&#136;æ&#151;¶å&#128;&#153;å&#138; é&#148;&#129;ï¼&#140;ä»&#128;ä¹&#136;æ&#151;¶å&#128;&#153;è§£é&#148;&#129;ï¼&#140;æ&#155;´å&#138; ç&#129;µæ´»ã&#128;&#130;</div>
-<div>è&#128;&#140;ä¸&#148;å&#144;&#142;è&#128;&#133;ç&#154;&#132;å®&#158;ç&#142;°æ&#150;¹å¼&#143;æ&#152;¯CASç&#154;&#132;æ&#150;¹å¼&#143;å&#133;·æ&#156;&#137;æ&#155;´å¥½ç&#154;&#132;æ&#128;§è&#131;½ã&#128;&#130;å°¤å&#133;¶æ&#143;&#144;ä¾&#155;ç&#154;&#132;è¯»å&#134;&#153;é&#148;&#129;ç&#154;&#132;å&#136;&#134;ç¦»ï¼&#140;æ&#155;´å&#138; ç&#129;µæ´»é«&#152;æ&#149;&#136;ã&#128;&#130;</div>
-<h4><span>33ï¼&#137; æ&#156;&#137;ä¸&#137;ä¸ªçº¿ç¨&#139;T1ï¼&#140;T2ï¼&#140;T3ï¼&#140;æ&#128;&#142;ä¹&#136;ç¡®ä¿&#157;å®&#131;ä»¬æ&#140;&#137;é¡ºåº&#143;æ&#137;§è¡&#140;ï¼&#159;</span></h4>
-<div>Â  Â  è¿&#153;ä¸ªå&#133;¶å®&#158;å°±æ&#152;¯è&#128;&#131;ç&#154;&#132;æ&#152;¯çº¿ç¨&#139;é&#151;´ç&#154;&#132;é&#128;&#154;ä¿¡ï¼&#140;æ&#137;&#128;ä»¥ä½ å¾&#128;çº¿ç¨&#139;ç&#154;&#132;é&#128;&#154;ä¿¡ä¸&#138;å&#142;»è&#128;&#131;è&#153;&#145;å°±å¯¹äº&#134;ã&#128;&#130;æ¯&#148;å¦&#130;æ&#136;&#145;ä»¬ç&#154;&#132;çº¿ç¨&#139;å&#144;&#140;æ­¥å·¥å&#133;·è&#131;½ä¸&#141;è&#131;½ï¼&#159;waitå&#146;&#140;notifyè&#131;½ä¸&#141;è&#131;½è¡&#140;ï¼&#159;æ&#136;&#145;è&#131;½æ&#131;³å&#136;°4ä¸­å&#138;&#158;æ³&#149;ã&#128;&#130;</div>
-<div>ç¬¬ä¸&#128;ç§&#141;ï¼&#140;ä¸&#128;ä¸ªçº¿ç¨&#139;ç­&#137;å¾&#133;å&#143;¦å¤&#150;ä¸&#128;ä¸ªçº¿ç¨&#139;æ&#156;&#128;ç®&#128;å&#141;&#149;ç&#154;&#132;å&#138;&#158;æ³&#149;å½&#147;æ&#151;¶ç&#132;¶joinæ&#150;¹æ³&#149;ã&#128;&#130;å&#156;¨T3é&#135;&#140;start T2,å¹¶ä¸&#148;è°&#131;ç&#148;¨T2ç&#154;&#132;joinæ&#150;¹æ³&#149;å&#143;¯ä»¥ä¿&#157;è¯&#129;T3ç­&#137;å¾&#133;T2å®&#140;æ&#136;&#144;ã&#128;&#130;å&#144;&#140;æ ·ç&#154;&#132;å&#138;&#158;æ³&#149;å&#156;¨T2é&#135;&#140;startçº¿ç¨&#139;T1ï¼&#140;T2å°±ä¼&#154;ç­&#137;å¾&#133;T1å®&#140;æ&#136;&#144;ã&#128;&#130;</div>
-<div>ç¬¬äº&#140;ç§&#141;ï¼&#140;çº¿ç¨&#139;é&#151;´ç&#154;&#132;é&#128;&#154;ä¿¡ï¼&#140;é&#128;&#154;è¿&#135;waitå&#146;&#140;notifyå®&#158;ç&#142;°ã&#128;&#130;å&#156;¨T3ä¸­è°&#131;ç&#148;¨waitï¼&#140;å¹¶ä¸&#148;å&#156;¨T2é&#135;&#140;å®&#140;æ&#136;&#144;äº&#134;ä»¥å&#144;&#142;è°&#131;ç&#148;¨notifyï¼&#140;é&#128;&#154;ç&#159;¥T3çº¿ç¨&#139;é&#134;&#146;æ&#157;¥ã&#128;&#130;å&#144;&#140;æ ·ç&#154;&#132;é&#129;&#147;ç&#144;&#134;å®&#140;æ&#136;&#144;T2ç­&#137;å¾&#133;T1ã&#128;&#130;ä¸&#141;è¿&#135;è¿&#153;æ&#156;&#137;ä¸ªé&#151;®é¢&#152;å°±æ&#152;¯å&#129;&#135;å&#148;¤é&#134;&#146;ç&#154;&#132;é&#151;®é¢&#152;ï¼&#140;é&#156;&#128;è¦&#129;ç&#137;¹å&#136;«å¤&#132;ç&#144;&#134;ä¸&#139;ã&#128;&#130;</div>
-<div>ç¬¬ä¸&#137;ç§&#141;ï¼&#140;ä½¿ç&#148;¨CountdownLatchã&#128;&#130;T3å&#146;&#140;T2å&#133;¬ç&#148;¨ä¸&#128;ä¸ªï¼&#140;æ&#138;&#138;è®¡æ&#149;°å&#153;¨è®¾ç½®æ&#136;&#144;1ï¼&#140;å¹¶ä¸&#148;å&#156;¨T2å®&#140;æ&#136;&#144;ä¹&#139;å&#144;&#142;è°&#131;ç&#148;¨countdownç&#154;&#132;æ&#150;¹æ³&#149;å&#135;&#143;ä¸&#128;ï¼&#140;ä¿&#157;è¯&#129;T3è&#131;½å&#156;¨T2å®&#140;æ&#136;&#144;ä¹&#139;å&#144;&#142;è¢«å&#148;¤é&#134;&#146;ã&#128;&#130;</div>
-<div>ç¬¬å&#155;&#155;ç§&#141;ï¼&#140;ä½¿ç&#148;¨semaphoreã&#128;&#130; T3å&#146;&#140;T2å&#133;¬ç&#148;¨ä¸&#128;ä¸ªï¼&#140;å&#156;¨T3é&#135;&#140;è°&#131;ç&#148;¨tryAcquireï¼&#140;å&#156;¨T2é&#135;&#140;è°&#131;ç&#148;¨releaseæ&#150;¹æ³&#149;ï¼&#140;ä¿&#157;è¯&#129;T2å®&#140;æ&#136;&#144;ä¹&#139;å&#144;&#142;å&#143;¯ä»¥å&#148;¤é&#134;&#146;T3çº¿ç¨&#139;ã&#128;&#130;</div>
-<div>ç¬¬äº&#148;ç§&#141;ï¼&#140;æ­ªé&#151;¨é&#130;ªé&#129;&#147;ã&#128;&#130;ä½¿ç&#148;¨sleepæ&#150;¹æ¡&#136;ã&#128;&#130;è®©T1,T2,T3è&#131;½sleepä¸&#141;å&#144;&#140;ç&#154;&#132;æ&#151;¶é&#151;´ï¼&#140;å½&#147;ç&#132;¶è¿&#152;é&#156;&#128;è¦&#129;ä¿&#157;è¯&#129;ä»&#150;ä»¬ç&#154;&#132;sleepæ&#152;¯å&#144;&#140;æ&#151;¶å¼&#128;å§&#139;ç&#154;&#132;ã&#128;&#130;å¦&#130;ä½&#149;ä¿&#157;æ&#140;&#129;å&#144;&#140;æ&#151;¶å¼&#128;å§&#139;å&#145;¢ï¼&#140;ä½¿ç&#148;¨cyclicBarrierã&#128;&#130;</div>
-<h4><span>34) Threadç±»ä¸­ç&#154;&#132;yieldæ&#150;¹æ³&#149;æ&#156;&#137;ä»&#128;ä¹&#136;ä½&#156;ç&#148;¨ï¼&#159;</span></h4>
-<div><span>è°&#131;ç&#148;¨è¿&#153;ä¸ªä¼&#154;å&#135;ºè®©å½&#147;å&#137;&#141;çº¿ç¨&#139;ç&#154;&#132;cpuä½¿ç&#148;¨æ&#157;&#131;ï¼&#140;è®©å¤§å®¶å&#156;¨ä¸&#128;èµ·å&#142;»ç«&#158;äº&#137;cpuèµ&#132;æº&#144;ï¼&#140;å½&#147;ç&#132;¶ä»&#150;è&#135;ªå·±æ&#156;&#137;å&#143;¯è&#131;½ä¼&#154;å&#134;&#141;æ¬¡æ&#138;¢å&#136;°è¿&#153;ä¸ªcpuèµ&#132;æº&#144;ï¼&#140;æ²¡æ&#156;&#137;ç&#148;¨è¿&#135;ï¼&#140;ä¸&#141;ç&#159;¥é&#129;&#147;å&#133;·ä½&#147;ç&#154;&#132;ä½¿ç&#148;¨å&#156;ºæ&#153;¯ã&#128;&#130;</span></div>
+<td>可以打印堆信息dump</td>
+</tr></tbody></table><h4><span>31) JVM中哪个参数是用来控制线程的栈堆栈小的</span></h4>
+<div>     可以调整堆大小、gc算法、伊甸区空间大小等参数</div>
+<h4><span>32） Java中synchronized 和 ReentrantLock 有什么不同？</span></h4>
+<div>     前者是一个隐式的锁，比较重。后者是一个可重入锁，用户可以操控，决定什么时候加锁，什么时候解锁，更加灵活。</div>
+<div>而且后者的实现方式是CAS的方式具有更好的性能。尤其提供的读写锁的分离，更加灵活高效。</div>
+<h4><span>33） 有三个线程T1，T2，T3，怎么确保它们按顺序执行？</span></h4>
+<div>    这个其实就是考的是线程间的通信，所以你往线程的通信上去考虑就对了。比如我们的线程同步工具能不能？wait和notify能不能行？我能想到4中办法。</div>
+<div>第一种，一个线程等待另外一个线程最简单的办法当时然join方法。在T3里start T2,并且调用T2的join方法可以保证T3等待T2完成。同样的办法在T2里start线程T1，T2就会等待T1完成。</div>
+<div>第二种，线程间的通信，通过wait和notify实现。在T3中调用wait，并且在T2里完成了以后调用notify，通知T3线程醒来。同样的道理完成T2等待T1。不过这有个问题就是假唤醒的问题，需要特别处理下。</div>
+<div>第三种，使用CountdownLatch。T3和T2公用一个，把计数器设置成1，并且在T2完成之后调用countdown的方法减一，保证T3能在T2完成之后被唤醒。</div>
+<div>第四种，使用semaphore。 T3和T2公用一个，在T3里调用tryAcquire，在T2里调用release方法，保证T2完成之后可以唤醒T3线程。</div>
+<div>第五种，歪门邪道。使用sleep方案。让T1,T2,T3能sleep不同的时间，当然还需要保证他们的sleep是同时开始的。如何保持同时开始呢，使用cyclicBarrier。</div>
+<h4><span>34) Thread类中的yield方法有什么作用？</span></h4>
+<div><span>调用这个会出让当前线程的cpu使用权，让大家在一起去竞争cpu资源，当然他自己有可能会再次抢到这个cpu资源，没有用过，不知道具体的使用场景。</span></div>
 </div>
 <div></div>
 <div></div>
-<h4><span>35ï¼&#137; Javaä¸­ConcurrentHashMapç&#154;&#132;å¹¶å&#143;&#145;åº¦æ&#152;¯ä»&#128;ä¹&#136;ï¼&#159;</span></h4>
-<div><span>Â  Â  hashmapä¸ºä»&#128;ä¹&#136;ä¸&#141;æ&#152;¯çº¿ç¨&#139;å®&#137;å&#133;¨ç&#154;&#132;ï¼&#159;è¿&#153;ä¸ªè¦&#129;ä»&#142;ä»&#150;ç&#154;&#132;å®&#158;ç&#142;°è®²èµ·ã&#128;&#130;hashmapç&#154;&#132;å­&#152;å&#130;¨ç»&#147;æ&#158;&#132;æ&#152;¯ä¸&#128;ä¸ªæ&#149;°ç»&#132;ç»&#147;æ&#158;&#132;ï¼&#140;è&#128;&#140;å½&#147;å&#143;&#145;ç&#148;&#159;ç¢°æ&#146;&#158;ç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#140;ç&#155;¸å&#144;&#140;ç&#154;&#132;æ§½ä½&#141;ä¸&#138;ç&#154;&#132;å&#133;&#131;ç´ æ&#152;¯ä»¥é&#147;¾è¡¨ç&#154;&#132;å½¢å¼&#143;ç»&#132;ç»&#135;ç&#154;&#132;ã&#128;&#130;çº¿ç¨&#139;ä¸&#141;å®&#137;å&#133;¨å&#143;&#145;ç&#148;&#159;å&#156;¨æ&#137;©å®¹ç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#136;è´&#159;è½½å&#155; å­&#144;é¥±å&#146;&#140;ä¹&#139;å&#144;&#142;ï¼&#137;ï¼&#140;å&#155; ä¸ºå¤&#154;ä¸ªçº¿ç¨&#139;å&#133;±äº«äº&#134;æ&#149;°ç»&#132;ç&#154;&#132;æ&#140;&#135;é&#146;&#136;ï¼&#140;å¯¼è&#135;´äº&#134;å¾ªç&#142;¯é&#147;¾è¡¨ã&#128;&#130;å½&#147;ä¸&#139;ä¸&#128;æ¬¡è¯»å&#143;&#150;ç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#140;å&#155; ä¸ºå¾ªç&#142;¯é&#147;¾è¡¨å°±é&#128; æ&#136;&#144;äº&#134;æ­»å¾ªç&#142;¯ï¼&#140;cpu100%ç&#154;&#132;é&#151;®é¢&#152;ã&#128;&#130;concurrentmapç&#154;&#132;è§£å&#134;³å&#138;&#158;æ³&#149;æ&#152;¯ï¼&#140;ä½¿ç&#148;¨äº&#134;å&#136;&#134;æ®µé&#148;&#129;æ&#157;¥ä¿&#157;è¯&#129;çº¿ç¨&#139;å®&#137;å&#133;¨å&#146;&#140;æ&#128;§è&#131;½ç&#154;&#132;é&#151;®é¢&#152;ã&#128;&#130;å&#156;¨jkd8é&#135;&#140;é&#157;¢æ&#155;´æ&#152;¯é&#135;&#135;ç&#148;¨äº&#134;çº¢é»&#145;æ &#145;ç&#154;&#132;å­&#152;å&#130;¨ç»&#147;æ&#158;&#132;æ&#157;¥ä»£æ&#155;¿é&#147;¾è¡¨ç&#154;&#132;æ&#149;°æ&#141;®ç»&#147;æ&#158;&#132;ã&#128;&#130;è¿&#153;ä¸ªå¹¶å&#143;&#145;åº¦å&#133;¶å®&#158;å°±æ&#152;¯å&#136;&#157;å§&#139;ç&#154;&#132;æ&#151;¶å&#128;&#153;ç&#154;&#132;è¿&#153;ä¸ªæ&#149;°ç»&#132;ç&#154;&#132;å¤§å°&#143;ï¼&#140;é»&#152;è®¤æ&#152;¯16.</span></div>
+<h4><span>35） Java中ConcurrentHashMap的并发度是什么？</span></h4>
+<div><span>    hashmap为什么不是线程安全的？这个要从他的实现讲起。hashmap的存储结构是一个数组结构，而当发生碰撞的时候，相同的槽位上的元素是以链表的形式组织的。线程不安全发生在扩容的时候（负载因子饱和之后），因为多个线程共享了数组的指针，导致了循环链表。当下一次读取的时候，因为循环链表就造成了死循环，cpu100%的问题。concurrentmap的解决办法是，使用了分段锁来保证线程安全和性能的问题。在jkd8里面更是采用了红黑树的存储结构来代替链表的数据结构。这个并发度其实就是初始的时候的这个数组的大小，默认是16.</span></div>
 <div></div>
-<h4><span>36ï¼&#137; Javaä¸­Semaphoreæ&#152;¯ä»&#128;ä¹&#136;ï¼&#159;</span></h4>
-<div>semaphoreå®&#158;é&#153;&#133;ä¸&#138;å°±æ&#152;¯å¹¶å&#143;&#145;é&#135;&#143;ç&#154;&#132;æ&#142;§å&#136;¶ã&#128;&#130;ä»&#150;æ&#156;&#137;ä¸&#128;ä¸ªæ&#150;¹æ³&#149;æ&#152;¯tryAcquireå&#146;&#140;releaseã&#128;&#130;æ&#136;&#145;ä»¬å&#156;¨æ&#137;§è¡&#140;ä»£ç &#129;ä¹&#139;å&#137;&#141;ï¼&#140;è¯&#149;ç&#157;&#128;tryAcquireç&#154;&#132;è¯&#157;ï¼&#140;å¦&#130;æ&#158;&#156;å½&#147;å&#137;&#141;ç&#154;&#132;ä¿¡å&#143;·é&#135;&#143;è¿&#135;å¤§ï¼&#140;å°±ä¼&#154;é&#152;»å¡&#158;å½&#147;å&#137;&#141;çº¿ç¨&#139;ã&#128;&#130;ç&#159;¥é&#129;&#147;å&#133;¶ä»&#150;çº¿ç¨&#139;è°&#131;ç&#148;¨äº&#134;releaseï¼&#140;é&#135;&#138;æ&#148;¾äº&#134;å&#144;&#141;é¢&#157;ï¼&#140;è¢«é&#152;»å¡&#158;ç&#154;&#132;çº¿ç¨&#139;ä¼&#154;è¢«è&#135;ªå&#138;¨å&#148;¤é&#134;&#146;ï¼&#140;ç»§ç»­è&#135;ªå·±ç&#154;&#132;å·¥ä½&#156;ã&#128;&#130;å®&#158;é&#153;&#133;ä¸&#138;æ&#152;¯å¤&#154;çº¿ç¨&#139;é&#151;´ç&#154;&#132;å&#144;&#140;æ­¥å·¥å&#133;·ï¼&#140;å&#133;¶ä»&#150;å·¥å&#133;·å¦&#130;</div>
+<h4><span>36） Java中Semaphore是什么？</span></h4>
+<div>semaphore实际上就是并发量的控制。他有一个方法是tryAcquire和release。我们在执行代码之前，试着tryAcquire的话，如果当前的信号量过大，就会阻塞当前线程。知道其他线程调用了release，释放了名额，被阻塞的线程会被自动唤醒，继续自己的工作。实际上是多线程间的同步工具，其他工具如</div>
 <div>
 <div></div>
 <table><colgroup><col><col><col></colgroup><tbody><tr><td>CountdownLatch</td>
@@ -322,12 +150,12 @@ h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in
 <div>await</div>
 <div>Countdown</div>
 </td>
-<td>è®¡æ&#149;°å&#153;¨ç&#148;¨ç&#154;&#132;ï¼&#140;å½&#147;è®¡æ&#149;°å&#153;¨Countdownè°&#131;ç&#148;¨ä¹&#139;å&#144;&#142;ï¼&#140;-1ï¼&#140; å½&#147;è¾¾å&#136;°0ç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#140;å°±ä¼&#154;å&#148;¤é&#134;&#146;æ&#137;&#128;æ&#156;&#137;è°&#131;ç&#148;¨äº&#134;awaitç&#154;&#132;çº¿ç¨&#139;</td>
+<td>计数器用的，当计数器Countdown调用之后，-1， 当达到0的时候，就会唤醒所有调用了await的线程</td>
 </tr><tr><td>
 <div><span>CyclicBarrier</span></div>
 </td>
 <td>await</td>
-<td>è®¡æ&#149;°å&#153;¨ç&#148;¨ç&#154;&#132;ï¼&#140;å½&#147;è¾¾å&#136;°ä»&#150;æ&#137;&#128;è®¾ç½®ç&#154;&#132;sizeä¹&#139;å&#144;&#142;ï¼&#140;æ&#137;&#128;æ&#156;&#137;waitç&#154;&#132;çº¿ç¨&#139;ä¼&#154;è¢«å&#148;¤é&#134;&#146;</td>
+<td>计数器用的，当达到他所设置的size之后，所有wait的线程会被唤醒</td>
 </tr><tr><td>
 <div><span>semaphore</span></div>
 </td>
@@ -335,347 +163,264 @@ h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in
 <div>tryAcquire</div>
 <div>release</div>
 </td>
-<td>è®¡æ&#149;°å&#153;¨ç&#148;¨ç&#154;&#132;ï¼&#140;releaseä¹&#139;å&#144;&#142;-1ï¼&#140;å½&#147;è¾¾å&#136;°é&#153;&#144;é¢&#157;ä¹&#139;å&#144;&#142;ï¼&#140;æ&#137;&#128;æ&#156;&#137;ç&#154;&#132;tryAcquireä¼&#154;é&#152;»å¡&#158;å½&#147;å&#137;&#141;çº¿ç¨&#139;ï¼&#140;ç&#159;¥é&#129;&#147;æ&#156;&#137;çº¿ç¨&#139;é&#135;&#138;æ&#148;¾releaseä¹&#139;å&#144;&#142;ï¼&#140;å&#134;&#141;å&#148;¤é&#134;&#146;å¤§å®¶æ&#157;¥äº&#137;æ&#138;¢ã&#128;&#130;è·&#159;Countdownlatchç&#154;&#132;å&#140;ºå&#136;«æ&#152;¯ä»&#150;å&#143;¯ä»¥å&#143;&#141;å¤&#141;ä½¿ç&#148;¨ã&#128;&#130;</td>
+<td>计数器用的，release之后-1，当达到限额之后，所有的tryAcquire会阻塞当前线程，知道有线程释放release之后，再唤醒大家来争抢。跟Countdownlatch的区别是他可以反复使用。</td>
 </tr><tr><td>
 <div>phaser</div>
 </td>
 <td>
 <div><span>arriveAndAwaitAdvance</span></div>
 </td>
-<td>å¤&#154;é&#152;¶æ®µæ&#137;§è¡&#140;ï¼&#140;å&#143;¯ä»¥å®&#154;ä¹&#137;nä¸ªé&#152;¶æ®µ<span>ï¼&#140;ä½¿</span><span>ç&#148;¨</span><span>arriveAndAwaitAdvanceè¿&#153;ä¸ªæ&#150;¹æ³&#149;å&#143;¯ä»¥è®©ç¬¬ä¸&#128;ä¸ªé&#152;¶æ®µå&#133;¨é&#131;¨æ&#137;§è¡&#140;å®&#140;æ&#136;&#144;å&#144;&#142;ï¼&#140;å&#156;¨å&#144;&#140;æ&#151;¶è¿&#155;å&#133;¥ä¸&#139;ä¸&#128;ä¸ªé&#152;¶æ®µ</span></td>
-</tr></tbody></table><h4><span>37ï¼&#137;å¦&#130;æ&#158;&#156;ä½ æ&#143;&#144;äº¤ä»»å&#138;¡æ&#151;¶ï¼&#140;çº¿ç¨&#139;æ± é&#152;&#159;å&#136;&#151;å·²æ»¡ã&#128;&#130;ä¼&#154;æ&#151;¶å&#143;&#145;ä¼&#154;ç&#148;&#159;ä»&#128;ä¹&#136;ï¼&#159;</span></h4>
-<div>Â  Â  å&#156;¨çº¿ç¨&#139;æ± æ&#137;§è¡&#140;ç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#140;å¦&#130;æ&#158;&#156;ä»»å&#138;¡æ&#157;¥ç&#154;&#132;è¿&#135;å¿«è¿&#135;å¤&#154;ï¼&#140;è¿&#153;ä¹&#136;å¤&#154;çº¿ç¨&#139;é&#131;½æ&#157;¥ä¸&#141;å&#143;&#138;å¤&#132;ç&#144;&#134;è¿&#153;äº&#155;ä»»å&#138;¡ï¼&#140;é&#130;£ä¹&#136;æ&#157;¥ä¸&#141;å&#143;&#138;å¤&#132;ç&#144;&#134;ç&#154;&#132;ä»»å&#138;¡ä¼&#154;è¿&#155;å&#133;¥ä¸&#128;ä¸ªç­&#137;å¾&#133;é&#152;&#159;å&#136;&#151;ï¼&#140;ç­&#137;å¾&#133;çº¿ç¨&#139;æ&#157;¥æ&#137;§è¡&#140;ä»&#150;ã&#128;&#130;å¦&#130;æ&#158;&#156;çº¿ç¨&#139;æ± ç&#154;&#132;é&#152;&#159;å&#136;&#151;æ»¡äº&#134;ï¼&#140;ä¼&#154;æ&#138;&#155;å&#135;ºrejectexecutorExcptionã&#128;&#130;</div>
+<td>多阶段执行，可以定义n个阶段<span>，使</span><span>用</span><span>arriveAndAwaitAdvance这个方法可以让第一个阶段全部执行完成后，在同时进入下一个阶段</span></td>
+</tr></tbody></table><h4><span>37）如果你提交任务时，线程池队列已满。会时发会生什么？</span></h4>
+<div>    在线程池执行的时候，如果任务来的过快过多，这么多线程都来不及处理这些任务，那么来不及处理的任务会进入一个等待队列，等待线程来执行他。如果线程池的队列满了，会抛出rejectexecutorExcption。</div>
 </div>
-<h4><span>38) Javaçº¿ç¨&#139;æ± ä¸­submit() å&#146;&#140; execute()æ&#150;¹æ³&#149;æ&#156;&#137;ä»&#128;ä¹&#136;å&#140;ºå&#136;«ï¼&#159;</span></h4>
-<div>Â  Â  è¿&#153;ä¸ªæ¯&#148;è¾&#131;å®¹æ&#152;&#147;ï¼&#140;executeæ&#152;¯Executoræ&#142;¥å&#143;£é&#135;&#140;å®&#154;ä¹&#137;ç&#154;&#132;æ&#150;¹æ³&#149;ï¼&#140;ä»&#150;æ&#142;¥å&#143;&#151;ç&#154;&#132;å&#143;&#130;æ&#149;°æ&#152;¯Runableç&#154;&#132;æ&#142;¥å&#143;£ï¼&#140;è&#128;&#140;submitå&#136;&#153;æ&#152;¯ExecutorServiceæ&#142;¥å&#143;£é&#135;&#140;æ&#143;&#144;ä¾&#155;ç&#154;&#132;æ&#150;¹æ³&#149;ï¼&#140;ä»&#150;æ&#152;¯æ&#156;&#137;è¿&#148;å&#155;&#158;å¯¹è±¡ç&#154;&#132;ï¼&#140;è¿&#148;å&#155;&#158;ç&#154;&#132;æ&#152;¯Futureå¯¹è±¡ï¼&#140;ä»&#150;æ&#142;¥å&#143;&#151;ç&#154;&#132;å&#143;&#130;æ&#149;°æ&#152;¯Callableç&#154;&#132;å¯¹è±¡ã&#128;&#130;Futureå&#143;¯ä»¥å&#136;¤æ&#150;­å½&#147;å&#137;&#141;ç&#154;&#132;ä»»å&#138;¡æ&#152;¯å&#144;¦å®&#140;æ&#136;&#144;(isDone)ï¼&#140;å¹¶ä¸&#148;è°&#131;ç&#148;¨geä¼&#154;é&#152;»å¡&#158;ä¸&#128;ç&#155;´å&#136;°ç»&#147;æ&#158;&#156;è¿&#148;å&#155;&#158;ã&#128;&#130;</div>
+<h4><span>38) Java线程池中submit() 和 execute()方法有什么区别？</span></h4>
+<div>    这个比较容易，execute是Executor接口里定义的方法，他接受的参数是Runable的接口，而submit则是ExecutorService接口里提供的方法，他是有返回对象的，返回的是Future对象，他接受的参数是Callable的对象。Future可以判断当前的任务是否完成(isDone)，并且调用ge会阻塞一直到结果返回。</div>
 <div></div>
-<h4><span>39) ä»&#128;ä¹&#136;æ&#152;¯é&#152;»å¡&#158;å¼&#143;æ&#150;¹æ³&#149;ï¼&#159;</span></h4>
-<div>Â  Â  é&#152;»å¡&#158;æ&#150;¹æ³&#149;æ&#152;¯æ&#140;&#135;æ&#150;¹æ³&#149;è°&#131;ç&#148;¨ä¹&#139;å&#144;&#142;ï¼&#140;å&#156;¨è¯¥æ&#150;¹æ³&#149;è¿&#148;å&#155;&#158;ä¹&#139;å&#137;&#141;ç¨&#139;åº&#143;ä¼&#154;ä¸&#128;ç&#155;´ç­&#137;å¾&#133;ç&#159;¥é&#129;&#147;æ&#156;&#137;ç»&#147;æ&#158;&#156;è¿&#148;å&#155;&#158;ã&#128;&#130;å¯¹åº&#148;ç&#154;&#132;é&#157;&#158;é&#152;»å¡&#158;æ&#150;¹æ³&#149;æ&#152;¯è°&#131;ç&#148;¨ä¹&#139;å&#144;&#142;ï¼&#140;ä¸&#141;ç&#148;¨ç­&#137;æ&#150;¹æ³&#149;è¿&#148;å&#155;&#158;ï¼&#140;è¯¥çº¿ç¨&#139;ä¼&#154;æ&#142;¥ç&#157;&#128;å&#129;&#154;å&#133;¶ä»&#150;ç&#154;&#132;äº&#139;æ&#131;&#133;ã&#128;&#130;</div>
-<h4><span>40) Swingæ&#152;¯çº¿ç¨&#139;å®&#137;å&#133;¨ç&#154;&#132;å&#144;&#151;ï¼&#159; ä¸ºä»&#128;ä¹&#136;ï¼&#159;</span></h4>
-<div>Â  Â  ç&#149;¥ã&#128;&#130;å¯¹swingç&#154;&#132;ç¡®äº&#134;è§£ä¸&#141;å¤&#154;ï¼&#140;è&#128;&#140;ä¸&#148;è¿&#153;ä¸ªæ&#138;&#128;æ&#156;¯ä¹&#159;è¿&#135;æ&#151;¶äº&#134;ã&#128;&#130;</div>
+<h4><span>39) 什么是阻塞式方法？</span></h4>
+<div>    阻塞方法是指方法调用之后，在该方法返回之前程序会一直等待知道有结果返回。对应的非阻塞方法是调用之后，不用等方法返回，该线程会接着做其他的事情。</div>
+<h4><span>40) Swing是线程安全的吗？ 为什么？</span></h4>
+<div>    略。对swing的确了解不多，而且这个技术也过时了。</div>
 <div></div>
 <div>
-<h4><span>41ï¼&#137; Javaä¸­invokeAndWait å&#146;&#140; invokeLateræ&#156;&#137;ä»&#128;ä¹&#136;å&#140;ºå&#136;«ï¼&#159;</span></h4>
-<div>Â swingç&#155;¸å&#133;³ï¼&#140;æ&#154;&#130;æ&#151; </div>
-<h4><span>42) Swing APIä¸­é&#130;£äº&#155;æ&#150;¹æ³&#149;æ&#152;¯çº¿ç¨&#139;å®&#137;å&#133;¨ç&#154;&#132;ï¼&#159;</span></h4>
-<div><span>swingç&#155;¸å&#133;³æ&#154;&#130;æ&#151; </span></div>
+<h4><span>41） Java中invokeAndWait 和 invokeLater有什么区别？</span></h4>
+<div> swing相关，暂无</div>
+<h4><span>42) Swing API中那些方法是线程安全的？</span></h4>
+<div><span>swing相关暂无</span></div>
 <div></div>
-<h4><span>44ï¼&#137; Javaä¸­ç&#154;&#132;ReadWriteLockæ&#152;¯ä»&#128;ä¹&#136;ï¼&#159;</span></h4>
-<div><span>Javaç&#154;&#132;è¯»å&#134;&#153;é&#148;&#129;æ&#152;¯ä¸ºäº&#134;è¯»å&#134;&#153;å&#136;&#134;ç¦»ä½¿ç&#148;¨ç&#154;&#132;ï¼&#140;å&#133;&#136;è¯´å¦&#130;æ&#158;&#156;æ²¡æ&#156;&#137;è¯»å&#134;&#153;é&#148;&#129;ï¼&#140;é&#130;£ä¹&#136;å&#156;¨ä¸&#128;ä¸ªè¯»å¤&#154;å&#134;&#153;å°&#145;ç&#154;&#132;ç³»ç»&#159;é&#135;&#140;ï¼&#140;æ¯&#143;ä¸&#128;æ¬¡è¯»é&#131;½è¦&#129;å&#142;»ç«&#158;äº&#137;ä¸&#128;æ&#138;&#138;é&#148;&#129;ï¼&#140;ä½&#134;æ&#152;¯å®&#158;é&#153;&#133;ä¸&#138;å¹¶æ²¡æ&#156;&#137;äººå&#134;&#153;ï¼&#140;å&#141;&#149;çº¯ç&#154;&#132;è¯»æ&#152;¯çº¿ç¨&#139;å®&#137;å&#133;¨ç&#154;&#132;ã&#128;&#130;å¦&#130;æ&#158;&#156;æ&#156;&#137;äº&#134;è¯»å&#134;&#153;é&#148;&#129;ï¼&#140;å&#156;¨è¯»ç&#154;&#132;æ&#151;¶å&#128;&#153;å&#142;»æ&#139;¿è¯»é&#148;&#129;ï¼&#140;å&#134;&#141;å&#134;&#153;ç&#154;&#132;æ&#151;¶å&#128;&#153;å&#142;»æ&#139;¿è¯»å&#134;&#153;é&#148;&#129;ã&#128;&#130;</span></div>
-<div><span>Â  Â  å&#133;·ä½&#147;ç&#154;&#132;ä½¿ç&#148;¨æ&#152;¯readç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#140;getReadLockå¹¶ä¸&#148;å&#142;»lockï¼&#140;è¯»å®&#140;äº&#134;ä»¥å&#144;&#142;unlock</span></div>
-<div><span>Â  Â  å&#144;&#140;ç&#144;&#134;ï¼&#140;writeç&#154;&#132;æ&#151;¶å&#128;&#153;ï¼&#140;getWriteLockå¹¶ä¸&#148;å&#142;»lockï¼&#140;ç&#148;¨å®&#140;äº&#134;unlockã&#128;&#130;</span></div>
-<div><span>å&#133;·ä½&#147;ç&#154;&#132;å®&#158;ç&#142;°æ&#152;¯ï¼&#140;readè&#142;·å&#143;&#150;é&#148;&#129;ç&#154;&#132;å&#137;&#141;æ&#143;&#144;æ&#152;¯æ²¡æ&#156;&#137;å&#141; ç&#148;¨å&#134;&#153;é&#148;&#129;ï¼&#140;å&#144;¦å&#136;&#153;ç&#155;´æ&#142;¥è&#142;·å&#143;&#150;è¯»é&#148;&#129;ï¼&#140;å¦&#130;æ&#158;&#156;æ&#156;&#137;å&#134;&#153;é&#148;&#129;å&#136;&#153;è¿&#155;å&#133;¥ç­&#137;å¾&#133;é&#152;&#159;å&#136;&#151;ã&#128;&#130;</span></div>
-<div><span>å¦&#130;æ&#158;&#156;è¿&#153;ä¸ªæ&#151;¶å&#128;&#153;ï¼&#140;æ²¡æ&#156;&#137;å&#134;&#153;é&#148;&#129;ï¼&#140;è&#128;&#140;é&#152;&#159;é&#135;&#140;é&#135;&#140;æ&#156;&#137;ç­&#137;å¾&#133;å&#134;&#153;é&#148;&#129;ç&#154;&#132;çº¿ç¨&#139;ï¼&#140;é&#130;£ä¹&#136;è¿&#153;ä¸ªè¯·æ±&#130;ä¹&#159;ä¼&#154;è¢«æ&#148;¾å&#133;¥ç­&#137;å¾&#133;é&#152;&#159;å&#136;&#151;ï¼&#140;å&#144;¦å&#136;&#153;å&#134;&#153;é&#148;&#129;æ°¸è¿&#156;å¾&#151;ä¸&#141;å&#136;°æ&#156;ºä¼&#154;ã&#128;&#130;</span></div>
-<div><span>writeè&#142;·å&#143;&#150;é&#148;&#129;ç&#154;&#132;å&#137;&#141;æ&#143;&#144;æ&#152;¯ï¼&#140;æ²¡æ&#156;&#137;å&#141; ç&#148;¨è¯»é&#148;&#129;ï¼&#140;å&#144;¦å&#136;&#153;è¿&#155;å&#133;¥é&#152;&#159;å°¾ç­&#137;å¾&#133;ã&#128;&#130;å½&#147;è¯»é&#148;&#129;å&#133;¨é&#131;¨é&#135;&#138;æ&#148;¾äº&#134;ä»¥å&#144;&#142;ï¼&#140;å&#134;&#153;é&#148;&#129;è&#142;·å¾&#151;ï¼&#140;ç&#132;¶å&#144;&#142;å&#134;&#153;æ&#149;°æ&#141;®ã&#128;&#130;</span></div>
+<h4><span>44） Java中的ReadWriteLock是什么？</span></h4>
+<div><span>Java的读写锁是为了读写分离使用的，先说如果没有读写锁，那么在一个读多写少的系统里，每一次读都要去竞争一把锁，但是实际上并没有人写，单纯的读是线程安全的。如果有了读写锁，在读的时候去拿读锁，再写的时候去拿读写锁。</span></div>
+<div><span>    具体的使用是read的时候，getReadLock并且去lock，读完了以后unlock</span></div>
+<div><span>    同理，write的时候，getWriteLock并且去lock，用完了unlock。</span></div>
+<div><span>具体的实现是，read获取锁的前提是没有占用写锁，否则直接获取读锁，如果有写锁则进入等待队列。</span></div>
+<div><span>如果这个时候，没有写锁，而队里里有等待写锁的线程，那么这个请求也会被放入等待队列，否则写锁永远得不到机会。</span></div>
+<div><span>write获取锁的前提是，没有占用读锁，否则进入队尾等待。当读锁全部释放了以后，写锁获得，然后写数据。</span></div>
 </div>
-								</div>
-			
-		<div class="section section-blog-info">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="entry-categories">å&#136;&#134;ç±»ï¼&#154;						<span class="label label-primary"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Javaå­¦ä¹ </a></span>					</div>
-									</div>
-				
-        <div class="col-md-6">
-            <div class="entry-social">
-                <a target="_blank" rel="tooltip" data-original-title="å&#136;&#134;äº«å&#136;° Facebook" class="btn btn-just-icon btn-round btn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://huster.top/htmls/649.html">
-                   <i class="fa fa-facebook"></i>
-                </a>
-                
-                <a target="_blank" rel="tooltip" data-original-title="å&#136;&#134;äº«è&#135;³å¾®å&#141;&#154;" class="btn btn-just-icon btn-round btn-twitter" href="https://twitter.com/home?status=Java%C3%A5%C2%A4%C2%9A%C3%A7%C2%BA%C2%BF%C3%A7%C2%A8%C2%8B%C3%A7%C2%9F%C2%A5%C3%A8%C2%AF%C2%86%C3%A7%C2%82%C2%B9%C3%AF%C2%BC%C2%88%C3%A4%C2%B8%C2%8B%C3%AF%C2%BC%C2%89%20-%20https://huster.top/htmls/649.html">
-                   <i class="fa fa-twitter"></i>
-                </a>
-                
-                <a target="_blank" rel="tooltip" data-original-title=" å&#136;&#134;äº«å&#136;° Google+" class="btn btn-just-icon btn-round btn-google" href="https://plus.google.com/share?url=https://huster.top/htmls/649.html">
-                   <i class="fa fa-google"></i>
-               </a>
-            </div>
-		</div>			</div>
-			<hr><div class="card card-profile card-plain">
-			<div class="row">
-				<div class="col-md-2">
-					<div class="card-avatar">
-						<a href="https://huster.top/htmls/author/admin" title="é¾&#153;å®&#137;_ä»»å¤©å&#133;µ"><img alt="" src="https://secure.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=100&r=g" srcset="https://secure.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=200&r=g 2x" class="avatar avatar-100 photo" height="100" width="100"></a>
-					</div>
-				</div>
-				<div class="col-md-10">
-					<h4 class="card-title">é¾&#153;å®&#137;_ä»»å¤©å&#133;µ</h4>
-					<p class="description">ä¸&#141;å¿&#152;å&#136;&#157;å¿&#131;ï¼&#140;æ&#150;¹å¾&#151;å§&#139;ç»&#136;!</p>
-				</div>
-			</div>
-		</div>
-		
-<div id="comments" class="section section-comments">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="media-area">
-				<h3 class="hestia-title text-center">
-									</h3>
-							</div>
-			<div class="media-body">
-					<div id="respond" class="comment-respond">
-		<h3 class="hestia-title text-center">å&#143;&#145;è¡¨è¯&#132;è®º <small><a rel="nofollow" id="cancel-comment-reply-link" href="/htmls/649.html#respond" style="display:none;">å&#143;&#150;æ¶&#136;å&#155;&#158;å¤&#141;</a></small></h3> <span class="pull-left author"> <div class="avatar"><img src="https://huster.top/wp-content/themes/hestia/assets/img/placeholder.jpg" height="64" width="64"></div> </span>			<form action="https://huster.top/wp-comments-post.php" method="post" id="commentform" class="form media-body">
-				<p class="comment-notes"><span id="email-notes">ç&#148;µå­&#144;é&#130;®ä»¶å&#156;°å&#157;&#128;ä¸&#141;ä¼&#154;è¢«å&#133;¬å¼&#128;ã&#128;&#130;</span></p><div class="row"> <div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">å&#144;&#141;ç§°</label><input id="author" name="author" class="form-control" type="text"><span class="hestia-input"></span> </div> </div>
-<div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">ç&#148;µå­&#144;é&#130;®ä»¶</label><input id="email" name="email" class="form-control" type="email"><span class="hestia-input"></span> </div> </div>
-<div class="col-md-4"> <div class="form-group label-floating is-empty"> <label class="control-label">ç½&#145;ç«&#153;</label><input id="url" name="url" class="form-control" type="url"><span class="hestia-input"></span> </div> </div> </div>
-<div class="form-group label-floating is-empty"> <label class="control-label">å&#156;¨æ&#131;³äº&#155;ä»&#128;ä¹&#136;ï¼&#159;</label><textarea id="comment" name="comment" class="form-control" rows="6" aria-required="true"></textarea><span class="hestia-input"></span> </div><p class="form-submit"><input name="submit" type="submit" id="submit" class="btn btn-primary pull-right" value="å&#143;&#145;è¡¨è¯&#132;è®º"><input type="hidden" name="comment_post_ID" value="649" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="bea345a8f3"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="1"></p>			</form>
-			</div>
-								</div>
-		</div>
+
+<div class="author-info">
+	<div class="author-avatar">
+		<img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=42&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=84&r=g 2x" class="avatar avatar-42 photo" height="42" width="42"></div>
+
+	<div class="author-description">
+		<h2 class="author-title"><span class="author-heading">作者：</span> 龙安_任天兵</h2>
+
+		<p class="author-bio">
+			不忘初心，方得始终!			<a class="author-link" href="https://huster.top/htmls/author/admin" rel="author">
+				查看龙安_任天兵的所有文章			</a>
+		</p>
 	</div>
 </div>
-		</div>
-		</div>	<div class="col-md-3 blog-sidebar-wrapper col-md-offset-1 ">
-		<aside id="secondary" class="blog-sidebar" role="complementary"><div id="recent-posts-2" class="widget widget_recent_entries">		<h5>è¿&#145;æ&#156;&#159;æ&#150;&#135;ç« </h5>		<ul><li>
-					<a href="https://huster.top/htmls/665.html">Javaå­&#151;è&#138;&#130;ç &#129;å¢&#158;å¼ºæ&#138;&#128;æ&#156;¯ç&#154;&#132;åº&#148;ç&#148;¨</a>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/649.html" rel="bookmark"><time class="entry-date published" datetime="2018-12-20T19:29:20+00:00">2018 年 12 月 20 日</time><time class="updated" datetime="2019-03-18T15:30:57+00:00">2019 年 3 月 18 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span>			</footer></article><div id="comments" class="comments-area">
+
+	
+	
+		<div id="respond" class="comment-respond">
+		<h2 id="reply-title" class="comment-reply-title">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="/htmls/649.html#respond" style="display:none;">取消回复</a></small></h2>			<form action="https://huster.top/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
+<p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes"></p>
+<p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="649" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="c92be3b95e"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="65"></p>			</form>
+			</div>
+	
+</div>
+
+	<nav class="navigation post-navigation" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://huster.top/htmls/645.html" rel="prev"><span class="meta-nav" aria-hidden="true">上一</span> <span class="screen-reader-text">上篇文章：</span> <span class="post-title">如何写代码来解决生产者消费者问题？</span></a></div><div class="nav-next"><a href="https://huster.top/htmls/657.html" rel="next"><span class="meta-nav" aria-hidden="true">下一</span> <span class="screen-reader-text">下篇文章：</span> <span class="post-title">Java类库设计之日志框架选择</span></a></div></div>
+	</nav></main><aside id="content-bottom-widgets" class="content-bottom-widgets" role="complementary"><div class="widget-area">
+			<section id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script src="https://s22.cnzz.com/z_stat.php?id=3943131&web_id=3943131" language="JavaScript"></script></div></section></div>
+	
+	</aside></div>
+
+
+	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/686.html">Java字节码增强应用</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/662.html">JVM Sandbox æº&#144;ç &#129;å&#136;&#134;æ&#158;&#144;ï¼&#136;ä¸&#128;ï¼&#137;å&#159;ºç¡&#128;ç¯&#135;: Instrumentationå&#146;&#140;ClassFileTransformerä½&#156;ç&#148;¨</a>
+					<a href="https://huster.top/htmls/662.html">JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/657.html">Javaç±»åº&#147;è®¾è®¡ä¹&#139;æ&#151;¥å¿&#151;æ¡&#134;æ&#158;¶é&#128;&#137;æ&#139;©</a>
+					<a href="https://huster.top/htmls/657.html">Java类库设计之日志框架选择</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/649.html">Javaå¤&#154;çº¿ç¨&#139;ç&#159;¥è¯&#134;ç&#130;¹ï¼&#136;ä¸&#139;ï¼&#137;</a>
+					<a href="https://huster.top/htmls/649.html">Java多线程知识点（下）</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/645.html">å¦&#130;ä½&#149;å&#134;&#153;ä»£ç &#129;æ&#157;¥è§£å&#134;³ç&#148;&#159;äº§è&#128;&#133;æ¶&#136;è´¹è&#128;&#133;é&#151;®é¢&#152;ï¼&#159;</a>
+					<a href="https://huster.top/htmls/645.html">如何写代码来解决生产者消费者问题？</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/642.html">Javaå¤&#154;çº¿ç¨&#139;æ&#128;»ç»&#147;(ä¸&#138;é&#131;¨å&#136;&#134;)é&#157;¢è¯&#149;é¢&#152;è§£ç­&#148;</a>
+					<a href="https://huster.top/htmls/642.html">Java多线程总结(上部分)面试题解答</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/637.html">ç»&#134;è¯´Javaç&#154;&#132;å&#134;&#133;å­&#152;æ¨¡å&#158;&#139;</a>
+					<a href="https://huster.top/htmls/637.html">细说Java的内存模型</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/633.html">Javaé&#157;¢è¯&#149;é¢&#152;ä¹&#139;Javaè¯­æ³&#149;ç&#154;&#132;å&#159;ºç¡&#128;ç&#159;¥è¯&#134;</a>
+					<a href="https://huster.top/htmls/633.html">Java面试题之Java语法的基础知识</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/629.html">Javaç&#154;&#132;é&#148;&#129;</a>
+					<a href="https://huster.top/htmls/629.html">Java的锁</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/615.html">ç&#144;&#134;è§£Javaçº¿ç¨&#139;é&#151;´ç&#154;&#132;é&#128;&#154;ä¿¡</a>
+					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/610.html">å&#134;&#153;ç»&#153;è®¡ç®&#151;æ&#156;ºä¸&#147;ä¸&#154;æ¯&#149;ä¸&#154;ç&#148;&#159;ç&#154;&#132;22æ&#157;¡å®&#157;è´µå»ºè®®</a>
+					<a href="https://huster.top/htmls/610.html">写给计算机专业毕业生的22条宝贵建议</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/599.html">tensortFlowå®&#137;è£&#133;å&#146;&#140;å¼&#128;å&#143;&#145;ç&#142;¯å¢&#131;é&#133;&#141;ç½®</a>
+					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/573.html">spring bootåº&#148;ç&#148;¨å&#156;¨ POSTè¯·æ±&#130;ç&#154;&#132;Invalid CORS requestç&#154;&#132;é&#151;®é¢&#152;</a>
+					<a href="https://huster.top/htmls/573.html">spring boot应用在 POST请求的Invalid CORS request的问题</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/568.html">Macä¸&#139;Pipç&#154;&#132;æ&#138;¥é&#148;&#153;é&#151;®é¢&#152;</a>
+					<a href="https://huster.top/htmls/568.html">Mac下Pip的报错问题</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/557.html">å¹¶å&#143;&#145;ç¼&#150;ç¨&#139;æ¨¡å&#158;&#139;(è½¬è½½)</a>
+					<a href="https://huster.top/htmls/557.html">并发编程模型(转载)</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/552.html">ä»&#142;ThreadPoolExecutorç&#154;&#132;invokeAllæ&#150;¹æ³&#149;è¯´å¼&#128;å&#142;»:å¦&#130;ä½&#149;ç­&#137;å¾&#133;å¤&#154;ä¸ªå¹¶å&#143;&#145;ä»»å&#138;¡ç»&#147;æ&#157;&#159;å¹¶æ&#148;¶é&#155;&#134;ç»&#147;æ&#158;&#156;</a>
+					<a href="https://huster.top/htmls/552.html">从ThreadPoolExecutor的invokeAll方法说开去:如何等待多个并发任务结束并收集结果</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/548.html">è®¤è¯&#134;ExecutorCompletionServiceè¿&#148;å&#155;&#158;æ&#156;&#128;å¿«ç&#154;&#132;ç»&#147;æ&#158;&#156;</a>
+					<a href="https://huster.top/htmls/548.html">认识ExecutorCompletionService返回最快的结果</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/543.html">Javaé&#135;&#140;ç&#154;&#132;Joinç&#154;&#132;æ&#137;§è¡&#140;é¡ºåº&#143;é&#151;®é¢&#152;</a>
+					<a href="https://huster.top/htmls/543.html">Java里的Join的执行顺序问题</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/538.html">spring boot cacheè¸©å&#136;°ç&#154;&#132;å&#157;&#145;</a>
+					<a href="https://huster.top/htmls/538.html">spring boot cache踩到的坑</a>
 									</li>
 											<li>
-					<a href="https://huster.top/htmls/530.html">Hessianç&#154;&#132;ä½¿ç&#148;¨</a>
+					<a href="https://huster.top/htmls/530.html">Hessian的使用</a>
 									</li>
-					</ul></div><div id="archives-2" class="widget widget_archive"><h5>æ&#150;&#135;ç« å½&#146;æ¡£</h5>		<ul><li><a href="https://huster.top/htmls/date/2019/07">2019å¹´ä¸&#131;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2019/06">2019å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2019/05">2019å¹´äº&#148;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/12">2018å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2018/11">2018å¹´å&#141;&#129;ä¸&#128;æ&#156;&#136;</a> (5)</li>
-	<li><a href="https://huster.top/htmls/date/2018/10">2018å¹´å&#141;&#129;æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2018/08">2018å¹´å&#133;«æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/07">2018å¹´ä¸&#131;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/06">2018å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2018/04">2018å¹´å&#155;&#155;æ&#156;&#136;</a> (3)</li>
-	<li><a href="https://huster.top/htmls/date/2018/01">2018å¹´ä¸&#128;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2017/10">2017å¹´å&#141;&#129;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2017/08">2017å¹´å&#133;«æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2017/07">2017å¹´ä¸&#131;æ&#156;&#136;</a> (6)</li>
-	<li><a href="https://huster.top/htmls/date/2017/06">2017å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2017/04">2017å¹´å&#155;&#155;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/12">2016å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/11">2016å¹´å&#141;&#129;ä¸&#128;æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2016/10">2016å¹´å&#141;&#129;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/06">2016å¹´å&#133;­æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2016/03">2016å¹´ä¸&#137;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2015/11">2015å¹´å&#141;&#129;ä¸&#128;æ&#156;&#136;</a> (4)</li>
-	<li><a href="https://huster.top/htmls/date/2015/01">2015å¹´ä¸&#128;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2014/10">2014å¹´å&#141;&#129;æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2013/08">2013å¹´å&#133;«æ&#156;&#136;</a> (4)</li>
-	<li><a href="https://huster.top/htmls/date/2013/06">2013å¹´å&#133;­æ&#156;&#136;</a> (4)</li>
-	<li><a href="https://huster.top/htmls/date/2013/05">2013å¹´äº&#148;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2013/03">2013å¹´ä¸&#137;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/12">2012å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/09">2012å¹´ä¹&#157;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/08">2012å¹´å&#133;«æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2012/07">2012å¹´ä¸&#131;æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2012/06">2012å¹´å&#133;­æ&#156;&#136;</a> (2)</li>
-	<li><a href="https://huster.top/htmls/date/2012/05">2012å¹´äº&#148;æ&#156;&#136;</a> (1)</li>
-	<li><a href="https://huster.top/htmls/date/2012/04">2012å¹´å&#155;&#155;æ&#156;&#136;</a> (10)</li>
-	<li><a href="https://huster.top/htmls/date/2012/03">2012å¹´ä¸&#137;æ&#156;&#136;</a> (8)</li>
-	<li><a href="https://huster.top/htmls/date/2010/12">2010å¹´å&#141;&#129;äº&#140;æ&#156;&#136;</a> (1)</li>
-		</ul></div><div id="categories-2" class="widget widget_categories"><h5>å&#136;&#134;ç±»ç&#155;®å½&#149;</h5>		<ul><li class="cat-item cat-item-57"><a href="https://huster.top/htmls/category/nas-%e7%be%a4%e6%99%96">nas-ç¾¤æ&#153;&#150;</a> (2)
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2019/07">2019年七月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/06">2019年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/05">2019年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/12">2018年十二月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2018/11">2018年十一月</a> (5)</li>
+	<li><a href="https://huster.top/htmls/date/2018/10">2018年十月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2018/08">2018年八月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/07">2018年七月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/06">2018年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/04">2018年四月</a> (3)</li>
+	<li><a href="https://huster.top/htmls/date/2018/01">2018年一月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/10">2017年十月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/08">2017年八月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2017/07">2017年七月</a> (6)</li>
+	<li><a href="https://huster.top/htmls/date/2017/06">2017年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/04">2017年四月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/12">2016年十二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/11">2016年十一月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2016/10">2016年十月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/06">2016年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/03">2016年三月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2015/11">2015年十一月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2015/01">2015年一月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2014/10">2014年十月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2013/08">2013年八月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2013/06">2013年六月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2013/05">2013年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2013/03">2013年三月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/12">2012年十二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/09">2012年九月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/08">2012年八月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/07">2012年七月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/06">2012年六月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/05">2012年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/04">2012年四月</a> (10)</li>
+	<li><a href="https://huster.top/htmls/date/2012/03">2012年三月</a> (8)</li>
+	<li><a href="https://huster.top/htmls/date/2010/12">2010年十二月</a> (1)</li>
+		</ul></section><section id="categories-2" class="widget widget_categories"><h2 class="widget-title">分类目录</h2>		<ul><li class="cat-item cat-item-57"><a href="https://huster.top/htmls/category/nas-%e7%be%a4%e6%99%96">nas-群晖</a> (2)
 </li>
-	<li class="cat-item cat-item-11"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7">PHPé«&#152;æ&#149;&#136;ç¼&#150;ç¨&#139;</a> (6)
-<ul class="children"><li class="cat-item cat-item-53"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php-tools">PHPç&#154;&#132;å¼&#128;å&#143;&#145;å·¥å&#133;·</a> (3)
+	<li class="cat-item cat-item-11"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7">PHP高效编程</a> (6)
+<ul class="children"><li class="cat-item cat-item-53"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php-tools">PHP的开发工具</a> (3)
 </li>
-	<li class="cat-item cat-item-6"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php%e9%82%a3%e4%ba%9b%e6%9c%89%e8%b6%a3%e7%9a%84%e4%ba%8b%e5%84%bf" title="phpé&#130;£äº&#155;ä»¥å&#137;&#141;æ²¡æ³¨æ&#132;&#143;å&#136;°ç&#154;&#132;ï¼&#140;æ&#136;&#150;è&#128;&#133;å¾&#136;å°&#145;æ³¨æ&#132;&#143;å&#136;°äº&#139;æ&#131;&#133;">PHPç¼&#150;ç¨&#139;</a> (3)
+	<li class="cat-item cat-item-6"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php%e9%82%a3%e4%ba%9b%e6%9c%89%e8%b6%a3%e7%9a%84%e4%ba%8b%e5%84%bf" title="php那些以前没注意到的，或者很少注意到事情">PHP编程</a> (3)
 </li>
 </ul></li>
 	<li class="cat-item cat-item-74"><a href="https://huster.top/htmls/category/tensortflow">TensortFlow</a> (2)
 </li>
-	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEBå®&#137;å&#133;¨</a> (3)
+	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">å­¦ä¹ ç¬&#148;è®°</a> (58)
-<ul class="children"><li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1é&#152;&#133;è¯»ç¬&#148;è®°</a> (11)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (58)
+<ul class="children"><li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Javaå­¦ä¹ </a> (35)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (35)
 </li>
-	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linuxå­¦ä¹ ç¬&#148;è®°</a> (1)
+	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
-	<li class="cat-item cat-item-23"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/%e6%9c%8d%e5%8a%a1">PHPç¼&#150;å&#134;&#153;æ&#156;&#141;å&#138;¡ç&#154;&#132;ç &#148;ç©¶</a> (1)
+	<li class="cat-item cat-item-23"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/%e6%9c%8d%e5%8a%a1">PHP编写服务的研究</a> (1)
 </li>
-	<li class="cat-item cat-item-40"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/rfc793-tcp%e6%8e%a7%e5%88%b6%e5%8d%8f%e8%ae%ae">RFC793-TCPæ&#142;§å&#136;¶å&#141;&#143;è®®</a> (1)
+	<li class="cat-item cat-item-40"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/rfc793-tcp%e6%8e%a7%e5%88%b6%e5%8d%8f%e8%ae%ae">RFC793-TCP控制协议</a> (1)
 </li>
-	<li class="cat-item cat-item-56"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/spring%e6%96%87%e6%a1%a3">Springæ&#150;&#135;æ¡£</a> (3)
+	<li class="cat-item cat-item-56"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/spring%e6%96%87%e6%a1%a3">Spring文档</a> (3)
 </li>
-	<li class="cat-item cat-item-1"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized">å&#133;¶ä»&#150;</a> (5)
+	<li class="cat-item cat-item-1"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized">其他</a> (5)
 </li>
 </ul></li>
-	<li class="cat-item cat-item-16"><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84">ç³»ç»&#159;æ&#158;¶æ&#158;&#132;å­¦ä¹ </a> (13)
+	<li class="cat-item cat-item-16"><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84">系统架构学习</a> (13)
 </li>
-	<li class="cat-item cat-item-75"><a href="https://huster.top/htmls/category/%e8%bd%ac%e8%bd%bd">è½¬è½½</a> (2)
+	<li class="cat-item cat-item-75"><a href="https://huster.top/htmls/category/%e8%bd%ac%e8%bd%bd">转载</a> (2)
 </li>
-		</ul></div><div id="tag_cloud-2" class="widget widget_tag_cloud"><h5>æ &#135;ç­¾</h5><div class="tagcloud"><a href="https://huster.top/htmls/tag/apache" class="tag-cloud-link tag-link-31 tag-link-position-1" style="font-size: 8pt;" aria-label="Apache (1ä¸ªé¡¹ç&#155;®)">Apache</a>
-<a href="https://huster.top/htmls/tag/codesniffer" class="tag-cloud-link tag-link-12 tag-link-position-2" style="font-size: 8pt;" aria-label="CodeSniffer (1ä¸ªé¡¹ç&#155;®)">CodeSniffer</a>
-<a href="https://huster.top/htmls/tag/ecache" class="tag-cloud-link tag-link-67 tag-link-position-3" style="font-size: 8pt;" aria-label="Ecache (1ä¸ªé¡¹ç&#155;®)">Ecache</a>
-<a href="https://huster.top/htmls/tag/globals" class="tag-cloud-link tag-link-10 tag-link-position-4" style="font-size: 8pt;" aria-label="GLOBALS (1ä¸ªé¡¹ç&#155;®)">GLOBALS</a>
-<a href="https://huster.top/htmls/tag/hessian" class="tag-cloud-link tag-link-73 tag-link-position-5" style="font-size: 8pt;" aria-label="Hessian (1ä¸ªé¡¹ç&#155;®)">Hessian</a>
-<a href="https://huster.top/htmls/tag/http1-1" class="tag-cloud-link tag-link-22 tag-link-position-6" style="font-size: 15.905882352941pt;" aria-label="HTTP/1.1 (5ä¸ªé¡¹ç&#155;®)">HTTP/1.1</a>
-<a href="https://huster.top/htmls/tag/httpurlconnection" class="tag-cloud-link tag-link-71 tag-link-position-7" style="font-size: 8pt;" aria-label="HttpURLConnection (1ä¸ªé¡¹ç&#155;®)">HttpURLConnection</a>
-<a href="https://huster.top/htmls/tag/http%e8%af%b7%e6%b1%82" class="tag-cloud-link tag-link-70 tag-link-position-8" style="font-size: 8pt;" aria-label="Httpè¯·æ±&#130; (1ä¸ªé¡¹ç&#155;®)">Httpè¯·æ±&#130;</a>
-<a href="https://huster.top/htmls/tag/ioc" class="tag-cloud-link tag-link-17 tag-link-position-9" style="font-size: 8pt;" aria-label="IoC (1ä¸ªé¡¹ç&#155;®)">IoC</a>
-<a href="https://huster.top/htmls/tag/java" class="tag-cloud-link tag-link-58 tag-link-position-10" style="font-size: 22pt;" aria-label="Java (13ä¸ªé¡¹ç&#155;®)">Java</a>
-<a href="https://huster.top/htmls/tag/java-spring-petclinic" class="tag-cloud-link tag-link-55 tag-link-position-11" style="font-size: 8pt;" aria-label="Java spring-petclinic (1ä¸ªé¡¹ç&#155;®)">Java spring-petclinic</a>
-<a href="https://huster.top/htmls/tag/log4j" class="tag-cloud-link tag-link-68 tag-link-position-12" style="font-size: 8pt;" aria-label="log4j (1ä¸ªé¡¹ç&#155;®)">log4j</a>
-<a href="https://huster.top/htmls/tag/logback" class="tag-cloud-link tag-link-69 tag-link-position-13" style="font-size: 8pt;" aria-label="logback (1ä¸ªé¡¹ç&#155;®)">logback</a>
-<a href="https://huster.top/htmls/tag/maven" class="tag-cloud-link tag-link-64 tag-link-position-14" style="font-size: 8pt;" aria-label="Maven (1ä¸ªé¡¹ç&#155;®)">Maven</a>
-<a href="https://huster.top/htmls/tag/maven-shade-plugin" class="tag-cloud-link tag-link-66 tag-link-position-15" style="font-size: 8pt;" aria-label="maven-shade-plugin (1ä¸ªé¡¹ç&#155;®)">maven-shade-plugin</a>
-<a href="https://huster.top/htmls/tag/mybatis" class="tag-cloud-link tag-link-72 tag-link-position-16" style="font-size: 8pt;" aria-label="mybatis (1ä¸ªé¡¹ç&#155;®)">mybatis</a>
-<a href="https://huster.top/htmls/tag/php" class="tag-cloud-link tag-link-7 tag-link-position-17" style="font-size: 12.941176470588pt;" aria-label="PHP (3ä¸ªé¡¹ç&#155;®)">PHP</a>
-<a href="https://huster.top/htmls/tag/plugin" class="tag-cloud-link tag-link-65 tag-link-position-18" style="font-size: 8pt;" aria-label="Plugin (1ä¸ªé¡¹ç&#155;®)">Plugin</a>
-<a href="https://huster.top/htmls/tag/register_globals" class="tag-cloud-link tag-link-9 tag-link-position-19" style="font-size: 8pt;" aria-label="register_globals (1ä¸ªé¡¹ç&#155;®)">register_globals</a>
-<a href="https://huster.top/htmls/tag/rfc" class="tag-cloud-link tag-link-20 tag-link-position-20" style="font-size: 8pt;" aria-label="RFC (1ä¸ªé¡¹ç&#155;®)">RFC</a>
-<a href="https://huster.top/htmls/tag/rfc2616" class="tag-cloud-link tag-link-21 tag-link-position-21" style="font-size: 8pt;" aria-label="RFC2616 (1ä¸ªé¡¹ç&#155;®)">RFC2616</a>
-<a href="https://huster.top/htmls/tag/serializable" class="tag-cloud-link tag-link-59 tag-link-position-22" style="font-size: 8pt;" aria-label="Serializable (1ä¸ªé¡¹ç&#155;®)">Serializable</a>
-<a href="https://huster.top/htmls/tag/spring" class="tag-cloud-link tag-link-63 tag-link-position-23" style="font-size: 10.964705882353pt;" aria-label="Spring (2ä¸ªé¡¹ç&#155;®)">Spring</a>
-<a href="https://huster.top/htmls/tag/spring-boot" class="tag-cloud-link tag-link-62 tag-link-position-24" style="font-size: 10.964705882353pt;" aria-label="Spring boot (2ä¸ªé¡¹ç&#155;®)">Spring boot</a>
-<a href="https://huster.top/htmls/tag/thinkphp" class="tag-cloud-link tag-link-34 tag-link-position-25" style="font-size: 8pt;" aria-label="ThinkPHP (1ä¸ªé¡¹ç&#155;®)">ThinkPHP</a>
-<a href="https://huster.top/htmls/tag/vsftp" class="tag-cloud-link tag-link-43 tag-link-position-26" style="font-size: 8pt;" aria-label="VSFTP (1ä¸ªé¡¹ç&#155;®)">VSFTP</a>
-<a href="https://huster.top/htmls/tag/wordpress%e6%ba%90%e7%a0%81" class="tag-cloud-link tag-link-8 tag-link-position-27" style="font-size: 10.964705882353pt;" aria-label="wordpressæº&#144;ç &#129; (2ä¸ªé¡¹ç&#155;®)">wordpressæº&#144;ç &#129;</a>
-<a href="https://huster.top/htmls/tag/zeromq" class="tag-cloud-link tag-link-29 tag-link-position-28" style="font-size: 14.588235294118pt;" aria-label="ZeroMQ (4ä¸ªé¡¹ç&#155;®)">ZeroMQ</a>
-<a href="https://huster.top/htmls/tag/zmq" class="tag-cloud-link tag-link-41 tag-link-position-29" style="font-size: 12.941176470588pt;" aria-label="zmq (3ä¸ªé¡¹ç&#155;®)">zmq</a>
-<a href="https://huster.top/htmls/tag/zmq%e7%9a%84%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-42 tag-link-position-30" style="font-size: 8pt;" aria-label="ZMQç&#154;&#132;å­¦ä¹ ç¬&#148;è®° (1ä¸ªé¡¹ç&#155;®)">ZMQç&#154;&#132;å­¦ä¹ ç¬&#148;è®°</a>
-<a href="https://huster.top/htmls/tag/%e4%ba%92%e8%81%94%e7%bd%91" class="tag-cloud-link tag-link-14 tag-link-position-31" style="font-size: 12.941176470588pt;" aria-label="äº&#146;è&#129;&#148;ç½&#145; (3ä¸ªé¡¹ç&#155;®)">äº&#146;è&#129;&#148;ç½&#145;</a>
-<a href="https://huster.top/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86" class="tag-cloud-link tag-link-61 tag-link-position-32" style="font-size: 8pt;" aria-label="å&#138;¨æ&#128;&#129;ä»£ç&#144;&#134; (1ä¸ªé¡¹ç&#155;®)">å&#138;¨æ&#128;&#129;ä»£ç&#144;&#134;</a>
-<a href="https://huster.top/htmls/tag/%e5%8f%8c%e5%bc%95%e5%8f%b7" class="tag-cloud-link tag-link-36 tag-link-position-33" style="font-size: 8pt;" aria-label="å&#143;&#140;å¼&#149;å&#143;· (1ä¸ªé¡¹ç&#155;®)">å&#143;&#140;å¼&#149;å&#143;·</a>
-<a href="https://huster.top/htmls/tag/%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="tag-cloud-link tag-link-78 tag-link-position-34" style="font-size: 10.964705882353pt;" aria-label="å¤&#154;çº¿ç¨&#139; (2ä¸ªé¡¹ç&#155;®)">å¤&#154;çº¿ç¨&#139;</a>
-<a href="https://huster.top/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-28 tag-link-position-35" style="font-size: 8pt;" aria-label="å­¦ä¹ ç¬&#148;è®° (1ä¸ªé¡¹ç&#155;®)">å­¦ä¹ ç¬&#148;è®°</a>
-<a href="https://huster.top/htmls/tag/%e5%ae%89%e5%85%a8" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 8pt;" aria-label="å®&#137;å&#133;¨ (1ä¸ªé¡¹ç&#155;®)">å®&#137;å&#133;¨</a>
-<a href="https://huster.top/htmls/tag/%e6%8a%80%e6%9c%af%e5%80%ba%e5%8a%a1" class="tag-cloud-link tag-link-30 tag-link-position-37" style="font-size: 8pt;" aria-label="æ&#138;&#128;æ&#156;¯å&#128;ºå&#138;¡ (1ä¸ªé¡¹ç&#155;®)">æ&#138;&#128;æ&#156;¯å&#128;ºå&#138;¡</a>
-<a href="https://huster.top/htmls/tag/%e6%97%a5%e5%bf%97" class="tag-cloud-link tag-link-32 tag-link-position-38" style="font-size: 10.964705882353pt;" aria-label="æ&#151;¥å¿&#151; (2ä¸ªé¡¹ç&#155;®)">æ&#151;¥å¿&#151;</a>
-<a href="https://huster.top/htmls/tag/%e6%9d%83%e5%88%a9" class="tag-cloud-link tag-link-49 tag-link-position-39" style="font-size: 8pt;" aria-label="æ&#157;&#131;å&#136;© (1ä¸ªé¡¹ç&#155;®)">æ&#157;&#131;å&#136;©</a>
-<a href="https://huster.top/htmls/tag/%e6%9f%b4%e9%9d%99" class="tag-cloud-link tag-link-48 tag-link-position-40" style="font-size: 8pt;" aria-label="æ&#159;´é&#157;&#153; (1ä¸ªé¡¹ç&#155;®)">æ&#159;´é&#157;&#153;</a>
-<a href="https://huster.top/htmls/tag/%e6%b3%9b%e5%9e%8b" class="tag-cloud-link tag-link-60 tag-link-position-41" style="font-size: 8pt;" aria-label="æ³&#155;å&#158;&#139; (1ä¸ªé¡¹ç&#155;®)">æ³&#155;å&#158;&#139;</a>
-<a href="https://huster.top/htmls/tag/%e6%b5%8f%e8%a7%88%e5%99%a8" class="tag-cloud-link tag-link-15 tag-link-position-42" style="font-size: 8pt;" aria-label="æµ&#143;è§&#136;å&#153;¨ (1ä¸ªé¡¹ç&#155;®)">æµ&#143;è§&#136;å&#153;¨</a>
-<a href="https://huster.top/htmls/tag/%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-13 tag-link-position-43" style="font-size: 8pt;" aria-label="ç³»ç»&#159;è®¾è®¡ (1ä¸ªé¡¹ç&#155;®)">ç³»ç»&#159;è®¾è®¡</a>
-<a href="https://huster.top/htmls/tag/%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-47 tag-link-position-44" style="font-size: 8pt;" aria-label="è¯»ä¹¦ç¬&#148;è®° (1ä¸ªé¡¹ç&#155;®)">è¯»ä¹¦ç¬&#148;è®°</a>
-<a href="https://huster.top/htmls/tag/%e8%bd%af%e4%bb%b6%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-18 tag-link-position-45" style="font-size: 8pt;" aria-label="è½¯ä»¶è®¾è®¡ (1ä¸ªé¡¹ç&#155;®)">è½¯ä»¶è®¾è®¡</a></div>
-</div><div id="linkcat-2" class="widget widget_links"><h5>é&#147;¾æ&#142;¥è¡¨</h5>
-	<ul class="xoxo blogroll"><li><a href="http://blog.sina.com.cn/rentb" rel="me" title="å&#142;&#159;æ&#157;¥ç&#154;&#132;å&#141;&#154;å®¢å&#156;°å&#157;&#128;" target="_blank">å&#141;&#154;å®¢è&#128;&#129;å&#156;°å&#157;&#128;</a></li>
-<li><a href="http://blog.csdn.net/heiyeshuwu" rel="colleague" target="_blank">é»&#145;å¤&#156;è·¯äºº</a></li>
+		</ul></section><section id="tag_cloud-2" class="widget widget_tag_cloud"><h2 class="widget-title">标签</h2><div class="tagcloud"><a href="https://huster.top/htmls/tag/apache" class="tag-cloud-link tag-link-31 tag-link-position-1" style="font-size: 1em;">Apache</a>
+<a href="https://huster.top/htmls/tag/codesniffer" class="tag-cloud-link tag-link-12 tag-link-position-2" style="font-size: 1em;">CodeSniffer</a>
+<a href="https://huster.top/htmls/tag/ecache" class="tag-cloud-link tag-link-67 tag-link-position-3" style="font-size: 1em;">Ecache</a>
+<a href="https://huster.top/htmls/tag/globals" class="tag-cloud-link tag-link-10 tag-link-position-4" style="font-size: 1em;">GLOBALS</a>
+<a href="https://huster.top/htmls/tag/hessian" class="tag-cloud-link tag-link-73 tag-link-position-5" style="font-size: 1em;">Hessian</a>
+<a href="https://huster.top/htmls/tag/http1-1" class="tag-cloud-link tag-link-22 tag-link-position-6" style="font-size: 1em;">HTTP/1.1</a>
+<a href="https://huster.top/htmls/tag/httpurlconnection" class="tag-cloud-link tag-link-71 tag-link-position-7" style="font-size: 1em;">HttpURLConnection</a>
+<a href="https://huster.top/htmls/tag/http%e8%af%b7%e6%b1%82" class="tag-cloud-link tag-link-70 tag-link-position-8" style="font-size: 1em;">Http请求</a>
+<a href="https://huster.top/htmls/tag/ioc" class="tag-cloud-link tag-link-17 tag-link-position-9" style="font-size: 1em;">IoC</a>
+<a href="https://huster.top/htmls/tag/java" class="tag-cloud-link tag-link-58 tag-link-position-10" style="font-size: 1em;">Java</a>
+<a href="https://huster.top/htmls/tag/java-spring-petclinic" class="tag-cloud-link tag-link-55 tag-link-position-11" style="font-size: 1em;">Java spring-petclinic</a>
+<a href="https://huster.top/htmls/tag/log4j" class="tag-cloud-link tag-link-68 tag-link-position-12" style="font-size: 1em;">log4j</a>
+<a href="https://huster.top/htmls/tag/logback" class="tag-cloud-link tag-link-69 tag-link-position-13" style="font-size: 1em;">logback</a>
+<a href="https://huster.top/htmls/tag/maven" class="tag-cloud-link tag-link-64 tag-link-position-14" style="font-size: 1em;">Maven</a>
+<a href="https://huster.top/htmls/tag/maven-shade-plugin" class="tag-cloud-link tag-link-66 tag-link-position-15" style="font-size: 1em;">maven-shade-plugin</a>
+<a href="https://huster.top/htmls/tag/mybatis" class="tag-cloud-link tag-link-72 tag-link-position-16" style="font-size: 1em;">mybatis</a>
+<a href="https://huster.top/htmls/tag/php" class="tag-cloud-link tag-link-7 tag-link-position-17" style="font-size: 1em;">PHP</a>
+<a href="https://huster.top/htmls/tag/plugin" class="tag-cloud-link tag-link-65 tag-link-position-18" style="font-size: 1em;">Plugin</a>
+<a href="https://huster.top/htmls/tag/register_globals" class="tag-cloud-link tag-link-9 tag-link-position-19" style="font-size: 1em;">register_globals</a>
+<a href="https://huster.top/htmls/tag/rfc" class="tag-cloud-link tag-link-20 tag-link-position-20" style="font-size: 1em;">RFC</a>
+<a href="https://huster.top/htmls/tag/rfc2616" class="tag-cloud-link tag-link-21 tag-link-position-21" style="font-size: 1em;">RFC2616</a>
+<a href="https://huster.top/htmls/tag/serializable" class="tag-cloud-link tag-link-59 tag-link-position-22" style="font-size: 1em;">Serializable</a>
+<a href="https://huster.top/htmls/tag/spring" class="tag-cloud-link tag-link-63 tag-link-position-23" style="font-size: 1em;">Spring</a>
+<a href="https://huster.top/htmls/tag/spring-boot" class="tag-cloud-link tag-link-62 tag-link-position-24" style="font-size: 1em;">Spring boot</a>
+<a href="https://huster.top/htmls/tag/thinkphp" class="tag-cloud-link tag-link-34 tag-link-position-25" style="font-size: 1em;">ThinkPHP</a>
+<a href="https://huster.top/htmls/tag/vsftp" class="tag-cloud-link tag-link-43 tag-link-position-26" style="font-size: 1em;">VSFTP</a>
+<a href="https://huster.top/htmls/tag/wordpress%e6%ba%90%e7%a0%81" class="tag-cloud-link tag-link-8 tag-link-position-27" style="font-size: 1em;">wordpress源码</a>
+<a href="https://huster.top/htmls/tag/zeromq" class="tag-cloud-link tag-link-29 tag-link-position-28" style="font-size: 1em;">ZeroMQ</a>
+<a href="https://huster.top/htmls/tag/zmq" class="tag-cloud-link tag-link-41 tag-link-position-29" style="font-size: 1em;">zmq</a>
+<a href="https://huster.top/htmls/tag/zmq%e7%9a%84%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-42 tag-link-position-30" style="font-size: 1em;">ZMQ的学习笔记</a>
+<a href="https://huster.top/htmls/tag/%e4%ba%92%e8%81%94%e7%bd%91" class="tag-cloud-link tag-link-14 tag-link-position-31" style="font-size: 1em;">互联网</a>
+<a href="https://huster.top/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86" class="tag-cloud-link tag-link-61 tag-link-position-32" style="font-size: 1em;">动态代理</a>
+<a href="https://huster.top/htmls/tag/%e5%8f%8c%e5%bc%95%e5%8f%b7" class="tag-cloud-link tag-link-36 tag-link-position-33" style="font-size: 1em;">双引号</a>
+<a href="https://huster.top/htmls/tag/%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="tag-cloud-link tag-link-78 tag-link-position-34" style="font-size: 1em;">多线程</a>
+<a href="https://huster.top/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-28 tag-link-position-35" style="font-size: 1em;">学习笔记</a>
+<a href="https://huster.top/htmls/tag/%e5%ae%89%e5%85%a8" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 1em;">安全</a>
+<a href="https://huster.top/htmls/tag/%e6%8a%80%e6%9c%af%e5%80%ba%e5%8a%a1" class="tag-cloud-link tag-link-30 tag-link-position-37" style="font-size: 1em;">技术债务</a>
+<a href="https://huster.top/htmls/tag/%e6%97%a5%e5%bf%97" class="tag-cloud-link tag-link-32 tag-link-position-38" style="font-size: 1em;">日志</a>
+<a href="https://huster.top/htmls/tag/%e6%9d%83%e5%88%a9" class="tag-cloud-link tag-link-49 tag-link-position-39" style="font-size: 1em;">权利</a>
+<a href="https://huster.top/htmls/tag/%e6%9f%b4%e9%9d%99" class="tag-cloud-link tag-link-48 tag-link-position-40" style="font-size: 1em;">柴静</a>
+<a href="https://huster.top/htmls/tag/%e6%b3%9b%e5%9e%8b" class="tag-cloud-link tag-link-60 tag-link-position-41" style="font-size: 1em;">泛型</a>
+<a href="https://huster.top/htmls/tag/%e6%b5%8f%e8%a7%88%e5%99%a8" class="tag-cloud-link tag-link-15 tag-link-position-42" style="font-size: 1em;">浏览器</a>
+<a href="https://huster.top/htmls/tag/%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-13 tag-link-position-43" style="font-size: 1em;">系统设计</a>
+<a href="https://huster.top/htmls/tag/%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-47 tag-link-position-44" style="font-size: 1em;">读书笔记</a>
+<a href="https://huster.top/htmls/tag/%e8%bd%af%e4%bb%b6%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-18 tag-link-position-45" style="font-size: 1em;">软件设计</a></div>
+</section><section id="linkcat-2" class="widget widget_links"><h2 class="widget-title">链接表</h2>
+	<ul class="xoxo blogroll"><li><a href="http://blog.sina.com.cn/rentb" rel="me" title="原来的博客地址" target="_blank">博客老地址</a></li>
+<li><a href="http://blog.csdn.net/heiyeshuwu" rel="colleague" target="_blank">黑夜路人</a></li>
 
-	</ul></div>
-<div id="recent-comments-2" class="widget widget_recent_comments"><h5>è¿&#145;æ&#156;&#159;è¯&#132;è®º</h5><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/645.html" rel="external nofollow" class="url">å¦&#130;ä½&#149;å&#134;&#153;ä»£ç &#129;æ&#157;¥è§£å&#134;³ç&#148;&#159;äº§è&#128;&#133;æ¶&#136;è´¹è&#128;&#133;é&#151;®é¢&#152;ï¼&#159; – ä¸&#137;ä¸¤å¸¦èµ°</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/615.html#comment-24314">ç&#144;&#134;è§£Javaçº¿ç¨&#139;é&#151;´ç&#154;&#132;é&#128;&#154;ä¿¡</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">é¾&#153;å®&#137;_ä»»å¤©å&#133;µ</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/557.html#comment-24313">å¹¶å&#143;&#145;ç¼&#150;ç¨&#139;æ¨¡å&#158;&#139;(è½¬è½½)</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Javaå¤&#154;çº¿ç¨&#139;æ&#128;»ç»&#147;(ä¸&#138;é&#131;¨å&#136;&#134;)é&#157;¢è¯&#149;é¢&#152;è§£ç­&#148; – ä¸&#137;ä¸¤å¸¦èµ°</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/637.html#comment-24312">ç»&#134;è¯´Javaç&#154;&#132;å&#134;&#133;å­&#152;æ¨¡å&#158;&#139;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Javaå¤&#154;çº¿ç¨&#139;æ&#128;»ç»&#147;(ä¸&#138;é&#131;¨å&#136;&#134;)é&#157;¢è¯&#149;é¢&#152;è§£ç­&#148; – ä¸&#137;ä¸¤å¸¦èµ°</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/557.html#comment-24311">å¹¶å&#143;&#145;ç¼&#150;ç¨&#139;æ¨¡å&#158;&#139;(è½¬è½½)</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">shanchao</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/573.html#comment-24309">spring bootåº&#148;ç&#148;¨å&#156;¨ POSTè¯·æ±&#130;ç&#154;&#132;Invalid CORS requestç&#154;&#132;é&#151;®é¢&#152;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">adimin</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/462.html#comment-24307">ä»&#139;ç»&#141;springç&#154;&#132;ä¸¤ä¸ªæ&#142;¥å&#143;£ApplicationContextAwareå&#146;&#140;ApplicationListener</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">å&#140;¿å&#144;&#141;</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/462.html#comment-24306">ä»&#139;ç»&#141;springç&#154;&#132;ä¸¤ä¸ªæ&#142;¥å&#143;£ApplicationContextAwareå&#146;&#140;ApplicationListener</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">å&#140;¿å&#144;&#141;</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/472.html#comment-24276">Spring bootè®¿é&#151;®jsã&#128;&#129;cssã&#128;&#129;å&#155;¾ç&#137;&#135;(img)è®¿é&#151;®404æ&#151; æ³&#149;è®¿é&#151;®ç&#154;&#132;é&#151;®é¢&#152;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link"><a href="http://kailin.li" rel="external nofollow" class="url">kailin</a></span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/htmls/472.html#comment-24275">Spring bootè®¿é&#151;®jsã&#128;&#129;cssã&#128;&#129;å&#155;¾ç&#137;&#135;(img)è®¿é&#151;®404æ&#151; æ³&#149;è®¿é&#151;®ç&#154;&#132;é&#151;®é¢&#152;</a>ã&#128;&#139;</li><li class="recentcomments"><span class="comment-author-link">å&#159;ºå&#156;°å&#141;&#142;ç§&#145;ç&#148;·</span>å&#143;&#145;è¡¨å&#156;¨ã&#128;&#138;<a href="https://huster.top/about-me#comment-24271">å&#133;³äº&#142;æ&#136;&#145;</a>ã&#128;&#139;</li></ul></div>		</aside></div>
+	</ul></section><section id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widget-title">近期评论</h2><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/645.html" rel="external nofollow" class="url">如何写代码来解决生产者消费者问题？ – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/615.html/comment-page-1#comment-24314">理解Java线程间的通信</a>》</li><li class="recentcomments"><span class="comment-author-link">龙安_任天兵</span>发表在《<a href="https://huster.top/htmls/557.html/comment-page-1#comment-24313">并发编程模型(转载)</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Java多线程总结(上部分)面试题解答 – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/637.html/comment-page-1#comment-24312">细说Java的内存模型</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Java多线程总结(上部分)面试题解答 – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/557.html/comment-page-1#comment-24311">并发编程模型(转载)</a>》</li><li class="recentcomments"><span class="comment-author-link">shanchao</span>发表在《<a href="https://huster.top/htmls/573.html/comment-page-1#comment-24309">spring boot应用在 POST请求的Invalid CORS request的问题</a>》</li><li class="recentcomments"><span class="comment-author-link">adimin</span>发表在《<a href="https://huster.top/htmls/462.html/comment-page-1#comment-24307">介绍spring的两个接口ApplicationContextAware和ApplicationListener</a>》</li><li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a href="https://huster.top/htmls/462.html/comment-page-1#comment-24306">介绍spring的两个接口ApplicationContextAware和ApplicationListener</a>》</li><li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a href="https://huster.top/htmls/472.html/comment-page-1#comment-24276">Spring boot访问js、css、图片(img)访问404无法访问的问题</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="http://kailin.li" rel="external nofollow" class="url">kailin</a></span>发表在《<a href="https://huster.top/htmls/472.html/comment-page-1#comment-24275">Spring boot访问js、css、图片(img)访问404无法访问的问题</a>》</li><li class="recentcomments"><span class="comment-author-link">基地华科男</span>发表在《<a href="https://huster.top/about-me/comment-page-2#comment-24271">关于我</a>》</li></ul></section></aside></div>
+
+		<footer id="colophon" class="site-footer" role="contentinfo"><div class="site-info">
+								<span class="site-title"><a href="https://huster.top/" rel="home">三两带走</a></span>
+				<a href="https://cn.wordpress.org/">自豪地采用WordPress</a>
 			</div>
-</article></div>
-	</div>
+		</footer></div>
 </div>
 
-			<div class="section related-posts">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<h2 class="hestia-title text-center">ç&#155;¸å&#133;³æ&#150;&#135;ç« </h2>
-							<div class="row">
-																	<div class="col-md-4">
-										<div class="card card-blog">
-																						<div class="content">
-												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" title="æ&#159;¥ç&#156;&#139;Javaå­¦ä¹ ä¸­ç&#154;&#132;å&#133;¨é&#131;¨æ&#150;&#135;ç« ">Javaå­¦ä¹ </a> </h6>
-												<h4 class="card-title">
-													<a class="blog-item-title-link" href="https://huster.top/htmls/665.html" title="Javaå­&#151;è&#138;&#130;ç &#129;å¢&#158;å¼ºæ&#138;&#128;æ&#156;¯ç&#154;&#132;åº&#148;ç&#148;¨" rel="bookmark">
-														Javaå­&#151;è&#138;&#130;ç &#129;å¢&#158;å¼ºæ&#138;&#128;æ&#156;¯ç&#154;&#132;åº&#148;ç&#148;¨													</a>
-												</h4>
-												<p class="card-description">Javaå­&#151;è&#138;&#130;ç &#129;å¢&#158;å¼ºæ&#138;&#128;æ&#156;¯ è®¤è¯&#134;Instrumentation &nbsp<a class="moretag" href="https://huster.top/htmls/665.html"> é&#152;&#133;è¯»æ&#155;´å¤&#154;…</a></p>
-											</div>
-										</div>
-									</div>
-																	<div class="col-md-4">
-										<div class="card card-blog">
-																						<div class="content">
-												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" title="æ&#159;¥ç&#156;&#139;Javaå­¦ä¹ ä¸­ç&#154;&#132;å&#133;¨é&#131;¨æ&#150;&#135;ç« ">Javaå­¦ä¹ </a> </h6>
-												<h4 class="card-title">
-													<a class="blog-item-title-link" href="https://huster.top/htmls/662.html" title="JVM Sandbox æº&#144;ç &#129;å&#136;&#134;æ&#158;&#144;ï¼&#136;ä¸&#128;ï¼&#137;å&#159;ºç¡&#128;ç¯&#135;: Instrumentationå&#146;&#140;ClassFileTransformerä½&#156;ç&#148;¨" rel="bookmark">
-														JVM Sandbox æº&#144;ç &#129;å&#136;&#134;æ&#158;&#144;ï¼&#136;ä¸&#128;ï¼&#137;å&#159;ºç¡&#128;ç¯&#135;: Instrumentationå&#146;&#140;ClassFileTransformerä½&#156;ç&#148;¨													</a>
-												</h4>
-												<p class="card-description">è&#131;&#140;æ&#153;¯ jvm sandboxæ&#152;¯ä¸&#128;ä¸ªå¼&#128;æº&#144;é¡¹ç&#155;®https://github<a class="moretag" href="https://huster.top/htmls/662.html"> é&#152;&#133;è¯»æ&#155;´å¤&#154;…</a></p>
-											</div>
-										</div>
-									</div>
-																	<div class="col-md-4">
-										<div class="card card-blog">
-																						<div class="content">
-												<h6 class="category text-info"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" title="æ&#159;¥ç&#156;&#139;Javaå­¦ä¹ ä¸­ç&#154;&#132;å&#133;¨é&#131;¨æ&#150;&#135;ç« ">Javaå­¦ä¹ </a> </h6>
-												<h4 class="card-title">
-													<a class="blog-item-title-link" href="https://huster.top/htmls/657.html" title="Javaç±»åº&#147;è®¾è®¡ä¹&#139;æ&#151;¥å¿&#151;æ¡&#134;æ&#158;¶é&#128;&#137;æ&#139;©" rel="bookmark">
-														Javaç±»åº&#147;è®¾è®¡ä¹&#139;æ&#151;¥å¿&#151;æ¡&#134;æ&#158;¶é&#128;&#137;æ&#139;©													</a>
-												</h4>
-												<p class="card-description">Javaæ&#151;¥å¿&#151;æ¡&#134;æ&#158;¶ç&#142;°ç&#138;¶ Javaæ&#151;¥å¿&#151;æ¡&#134;æ&#158;¶ç&#154;&#132;æ&#149;&#133;äº&#139;è¯´æ&#157;¥è¯&#157;é&#149;¿ï¼&#140;å&#129;&#154;è¿&#135;å¼&#128;å&#143;&#145;ç&#154;&#132;ä¸&#128;å®&#154;é&#129;&#135;<a class="moretag" href="https://huster.top/htmls/657.html"> é&#152;&#133;è¯»æ&#155;´å¤&#154;…</a></p>
-											</div>
-										</div>
-									</div>
-																							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="footer-wrapper">
-						<footer class="footer footer-black footer-big"><div class="container">
-								
-		<div class="content">
-			<div class="row">
-				<div class="col-md-4"><div id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script src="https://s22.cnzz.com/z_stat.php?id=3943131&web_id=3943131" language="JavaScript"></script></div></div></div>			</div>
-		</div>
-		<hr><div class="hestia-bottom-footer-content"><ul class="footer-menu pull-left"><li class="page_item page-item-50"><a href="https://huster.top/books">é&#130;£äº&#155;å¹´ï¼&#140;é&#130;£äº&#155;ä¹¦</a></li>
-<li class="page_item page-item-52"><a href="https://huster.top/music">é&#130;£äº&#155;å¹´ï¼&#140;é&#130;£äº&#155;é&#159;³ä¹&#144;</a></li>
-<li class="page_item page-item-54"><a href="https://huster.top/movie">é&#130;£äº&#155;å¹´ï¼&#140;é&#130;£äº&#155;ç&#148;µå½±</a></li>
-<li class="page_item page-item-60"><a href="https://huster.top/myworkspac">æ&#136;&#145;ç&#154;&#132;å¼&#128;å&#143;&#145;ç&#142;¯å¢&#131;</a></li>
-<li class="page_item page-item-5"><a href="https://huster.top/about-me">å&#133;³äº&#142;æ&#136;&#145;</a></li>
-<li class="page_item page-item-89"><a href="https://huster.top/notebook">ç&#149;&#153;è¨&#128;æ&#156;¬</a></li>
-</ul><div class="copyright pull-right">
-				Hestia |ç&#148;±<a href="https://themeisle.com" rel="nofollow">ThemeIsle</a>å¼&#128;å&#143;&#145;			</div>
-			</div>			</div>
-					</footer></div>
-	</div>
 <script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shCore.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushAS3.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushBash.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushColdFusion.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushClojure.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCpp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCSharp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCss.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushDelphi.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushDiff.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushErlang.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushFSharp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushGroovy.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJava.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJavaFX.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJScript.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushLatex.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushMatlabKey.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushObjC.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPerl.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPhp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPlain.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPowerShell.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPython.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushR.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushRuby.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushScala.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushSql.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushVb.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushXml.js"></script><script type="text/javascript">
 	(function(){
 		var corecss = document.createElement('link');
@@ -724,8 +469,8 @@ h1, h2, h3, h4, h5, h6, .hestia-title, .hestia-title.title-in-content, p.meta-in
 			} );
 		} );
 	}
-</script><script type="text/javascript" src="https://huster.top/wp-content/themes/hestia/assets/bootstrap/js/bootstrap.min.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/ui/core.min.js"></script><script type="text/javascript">
+</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
 /* <![CDATA[ */
-var requestpost = {"ajaxurl":"https:\/\/huster.top\/wp-admin\/admin-ajax.php","disable_autoslide":"","masonry":""};
+var screenReaderText = {"expand":"\u5c55\u5f00\u5b50\u83dc\u5355","collapse":"\u6298\u53e0\u5b50\u83dc\u5355"};
 /* ]]> */
-</script><script type="text/javascript" src="https://huster.top/wp-content/themes/hestia/assets/js/script.min.js"></script><script async="async" type="text/javascript" src="https://huster.top/wp-content/plugins/akismet/_inc/form.js"></script></body></html>
+</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/functions.js"></script><script async="async" type="text/javascript" src="https://huster.top/wp-content/plugins/akismet/_inc/form.js"></script></body></html>

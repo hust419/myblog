@@ -12,7 +12,7 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Mon, 03 Jun 2019 12:41:44 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 09 Jul 2019 12:57:27 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
@@ -26,6 +26,362 @@
 	<height>32</height>
 </image> 
 	<item>
+		<title>Java字节码增强应用</title>
+		<link>https://huster.top/htmls/686.html</link>
+		<comments>https://huster.top/htmls/686.html#respond</comments>
+		<pubDate>Tue, 09 Jul 2019 12:55:59 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[Java学习]]></category>
+
+		<guid isPermaLink="false">https://huster.top/?p=686</guid>
+		<description><![CDATA[Java字节码增强技术 认识Instrumentation &#160; 基本用法: 方法 作用 addTra &#8230; <a href="https://huster.top/htmls/686.html" class="more-link">继续阅读<span class="screen-reader-text">“Java字节码增强应用”</span></a>]]></description>
+				<content:encoded><![CDATA[<h1>Java字节码增强技术</h1>
+<h1 id="N9W6r">认识Instrumentation</h1>
+<p>&nbsp;</p>
+<p>基本用法:</p>
+<table class="lake-table" style="width: 722px;">
+<colgroup>
+<col width="240" />
+<col width="240" />
+<col width="241" /> </colgroup>
+<tbody>
+<tr>
+<td>方法</td>
+<td>作用</td>
+<td></td>
+</tr>
+<tr>
+<td>addTransformer</td>
+<td>织入一段代码</td>
+<td></td>
+</tr>
+<tr>
+<td>removeTransformer</td>
+<td>移除被织入的代码</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #ffffff;" colspan="1">retransformClasses</td>
+<td style="background-color: #ffffff;" colspan="1">用于已经载入的类重新植入</td>
+<td style="background-color: #ffffff;" colspan="1">Class&lt;?&gt;&#8230; classes</td>
+</tr>
+</tbody>
+</table>
+<p><span id="more-686"></span></p>
+<p>其他用法:</p>
+<table class="lake-table" style="width: 722px;">
+<colgroup>
+<col width="240" />
+<col width="240" />
+<col width="241" /> </colgroup>
+<tbody>
+<tr>
+<td>方法</td>
+<td>作用</td>
+<td></td>
+</tr>
+<tr>
+<td>appendToBootstrapClassLoaderSearch</td>
+<td>将指定路径的jar包用bootstrapclassloader查找路径</td>
+<td></td>
+</tr>
+<tr>
+<td>getAllLoadedClasses</td>
+<td>获取所有已加载的类</td>
+<td></td>
+</tr>
+<tr>
+<td style="background-color: #ffffff;" colspan="1">getObjectSize</td>
+<td style="background-color: #ffffff;" colspan="1">获取指定的对象的大小</td>
+<td style="background-color: #ffffff;" colspan="1"></td>
+</tr>
+<tr>
+<td style="background-color: #ffffff;" colspan="1">isNativeMethodPrefixSupported</td>
+<td style="background-color: #ffffff;" colspan="1">是否拦截本地方法</td>
+<td style="background-color: #ffffff;" colspan="1"></td>
+</tr>
+</tbody>
+</table>
+<h1 id="txjJI">Permain的方式植入代码</h1>
+<h2 id="5KeNr">程序测试代码</h2>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>package huster.top;
+
+/**
+ * Created by longan.rtb on 2019/7/8.
+ */
+public class JavaAgentTest {
+
+    public String helloWorld() {
+        for (int i = 0; i&lt;5; i++) {
+            System.out.println("Hello world!");
+        }
+        return "ok";
+    }
+
+    public static void main(String[] args) {
+        JavaAgentTest javaAgentTest = new JavaAgentTest();
+        javaAgentTest.helloWorld();
+    }
+}
+</code></pre>
+<p>&nbsp;</p>
+<h2 id="5O1RN">Agent代码(permain方式)</h2>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>package huster.top;
+
+import java.lang.instrument.Instrumentation;
+
+/**
+ * Created by longan.rtb on 2019/7/8.
+ */
+public class AgentMain  {
+
+    public static void premain(String args, Instrumentation inst) {
+       System.out.println("permain has been called, arguments is : " + args);
+       inst.addTransformer(new AOPImplement());
+    }
+}
+</code></pre>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>public class AOPImplement implements ClassFileTransformer {
+
+    private final static String methodName = "helloWorld";
+
+    private final static String targetClassName = "huster.top.JavaAgentTest";
+
+   public byte[]
+    transform(  ClassLoader         loader,
+                String              className,
+                Class&lt;?&gt;            classBeingRedefined,
+                ProtectionDomain protectionDomain,
+                byte[]              classfileBuffer)
+            throws IllegalClassFormatException {
+       className = className.replace("/", ".");
+       if (!className.equals(targetClassName)) {
+           //只监控需要的类
+           return classfileBuffer;
+       }
+
+       CtClass ctclass = null;
+       try {
+           ctclass = ClassPool.getDefault().get(className);
+           //只监控需要的方法
+           CtMethod ctmethod = ctclass.getDeclaredMethod(methodName);
+           //旧方法改个名字
+           String oldMethod = methodName + "_____old____";
+           ctmethod.setName(oldMethod);
+           CtMethod newMethod = CtNewMethod.copy(ctmethod, methodName, ctclass, null);
+           String methodBody = "{" +
+                        "System.out.println(\"before called!!\");\n" +
+                        "String a = " + oldMethod + "($$);\n" +
+                        "System.out.println(\"after method called!!\");\n" +
+                        "return a;" +
+                   "}";
+           newMethod.setBody(methodBody);
+           ctclass.addMethod(newMethod);
+           return ctclass.toBytecode();
+       } catch (Exception e) {
+           e.printStackTrace();
+           return classfileBuffer;
+       }
+
+   }
+}</code></pre>
+<p>&nbsp;</p>
+<p>pom.xml</p>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;parent&gt;
+        &lt;artifactId&gt;javaagent-demo&lt;/artifactId&gt;
+        &lt;groupId&gt;huster.top&lt;/groupId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;artifactId&gt;original-agent&lt;/artifactId&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javassist&lt;/groupId&gt;
+            &lt;artifactId&gt;javassist&lt;/artifactId&gt;
+            &lt;version&gt;3.12.1.GA&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;finalName&gt;original-agent&lt;/finalName&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.8&lt;/source&gt;
+                    &lt;target&gt;1.8&lt;/target&gt;
+                    &lt;encoding&gt;utf-8&lt;/encoding&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+                &lt;version&gt;3.0.0&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;archive&gt;
+                        &lt;manifest&gt;
+                            &lt;addClasspath&gt;true&lt;/addClasspath&gt;
+                        &lt;/manifest&gt;
+                        &lt;manifestEntries&gt;
+                            &lt;Premain-Class&gt;huster.top.AgentMain&lt;/Premain-Class&gt;
+                        &lt;/manifestEntries&gt;
+                    &lt;/archive&gt;
+                    &lt;descriptorRefs&gt;
+                        &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;
+                    &lt;/descriptorRefs&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;id&gt;make-assembly&lt;/id&gt;
+                        &lt;phase&gt;package&lt;/phase&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;single&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;</code></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>然后在测试代码的vm参数里增加：</p>
+<p>-javaagent:/Users/longan.rtb/JavaProject/javaagentdemo/originalagent/target/original-agent-jar-with-dependencies.jar=args1;args2;args3</p>
+<p>&nbsp;</p>
+<p>运行结果如下：</p>
+<p><a href="https://huster.top/wp-content/uploads/2019/07/123.png"><img class="alignnone size-full wp-image-687" src="https://huster.top/wp-content/uploads/2019/07/123.png" alt="" width="800" height="169" /></a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h1 id="03SBv">Attach的方式植入代码</h1>
+<h2 id="7ste8">attach的程序</h2>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>public class AttachAgent {
+
+    public static void main(String[] args)  throws Exception {
+        String pid = args[0];
+        String jar = args[1];
+        if (jar == null  || "".equals(jar)) {
+            jar = "/Users/longan.rtb/JavaProject/javaagentdemo/originalagent/target/original-agent-jar-with-dependencies.jar";
+        }
+        VirtualMachine vmObj = null;
+        try {
+            vmObj = VirtualMachine.attach(pid);
+            vmObj.loadAgent(jar,
+                    "this is arguments");
+        } finally {
+            if (vmObj != null) {
+                vmObj.detach();
+            }
+
+        }
+    }
+}
+</code></pre>
+<p>&nbsp;</p>
+<h2 id="Fi6f1">agent的代码修改为</h2>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>public class AgentMain  {
+
+    public static void premain(String args, Instrumentation inst) {
+       System.out.println("permain has been called, arguments is : " + args);
+       inst.addTransformer(new AOPImplement());
+    }
+
+    //attach方式.
+    public static void agentmain(String args, Instrumentation inst){
+        System.out.println("444agentmain has been called, arguments is : " + args);
+        System.out.println("is enable :" + String.valueOf(inst.isRetransformClassesSupported()));
+        inst.addTransformer(new AOPImplement2(),true);
+        try {
+            inst.retransformClasses(Class.forName("huster.top.JavaAgentTest"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+}</code></pre>
+<p>&nbsp;</p>
+<h2 id="LrlOT">坑1: 始终报UnsupportedOperationException错误</h2>
+<p>是因为我们在植入代码的时候，使用了新增函数的方法，这种方法的是不允许的在Retrans的时候</p>
+<p>* Caused by: java.lang.UnsupportedOperationException: class redefinition failed: attempted to add a method* The retransformation may change method bodies, the constant pool and attributes.* The retransformation must not add, remove or rename fields or methods, change the* signatures of methods, or change inheritance.  These restrictions maybe be* lifted in future versions.  The class file bytes are not checked, verified and installed* until after the transformations have been applied, if the resultant bytes are in* error this method will throw an exception.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="ja8jv">将attach程序打包成jar运行</h2>
+<p>pom.xml</p>
+<p>&nbsp;</p>
+<pre data-lang="java"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;parent&gt;
+        &lt;artifactId&gt;javaagent-demo&lt;/artifactId&gt;
+        &lt;groupId&gt;huster.top&lt;/groupId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+
+    &lt;artifactId&gt;attach-agent&lt;/artifactId&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.sun&lt;/groupId&gt;
+            &lt;artifactId&gt;tools&lt;/artifactId&gt;
+            &lt;version&gt;1.8&lt;/version&gt;
+            &lt;scope&gt;system&lt;/scope&gt;
+            &lt;systemPath&gt;${java.home}/../lib/tools.jar&lt;/systemPath&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;attached&lt;/goal&gt;
+                        &lt;/goals&gt;
+                        &lt;phase&gt;package&lt;/phase&gt;
+                        &lt;configuration&gt;
+                            &lt;descriptorRefs&gt;
+                                &lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;
+                            &lt;/descriptorRefs&gt;
+                            &lt;archive&gt;
+                                &lt;manifest&gt;
+                                    &lt;mainClass&gt;huster.top.AttachAgent&lt;/mainClass&gt;
+                                &lt;/manifest&gt;
+                            &lt;/archive&gt;
+                        &lt;/configuration&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;</code></pre>
+<p>&nbsp;</p>
+<h2 id="Bs2jY">坑2: VirtualMachine找不到的问题</h2>
+<p>需要我们在运行的时候指明tool.jar的位置</p>
+<p>/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/bin/java -jar -Xbootclasspath/a:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/lib/tools.jar /Users/longan.rtb/JavaProject/javaagentdemo/attachagent/target/attach-agent-1.0-SNAPSHOT-jar-with-dependencies.jar 29808</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/686.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
 		<title>JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</title>
 		<link>https://huster.top/htmls/662.html</link>
 		<comments>https://huster.top/htmls/662.html#respond</comments>
@@ -36,7 +392,7 @@
 		<category><![CDATA[jvm sandbox]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=662</guid>
-		<description><![CDATA[背景 jvm sandbox是一个开源项目https://github.com/alibaba/jv<a class="moretag" href="https://huster.top/htmls/662.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[背景 jvm sandbox是一个开源项目https://github.com/alibaba/jvm-san &#8230; <a href="https://huster.top/htmls/662.html" class="more-link">继续阅读<span class="screen-reader-text">“JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用”</span></a>]]></description>
 				<content:encoded><![CDATA[<h1>背景</h1>
 <p>jvm sandbox是一个开源项目https://github.com/alibaba/jvm-sandbox/wiki/FIRST-MODULE，他是对java agent的一个应用，他将agent发扬光大，让你可以不用用户改代码的情况下，进行代码增强，实现AOP，切面编程的功能，非常强大。但是他的代码量其实不大，文档清晰，所以读起来不是太费劲。他最最基础和核心的功能是使用了Java 提供的 Instrumenttation和ClassFileTransformer来实现的，我们先来了解下这个两个类的API，了解他们都提供了什么功能。</p>
 <p>&nbsp;</p>
@@ -119,7 +475,7 @@
 				<category><![CDATA[Java学习]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=657</guid>
-		<description><![CDATA[Java日志框架现状 Java日志框架的故事说来话长，做过开发的一定遇到过slf4j,log4j,l<a class="moretag" href="https://huster.top/htmls/657.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[Java日志框架现状 Java日志框架的故事说来话长，做过开发的一定遇到过slf4j,log4j,logbac &#8230; <a href="https://huster.top/htmls/657.html" class="more-link">继续阅读<span class="screen-reader-text">“Java类库设计之日志框架选择”</span></a>]]></description>
 				<content:encoded><![CDATA[<h4>Java日志框架现状</h4>
 <p>Java日志框架的故事说来话长，做过开发的一定遇到过slf4j,log4j,logback,commons-logging,log4j2。=也一定见过这些jar包，什么log4j.jar,slf4j-api.jar,slf4j-log4j12.jar,logback-classic.jar,logback-core.jar等等。以前看到他们就头大，傻傻分不清楚，到现在搞清楚了也就这么回事，可以具体看看slf4j的实现和适配是怎么做的。</p>
 <p><span id="more-657"></span></p>
@@ -193,7 +549,7 @@ Embedded components such as libraries not only do not need to configure the unde
 				<category><![CDATA[Java学习]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=649</guid>
-		<description><![CDATA[26） 如何写代码来解决生产者消费者问题？ 我们先尝试使用队列实现一个生产者和消费者模式。那么就需要<a class="moretag" href="https://huster.top/htmls/649.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[26） 如何写代码来解决生产者消费者问题？ 我们先尝试使用队列实现一个生产者和消费者模式。那么就需要先了解队列 &#8230; <a href="https://huster.top/htmls/649.html" class="more-link">继续阅读<span class="screen-reader-text">“Java多线程知识点（下）”</span></a>]]></description>
 				<content:encoded><![CDATA[<h4><span>26） 如何写代码来解决生产者消费者问题？</span></h4>
 <div>我们先尝试使用队列实现一个生产者和消费者模式。那么就需要先了解队列，队里的接口定义如下</div>
 <div>    Queue.</div>
@@ -362,7 +718,7 @@ Embedded components such as libraries not only do not need to configure the unde
 		<category><![CDATA[阻塞队列]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=645</guid>
-		<description><![CDATA[这个题目考验的实际上是线程间的通信和同步问题。我们再有一篇文章中，使用Object的wait和not<a class="moretag" href="https://huster.top/htmls/645.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[这个题目考验的实际上是线程间的通信和同步问题。我们再有一篇文章中，使用Object的wait和notify实现 &#8230; <a href="https://huster.top/htmls/645.html" class="more-link">继续阅读<span class="screen-reader-text">“如何写代码来解决生产者消费者问题？”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>这个题目考验的实际上是线程间的通信和同步问题。我们再有一篇文章中，使用Object的wait和notify实现了线程间的同步。参见 : https://huster.top/htmls/615.html</p>
 <p><span id="more-645"></span></p>
 <p>一、最简单的一个实现</p>
@@ -722,7 +1078,7 @@ public class ProductClient4 implements Runnable {
 		<category><![CDATA[多线程]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=642</guid>
-		<description><![CDATA[    自去年列下计划到现在一年有余，看了好几本书，以为已经过了很长时间，现在回头发现仅仅才过了一年<a class="moretag" href="https://huster.top/htmls/642.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[    自去年列下计划到现在一年有余，看了好几本书，以为已经过了很长时间，现在回头发现仅仅才过了一年而已，已经 &#8230; <a href="https://huster.top/htmls/642.html" class="more-link">继续阅读<span class="screen-reader-text">“Java多线程总结(上部分)面试题解答”</span></a>]]></description>
 				<content:encoded><![CDATA[<div>    自去年列下计划到现在一年有余，看了好几本书，以为已经过了很长时间，现在回头发现仅仅才过了一年而已，已经积累了不少知识，看来有目的的去学习还是有一些成效的。正好今天看到一个关于多线程的面试题，所以来总结过去所学，也是对过去知识的一个考验。</div>
 <div></div>
 <p><span id="more-642"></span></p>
@@ -890,7 +1246,7 @@ public class ProductClient4 implements Runnable {
 		<category><![CDATA[内存模型]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=637</guid>
-		<description><![CDATA[    多线程之所以复杂，是因为在多线程环境下，稍有不慎就会导致诡异的问题。这个诡异表现在，他不是一<a class="moretag" href="https://huster.top/htmls/637.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[    多线程之所以复杂，是因为在多线程环境下，稍有不慎就会导致诡异的问题。这个诡异表现在，他不是一定会出现， &#8230; <a href="https://huster.top/htmls/637.html" class="more-link">继续阅读<span class="screen-reader-text">“细说Java的内存模型”</span></a>]]></description>
 				<content:encoded><![CDATA[<div><span>    多线程之所以复杂，是因为在多线程环境下，稍有不慎就会导致诡异的问题。这个诡异表现在，他不是一定会出现，他不知道会在什么时候会以什么样的姿态出现在我们的生产环境中。为了避免犯错误，所以我们在所有可能出问题的地方都加上synchronize，那当然也是欠妥的，所以我们要搞清楚其中的细节，对我们写程序就有比较大的帮助了。</span></div>
 <div></div>
 <p><span id="more-637"></span></p>
@@ -996,7 +1352,7 @@ public class ProductClient4 implements Runnable {
 				<category><![CDATA[Java学习]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=633</guid>
-		<description><![CDATA[以前整理的几个面试题，主要是Java的基本语法，如下 &#160; String、StringBui<a class="moretag" href="https://huster.top/htmls/633.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[以前整理的几个面试题，主要是Java的基本语法，如下 &#160; String、StringBuidler、 &#8230; <a href="https://huster.top/htmls/633.html" class="more-link">继续阅读<span class="screen-reader-text">“Java面试题之Java语法的基础知识”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>以前整理的几个面试题，主要是Java的基本语法，如下</p>
 <p>&nbsp;</p>
 <p><span id="more-633"></span></p>
@@ -1150,7 +1506,7 @@ public class ProductClient4 implements Runnable {
 				<category><![CDATA[Java学习]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=629</guid>
-		<description><![CDATA[一、锁的使用 Java的多线程环境下，由于共享资源的竞态可能导致错误的结果。因此锁的使用就是保护临界<a class="moretag" href="https://huster.top/htmls/629.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[一、锁的使用 Java的多线程环境下，由于共享资源的竞态可能导致错误的结果。因此锁的使用就是保护临界代码，这个 &#8230; <a href="https://huster.top/htmls/629.html" class="more-link">继续阅读<span class="screen-reader-text">“Java的锁”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>一、锁的使用<br />
 Java的多线程环境下，由于共享资源的竞态可能导致错误的结果。因此锁的使用就是保护临界代码，这个就不再赘述。<br />
 代码： 没有锁的时候，临界区没有保护，可能出现错误的结果(出错概率跟你的并发程度有关，小概率事件)，尽管代码比较简单，可以通过其他手段来规避多线程问题，这里还是以这个代码为例，仅仅用来说明多线程问题</p>
@@ -1351,7 +1707,7 @@ java的读写锁实现，ReentrantReadWriteLock 使用起来也比较简单，�
 				<category><![CDATA[Java学习]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=615</guid>
-		<description><![CDATA[多个线程间肯定是需要通信的，回忆一下我们的并发编程模型里的流水线工作模式(流水线工作模式)，我们的线<a class="moretag" href="https://huster.top/htmls/615.html"> 阅读更多&#8230;</a>]]></description>
+		<description><![CDATA[多个线程间肯定是需要通信的，回忆一下我们的并发编程模型里的流水线工作模式(流水线工作模式)，我们的线程在遇到i &#8230; <a href="https://huster.top/htmls/615.html" class="more-link">继续阅读<span class="screen-reader-text">“理解Java线程间的通信”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>多个线程间肯定是需要通信的，回忆一下我们的并发编程模型里的流水线工作模式(<a href="https://huster.top/htmls/557.html">流水线工作模式</a>)，我们的线程在遇到io阻塞的时候，肯定不能在那边一直等着，得出让自己的cpu资源，等到io完成了，再把任务交给下一个工作线程，我们试着来实现下看看。</p>
 <p><span id="more-615"></span><br />
 第一种方式，共享变量的方式。</p>
@@ -1558,169 +1914,6 @@ public class LockTest {
 <p>分析: 要特别注意while那一段代码，这个就是我们刚刚上面讲述的内容，如果没有这个while会导致这个lock错失notify的信号的话，就永远wait下去。而如果不用while用if的话，如果遇到假唤醒就会导致同时有两个线程进入了lock锁定区域，这个也与我们想要的不符合。</p>
 ]]></content:encoded>
 			<wfw:commentRss>https://huster.top/htmls/615.html/feed</wfw:commentRss>
-		<slash:comments>1</slash:comments>
-		</item>
-		<item>
-		<title>spring boot应用在 POST请求的Invalid CORS request的问题</title>
-		<link>https://huster.top/htmls/573.html</link>
-		<comments>https://huster.top/htmls/573.html#comments</comments>
-		<pubDate>Wed, 22 Aug 2018 14:20:07 +0000</pubDate>
-		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
-				<category><![CDATA[Java学习]]></category>
-		<category><![CDATA[Spring]]></category>
-		<category><![CDATA[Spring boot]]></category>
-
-		<guid isPermaLink="false">http://huster.top/?p=573</guid>
-		<description><![CDATA[继上一篇遇到的Invalid CORS request之后，很久没有遇到这个问题了，今天又遇到了这个<a class="moretag" href="https://huster.top/htmls/573.html"> 阅读更多&#8230;</a>]]></description>
-				<content:encoded><![CDATA[<p>继上一篇遇到的Invalid CORS request之后，很久没有遇到这个问题了，今天又遇到了这个问题。上次问题是因为nginx没有把host信息代理给后面的java应用导致的，https://huster.top/htmls/511.html，而这次居然不是这个问题，检查了下 proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;该有的配置都有。</p>
-<p>这就奇怪了，就是为什么呢？</p>
-<p>现象： GET请求没有问题。POST请求下在http下是好的，在https报403 Invalid CORS request错误。刚开始，我并没有意识到是http和https的问题，而是集团有日常、预发环境。日常验证是http验证的，一切正常。上到预发就发生了这个问题，排查其他配置、差异什么的走了一些弯路。</p>
-<p><span id="more-573"></span></p>
-<p>排查过程：</p>
-<p>1.当然是看access log. 首先看下access log里有没有什么线索。寻找access log发现的确是 403, 突然发现域名问题。access log记录的域名是http的，真实情况我们是https的。会不会是因为这个导致的跨域呢？在去看log_formate 发现http是写死的，好生失望</p>
-<pre class="brush:java">log_format proxyformat "$remote_addr $request_time_usec $http_x_readtime [$time_local] \"$request_method http://$host$request_uri\" $status $body_bytes_sent \"$http_referer\" \"$upstream_addr\" \"$http_user_agent\" \"$cookie_unb\" \"$cookie_cookie2\" \"$eagleeye_traceid\"";</pre>
-<ol>
-<li>接着检查nginx的host透传，也就是上次遇到的问题，配置也是对的，也没有问题</li>
-<li>没有头绪了，只能断点调试了。但是本地没有，只能远程调试了。使用了ieda的远程调试功能，启动jvm的加上 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7878 就可以断点调试了。调试发现，还是集中在上次的类和方法里，主要是这方法</li>
-</ol>
-<p>class :  DefaultCorsProcessor</p>
-<p>method:  processRequest</p>
-<p>&nbsp;</p>
-<pre class="brush:java">/*** Handle the given request.
-*/
-    protected boolean handleInternal(ServerHttpRequest request, ServerHttpResponse response,
-            CorsConfiguration config, boolean preFlightRequest) throws IOException {
-
-        String requestOrigin = request.getHeaders().getOrigin();
-        String allowOrigin = checkOrigin(config, requestOrigin);
-
-        HttpMethod requestMethod = getMethodToUse(request, preFlightRequest);
-        List&lt;HttpMethod&gt; allowMethods = checkMethods(config, requestMethod);
-
-        List&lt;String&gt; requestHeaders = getHeadersToUse(request, preFlightRequest);
-        List&lt;String&gt; allowHeaders = checkHeaders(config, requestHeaders);
-
-<span style="color: #ff0000;"><strong>      if (allowOrigin == null || allowMethods == null || (preFlightRequest &amp;&amp; allowHeaders == null)) {
-</strong></span>            rejectRequest(response);
-            return false;
-        }
-
-        HttpHeaders responseHeaders = response.getHeaders();
-        responseHeaders.setAccessControlAllowOrigin(allowOrigin);
-        responseHeaders.add(HttpHeaders.VARY, HttpHeaders.ORIGIN);
-
-        if (preFlightRequest) {
-            responseHeaders.setAccessControlAllowMethods(allowMethods);
-        }
-
-        if (preFlightRequest &amp;&amp; !allowHeaders.isEmpty()) {
-            responseHeaders.setAccessControlAllowHeaders(allowHeaders);
-        }
-
-        if (!CollectionUtils.isEmpty(config.getExposedHeaders())) {
-            responseHeaders.setAccessControlExposeHeaders(config.getExposedHeaders());
-        }
-
-        if (Boolean.TRUE.equals(config.getAllowCredentials())) {
-            responseHeaders.setAccessControlAllowCredentials(true);
-        }
-
-        if (preFlightRequest &amp;&amp; config.getMaxAge() != null) {
-            responseHeaders.setAccessControlMaxAge(config.getMaxAge());
-        }
-
-        response.flush();
-        return true;
-    }
-</pre>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>最终走入到上面的方法, 注意红色部分，主要是因为<strong>allowOrigin为空了，那么看看</strong><strong>String allowOrigin = checkOrigin(config, requestOrigin); 那么这个方法干了什么呢？ 这个主要是读取我们的cors配置,看看配置域名里有没有http header 里origin传入的域名</strong></p>
-<p>&nbsp;</p>
-<pre class="brush:java">@Configuration
-public class CORS {
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:9001",
-                                "http://localhost:7001",
-                                "http://127.0.0.1:9001",
-                                "http://127.0.0.1:8080")
-                        .allowedMethods("POST","GET","OPTIONS");
-            }
-        };
-    }
-}
-</pre>
-<p>&nbsp;</p>
-<p>我们配置的域名里并没有传入的origin，导致了<strong>allowOrigin为空，导致上面的报错。</strong></p>
-<p>于是，我把这个Configuration删掉，结果就好了，问题解决了</p>
-<ol>
-<li>但是还是有几个问题一直萦绕在我脑海里，挥之不去。</li>
-</ol>
-<p>a. 为什么GET可以，唯独POST不行</p>
-<p>b. 为毛同一个域名，还会校验跨域配置? 也就是校验我们配置的域名列表??</p>
-<p>c. 另外一个应用也有这个配置，为什么他就问题。</p>
-<p>&nbsp;</p>
-<ol>
-<li>为什么GET可以，唯独POST有问题 ？ 于是我接着调试 . 发现GET请求的时候，是在这句话这里返回的</li>
-</ol>
-<pre class="brush:java">ServletServerHttpRequest serverRequest = new ServletServerHttpRequest(request);
-        if (WebUtils.isSameOrigin(serverRequest)) {
-            logger.debug("Skip CORS processing: request is from same origin");
-            return true;
-        }
-
-接着看isSameOrigin方法。</pre>
-<pre class="brush:java">public static boolean isSameOrigin(HttpRequest request) {
-        String origin = request.getHeaders().getOrigin();
-        if (origin == null) {
-            return true;
-        }
-        UriComponentsBuilder urlBuilder;
-        if (request instanceof ServletServerHttpRequest) {
-            // Build more efficiently if we can: we only need scheme, host, port for origin comparison
-            HttpServletRequest servletRequest = ((ServletServerHttpRequest) request).getServletRequest();
-            urlBuilder = new UriComponentsBuilder().
-                    scheme(servletRequest.getScheme()).
-                    host(servletRequest.getServerName()).
-                    port(servletRequest.getServerPort()).
-                    adaptFromForwardedHeaders(request.getHeaders());
-        }
-        else {
-            urlBuilder = UriComponentsBuilder.fromHttpRequest(request);
-        }
-        UriComponents actualUrl = urlBuilder.build();
-        UriComponents originUrl = UriComponentsBuilder.fromOriginHeader(origin).build();
-        return (ObjectUtils.nullSafeEquals(actualUrl.getHost(), originUrl.getHost()) &amp;&amp;
-                getPort(actualUrl) == getPort(originUrl));
-    }</pre>
-<p>&nbsp;</p>
-<p>通过调试发现，因为GET的时候并没有在header头里带origin，所以在方法的第一行就返回了。</p>
-<p>为了验证我的想法，我在get的时候，也通过postman发送了header，结果出现了post一样的报错，证实了我的想法。</p>
-<p><a href="http://huster.top/wp-content/uploads/2018/08/图片.png"><img class="alignnone size-full wp-image-575" src="http://huster.top/wp-content/uploads/2018/08/图片.png" alt="" width="1120" height="361" srcset="https://huster.top/wp-content/uploads/2018/08/图片.png 1120w, https://huster.top/wp-content/uploads/2018/08/图片-300x97.png 300w, https://huster.top/wp-content/uploads/2018/08/图片-768x248.png 768w, https://huster.top/wp-content/uploads/2018/08/图片-1024x330.png 1024w" sizes="(max-width: 1120px) 100vw, 1120px" /></a></p>
-<p>&nbsp;</p>
-<ol>
-<li>为什么相同的域名还会出现跨域的问题</li>
-</ol>
-<p>还是isSameOrigin这个方法，通过调试发现origin里的域名是带了https的，而通过servletRequest.getScheme()发现，返回的是http的。再去查看nginx的配置</p>
-<pre class="brush:java">location / {
-proxy_pass http://127.0.0.1:7001;
-if you want to enable cell logic, you must change your proxy_pass conf to following
-#proxy_pass $ups;
-}
-</pre>
-<p>这里写死了http，原来如此。origin里发送的域名是 https://xx.xx.xx而我们转给java程序的是http://xx.xx.xx所以导致了跨域问题。</p>
-<p>ps : 因为证书问题，公司的https是通过统一接入层，代理给下面的应用的，所以应用都是http的。而JavaScript是https的所以导致了问题。</p>
-<p>至此，所以的谜团就解开了。要解决问题很容易了，删除你的cors配置，如果非得要，那么把http的域名加进去就可以了。</p>
-<ol>
-<li>最后我去看了另外一应用，发现该应用把post都改成get了，可能当时遇到了同样的问题，但是没有去仔细解  ^_^</li>
-</ol>
-]]></content:encoded>
-			<wfw:commentRss>https://huster.top/htmls/573.html/feed</wfw:commentRss>
 		<slash:comments>1</slash:comments>
 		</item>
 	</channel>
