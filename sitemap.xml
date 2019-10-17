@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="https://huster.top/wp-content/plugins/google-sitemap-generator/sitemap.xsl"?><!-- sitemap-generator-url="http://www.arnebrachhold.de" sitemap-generator-version="4.1.0" -->
-<!-- generated-on="2019 年 9 月 20 日 02:08" -->
+<!-- generated-on="2019 年 10 月 17 日 08:52" -->
 <sitemapindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">	<sitemap>
 		<loc>https://huster.top/sitemap-misc.xml</loc>
-		<lastmod>2019-07-09T12:57:27+00:00</lastmod>
+		<lastmod>2019-10-17T08:49:32+00:00</lastmod>
+	</sitemap>
+	<sitemap>
+		<loc>https://huster.top/sitemap-pt-post-2019-10.xml</loc>
+		<lastmod>2019-10-17T08:49:32+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://huster.top/sitemap-pt-post-2019-07.xml</loc>
@@ -160,4 +164,4 @@
 		<loc>https://huster.top/sitemap-pt-page-2012-03.xml</loc>
 		<lastmod>2018-10-23T11:25:49+00:00</lastmod>
 	</sitemap>
-</sitemapindex><!-- Request ID: c0a21228cc08fd499b71e5e3c33f78de; Queries for sitemap: 5; Total queries: 21; Seconds: 0.11; Memory for sitemap: 0MB; Total memory: 2MB -->
+</sitemapindex><!-- Request ID: 8351f22de58cad5bd8a2458afd625511; Queries for sitemap: 5; Total queries: 23; Seconds: 0.09; Memory for sitemap: 0MB; Total memory: 6MB -->
