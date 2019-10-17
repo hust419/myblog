@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>flink &#8211; 三两带走</title>
+	<atom:link href="http://rentb.vicp.net/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink/feed" rel="self" type="application/rss+xml" />
+	<link>http://huster.top/</link>
+	<description>(任天兵)龙安的博客</description>
+	<lastBuildDate>Thu, 17 Oct 2019 08:49:32 +0000</lastBuildDate>
+	<language>zh-CN</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.9.10</generator>
+
+<image>
+	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
+	<title>flink &#8211; 三两带走</title>
+	<link>http://huster.top/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>flink通过jdbc读取postgresql数据库里的数据</title>
+		<link>https://huster.top/htmls/706.html</link>
+		<comments>https://huster.top/htmls/706.html#respond</comments>
+		<pubDate>Thu, 17 Oct 2019 08:49:32 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[flink]]></category>
+
+		<guid isPermaLink="false">https://huster.top/?p=706</guid>
+		<description><![CDATA[问题1： 从postgresql里使用flink-jdbc读取数据的问题, 数据类型不匹配，不支持jsonb等 &#8230; <a href="https://huster.top/htmls/706.html" class="more-link">继续阅读<span class="screen-reader-text">“flink通过jdbc读取postgresql数据库里的数据”</span></a>]]></description>
+				<content:encoded><![CDATA[<div></div>
+<div></div>
+<div></div>
+<div>问题1： 从postgresql里使用flink-jdbc读取数据的问题, 数据类型不匹配，不支持jsonb等其他类型.</div>
+<div></div>
+<div></div>
+<p><span id="more-706"></span></p>
+<div></div>
+<div>        使用create table 语句来读取，由于postgresql里设置的是jsonb的类型, 他又不让你输入sql语句(语句里需要写CAST函数),所以就抛错了</div>
+<div>Caused by: java.lang.ClassCastException: org.postgresql.util.PGobject cannot be cast to java.lang.String</div>
+<div>Caused by: java.lang.ClassCastException: org.postgresql.util.PGobject cannot be cast to java.lang.String</div>
+<div>    at <a href="http://org.apache.flink.api.common.typeutils.base.stringserializer.copy(stringserializer.java:33/">org.apache.flink.api.common.typeutils.base.StringSerializer.copy(StringSerializer.java:33</a>)</div>
+<div>    at org.apache.flink.api.java.typeutils.runtime.RowSerializer.copy(RowSerializer.java:93)</div>
+<div>    at org.apache.flink.api.java.typeutils.runtime.RowSerializer.copy(RowSerializer.java:44)</div>
+<div>    at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.pushToOperator(OperatorChain.java:635)</div>
+<div>    &#8230; 9 more</div>
+<div></div>
+<div></div>
+<div>问题2: partition必须是数字类型的字段</div>
+<div></div>
+<div></div>
+<div> 另外，因为connector.read.partition.column他使用的是between语句，所以只能是数字，时间戳等，否则也会报错</div>
+<div>. partition.column must be a numeric,</div>
+<div> &#8212; date, or timestamp column from the table in question.</div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div>Exception in thread &#8220;main&#8221; org.apache.flink.runtime.client.JobExecutionException: Job execution failed.</div>
+<div>    at org.apache.flink.runtime.jobmaster.JobResult.toJobExecutionResult(JobResult.java:146)</div>
+<div>    at org.apache.flink.runtime.minicluster.MiniCluster.executeJobBlocking(MiniCluster.java:627)</div>
+<div>    at org.apache.flink.streaming.api.environment.LocalStreamEnvironment.execute(LocalStreamEnvironment.java:117)</div>
+<div>    at org.apache.flink.streaming.api.environment.StreamExecutionEnvironment.execute(StreamExecutionEnvironment.java:1507)</div>
+<div>    at com.hellobike.search.flink.task.FullIndexBuilderTask.main(FullIndexBuilderTask.java:92)</div>
+<div>Caused by: java.lang.Exception: java.lang.IllegalArgumentException: open() failed.ERROR: operator does not exist: character varying &gt;= bigint</div>
+<div>  建议：No operator matches the given name and argument type(s). You might need to add explicit type casts.</div>
+<div>  位置：514</div>
+<div>    at org.apache.flink.streaming.runtime.tasks.SourceStreamTask$LegacySourceFunctionThread.checkThrowSourceExecutionException(SourceStreamTask.java:212)</div>
+<div>    at org.apache.flink.streaming.runtime.tasks.SourceStreamTask.performDefaultAction(SourceStreamTask.java:132)</div>
+<div>    at org.apache.flink.streaming.runtime.tasks.StreamTask.run(StreamTask.java:298)</div>
+<div>    at org.apache.flink.streaming.runtime.tasks.StreamTask.invoke(StreamTask.java:403)</div>
+<div>    at org.apache.flink.runtime.taskmanager.Task.doRun(Task.java:705)</div>
+<div>    at org.apache.flink.runtime.taskmanager.Task.run(Task.java:530)</div>
+<div>    at java.lang.Thread.run(Thread.java:748)</div>
+<div>Caused by: java.lang.IllegalArgumentException: open() failed.ERROR: operator does not exist: character varying &gt;= bigint</div>
+<div>  建议：No operator matches the given name and argument type(s). You might need to add explicit type casts.</div>
+<div>  位置：514</div>
+<div>    at org.apache.flink.api.java.io.jdbc.JDBCInputFormat.open(JDBCInputFormat.java:250)</div>
+<div>    at org.apache.flink.streaming.api.functions.source.InputFormatSourceFunction.run(InputFormatSourceFunction.java:85)</div>
+<div>    at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:100)</div>
+<div>    at org.apache.flink.streaming.api.operators.StreamSource.run(StreamSource.java:63)</div>
+<div>    at org.apache.flink.streaming.runtime.tasks.SourceStreamTask$LegacySourceFunctionThread.run(SourceStreamTask.java:202)</div>
+<div>Caused by: org.postgresql.util.PSQLException: ERROR: operator does not exist: character varying &gt;= bigint</div>
+<div>  建议：No operator matches the given name and argument type(s). You might need to add explicit type casts.</div>
+<div>  位置：514</div>
+<div>    at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2103)</div>
+<div>    at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:1836)</div>
+<div>    at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:257)</div>
+<div>    at org.postgresql.jdbc2.AbstractJdbc2Statement.execute(AbstractJdbc2Statement.java:512)</div>
+<div>    at org.postgresql.jdbc2.AbstractJdbc2Statement.executeWithFlags(AbstractJdbc2Statement.java:388)</div>
+<div>    at org.postgresql.jdbc2.AbstractJdbc2Statement.executeQuery(AbstractJdbc2Statement.java:273)</div>
+<div>    at org.apache.flink.api.java.io.jdbc.JDBCInputFormat.open(JDBCInputFormat.java:247)</div>
+<div>    &#8230; 4 more</div>
+<div>
+<div></div>
+</div>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/706.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>flink相关 &#8211; 通过Table API写入ElasticSearch的部分源码分析</title>
+		<link>https://huster.top/htmls/704.html</link>
+		<comments>https://huster.top/htmls/704.html#respond</comments>
+		<pubDate>Thu, 17 Oct 2019 08:49:06 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[flink]]></category>
+
+		<guid isPermaLink="false">https://huster.top/?p=704</guid>
+		<description><![CDATA[New ElasticSearch()…xxx&#8230;registerTableSink(); Elas &#8230; <a href="https://huster.top/htmls/704.html" class="more-link">继续阅读<span class="screen-reader-text">“flink相关 &#8211; 通过Table API写入ElasticSearch的部分源码分析”</span></a>]]></description>
+				<content:encoded><![CDATA[<div>New ElasticSearch()…xxx&#8230;registerTableSink();</div>
+<div></div>
+<div>ElasticSearch是一个ConnectorDescriptor: 最关键的就是一个toConnectorProperties就是一个配置的map,传给factory使用，他其实是一个配置收集器.</div>
+<div></div>
+<div></div>
+<p><span id="more-704"></span></p>
+<div></div>
+<div>TableFactoryUtils :  生成一个TableFactory的工具类，</div>
+<div>findAndCreateTableSink( ) 通过一个描述来生成一个工厂类.//描述里有必要的配置.</div>
+<div></div>
+<div>先找到合适的工厂类，然后创建一个TableSink.</div>
+<div></div>
+<div>第一步，A先找到合适的工厂类，通过properties里的配置来寻找,</div>
+<div>TableFactoryService.find(TableSinkFactory.class, properties)</div>
+<div>findSingleInternal()里的两个代码是关键代码</div>
+<div></div>
+<div>A.1 : List&lt;TableFactory&gt; tableFactories = discoverFactories(classLoader);    通过classLoader(可以传入, 否则使用默认)找到所有的Factory.</div>
+<div>A.2:  然后开始过滤， List&lt;T&gt; filtered = filter(tableFactories, factoryClass, properties)</div>
+<div>        A.2.1 : 首先检查类型, TableSinkFactory.class   filterByFactoryClass(factoryClass,properties,foundFactories)</div>
+<div>        A.2.2 : 然后检查必须的配置是不是设置了, List&lt;T&gt; contextFactories = filterByContext(factoryClass,properties,foundFactories,classFactories);</div>
+<div>                    其中必备的配置是在factory里配置和定义的，必须不能为空.这个是有TableFactory的requiredContext()方法定义的.</div>
+<div>       A.2.3 : 经过以上两轮的过滤，然后再继续检查，依然是TableFactoryService.java，这里面的</div>
+<div>   private static &lt;T extends TableFactory&gt; List&lt;T&gt; filterBySupportedProperties(</div>
+<div>            Class&lt;T&gt; factoryClass,</div>
+<div>            Map&lt;String, String&gt; properties,</div>
+<div>            List&lt;TableFactory&gt; foundFactories,</div>
+<div>            List&lt;T&gt; classFactories) 方法</div>
+<div></div>
+<div>            这里主要是TableFactory里的两个方法定义的属性</div>
+<div>                    Map&lt;String, String&gt; requiredContext();</div>
+<div>                    List&lt;String&gt; supportedProperties();</div>
+<div>            然后和用户Descriptor（如 ElasticSearch）里设置的属性匹配，其中有字符忽略大小写，星号匹配等细节，不再研究.</div>
+<div></div>
+<div>然后这就找到了工厂类，接下来要生成TableSink了。例如 ElasticSearch找到的就是Elasticsearch6UpsertTableSinkFactory.</div>
+<div></div>
+<div>第二步，生成TableSink.在ElasticSearch中，他是直接的new了一个Elasticsearch6UpsertTableSink.而这个对象又是一个StreamTableSink，这样就生成了一个StreamTableSink, 这个sink可以交给flink直接使用了。在ElasticSearch这个TableSink里，最关键的是实现了consumeDataStream，这个决定了sink的写逻辑.注意区分的是一个是StreamTableSink是给Table接口使用的，另一个是DataStreamSink是给DataStream使用的。这里是连接Table和Stream接口的地方。所以说，Table的API其实还是基于Stream的API的。</div>
+<div></div>
+<div></div>
+<div>生成了Elasticsearch的TableSink之后，可以看到到这个类的用途是为了向es写入数据，他的作用是生成一个createSinkFunction。</div>
+<div>createSinkFunction是具体的连接es，向es写入数据的逻辑，具体的实现是ElasticsearchUpsertSinkFunction的process的方法。是由ElasticsearchSinkBase发起的调用。</div>
+<div></div>
+<div></div>
+<div></div>
+<div>在写入ElasticSearch的时候，如何让_id使用数据里的指定的field的值？</div>
+<div>在ES2.0之后，mapping里设置_id就被移除了这个特性。目的是为了让业务方不需要关心es的实现细节。在es connector里，他会根据你的table的primary key来生成这个_id的值。一般情况下，在append模式下，因为只是insert，所以他都是随机的。只有在update的时候，才需要根据primary key查找到元素并且进行更新。具体的实现在processUpsert方法。</div>
+<div></div>
+<div>        private void processUpsert(Row row, RequestIndexer indexer) {</div>
+<div>            final byte[] document = serializationSchema.serialize(row);</div>
+<div>            if (keyFieldIndices.length == 0) {</div>
+<div>                final IndexRequest indexRequest = requestFactory.createIndexRequest(</div>
+<div>                    index,</div>
+<div>                    docType,</div>
+<div>                    contentType,</div>
+<div>                    document);</div>
+<div>                indexer.add(indexRequest);</div>
+<div>            } else {</div>
+<div>                final String key = createKey(row);</div>
+<div>                final UpdateRequest updateRequest = requestFactory.createUpdateRequest(</div>
+<div>                    index,</div>
+<div>                    docType,</div>
+<div>                    key,</div>
+<div>                    contentType,</div>
+<div>                    document);</div>
+<div>                indexer.add(updateRequest);</div>
+<div>            }</div>
+<div>        }</div>
+<div></div>
+<div>这个方法的关键是keyFieldIndices这个属性。如果这个属性没值，那么久不指定key，让他自动生成_id，否则就从元数据里拿到这个字段值，再拼接成_id.而这个值是由方法</div>
+<div>public void setKeyFields(String[] keyNames) {} 来设置的。这个就是tablesink接口里定义的方法。这个方法可不是给业务方调用的，这个是flink框架调用的。所以你显示的调用这个方法也没用，他flink最终会覆盖掉你的配置。</div>
+<div>/**</div>
+<div>* Configures the unique key fields of the {@linkTable} to write.</div>
+<div>* The method is called after {@linkTableSink#configure(String[], TypeInformation[])}.</div>
+<div>*</div>
+<div>*&lt;p&gt;The keys array might be empty, if the table consists of a single (updated) record.</div>
+<div>* If the table does not have a key and is append-only, the keys attribute is null.</div>
+<div>*</div>
+<div>*@paramkeysthe field names of the table&#8217;s keys, an empty array if the table has a single</div>
+<div>*             row, and null if the table is append-only and has no key.</div>
+<div>*/</div>
+<div>voidsetKeyFields(String[] keys);</div>
+<div></div>
+<div>说明在这里。说的很清楚了，如果是append-only的模式，传入的keys就为空，否则就用table 的 primary key. 所以你可以定义一个table，指定主键。</div>
+<div></div>
+<div>找了一圈发现并没有定义table 的 primary的语法，翻看flink的源码发现他是自动判断的，具体的是根据你的sql语句来判断的。</div>
+<div></div>
+<div>UpdatingPlanChecker.scala是一个scala的不太好看明白，具体的在.private class UniqueKeyExtractor {} 这个类里面。他的寻找方式是，如果你是group by 语句，那么group by 就是你的key.如果你是join，那就看你左边的表和你右边的表来分别递归计算。</div>
+<div></div>
+<div>// Output of join must have keys if left and right both contain key(s).</div>
+<div>// Key groups from both side will be merged by join equi-predicates</div>
+<div>val lInNames: Seq[String] = j.getLeft.getRowType.getFieldNames</div>
+<div>val rInNames: Seq[String] = j.getRight.getRowType.getFieldNames</div>
+<div>val joinNames = j.getRowType.getFieldNames</div>
+<div>// if right field names equal to left field names, calcite will rename right</div>
+<div>// field names. For example, T1(pk, a) join T2(pk, b), calcite will rename T2(pk, b)</div>
+<div></div>
+<div></div>
+<div>总之就是，只有在聚合计算的时候才会有key, 也就是group by 后面的内容。那这不就扯了吗？ ElasticSearch connector 不就只支持插入操作了吗？</div>
+<div></div>
+<div></div>
+<div>Ps： flink后续会支持在table schema里定义primary key, 已经提交了pr，<a href="https://github.com/apache/flink/pull/8736">https://github.com/apache/flink/pull/8736</a> 可惜现在还没有。pat ~</div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/704.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>flink的动态表格</title>
+		<link>https://huster.top/htmls/700.html</link>
+		<comments>https://huster.top/htmls/700.html#respond</comments>
+		<pubDate>Thu, 17 Oct 2019 08:48:28 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[flink]]></category>
+
+		<guid isPermaLink="false">https://huster.top/?p=700</guid>
+		<description><![CDATA[目的： 订阅kafka的消息(kafka的消息是从postgresql来的)，将kafka的消息作为Table &#8230; <a href="https://huster.top/htmls/700.html" class="more-link">继续阅读<span class="screen-reader-text">“flink的动态表格”</span></a>]]></description>
+				<content:encoded><![CDATA[<div>目的： 订阅kafka的消息(kafka的消息是从postgresql来的)，将kafka的消息作为TableSource，执行sql，将结果输出到ElasticSearch中</div>
+<div></div>
+<div>动态表格</div>
+<div></div>
+<div>    flink的概念里，stream的输入是一个insert的模式。类似于点击日志这种，是源源不断的产出的新数据。而postgresql到kafka的消息包含了insert,update和delete的操作。</div>
+<div>在点击日志的概率里，如果统计点击次数，比较好理解。一种是表格不断的更新(update mode)。如果unique key第一次出现，则插入，否则做累加，类似下面这种</div>
+<div><a href="https://huster.top/wp-content/uploads/2019/10/5.png"><img class="alignnone size-full wp-image-701" src="https://huster.top/wp-content/uploads/2019/10/5.png" alt="" width="850" height="370" /></a></div>
+<div></div>
+<div>还有一种则是基于窗口的统计，每一个窗口期插入一系列的数据，所以这个是insert模式</div>
+<div><a href="https://huster.top/wp-content/uploads/2019/10/6.png"><img class="alignnone size-full wp-image-702" src="https://huster.top/wp-content/uploads/2019/10/6.png" alt="" width="872" height="350" /></a></div>
+<div></div>
+<div></div>
+<div></div>
+<div>但是在我们的场景里面，kafka里的消息不仅仅是插入的数据，还有可能是更新的数据。也就是有个维表，里面的数据在不断的更新。</div>
+<div></div>
+<div>那么现在就是要搞清楚一件事。如果我定义了一个Table，接受Stream data数据不断流入。如果我这个table里不存在这表数据(定义primary key)，那么他就会执行插入。否则他会执行update操作。我们写代码来试验一下这个想法， 看看是不是这样。如果没有group by 语句，你连primary key 都定义不了，也就没办法实现更新了…..所以要区分情况，如果你是上面的例子，通过group by 计算count, 因为有primary key，所以可以形成动态表格，可以自动update.如果你仅仅是接受kafka的消息，scan模式的话，由于表格没有primary key，所以是不支持update,而只支持insert的。</div>
+<div></div>
+<div></div>
+<div>所以针对update 和 delete 还需要单独处理….</div>
+<div></div>
+<div></div>
+<div></div>
+<div>在Table convert to DataStream一章里，使用了Tuple2&lt;Boolean, Row&gt;这个数据结构来区分Reactor Mode. 其中那个Boolean//   True is INSERT, false is DELETE.</div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/700.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>flink相关 &#8211; 读入kafka数据源</title>
+		<link>https://huster.top/htmls/696.html</link>
+		<comments>https://huster.top/htmls/696.html#respond</comments>
+		<pubDate>Thu, 17 Oct 2019 08:47:14 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[flink]]></category>
+
+		<guid isPermaLink="false">https://huster.top/?p=696</guid>
+		<description><![CDATA[业务代码如下 : fsTableEnv.connect(        newKafka()          &#8230; <a href="https://huster.top/htmls/696.html" class="more-link">继续阅读<span class="screen-reader-text">“flink相关 &#8211; 读入kafka数据源”</span></a>]]></description>
+				<content:encoded><![CDATA[<div>业务代码如下 :</div>
+<div>fsTableEnv.connect(</div>
+<div>       newKafka()</div>
+<div>                .version(&#8220;0.11&#8221;)</div>
+<div>                .topic(&#8220;xxxx&#8221;)</div>
+<div>                .property(&#8220;bootstrap.servers”,”<a href="http://newdev-kafka1.ttbike.com.cn:9092/">x</a>xxxx:xxxx&#8221;)</div>
+<div>                .property(&#8220;<a href="http://group.id/">group.id</a>&#8220;,&#8221;test4444&#8221;)</div>
+<div>                .startFromEarliest()//测试需要</div>
+<div>)</div>
+<div>        .withSchema(newSchema().schema(newTableSchema(fields, types)))</div>
+<div>        .withFormat(newJson().schema(newRowTypeInfo(types, fields)))</div>
+<div>        .inAppendMode()</div>
+<div>        .registerTableSource(“testTable”);</div>
+<div></div>
+<div></div>
+<div>问题是：读出来的数据总是null</div>
+<div>DataStream&lt;Row&gt; table = fsTableEnv.toAppendStream(fsTableEnv.sqlQuery(&#8220;select * from testTable&#8221;),Row.class);</div>
+<div>table.print();</div>
+<div></div>
+<div></div>
+<p><span id="more-696"></span></p>
+<div></div>
+<div></div>
+<div><a href="https://huster.top/wp-content/uploads/2019/10/3.png"><img class="alignnone size-full wp-image-697" src="https://huster.top/wp-content/uploads/2019/10/3.png" alt="" width="1810" height="219" /></a></div>
+<div></div>
+<div></div>
+<div>Kafka.java 这个类依然是一个配置收集器，就是为了收集一堆配置，然后给后面的工厂方法使用。依然通过FactoryService找到了Kafka011TableSourceSinkFactory这个工厂类。</div>
+<div></div>
+<div>Kafka011TableSourceSinkFactory : 作用是为了生成Kafka011TableSource这个TableSource。</div>
+<div></div>
+<div>Kafka011TableSource: 这个类的主要功效还是一个TableSource除了定义了TableSchema和ReturnType，最主要的是完成了他的核心功能，getDataStream()方法</div>
+<div></div>
+<div>FlinkKafkaConsumerBase : 由上一步的getDataStream方法，其实是为了生成这个类。这个类是一个SourceFunction，其中弹出信息的方法是run方法，我们继续看他的run方法</div>
+<div></div>
+<div></div>
+<div>最后跟踪定位到convert那个地方，才发现，原来解析的时候，他使用的是完整的json schema，而不是仅仅是data里的field字段，例如你传给kafka的json schema是包含了data平级的那些字段,table,operation等。而我传过去的是data里的field字段，当然就错了。</div>
+<div></div>
+<div>{</div>
+<div>    &#8220;schema&#8221;: “44444&#8243;,</div>
+<div>    &#8220;table&#8221;: &#8220;safs&#8221;,</div>
+<div>    &#8220;operation&#8221;: &#8220;INSERT&#8221;,</div>
+<div>    &#8220;data&#8221;: {</div>
+<div>        &#8220;start_time&#8221;: &#8220;2019-10-10 23:00:00&#8221;,</div>
+<div>        &#8220;end_point&#8221;: &#8220;0101000020E61000008BDEA9807B545E4062D9CC21A9313F40&#8221;,</div>
+<div>        &#8220;start_point&#8221;: &#8220;0101000020E61000002250FD8348575E40C284D1AC6C1F3F40&#8221;,</div>
+<div>        &#8220;user_new_id&#8221;: 1200001917,</div>
+<div>        &#8220;end_adcode&#8221;: null,</div>
+<div>        &#8220;end_time&#8221;: null,</div>
+<div>        &#8220;distance&#8221;: null,</div>
+<div>        &#8220;seat_count&#8221;: 4</div>
+<div>    },</div>
+<div>    &#8220;operateTime&#8221;: 1570602631926</div>
+<div>}</div>
+<div></div>
+<div></div>
+<div>跟踪调试，发现具体的是在Kafka09Fetcher的runFetchLoop方法里有一段，final T value = deserializer.deserialize(record);解析出来就出错了，就空了。继续跟踪调试，发现是在 JsonRowDeserializationSchema类的</div>
+<div>@Override</div>
+<div>public Row deserialize(byte[] message) throws IOException {</div>
+<div>   try {</div>
+<div>      final JsonNode root = objectMapper.readTree(message);</div>
+<div>      return (Row) runtimeConverter.convert(objectMapper, root);</div>
+<div>   } catch (Throwable t) {</div>
+<div>      throw new IOException(&#8220;Failed to deserialize JSON object.&#8221;, t);</div>
+<div>   }</div>
+<div>}</div>
+<div>这段代码里，root解析出来是好的，然后他开始convert.</div>
+<div></div>
+<div>private DeserializationRuntimeConverter assembleRowConverter(</div>
+<div>   String[] fieldNames,</div>
+<div>   List&lt;DeserializationRuntimeConverter&gt; fieldConverters) {</div>
+<div>   return (mapper, jsonNode) -&gt; {</div>
+<div>      ObjectNode node = (ObjectNode) jsonNode;</div>
+<div>      int arity = fieldNames.length;</div>
+<div>      Row row = new Row(arity);</div>
+<div>      for (int i = 0; i &lt; arity; i++) {</div>
+<div>         String fieldName = fieldNames[i];</div>
+<div>         JsonNode field = node.get(fieldName);</div>
+<div>         Object convertField = convertField(mapper, fieldConverters.get(i), fieldName, field);</div>
+<div>         row.setField(i, convertField);</div>
+<div>      }</div>
+<div>      return row;</div>
+<div>   };</div>
+<div>}</div>
+<div></div>
+<div>其中有这么一段JsonNode field = node.get(fieldName);他拿着你的fieldName去json数据里get,因为少了一个data层，所以就出错了。</div>
+<div></div>
+<div></div>
+<div>这个kafka的连接器的依赖也挺奇葩的 。</div>
+<div><a href="https://huster.top/wp-content/uploads/2019/10/4.png"><img class="alignnone size-full wp-image-698" src="https://huster.top/wp-content/uploads/2019/10/4.png" alt="" width="1141" height="132" /></a></div>
+<div></div>
+<div>0.11版本依赖0.10.再依赖0.9……..让人很迷惑.</div>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/696.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>flink学习笔记(一)</title>
+		<link>https://huster.top/htmls/691.html</link>
+		<comments>https://huster.top/htmls/691.html#respond</comments>
+		<pubDate>Thu, 17 Oct 2019 08:45:30 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[flink]]></category>
+
+		<guid isPermaLink="false">https://huster.top/?p=691</guid>
+		<description><![CDATA[架构  什么是flink flink是一个框架或者叫流式计算引擎，他可以用来处理有界(批处理，mapReduc &#8230; <a href="https://huster.top/htmls/691.html" class="more-link">继续阅读<span class="screen-reader-text">“flink学习笔记(一)”</span></a>]]></description>
+				<content:encoded><![CDATA[<div>架构</div>
+<ol>
+<li>
+<div> 什么是flink</div>
+</li>
+</ol>
+<div>flink是一个框架或者叫流式计算引擎，他可以用来处理有界(批处理，mapReduce)数据和无界数据。他的特点是具有内存的速度和分布式的横向扩展能力。由于是分布式的，所以他可以处理任意规模的数据。另外，他是有状态的，表现为上一步的结算结果可以为下一步使用。</div>
+<div></div>
+<p><span id="more-691"></span></p>
+<div>有界和无界的解释，见下面的图。</div>
+<div><a href="https://huster.top/wp-content/uploads/2019/10/1.png"><img class="alignnone size-full wp-image-692" src="https://huster.top/wp-content/uploads/2019/10/1.png" alt="" width="2220" height="526" /></a></div>
+<ol start="2">
+<li>
+<div>    如何解释内存般的访问速度。</div>
+</li>
+</ol>
+<div>是指用户的逻辑始终需要不断的访问记录的状态，而这些状态被记录在内存里，这样访问就很快。当内存放不下的时候，会固化到硬盘里。另外，会定期的异步将当前的快照存放到硬盘里，以防止任务的重启能接着上次的终止的地方继续运算。如下图所示</div>
+<div><a href="https://huster.top/wp-content/uploads/2019/10/2.png"><img class="alignnone size-full wp-image-693" src="https://huster.top/wp-content/uploads/2019/10/2.png" alt="" width="2784" height="630" /></a></div>
+<div>运维</div>
+<div>   1. flink的时间和特点</div>
+<div>    flink提供了事件事件模式，即用事件发生时自身的时间戳来进行统计。好处是计算结果一定正确，坏处是可能有延迟。也就是即使是数据到达的不及时，也要保证结果的正确性。还有一种是处理时间模式，也就是用的是事件到达工作机的机器时间作为统计时间。这样做的好处是低延迟，坏处是可能结果不是那么的准确。</div>
+<div>        2. flink的checkpoint和savepoint</div>
+<div>checkpoint是异步的增量的持久化的保存着，是为了机器故障的恢复。而savepoint则是为了集群的迁移，版本的升级而设计。在流式应用中，一个很大的难点是如何在线平滑的升级你的flink应用(业务代码，业务发布)。如果你的业务代码都重新发布了，那以前的计算的中间结果如何承接过来。总不能你一升级，用户的点击数就从0开始计算吧？flink使用savepoint很好的解决了这个难题。另外，还支持flink版本的平滑升级。</div>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/691.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>
