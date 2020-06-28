@@ -73,7 +73,12 @@
 					</header><div id="content" class="site-content">
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main"><header class="page-header"><h1 class="page-title">分类：Java学习</h1>			</header><article id="post-573" class="post-573 post type-post status-publish format-standard hentry category-java tag-spring tag-spring-boot"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/573.html" rel="bookmark">spring boot应用在 POST请求的Invalid CORS request的问题</a></h2>	</header><div class="entry-content">
+		<main id="main" class="site-main" role="main"><header class="page-header"><h1 class="page-title">分类：Java学习</h1>			</header><article id="post-615" class="post-615 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/615.html" rel="bookmark">理解Java线程间的通信</a></h2>	</header><div class="entry-content">
+		<p>多个线程间肯定是需要通信的，回忆一下我们的并发编程模型里的流水线工作模式(<a href="https://huster.top/htmls/557.html">流水线工作模式</a>)，我们的线程在遇到io阻塞的时候，肯定不能在那边一直等着，得出让自己的cpu资源，等到io完成了，再把任务交给下一个工作线程，我们试着来实现下看看。</p>
+<p> <a href="https://huster.top/htmls/615.html#more-615" class="more-link">继续阅读<span class="screen-reader-text">“理解Java线程间的通信”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/615.html" rel="bookmark"><time class="entry-date published" datetime="2018-11-01T15:08:37+00:00">2018 年 11 月 1 日</time><time class="updated" datetime="2018-11-02T11:28:43+00:00">2018 年 11 月 2 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/615.html#comments"><span class="screen-reader-text">理解Java线程间的通信</span>有1条评论</a></span>			</footer></article><article id="post-573" class="post-573 post type-post status-publish format-standard hentry category-java tag-spring tag-spring-boot"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/573.html" rel="bookmark">spring boot应用在 POST请求的Invalid CORS request的问题</a></h2>	</header><div class="entry-content">
 		<p>继上一篇遇到的Invalid CORS request之后，很久没有遇到这个问题了，今天又遇到了这个问题。上次问题是因为nginx没有把host信息代理给后面的java应用导致的，https://huster.top/htmls/511.html，而这次居然不是这个问题，检查了下 proxy_set_header Host $host; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;该有的配置都有。</p>
 <p>这就奇怪了，就是为什么呢？</p>
 <p>现象： GET请求没有问题。POST请求下在http下是好的，在https报403 Invalid CORS request错误。刚开始，我并没有意识到是http和https的问题，而是集团有日常、预发环境。日常验证是http验证的，一切正常。上到预发就发生了这个问题，排查其他配置、差异什么的走了一些弯路。</p>
@@ -124,24 +129,7 @@
 <p> <a href="https://huster.top/htmls/520.html#more-520" class="more-link">继续阅读<span class="screen-reader-text">“如何通过spring-boot-starter-redis使用aliyun的Redis”</span></a></p>
 	</div>
 
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/520.html" rel="bookmark"><time class="entry-date published" datetime="2017-08-18T14:00:54+00:00">2017 年 8 月 18 日</time><time class="updated" datetime="2018-11-05T10:36:46+00:00">2018 年 11 月 5 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a>、<a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84" rel="category tag">系统架构学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/520.html#respond"><span class="screen-reader-text">于如何通过spring-boot-starter-redis使用aliyun的Redis</span>留下评论</a></span>			</footer></article><article id="post-516" class="post-516 post type-post status-publish format-standard hentry category-java tag-java tag-mybatis"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/516.html" rel="bookmark">Mybatis获取最近插入的主键</a></h2>	</header><div class="entry-content">
-		<p>通常情况下，我们插入一条记录的mapper如下：</p>
-<pre></pre>
-<pre class="brush:java">    @Insert("insert into experiment_info (gmt_create, gmt_modified, user_id, name, type) values (now(),now(),#{userId},#{name},#{type})")
-    int saveExperimentInfo(ExperimentInfoDO infoDO);</pre>
-<p> </p>
-<p>但是有时候，我们需要拿到这次插入之后生成的主键应该怎么办呢? 其实很简单，只需要一句话就可以完成, 将以上的代码改为如下:</p>
-<p> </p>
-<pre class="brush:java">    @Insert("insert into experiment_info (gmt_create, gmt_modified, user_id, name, type) values (now(),now(),#{userId},#{name},#{type})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    int saveExperimentInfo(ExperimentInfoDO infoDO);</pre>
-<p> </p>
-<p> </p>
-<p>其中id是默认值，可以省略不写。</p>
-<p>还有一种办法是，生成一个主键主动传入。</p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/516.html" rel="bookmark"><time class="entry-date published updated" datetime="2017-07-23T15:43:50+00:00">2017 年 7 月 23 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java" rel="tag">Java</a>、<a href="https://huster.top/htmls/tag/mybatis" rel="tag">mybatis</a></span><span class="comments-link"><a href="https://huster.top/htmls/516.html#comments"><span class="screen-reader-text">Mybatis获取最近插入的主键</span>有1条评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/520.html" rel="bookmark"><time class="entry-date published" datetime="2017-08-18T14:00:54+00:00">2017 年 8 月 18 日</time><time class="updated" datetime="2018-11-05T10:36:46+00:00">2018 年 11 月 5 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a>、<a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84" rel="category tag">系统架构学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/520.html#respond"><span class="screen-reader-text">于如何通过spring-boot-starter-redis使用aliyun的Redis</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><a class="prev page-numbers" href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0/">上一页</a>
 <a class="page-numbers" href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0/"><span class="meta-nav screen-reader-text">页 </span>1</a>
 <span aria-current="page" class="page-numbers current"><span class="meta-nav screen-reader-text">页 </span>2</span>
@@ -152,6 +140,15 @@
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/720.html">生产FullGC问题排查</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/713.html">flink读取kafka数据未能触发watermark</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/708.html">flink使用时间戳作为起始offset消费kafka的问题</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/706.html">flink通过jdbc读取postgresql数据库里的数据</a>
 									</li>
 											<li>
@@ -202,16 +199,9 @@
 											<li>
 					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/573.html">spring boot应用在 POST请求的Invalid CORS request的问题</a>
-									</li>
-											<li>
-					<a href="https://huster.top/htmls/568.html">Mac下Pip的报错问题</a>
-									</li>
-											<li>
-					<a href="https://huster.top/htmls/557.html">并发编程模型(转载)</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2019/10">2019年十月</a> (5)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/10">2019年十月</a> (6)</li>
 	<li><a href="https://huster.top/htmls/date/2019/07">2019年七月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2019/06">2019年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2019/05">2019年五月</a> (1)</li>
@@ -261,12 +251,12 @@
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28 current-cat-parent current-cat-ancestor"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (63)
-<ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (5)
+	<li class="cat-item cat-item-28 current-cat-parent current-cat-ancestor"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (66)
+<ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54 current-cat"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (35)
+	<li class="cat-item cat-item-54 current-cat"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (36)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>

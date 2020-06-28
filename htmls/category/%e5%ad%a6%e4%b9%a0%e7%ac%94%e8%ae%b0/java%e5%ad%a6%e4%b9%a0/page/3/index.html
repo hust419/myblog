@@ -73,7 +73,24 @@
 					</header><div id="content" class="site-content">
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main"><header class="page-header"><h1 class="page-title">分类：Java学习</h1>			</header><article id="post-511" class="post-511 post type-post status-publish format-standard hentry category-java category-web"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/511.html" rel="bookmark">一次nginx导致的乌龙跨域事件</a></h2>	</header><div class="entry-content">
+		<main id="main" class="site-main" role="main"><header class="page-header"><h1 class="page-title">分类：Java学习</h1>			</header><article id="post-516" class="post-516 post type-post status-publish format-standard hentry category-java tag-java tag-mybatis"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/516.html" rel="bookmark">Mybatis获取最近插入的主键</a></h2>	</header><div class="entry-content">
+		<p>通常情况下，我们插入一条记录的mapper如下：</p>
+<pre></pre>
+<pre class="brush:java">    @Insert("insert into experiment_info (gmt_create, gmt_modified, user_id, name, type) values (now(),now(),#{userId},#{name},#{type})")
+    int saveExperimentInfo(ExperimentInfoDO infoDO);</pre>
+<p> </p>
+<p>但是有时候，我们需要拿到这次插入之后生成的主键应该怎么办呢? 其实很简单，只需要一句话就可以完成, 将以上的代码改为如下:</p>
+<p> </p>
+<pre class="brush:java">    @Insert("insert into experiment_info (gmt_create, gmt_modified, user_id, name, type) values (now(),now(),#{userId},#{name},#{type})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int saveExperimentInfo(ExperimentInfoDO infoDO);</pre>
+<p> </p>
+<p> </p>
+<p>其中id是默认值，可以省略不写。</p>
+<p>还有一种办法是，生成一个主键主动传入。</p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/516.html" rel="bookmark"><time class="entry-date published updated" datetime="2017-07-23T15:43:50+00:00">2017 年 7 月 23 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java" rel="tag">Java</a>、<a href="https://huster.top/htmls/tag/mybatis" rel="tag">mybatis</a></span><span class="comments-link"><a href="https://huster.top/htmls/516.html#comments"><span class="screen-reader-text">Mybatis获取最近插入的主键</span>有1条评论</a></span>			</footer></article><article id="post-511" class="post-511 post type-post status-publish format-standard hentry category-java category-web"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/511.html" rel="bookmark">一次nginx导致的乌龙跨域事件</a></h2>	</header><div class="entry-content">
 		<p>最近搭建了一个独立应用，使用相同的域名去访问的时候居然报出了”Invalid CORS request”, 而且GET请求是好的，唯独POST请求报403 forbidden错误，response是, Invalid CORS request。 真是奇怪啊，明明同一个域名，为什么报跨域的错误呢?</p>
 <p> </p>
 <p> <a href="https://huster.top/htmls/511.html#more-511" class="more-link">继续阅读<span class="screen-reader-text">“一次nginx导致的乌龙跨域事件”</span></a></p>
@@ -133,14 +150,7 @@ private static final long serialVersionUID = 42L;</li>
 <p> <a href="https://huster.top/htmls/467.html#more-467" class="more-link">继续阅读<span class="screen-reader-text">“Java的动态代理和他的应用”</span></a></p>
 	</div>
 
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/467.html" rel="bookmark"><time class="entry-date published" datetime="2016-11-23T22:08:46+00:00">2016 年 11 月 23 日</time><time class="updated" datetime="2017-06-28T18:01:52+00:00">2017 年 6 月 28 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java" rel="tag">Java</a>、<a href="https://huster.top/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86" rel="tag">动态代理</a></span><span class="comments-link"><a href="https://huster.top/htmls/467.html#respond"><span class="screen-reader-text">于Java的动态代理和他的应用</span>留下评论</a></span>			</footer></article><article id="post-458" class="post-458 post type-post status-publish format-standard hentry category-java tag-java tag-maven tag-maven-shade-plugin tag-plugin"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/458.html" rel="bookmark">Apache Maven Shade Plugin的用途</a></h2>	</header><div class="entry-content">
-		<p>maven的shade插件,官方说明如下：</p>
-<p>这个插件能把所有的依赖打进一个jar里，形成一个超级jar包，这样做的好处是你打出的jar包可以独立运行,就和你用spring boot打出的jar包一样，拷贝到任何机器上，只要有java环境，jar包就能运行. 还有一个重要作用则是解决冲突的重要手段. 他甚至能够将依赖的jar包里的类解压出来，打进超级jar包的classPath，所以你可以理解的是，他的作用就是把依赖打进jar包。</p>
-<p> </p>
-<p> <a href="https://huster.top/htmls/458.html#more-458" class="more-link">继续阅读<span class="screen-reader-text">“Apache Maven Shade Plugin的用途”</span></a></p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/458.html" rel="bookmark"><time class="entry-date published" datetime="2016-10-12T22:49:28+00:00">2016 年 10 月 12 日</time><time class="updated" datetime="2017-06-28T18:03:36+00:00">2017 年 6 月 28 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java" rel="tag">Java</a>、<a href="https://huster.top/htmls/tag/maven" rel="tag">Maven</a>、<a href="https://huster.top/htmls/tag/maven-shade-plugin" rel="tag">maven-shade-plugin</a>、<a href="https://huster.top/htmls/tag/plugin" rel="tag">Plugin</a></span><span class="comments-link"><a href="https://huster.top/htmls/458.html#respond"><span class="screen-reader-text">于Apache Maven Shade Plugin的用途</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/467.html" rel="bookmark"><time class="entry-date published" datetime="2016-11-23T22:08:46+00:00">2016 年 11 月 23 日</time><time class="updated" datetime="2017-06-28T18:01:52+00:00">2017 年 6 月 28 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java" rel="tag">Java</a>、<a href="https://huster.top/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86" rel="tag">动态代理</a></span><span class="comments-link"><a href="https://huster.top/htmls/467.html#respond"><span class="screen-reader-text">于Java的动态代理和他的应用</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><a class="prev page-numbers" href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0/page/2">上一页</a>
 <a class="page-numbers" href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0/"><span class="meta-nav screen-reader-text">页 </span>1</a>
 <a class="page-numbers" href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0/page/2"><span class="meta-nav screen-reader-text">页 </span>2</a>
@@ -151,6 +161,15 @@ private static final long serialVersionUID = 42L;</li>
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/720.html">生产FullGC问题排查</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/713.html">flink读取kafka数据未能触发watermark</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/708.html">flink使用时间戳作为起始offset消费kafka的问题</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/706.html">flink通过jdbc读取postgresql数据库里的数据</a>
 									</li>
 											<li>
@@ -201,16 +220,9 @@ private static final long serialVersionUID = 42L;</li>
 											<li>
 					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/573.html">spring boot应用在 POST请求的Invalid CORS request的问题</a>
-									</li>
-											<li>
-					<a href="https://huster.top/htmls/568.html">Mac下Pip的报错问题</a>
-									</li>
-											<li>
-					<a href="https://huster.top/htmls/557.html">并发编程模型(转载)</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2019/10">2019年十月</a> (5)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/10">2019年十月</a> (6)</li>
 	<li><a href="https://huster.top/htmls/date/2019/07">2019年七月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2019/06">2019年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2019/05">2019年五月</a> (1)</li>
@@ -260,12 +272,12 @@ private static final long serialVersionUID = 42L;</li>
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28 current-cat-parent current-cat-ancestor"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (63)
-<ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (5)
+	<li class="cat-item cat-item-28 current-cat-parent current-cat-ancestor"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (66)
+<ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54 current-cat"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (35)
+	<li class="cat-item cat-item-54 current-cat"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (36)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>

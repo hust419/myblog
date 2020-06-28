@@ -12,7 +12,7 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Thu, 17 Oct 2019 08:49:32 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 28 Jun 2020 08:13:56 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
@@ -26,6 +26,243 @@
 	<height>32</height>
 </image> 
 	<item>
+		<title>flink读取kafka数据未能触发watermark</title>
+		<link>https://huster.top/htmls/713.html</link>
+		<comments>https://huster.top/htmls/713.html#respond</comments>
+		<pubDate>Wed, 05 Feb 2020 10:33:25 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[flink]]></category>
+
+		<guid isPermaLink="false">https://huster.top/?p=713</guid>
+		<description><![CDATA[过年被病毒闹的出不了门，就顺带着把flink秒级统计的逻辑写了一下，逻辑很简单，就是从kafka消费数据，然后 &#8230; <a href="https://huster.top/htmls/713.html" class="more-link">继续阅读<span class="screen-reader-text">“flink读取kafka数据未能触发watermark”</span></a>]]></description>
+				<content:encoded><![CDATA[<p>过年被病毒闹的出不了门，就顺带着把flink秒级统计的逻辑写了一下，逻辑很简单，就是从kafka消费数据，然后select count(*) from xxx group by xxx来一秒产出一个打点。程序代码非常简单</p>
+<p><span id="more-713"></span></p>
+<p>&#8220;`java</p>
+<pre>StreamExecutionEnvironment bsEnv = StreamExecutionEnvironment.getExecutionEnvironment();
+EnvironmentSettings bsSettings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build();
+StreamTableEnvironment bsTableEnv = StreamTableEnvironment.create(bsEnv, bsSettings);
+bsEnv.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+//并发数量小于等于kafka的partition数量,否则不会触发水位线
+bsEnv.setParallelism(1);
+//get input from kafka
+String[] fieldNamesOriginal = new String[]{"i","t","op"};
+TypeInformation[] typesOriginal = new TypeInformation[]{Types.STRING(), Types.JAVA_BIG_DEC(), Types.STRING()};
+Properties properties = new Properties();
+properties.setProperty("bootstrap.servers", "xxxx.com:9200");
+properties.setProperty("group.id", "xxxxxxx");
+//主动提交offset,不利用flink的job
+properties.put("enable.auto.commit", "true");
+properties.put("auto.commit.interval.ms", "1000");
+FlinkKafkaConsumer011&lt;Row&gt; kafkaConsumer011 = new FlinkKafkaConsumer011&lt;&gt;("xxxxxxxx",
+        new JsonRowDeserializationSchema(new RowTypeInfo(typesOriginal, fieldNamesOriginal)), properties);
+kafkaConsumer011.setStartFromLatest();
+DataStream&lt;Row&gt; streamSource = bsEnv
+        .addSource(kafkaConsumer011)
+        .uid("from_kafka_topic_is");
+TypeInformation[] returnTypeTmp = new TypeInformation[]{Types.STRING(), Types.SQL_TIME(), Types.STRING()};
+DataStream&lt;Row&gt; dataStreamWithTime = streamSource.map(new MapFunction&lt;Row, Row&gt;() {
+    @Override
+    public Row map(Row value) throws Exception {
+        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Row row = new Row(3);
+        BigDecimal time = (BigDecimal)value.getField(1);
+        row.setField(0, value.getField(0));
+        row.setField(1, new Time(time.longValue()));
+        row.setField(2, value.getField(2));
+        return row;
+    }
+})
+        .returns(new RowTypeInfo(returnTypeTmp, fieldNamesOriginal))
+        .uid("add_time")
+        .assignTimestampsAndWatermarks(new BoundedOutOfOrdernessTimestampExtractor&lt;Row&gt;(org.apache.flink.streaming.api.windowing.time.Time.seconds(2)) {
+            @Override
+            public long extractTimestamp(Row element) {
+                return ((Time)element.getField(1)).getTime();
+            }
+        });
+bsTableEnv.registerDataStream("_source_table", dataStreamWithTime, "i,t,op, rowtime.rowtime");
+bsTableEnv.connect(new Kafka()
+        .version("0.11")
+        .topic("s-log")
+        .property("bootstrap.servers", "abc.com:9200")
+        .startFromEarliest())
+        .withFormat(new Json().jsonSchema("{\"type\":\"object\",\"properties\":{\"index_name\":{\"type\":\"string\"},\"event_time_log\":{\"type\":\"string\"},\"op_type\":{\"type\":\"string\"},\"count_result\":{\"type\":\"number\"}}}"))
+        .withSchema(new Schema()
+                .field("index_name", Types.STRING())
+                .field("event_time_log", Types.STRING())
+                .field("op_type", Types.STRING())
+                .field("count_result", Types.LONG()))
+        .inAppendMode()
+        .registerTableSink("operator_log_result");
+bsTableEnv.sqlUpdate("insert into operator_log_result " +
+        "select  i as index_name,  DATE_FORMAT(TUMBLE_END(rowtime, INTERVAL '1' SECOND), 'yyyy-MM-dd HH:mm:ss') as event_time_log, op as op_type, count(op) as count_result " +
+        "from _source_table group by TUMBLE(rowtime, INTERVAL '1' SECOND) , i, op");
+bsEnv.execute("data-metrics");
+
+
+
+
+</pre>
+<p>代码如上，非常简单，输入的数据类似于</p>
+<p>&#8220;`json</p>
+<p class="p1"><span class="s1">{&#8220;t&#8221;:1580896327330,&#8221;st&#8221;:&#8221;DIRECT&#8221;,&#8221;i&#8221;:&#8221;hitch_passenger_order_2020_01_22_23_50_40&#8243;,&#8221;op&#8221;:&#8221;es_sink&#8221;,&#8221;id&#8221;:&#8221;,guid:15756341902141200002900&#8243;,&#8221;ut&#8221;:&#8221;,order_update_time:2020-02-05 17:52:07.190435&#8243;,&#8221;msg&#8221;:&#8221;&#8221;,&#8221;rId&#8221;:&#8221;0.1.1.1&#8243;}</span></p>
+<p class="p1"><span class="s1">{&#8220;t&#8221;:1580896327831,&#8221;st&#8221;:&#8221;DIRECT&#8221;,&#8221;i&#8221;:&#8221;hitch_passenger_order_2020_01_22_23_50_40&#8243;,&#8221;op&#8221;:&#8221;es_sink&#8221;,&#8221;id&#8221;:&#8221;,guid:15756341902141200002900&#8243;,&#8221;ut&#8221;:&#8221;,order_update_time:2020-02-05 17:52:07.687468&#8243;,&#8221;msg&#8221;:&#8221;&#8221;,&#8221;rId&#8221;:&#8221;0.1.1.1&#8243;}</span></p>
+<p class="p1"><span class="s1">{&#8220;t&#8221;:1580896328131,&#8221;st&#8221;:&#8221;DIRECT&#8221;,&#8221;i&#8221;:&#8221;hitch_passenger_order_2020_01_22_23_50_40&#8243;,&#8221;op&#8221;:&#8221;es_sink&#8221;,&#8221;id&#8221;:&#8221;,guid:15756341902141200002900&#8243;,&#8221;ut&#8221;:&#8221;,order_update_time:2020-02-05 17:52:08.047474&#8243;,&#8221;msg&#8221;:&#8221;&#8221;,&#8221;rId&#8221;:&#8221;0.1.1.1&#8243;}</span></p>
+<p>&nbsp;</p>
+<p>然而，死活就是无法输出正确的统计数据。但是当我把setParallelism并发设置为1的时候，就能正常输出统计数据。太神奇了，为什么跟并发度有关系呢？</p>
+<p>于是我在本地打开了跟踪调试功能，我发现问题出在StatusWatermarkValve这个类里，这个类的这个方法是这么写的</p>
+<p>&#8220;`java</p>
+<pre>private void findAndOutputNewMinWatermarkAcrossAlignedChannels() {
+   long newMinWatermark = Long.MAX_VALUE;
+   boolean hasAlignedChannels = false;
+
+   // determine new overall watermark by considering only watermark-aligned channels across all channels
+   for (InputChannelStatus channelStatus : channelStatuses) {
+      if (channelStatus.isWatermarkAligned) {
+         hasAlignedChannels = true;
+         newMinWatermark = Math.min(channelStatus.watermark, newMinWatermark);
+      }
+   }
+
+   // we acknowledge and output the new overall watermark if it really is aggregated
+   // from some remaining aligned channel, and is also larger than the last output watermark
+   if (hasAlignedChannels &amp;&amp; newMinWatermark &gt; lastOutputWatermark) {
+      lastOutputWatermark = newMinWatermark;
+      outputHandler.handleWatermark(new Watermark(lastOutputWatermark));
+   }
+}</pre>
+<p>这个方法跟踪调试，正常的时候是这样的也是比较符合我们预期的，到点了就该触发了。</p>
+<p><a href="https://huster.top/wp-content/uploads/2020/02/b1.png"><img class="alignnone size-full wp-image-714" src="https://huster.top/wp-content/uploads/2020/02/b1.png" alt="" width="2432" height="474" /></a></p>
+<p>而不正常的时候，多个并发的时候，是这样的</p>
+<p><a href="https://huster.top/wp-content/uploads/2020/02/b2.png"><img class="alignnone size-full wp-image-715" src="https://huster.top/wp-content/uploads/2020/02/b2.png" alt="" width="2384" height="982" /></a></p>
+<p>可以看到其他的subtask取到的watermark是一个负值，也就是初始值。</p>
+<p>&nbsp;</p>
+<p>这个时候flink怎么处理的呢？根据刚刚的代码，他会取并发里面最小的一个值作为watermark，也就是那个最小的long型值。</p>
+<p>然后一比较，跟默认值等的，不满足触发的条件，也就未能触发事件了。</p>
+<p>看到一篇文章是这么写的</p>
+<p><a href="https://huster.top/wp-content/uploads/2020/02/a3.jpg"><img class="alignnone size-full wp-image-716" src="https://huster.top/wp-content/uploads/2020/02/a3.jpg" alt="" width="1518" height="1400" /></a></p>
+<p>&nbsp;</p>
+<p>文章引用： https://www.jianshu.com/p/753e8cf803bb</p>
+<p>&nbsp;</p>
+<p>我感觉是flink的代码不合理导致的，至此，困扰我多日的一个问题终于有了答案。</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/713.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>flink使用时间戳作为起始offset消费kafka的问题</title>
+		<link>https://huster.top/htmls/708.html</link>
+		<comments>https://huster.top/htmls/708.html#respond</comments>
+		<pubDate>Mon, 21 Oct 2019 15:59:05 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[flink]]></category>
+
+		<guid isPermaLink="false">https://huster.top/?p=708</guid>
+		<description><![CDATA[代码如下 private static voidtest2()throwsException {     En &#8230; <a href="https://huster.top/htmls/708.html" class="more-link">继续阅读<span class="screen-reader-text">“flink使用时间戳作为起始offset消费kafka的问题”</span></a>]]></description>
+				<content:encoded><![CDATA[<div>代码如下</div>
+<div></div>
+<div></div>
+<div>private static voidtest2()throwsException {</div>
+<div>    EnvironmentSettings fsSettings = EnvironmentSettings.newInstance().useOldPlanner().inStreamingMode().build();</div>
+<div>   StreamExecutionEnvironment fsEnv = StreamExecutionEnvironment.getExecutionEnvironment();</div>
+<div>   StreamTableEnvironment tttt = StreamTableEnvironment.create(fsEnv,fsSettings);</div>
+<div>   Properties properties =newProperties();</div>
+<div>   properties.setProperty(&#8220;bootstrap.servers&#8221;,&#8221;localhost:9092&#8243;);</div>
+<div>    properties.setProperty(&#8220;<a href="http://group.id/">group.id</a>&#8220;,&#8221;test&#8221;+ System.currentTimeMillis());</div>
+<div>   FlinkKafkaConsumer011&lt;String&gt; kafkaConsumer011 =newFlinkKafkaConsumer011&lt;String&gt;(&#8220;test&#8221;, newSimpleStringSchema(),properties);</div>
+<div>   kafkaConsumer011.setStartFromTimestamp(System.currentTimeMillis());</div>
+<div>   DataStream&lt;String&gt; stream = fsEnv.addSource(kafkaConsumer011);</div>
+<div>   stream.print();</div>
+<div>   fsEnv.execute(&#8220;test&#8221;);</div>
+<div>}2019-10-21 23:06:58.970 [Thread-8] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 0 creating fetcher with offsets {}.</div>
+<div></div>
+<div>表现为，无法收到kafka发送过来的消息。这就很奇怪了，因为我使用kafka-consumer-console.sh的方式可以看到实际上是有消息产出的，但是这里死活就收不到数据。</div>
+<div></div>
+<p><span id="more-708"></span></p>
+<div></div>
+<div>进一步的测试，我把timestamp改成提前了很长的时间，就能正常工作。</div>
+<div></div>
+<div>进一步测试，如果刚好设置的timestamp那个点有消息产生，那么也能正常工作。</div>
+<div></div>
+<div></div>
+<div>对比了下，能拿到数据和不能拿到数据的区别。下面是不能拿到数据时候的日志输出，</div>
+<div></div>
+<div></div>
+<div>2019-10-21 23:06:58.970 [Thread-10] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 3 creating fetcher with offsets {}.</div>
+<div>2019-10-21 23:06:58.970 [Thread-7] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 1 creating fetcher with offsets {}.</div>
+<div>2019-10-21 23:07:01.100 [Source: Custom Source -&gt; Sink: Print to Std. Out (3/4)] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 2 initially has no partitions to read from.</div>
+<div>2019-10-21 23:07:01.108 [Thread-9] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 2 creating fetcher with offsets {}.</div>
+<div></div>
+<div></div>
+<div>而下面是能拿到数据时候的日志输出, 可以看到有一个task成功拿到了这个partition的offset</div>
+<div></div>
+<div></div>
+<div>2019-10-21 23:14:11.871 [Thread-7] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 2 creating fetcher with offsets {KafkaTopicPartition{topic=&#8217;test&#8217;, partition=0}=35}.</div>
+<div></div>
+<div></div>
+<div>所以原因是因为，通过kafka的consumer的api，consumer.offsetsForTimes的时候，能否拿到offset，如果拿不到在KafkaConsumerThread的线程的run方法里，有一个这个代码表明这个方法是阻塞的，一直等到有新的partition到来，才会继续。而新的partition不会到来，所以这里就有问题了。。。</div>
+<div></div>
+<div>try {</div>
+<div>   if (hasAssignedPartitions) {</div>
+<div>      newPartitions = unassignedPartitionsQueue.pollBatch();</div>
+<div>   }</div>
+<div>   else {</div>
+<div>      // if no assigned partitions block until we get at least one</div>
+<div>      // instead of hot spinning this loop. We rely on a fact that</div>
+<div>      // unassignedPartitionsQueue will be closed on a shutdown, so</div>
+<div>      // we don&#8217;t block indefinitely</div>
+<div>      newPartitions = unassignedPartitionsQueue.getBatchBlocking();</div>
+<div>   }</div>
+<div>   if (newPartitions != null) {</div>
+<div>      reassignPartitions(newPartitions);</div>
+<div>   }</div>
+<div>} catch (AbortedReassignmentException e) {</div>
+<div>   continue;</div>
+<div>}</div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div>那么kafka的这个offsetsForTimes的接口为何不能返回结果呢 ？</div>
+<div></div>
+<div>private static void testConsumer() {</div>
+<div>    Properties props = new Properties();</div>
+<div>    props.put(&#8220;bootstrap.servers&#8221;, &#8220;localhost:9092&#8221;);</div>
+<div>    props.put(&#8220;group.id&#8221;, &#8220;test&#8221;);</div>
+<div>    props.put(&#8220;key.deserializer&#8221;, &#8220;org.apache.kafka.common.serialization.StringDeserializer&#8221;);</div>
+<div>    props.put(&#8220;value.deserializer&#8221;, &#8220;org.apache.kafka.common.serialization.StringDeserializer&#8221;);</div>
+<div>    KafkaConsumer&lt;String, String&gt; consumer = new KafkaConsumer&lt;&gt;(props);</div>
+<div>    consumer.subscribe(Collections.singletonList(&#8220;test&#8221;));</div>
+<div>    TopicPartition topicPartition = new TopicPartition(&#8220;test&#8221;, 0);</div>
+<div>    long current = System.currentTimeMillis();</div>
+<div>    for (int i=0; i&lt;10000; i++) {</div>
+<div>        Map&lt;TopicPartition, Long&gt; map = new HashMap&lt;&gt;();</div>
+<div>        map.put(topicPartition, current &#8211; i*1000);</div>
+<div>        Map&lt;TopicPartition, OffsetAndTimestamp&gt; result  = consumer.offsetsForTimes(map);</div>
+<div>        System.out.println(&#8220;===================test : &#8221; + i + &#8220;==================&#8221;);</div>
+<div>        System.out.println(new Gson().toJson(result));</div>
+<div>    }</div>
+<div>    while (true) {</div>
+<div>        ConsumerRecords&lt;String, String&gt; records = consumer.poll(100);</div>
+<div>        for (ConsumerRecord&lt;String, String&gt; record : records)</div>
+<div>            System.out.printf(&#8220;offset = %d, key = %s, value = %s%n&#8221;, record.offset(), record.key(), record.value());</div>
+<div>    }</div>
+<div>}</div>
+<div></div>
+<div></div>
+<div>通过如上代码我们发现，如果这个timestamp之后有数据产出，那么就能正确的拿到offset，否则就拿不到。</div>
+<div></div>
+<div>也就是我们最后一条数据如果是18：00产生的，那么如果你的时间戳早于18:00是能正确的拿到offset的，如果比18:00晚，那么就拿不到了。</div>
+<div></div>
+<div></div>
+<div>总结，问题在于flink和kafka的配合。kafka的特征是，时间戳之后如果没有消息，那么就不返回offset(我认为合理的应该是返回last offset + 1) , 那么flink发现没有返回offset是怎么处理的呢？那就不消费数据了，因为他觉得返回的数据并不符合自己的预期，他也不知道从哪里开始取了。如果从offset+1开始取，可能会出错，干脆就不取了。</div>
+<div></div>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/708.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
 		<title>flink通过jdbc读取postgresql数据库里的数据</title>
 		<link>https://huster.top/htmls/706.html</link>
 		<comments>https://huster.top/htmls/706.html#respond</comments>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>flink读取kafka数据未能触发watermark – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/713.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
+	    
+		body.page-template-builder-fullwidth.elementor-page,
+		body.page-template-builder-fullwidth-std.elementor-page {
+			background: transparent;
+		}
+		.page-template-builder-fullwidth-std .site {
+			margin: 0;
+		}
+		.page-template-builder-fullwidth .elementor-page,
+        .page-template-builder-fullwidth-std .elementor-page {
+	        overflow: hidden;
+        }
+		.page-template-builder-fullwidth .full-width,
+        .page-template-builder-fullwidth-std .full-width {
+	        width: 100%;
+        }
+        .page-template-builder-fullwidth .site-inner,
+        .page-template-builder-fullwidth-std .site-inner {
+            max-width: 100%;
+        }
+        .page-template-builder-fullwidth .site-content,
+        .page-template-builder-fullwidth-std .site-content {
+            padding: 0;
+        }
+        .page-template-builder-fullwidth header#masthead,
+        .page-template-builder-fullwidth footer#colophon,
+        .page-template-builder-fullwidth-std header#masthead,
+        .page-template-builder-fullwidth-std footer#colophon {
+	        margin: 0 auto;
+	        max-width: 1320px;
+        } 
+        .page-template-builder-fullwidth .entry-content,
+        .page-template-builder-fullwidth-std .entry-content {
+	        margin-right: auto;
+	        margin-left: auto;
+        }
+        @media screen and (min-width: 56.875em) {
+	        .admin-bar .anchor-menu {
+		        top: 20px;
+	        }	
+			.admin-bar .anchor-menu-fixed.anchor-menu, .admin-bar .anchor-menu-fixed.elementor-widget-wp-widget-nav_menu {
+				top: 54px !important;
+			}			
+			.page-template-builder-fullwidth .entry-content,
+            .page-template-builder-fullwidth-std .entry-content	{
+	            margin-right: auto;
+	            margin-left: auto;
+	        }
+        }
+        @media screen and (min-width: 44.375em) {	        
+			.page-template-builder-fullwidth .entry-content,
+            .page-template-builder-fullwidth-std .entry-content {
+	            margin-right: auto;;
+	        }
+        }
+	
+</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-713 single-format-standard">
+<div id="page" class="site">
+	<div class="site-inner">
+		<a class="skip-link screen-reader-text" href="#content">跳至内容</a>
+
+		<header id="masthead" class="site-header" role="banner"><div class="site-header-main">
+				<div class="site-branding">
+					
+											<p class="site-title"><a href="https://huster.top/" rel="home">三两带走</a></p>
+											<p class="site-description">(任天兵)龙安的博客</p>
+									</div>
+
+							</div>
+
+					</header><div id="content" class="site-content">
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main"><article id="post-713" class="post-713 post type-post status-publish format-standard hentry category-flink"><header class="entry-header"><h1 class="entry-title">flink读取kafka数据未能触发watermark</h1>	</header><div class="entry-content">
+		<p>过年被病毒闹的出不了门，就顺带着把flink秒级统计的逻辑写了一下，逻辑很简单，就是从kafka消费数据，然后select count(*) from xxx group by xxx来一秒产出一个打点。程序代码非常简单</p>
+<p><span id="more-713"></span></p>
+<p>“`java</p>
+<pre>StreamExecutionEnvironment bsEnv = StreamExecutionEnvironment.getExecutionEnvironment();
+EnvironmentSettings bsSettings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build();
+StreamTableEnvironment bsTableEnv = StreamTableEnvironment.create(bsEnv, bsSettings);
+bsEnv.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+//并发数量小于等于kafka的partition数量,否则不会触发水位线
+bsEnv.setParallelism(1);
+//get input from kafka
+String[] fieldNamesOriginal = new String[]{"i","t","op"};
+TypeInformation[] typesOriginal = new TypeInformation[]{Types.STRING(), Types.JAVA_BIG_DEC(), Types.STRING()};
+Properties properties = new Properties();
+properties.setProperty("bootstrap.servers", "xxxx.com:9200");
+properties.setProperty("group.id", "xxxxxxx");
+//主动提交offset,不利用flink的job
+properties.put("enable.auto.commit", "true");
+properties.put("auto.commit.interval.ms", "1000");
+FlinkKafkaConsumer011<Row> kafkaConsumer011 = new FlinkKafkaConsumer011<>("xxxxxxxx",
+        new JsonRowDeserializationSchema(new RowTypeInfo(typesOriginal, fieldNamesOriginal)), properties);
+kafkaConsumer011.setStartFromLatest();
+DataStream<Row> streamSource = bsEnv
+        .addSource(kafkaConsumer011)
+        .uid("from_kafka_topic_is");
+TypeInformation[] returnTypeTmp = new TypeInformation[]{Types.STRING(), Types.SQL_TIME(), Types.STRING()};
+DataStream<Row> dataStreamWithTime = streamSource.map(new MapFunction<Row, Row>() {
+    @Override
+    public Row map(Row value) throws Exception {
+        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Row row = new Row(3);
+        BigDecimal time = (BigDecimal)value.getField(1);
+        row.setField(0, value.getField(0));
+        row.setField(1, new Time(time.longValue()));
+        row.setField(2, value.getField(2));
+        return row;
+    }
+})
+        .returns(new RowTypeInfo(returnTypeTmp, fieldNamesOriginal))
+        .uid("add_time")
+        .assignTimestampsAndWatermarks(new BoundedOutOfOrdernessTimestampExtractor<Row>(org.apache.flink.streaming.api.windowing.time.Time.seconds(2)) {
+            @Override
+            public long extractTimestamp(Row element) {
+                return ((Time)element.getField(1)).getTime();
+            }
+        });
+bsTableEnv.registerDataStream("_source_table", dataStreamWithTime, "i,t,op, rowtime.rowtime");
+bsTableEnv.connect(new Kafka()
+        .version("0.11")
+        .topic("s-log")
+        .property("bootstrap.servers", "abc.com:9200")
+        .startFromEarliest())
+        .withFormat(new Json().jsonSchema("{\"type\":\"object\",\"properties\":{\"index_name\":{\"type\":\"string\"},\"event_time_log\":{\"type\":\"string\"},\"op_type\":{\"type\":\"string\"},\"count_result\":{\"type\":\"number\"}}}"))
+        .withSchema(new Schema()
+                .field("index_name", Types.STRING())
+                .field("event_time_log", Types.STRING())
+                .field("op_type", Types.STRING())
+                .field("count_result", Types.LONG()))
+        .inAppendMode()
+        .registerTableSink("operator_log_result");
+bsTableEnv.sqlUpdate("insert into operator_log_result " +
+        "select  i as index_name,  DATE_FORMAT(TUMBLE_END(rowtime, INTERVAL '1' SECOND), 'yyyy-MM-dd HH:mm:ss') as event_time_log, op as op_type, count(op) as count_result " +
+        "from _source_table group by TUMBLE(rowtime, INTERVAL '1' SECOND) , i, op");
+bsEnv.execute("data-metrics");
+
+
+
+
+</pre>
+<p>代码如上，非常简单，输入的数据类似于</p>
+<p>“`json</p>
+<p class="p1"><span class="s1">{“t”:1580896327330,”st”:”DIRECT”,”i”:”hitch_passenger_order_2020_01_22_23_50_40″,”op”:”es_sink”,”id”:”,guid:15756341902141200002900″,”ut”:”,order_update_time:2020-02-05 17:52:07.190435″,”msg”:””,”rId”:”0.1.1.1″}</span></p>
+<p class="p1"><span class="s1">{“t”:1580896327831,”st”:”DIRECT”,”i”:”hitch_passenger_order_2020_01_22_23_50_40″,”op”:”es_sink”,”id”:”,guid:15756341902141200002900″,”ut”:”,order_update_time:2020-02-05 17:52:07.687468″,”msg”:””,”rId”:”0.1.1.1″}</span></p>
+<p class="p1"><span class="s1">{“t”:1580896328131,”st”:”DIRECT”,”i”:”hitch_passenger_order_2020_01_22_23_50_40″,”op”:”es_sink”,”id”:”,guid:15756341902141200002900″,”ut”:”,order_update_time:2020-02-05 17:52:08.047474″,”msg”:””,”rId”:”0.1.1.1″}</span></p>
+<p> </p>
+<p>然而，死活就是无法输出正确的统计数据。但是当我把setParallelism并发设置为1的时候，就能正常输出统计数据。太神奇了，为什么跟并发度有关系呢？</p>
+<p>于是我在本地打开了跟踪调试功能，我发现问题出在StatusWatermarkValve这个类里，这个类的这个方法是这么写的</p>
+<p>“`java</p>
+<pre>private void findAndOutputNewMinWatermarkAcrossAlignedChannels() {
+   long newMinWatermark = Long.MAX_VALUE;
+   boolean hasAlignedChannels = false;
+
+   // determine new overall watermark by considering only watermark-aligned channels across all channels
+   for (InputChannelStatus channelStatus : channelStatuses) {
+      if (channelStatus.isWatermarkAligned) {
+         hasAlignedChannels = true;
+         newMinWatermark = Math.min(channelStatus.watermark, newMinWatermark);
+      }
+   }
+
+   // we acknowledge and output the new overall watermark if it really is aggregated
+   // from some remaining aligned channel, and is also larger than the last output watermark
+   if (hasAlignedChannels && newMinWatermark > lastOutputWatermark) {
+      lastOutputWatermark = newMinWatermark;
+      outputHandler.handleWatermark(new Watermark(lastOutputWatermark));
+   }
+}</pre>
+<p>这个方法跟踪调试，正常的时候是这样的也是比较符合我们预期的，到点了就该触发了。</p>
+<p><a href="https://huster.top/wp-content/uploads/2020/02/b1.png"><img class="alignnone size-full wp-image-714" src="https://huster.top/wp-content/uploads/2020/02/b1.png" alt="" width="2432" height="474"></a></p>
+<p>而不正常的时候，多个并发的时候，是这样的</p>
+<p><a href="https://huster.top/wp-content/uploads/2020/02/b2.png"><img class="alignnone size-full wp-image-715" src="https://huster.top/wp-content/uploads/2020/02/b2.png" alt="" width="2384" height="982"></a></p>
+<p>可以看到其他的subtask取到的watermark是一个负值，也就是初始值。</p>
+<p> </p>
+<p>这个时候flink怎么处理的呢？根据刚刚的代码，他会取并发里面最小的一个值作为watermark，也就是那个最小的long型值。</p>
+<p>然后一比较，跟默认值等的，不满足触发的条件，也就未能触发事件了。</p>
+<p>看到一篇文章是这么写的</p>
+<p><a href="https://huster.top/wp-content/uploads/2020/02/a3.jpg"><img class="alignnone size-full wp-image-716" src="https://huster.top/wp-content/uploads/2020/02/a3.jpg" alt="" width="1518" height="1400"></a></p>
+<p> </p>
+<p>文章引用： https://www.jianshu.com/p/753e8cf803bb</p>
+<p> </p>
+<p>我感觉是flink的代码不合理导致的，至此，困扰我多日的一个问题终于有了答案。</p>
+
+<div class="author-info">
+	<div class="author-avatar">
+		<img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=42&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=84&r=g 2x" class="avatar avatar-42 photo" height="42" width="42"></div>
+
+	<div class="author-description">
+		<h2 class="author-title"><span class="author-heading">作者：</span> 龙安_任天兵</h2>
+
+		<p class="author-bio">
+			不忘初心，方得始终!			<a class="author-link" href="https://huster.top/htmls/author/admin" rel="author">
+				查看龙安_任天兵的所有文章			</a>
+		</p>
+	</div>
+</div>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/713.html" rel="bookmark"><time class="entry-date published updated" datetime="2020-02-05T18:33:25+00:00">2020 年 2 月 5 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink" rel="category tag">flink</a></span>			</footer></article><div id="comments" class="comments-area">
+
+	
+	
+		<div id="respond" class="comment-respond">
+		<h2 id="reply-title" class="comment-reply-title">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="/htmls/713.html#respond" style="display:none;">取消回复</a></small></h2>			<form action="https://huster.top/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
+<p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes"></p>
+<p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="713" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="14fba2250b"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="175"></p>			</form>
+			</div>
+	
+</div>
+
+	<nav class="navigation post-navigation" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://huster.top/htmls/708.html" rel="prev"><span class="meta-nav" aria-hidden="true">上一</span> <span class="screen-reader-text">上篇文章：</span> <span class="post-title">flink使用时间戳作为起始offset消费kafka的问题</span></a></div><div class="nav-next"><a href="https://huster.top/htmls/720.html" rel="next"><span class="meta-nav" aria-hidden="true">下一</span> <span class="screen-reader-text">下篇文章：</span> <span class="post-title">生产FullGC问题排查</span></a></div></div>
+	</nav></main><aside id="content-bottom-widgets" class="content-bottom-widgets" role="complementary"><div class="widget-area">
+			<section id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script src="https://s22.cnzz.com/z_stat.php?id=3943131&web_id=3943131" language="JavaScript"></script></div></section></div>
+	
+	</aside></div>
+
+
+	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/720.html">生产FullGC问题排查</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/713.html">flink读取kafka数据未能触发watermark</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/708.html">flink使用时间戳作为起始offset消费kafka的问题</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/706.html">flink通过jdbc读取postgresql数据库里的数据</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/704.html">flink相关 – 通过Table API写入ElasticSearch的部分源码分析</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/700.html">flink的动态表格</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/696.html">flink相关 – 读入kafka数据源</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/691.html">flink学习笔记(一)</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/686.html">Java字节码增强应用</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/662.html">JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/657.html">Java类库设计之日志框架选择</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/649.html">Java多线程知识点（下）</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/645.html">如何写代码来解决生产者消费者问题？</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/642.html">Java多线程总结(上部分)面试题解答</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/637.html">细说Java的内存模型</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/633.html">Java面试题之Java语法的基础知识</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/629.html">Java的锁</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/610.html">写给计算机专业毕业生的22条宝贵建议</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
+									</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/10">2019年十月</a> (6)</li>
+	<li><a href="https://huster.top/htmls/date/2019/07">2019年七月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/06">2019年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/05">2019年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/12">2018年十二月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2018/11">2018年十一月</a> (5)</li>
+	<li><a href="https://huster.top/htmls/date/2018/10">2018年十月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2018/08">2018年八月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/07">2018年七月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/06">2018年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2018/04">2018年四月</a> (3)</li>
+	<li><a href="https://huster.top/htmls/date/2018/01">2018年一月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/10">2017年十月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/08">2017年八月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2017/07">2017年七月</a> (6)</li>
+	<li><a href="https://huster.top/htmls/date/2017/06">2017年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2017/04">2017年四月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/12">2016年十二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/11">2016年十一月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2016/10">2016年十月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/06">2016年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2016/03">2016年三月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2015/11">2015年十一月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2015/01">2015年一月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2014/10">2014年十月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2013/08">2013年八月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2013/06">2013年六月</a> (4)</li>
+	<li><a href="https://huster.top/htmls/date/2013/05">2013年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2013/03">2013年三月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/12">2012年十二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/09">2012年九月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/08">2012年八月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/07">2012年七月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/06">2012年六月</a> (2)</li>
+	<li><a href="https://huster.top/htmls/date/2012/05">2012年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2012/04">2012年四月</a> (10)</li>
+	<li><a href="https://huster.top/htmls/date/2012/03">2012年三月</a> (8)</li>
+	<li><a href="https://huster.top/htmls/date/2010/12">2010年十二月</a> (1)</li>
+		</ul></section><section id="categories-2" class="widget widget_categories"><h2 class="widget-title">分类目录</h2>		<ul><li class="cat-item cat-item-57"><a href="https://huster.top/htmls/category/nas-%e7%be%a4%e6%99%96">nas-群晖</a> (2)
+</li>
+	<li class="cat-item cat-item-11"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7">PHP高效编程</a> (6)
+<ul class="children"><li class="cat-item cat-item-53"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php-tools">PHP的开发工具</a> (3)
+</li>
+	<li class="cat-item cat-item-6"><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php%e9%82%a3%e4%ba%9b%e6%9c%89%e8%b6%a3%e7%9a%84%e4%ba%8b%e5%84%bf" title="php那些以前没注意到的，或者很少注意到事情">PHP编程</a> (3)
+</li>
+</ul></li>
+	<li class="cat-item cat-item-74"><a href="https://huster.top/htmls/category/tensortflow">TensortFlow</a> (2)
+</li>
+	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
+</li>
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (66)
+<ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
+</li>
+	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
+</li>
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (36)
+</li>
+	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
+</li>
+	<li class="cat-item cat-item-23"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/%e6%9c%8d%e5%8a%a1">PHP编写服务的研究</a> (1)
+</li>
+	<li class="cat-item cat-item-40"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/rfc793-tcp%e6%8e%a7%e5%88%b6%e5%8d%8f%e8%ae%ae">RFC793-TCP控制协议</a> (1)
+</li>
+	<li class="cat-item cat-item-56"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/spring%e6%96%87%e6%a1%a3">Spring文档</a> (3)
+</li>
+	<li class="cat-item cat-item-1"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/uncategorized">其他</a> (5)
+</li>
+</ul></li>
+	<li class="cat-item cat-item-16"><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84">系统架构学习</a> (13)
+</li>
+	<li class="cat-item cat-item-75"><a href="https://huster.top/htmls/category/%e8%bd%ac%e8%bd%bd">转载</a> (2)
+</li>
+		</ul></section><section id="tag_cloud-2" class="widget widget_tag_cloud"><h2 class="widget-title">标签</h2><div class="tagcloud"><a href="https://huster.top/htmls/tag/apache" class="tag-cloud-link tag-link-31 tag-link-position-1" style="font-size: 1em;">Apache</a>
+<a href="https://huster.top/htmls/tag/codesniffer" class="tag-cloud-link tag-link-12 tag-link-position-2" style="font-size: 1em;">CodeSniffer</a>
+<a href="https://huster.top/htmls/tag/ecache" class="tag-cloud-link tag-link-67 tag-link-position-3" style="font-size: 1em;">Ecache</a>
+<a href="https://huster.top/htmls/tag/globals" class="tag-cloud-link tag-link-10 tag-link-position-4" style="font-size: 1em;">GLOBALS</a>
+<a href="https://huster.top/htmls/tag/hessian" class="tag-cloud-link tag-link-73 tag-link-position-5" style="font-size: 1em;">Hessian</a>
+<a href="https://huster.top/htmls/tag/http1-1" class="tag-cloud-link tag-link-22 tag-link-position-6" style="font-size: 1em;">HTTP/1.1</a>
+<a href="https://huster.top/htmls/tag/httpurlconnection" class="tag-cloud-link tag-link-71 tag-link-position-7" style="font-size: 1em;">HttpURLConnection</a>
+<a href="https://huster.top/htmls/tag/http%e8%af%b7%e6%b1%82" class="tag-cloud-link tag-link-70 tag-link-position-8" style="font-size: 1em;">Http请求</a>
+<a href="https://huster.top/htmls/tag/ioc" class="tag-cloud-link tag-link-17 tag-link-position-9" style="font-size: 1em;">IoC</a>
+<a href="https://huster.top/htmls/tag/java" class="tag-cloud-link tag-link-58 tag-link-position-10" style="font-size: 1em;">Java</a>
+<a href="https://huster.top/htmls/tag/java-spring-petclinic" class="tag-cloud-link tag-link-55 tag-link-position-11" style="font-size: 1em;">Java spring-petclinic</a>
+<a href="https://huster.top/htmls/tag/log4j" class="tag-cloud-link tag-link-68 tag-link-position-12" style="font-size: 1em;">log4j</a>
+<a href="https://huster.top/htmls/tag/logback" class="tag-cloud-link tag-link-69 tag-link-position-13" style="font-size: 1em;">logback</a>
+<a href="https://huster.top/htmls/tag/maven" class="tag-cloud-link tag-link-64 tag-link-position-14" style="font-size: 1em;">Maven</a>
+<a href="https://huster.top/htmls/tag/maven-shade-plugin" class="tag-cloud-link tag-link-66 tag-link-position-15" style="font-size: 1em;">maven-shade-plugin</a>
+<a href="https://huster.top/htmls/tag/mybatis" class="tag-cloud-link tag-link-72 tag-link-position-16" style="font-size: 1em;">mybatis</a>
+<a href="https://huster.top/htmls/tag/php" class="tag-cloud-link tag-link-7 tag-link-position-17" style="font-size: 1em;">PHP</a>
+<a href="https://huster.top/htmls/tag/plugin" class="tag-cloud-link tag-link-65 tag-link-position-18" style="font-size: 1em;">Plugin</a>
+<a href="https://huster.top/htmls/tag/register_globals" class="tag-cloud-link tag-link-9 tag-link-position-19" style="font-size: 1em;">register_globals</a>
+<a href="https://huster.top/htmls/tag/rfc" class="tag-cloud-link tag-link-20 tag-link-position-20" style="font-size: 1em;">RFC</a>
+<a href="https://huster.top/htmls/tag/rfc2616" class="tag-cloud-link tag-link-21 tag-link-position-21" style="font-size: 1em;">RFC2616</a>
+<a href="https://huster.top/htmls/tag/serializable" class="tag-cloud-link tag-link-59 tag-link-position-22" style="font-size: 1em;">Serializable</a>
+<a href="https://huster.top/htmls/tag/spring" class="tag-cloud-link tag-link-63 tag-link-position-23" style="font-size: 1em;">Spring</a>
+<a href="https://huster.top/htmls/tag/spring-boot" class="tag-cloud-link tag-link-62 tag-link-position-24" style="font-size: 1em;">Spring boot</a>
+<a href="https://huster.top/htmls/tag/thinkphp" class="tag-cloud-link tag-link-34 tag-link-position-25" style="font-size: 1em;">ThinkPHP</a>
+<a href="https://huster.top/htmls/tag/vsftp" class="tag-cloud-link tag-link-43 tag-link-position-26" style="font-size: 1em;">VSFTP</a>
+<a href="https://huster.top/htmls/tag/wordpress%e6%ba%90%e7%a0%81" class="tag-cloud-link tag-link-8 tag-link-position-27" style="font-size: 1em;">wordpress源码</a>
+<a href="https://huster.top/htmls/tag/zeromq" class="tag-cloud-link tag-link-29 tag-link-position-28" style="font-size: 1em;">ZeroMQ</a>
+<a href="https://huster.top/htmls/tag/zmq" class="tag-cloud-link tag-link-41 tag-link-position-29" style="font-size: 1em;">zmq</a>
+<a href="https://huster.top/htmls/tag/zmq%e7%9a%84%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-42 tag-link-position-30" style="font-size: 1em;">ZMQ的学习笔记</a>
+<a href="https://huster.top/htmls/tag/%e4%ba%92%e8%81%94%e7%bd%91" class="tag-cloud-link tag-link-14 tag-link-position-31" style="font-size: 1em;">互联网</a>
+<a href="https://huster.top/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86" class="tag-cloud-link tag-link-61 tag-link-position-32" style="font-size: 1em;">动态代理</a>
+<a href="https://huster.top/htmls/tag/%e5%8f%8c%e5%bc%95%e5%8f%b7" class="tag-cloud-link tag-link-36 tag-link-position-33" style="font-size: 1em;">双引号</a>
+<a href="https://huster.top/htmls/tag/%e5%a4%9a%e7%ba%bf%e7%a8%8b" class="tag-cloud-link tag-link-78 tag-link-position-34" style="font-size: 1em;">多线程</a>
+<a href="https://huster.top/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-28 tag-link-position-35" style="font-size: 1em;">学习笔记</a>
+<a href="https://huster.top/htmls/tag/%e5%ae%89%e5%85%a8" class="tag-cloud-link tag-link-35 tag-link-position-36" style="font-size: 1em;">安全</a>
+<a href="https://huster.top/htmls/tag/%e6%8a%80%e6%9c%af%e5%80%ba%e5%8a%a1" class="tag-cloud-link tag-link-30 tag-link-position-37" style="font-size: 1em;">技术债务</a>
+<a href="https://huster.top/htmls/tag/%e6%97%a5%e5%bf%97" class="tag-cloud-link tag-link-32 tag-link-position-38" style="font-size: 1em;">日志</a>
+<a href="https://huster.top/htmls/tag/%e6%9d%83%e5%88%a9" class="tag-cloud-link tag-link-49 tag-link-position-39" style="font-size: 1em;">权利</a>
+<a href="https://huster.top/htmls/tag/%e6%9f%b4%e9%9d%99" class="tag-cloud-link tag-link-48 tag-link-position-40" style="font-size: 1em;">柴静</a>
+<a href="https://huster.top/htmls/tag/%e6%b3%9b%e5%9e%8b" class="tag-cloud-link tag-link-60 tag-link-position-41" style="font-size: 1em;">泛型</a>
+<a href="https://huster.top/htmls/tag/%e6%b5%8f%e8%a7%88%e5%99%a8" class="tag-cloud-link tag-link-15 tag-link-position-42" style="font-size: 1em;">浏览器</a>
+<a href="https://huster.top/htmls/tag/%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-13 tag-link-position-43" style="font-size: 1em;">系统设计</a>
+<a href="https://huster.top/htmls/tag/%e8%af%bb%e4%b9%a6%e7%ac%94%e8%ae%b0" class="tag-cloud-link tag-link-47 tag-link-position-44" style="font-size: 1em;">读书笔记</a>
+<a href="https://huster.top/htmls/tag/%e8%bd%af%e4%bb%b6%e8%ae%be%e8%ae%a1" class="tag-cloud-link tag-link-18 tag-link-position-45" style="font-size: 1em;">软件设计</a></div>
+</section><section id="linkcat-2" class="widget widget_links"><h2 class="widget-title">链接表</h2>
+	<ul class="xoxo blogroll"><li><a href="http://blog.sina.com.cn/rentb" rel="me" title="原来的博客地址" target="_blank">博客老地址</a></li>
+<li><a href="http://blog.csdn.net/heiyeshuwu" rel="colleague" target="_blank">黑夜路人</a></li>
+
+	</ul></section><section id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widget-title">近期评论</h2><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/645.html" rel="external nofollow" class="url">如何写代码来解决生产者消费者问题？ – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/615.html/comment-page-1#comment-24314">理解Java线程间的通信</a>》</li><li class="recentcomments"><span class="comment-author-link">龙安_任天兵</span>发表在《<a href="https://huster.top/htmls/557.html/comment-page-1#comment-24313">并发编程模型(转载)</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Java多线程总结(上部分)面试题解答 – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/637.html/comment-page-1#comment-24312">细说Java的内存模型</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="https://huster.top/htmls/642.html" rel="external nofollow" class="url">Java多线程总结(上部分)面试题解答 – 三两带走</a></span>发表在《<a href="https://huster.top/htmls/557.html/comment-page-1#comment-24311">并发编程模型(转载)</a>》</li><li class="recentcomments"><span class="comment-author-link">shanchao</span>发表在《<a href="https://huster.top/htmls/573.html/comment-page-1#comment-24309">spring boot应用在 POST请求的Invalid CORS request的问题</a>》</li><li class="recentcomments"><span class="comment-author-link">adimin</span>发表在《<a href="https://huster.top/htmls/462.html/comment-page-1#comment-24307">介绍spring的两个接口ApplicationContextAware和ApplicationListener</a>》</li><li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a href="https://huster.top/htmls/462.html/comment-page-1#comment-24306">介绍spring的两个接口ApplicationContextAware和ApplicationListener</a>》</li><li class="recentcomments"><span class="comment-author-link">匿名</span>发表在《<a href="https://huster.top/htmls/472.html/comment-page-1#comment-24276">Spring boot访问js、css、图片(img)访问404无法访问的问题</a>》</li><li class="recentcomments"><span class="comment-author-link"><a href="http://kailin.li" rel="external nofollow" class="url">kailin</a></span>发表在《<a href="https://huster.top/htmls/472.html/comment-page-1#comment-24275">Spring boot访问js、css、图片(img)访问404无法访问的问题</a>》</li><li class="recentcomments"><span class="comment-author-link">基地华科男</span>发表在《<a href="https://huster.top/about-me/comment-page-2#comment-24271">关于我</a>》</li></ul></section></aside></div>
+
+		<footer id="colophon" class="site-footer" role="contentinfo"><div class="site-info">
+								<span class="site-title"><a href="https://huster.top/" rel="home">三两带走</a></span>
+				<a href="https://cn.wordpress.org/">自豪地采用WordPress</a>
+			</div>
+		</footer></div>
+</div>
+
+<script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shCore.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushAS3.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushBash.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushColdFusion.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushClojure.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCpp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCSharp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushCss.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushDelphi.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushDiff.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushErlang.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushFSharp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushGroovy.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJava.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJavaFX.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushJScript.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushLatex.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushMatlabKey.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushObjC.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPerl.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPhp.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPlain.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPowerShell.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushPython.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/third-party-brushes/shBrushR.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushRuby.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushScala.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushSql.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushVb.js"></script><script type="text/javascript" src="https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/shBrushXml.js"></script><script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/styles/shCore.css?ver=2.1.364";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/styles/shThemeRDark.css?ver=2.1.364";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.clipboardSwf = 'https://huster.top/wp-content/plugins/syntaxhighlighter/syntaxhighlighter2/scripts/clipboard.swf';
+	SyntaxHighlighter.config.strings.expandSource = 'show source';
+	SyntaxHighlighter.config.strings.viewSource = 'view source';
+	SyntaxHighlighter.config.strings.copyToClipboard = 'copy to clipboard';
+	SyntaxHighlighter.config.strings.copyToClipboardConfirmation = 'The code is in your clipboard now';
+	SyntaxHighlighter.config.strings.print = 'print';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['auto-links'] = false;
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.all();
+
+	// Infinite scroll support
+	if ( typeof( jQuery ) !== 'undefined' ) {
+		jQuery( function( $ ) {
+			$( document.body ).on( 'post-load', function() {
+				SyntaxHighlighter.highlight();
+			} );
+		} );
+	}
+</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
+/* <![CDATA[ */
+var screenReaderText = {"expand":"\u5c55\u5f00\u5b50\u83dc\u5355","collapse":"\u6298\u53e0\u5b50\u83dc\u5355"};
+/* ]]> */
+</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/functions.js"></script><script async="async" type="text/javascript" src="https://huster.top/wp-content/plugins/akismet/_inc/form.js"></script></body></html>

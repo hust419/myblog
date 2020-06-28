@@ -109,6 +109,7 @@
 <div>    at org.apache.flink.runtime.minicluster.MiniCluster.executeJobBlocking(MiniCluster.java:627)</div>
 <div>    at org.apache.flink.streaming.api.environment.LocalStreamEnvironment.execute(LocalStreamEnvironment.java:117)</div>
 <div>    at org.apache.flink.streaming.api.environment.StreamExecutionEnvironment.execute(StreamExecutionEnvironment.java:1507)</div>
+<div>    at com.hellobike.search.flink.task.FullIndexBuilderTask.main(FullIndexBuilderTask.java:92)</div>
 <div>Caused by: java.lang.Exception: java.lang.IllegalArgumentException: open() failed.ERROR: operator does not exist: character varying >= bigint</div>
 <div>  建议：No operator matches the given name and argument type(s). You might need to add explicit type casts.</div>
 <div>  位置：514</div>
@@ -166,13 +167,13 @@
 				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
 <p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes"></p>
 <p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
-<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="706" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="33322f2da3"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="0"></p>			</form>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="706" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="9142273af1"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="136"></p>			</form>
 			</div>
 	
 </div>
 
 	<nav class="navigation post-navigation" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
-		<div class="nav-links"><div class="nav-previous"><a href="https://huster.top/htmls/704.html" rel="prev"><span class="meta-nav" aria-hidden="true">上一</span> <span class="screen-reader-text">上篇文章：</span> <span class="post-title">flink相关 – 通过Table API写入ElasticSearch的部分源码分析</span></a></div></div>
+		<div class="nav-links"><div class="nav-previous"><a href="https://huster.top/htmls/704.html" rel="prev"><span class="meta-nav" aria-hidden="true">上一</span> <span class="screen-reader-text">上篇文章：</span> <span class="post-title">flink相关 – 通过Table API写入ElasticSearch的部分源码分析</span></a></div><div class="nav-next"><a href="https://huster.top/htmls/708.html" rel="next"><span class="meta-nav" aria-hidden="true">下一</span> <span class="screen-reader-text">下篇文章：</span> <span class="post-title">flink使用时间戳作为起始offset消费kafka的问题</span></a></div></div>
 	</nav></main><aside id="content-bottom-widgets" class="content-bottom-widgets" role="complementary"><div class="widget-area">
 			<section id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><script src="https://s22.cnzz.com/z_stat.php?id=3943131&web_id=3943131" language="JavaScript"></script></div></section></div>
 	
@@ -180,6 +181,15 @@
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/720.html">生产FullGC问题排查</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/713.html">flink读取kafka数据未能触发watermark</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/708.html">flink使用时间戳作为起始offset消费kafka的问题</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/706.html">flink通过jdbc读取postgresql数据库里的数据</a>
 									</li>
 											<li>
@@ -230,16 +240,9 @@
 											<li>
 					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/573.html">spring boot应用在 POST请求的Invalid CORS request的问题</a>
-									</li>
-											<li>
-					<a href="https://huster.top/htmls/568.html">Mac下Pip的报错问题</a>
-									</li>
-											<li>
-					<a href="https://huster.top/htmls/557.html">并发编程模型(转载)</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2019/10">2019年十月</a> (5)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2019/10">2019年十月</a> (6)</li>
 	<li><a href="https://huster.top/htmls/date/2019/07">2019年七月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2019/06">2019年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2019/05">2019年五月</a> (1)</li>
@@ -289,12 +292,12 @@
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (63)
-<ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (5)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (66)
+<ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (35)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (36)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
