@@ -73,7 +73,20 @@
 					</header><div id="content" class="site-content">
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main"><header class="page-header"><h1 class="page-title">分类：Java学习</h1>			</header><article id="post-516" class="post-516 post type-post status-publish format-standard hentry category-java tag-java tag-mybatis"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/516.html" rel="bookmark">Mybatis获取最近插入的主键</a></h2>	</header><div class="entry-content">
+		<main id="main" class="site-main" role="main"><header class="page-header"><h1 class="page-title">分类：Java学习</h1>			</header><article id="post-524" class="post-524 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/524.html" rel="bookmark">通过文件覆盖类里面的属性–一种配置文件的另类实现方式</a></h2>	</header><div class="entry-content">
+		<p>背景： 假设有这么一个场景，你写的jar包或者源代码服务提供给别人使用，你的默认配置是写在类里面的，如何通过一个ini文件来修改你写在类里面的配置呢？ 毕竟用户不应该去修改你的代码，而是仅仅通过文件配置来实现配置的修改。</p>
+<p>在一般的框架层面，系统已经支持的很好，例如spring boot的application.properties就是做这个事情的。另外，maven的插件也可以实现antx.properties的动态替换，下面我们用Java的反射手工的实现这么一个功能。</p>
+<p> <a href="https://huster.top/htmls/524.html#more-524" class="more-link">继续阅读<span class="screen-reader-text">“通过文件覆盖类里面的属性–一种配置文件的另类实现方式”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/524.html" rel="bookmark"><time class="entry-date published" datetime="2017-08-31T23:44:23+00:00">2017 年 8 月 31 日</time><time class="updated" datetime="2017-08-31T23:46:43+00:00">2017 年 8 月 31 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/524.html#respond"><span class="screen-reader-text">于通过文件覆盖类里面的属性–一种配置文件的另类实现方式</span>留下评论</a></span>			</footer></article><article id="post-520" class="post-520 post type-post status-publish format-standard hentry category-java category-16"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/520.html" rel="bookmark">如何通过spring-boot-starter-redis使用aliyun的Redis</a></h2>	</header><div class="entry-content">
+		<p>我有一个项目，使用的是spring boot构建，整个系统使用spring security构建了一个登录系统，关于spring boot security 如何使用，这里就不介绍了，这里只描述如何解决我遇到的问题。</p>
+<p>背景 : spring boot + spring security 构建的登陆系统，只能满足单机的需求，如果程序部署在集群之上，那么就涉及到了session的共享问题，否则你的用户就会显示一会登陆，一会又没登陆(落到了另外一台机器)。核心思想是通过redis来在集群之间共享用户的session，实现这样的方案有两种方法。</p>
+<p> </p>
+<p> <a href="https://huster.top/htmls/520.html#more-520" class="more-link">继续阅读<span class="screen-reader-text">“如何通过spring-boot-starter-redis使用aliyun的Redis”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/520.html" rel="bookmark"><time class="entry-date published" datetime="2017-08-18T14:00:54+00:00">2017 年 8 月 18 日</time><time class="updated" datetime="2018-11-05T10:36:46+00:00">2018 年 11 月 5 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a>、<a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84" rel="category tag">系统架构学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/520.html#respond"><span class="screen-reader-text">于如何通过spring-boot-starter-redis使用aliyun的Redis</span>留下评论</a></span>			</footer></article><article id="post-516" class="post-516 post type-post status-publish format-standard hentry category-java tag-java tag-mybatis"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/516.html" rel="bookmark">Mybatis获取最近插入的主键</a></h2>	</header><div class="entry-content">
 		<p>通常情况下，我们插入一条记录的mapper如下：</p>
 <pre></pre>
 <pre class="brush:java">    @Insert("insert into experiment_info (gmt_create, gmt_modified, user_id, name, type) values (now(),now(),#{userId},#{name},#{type})")
@@ -139,18 +152,7 @@ private static final long serialVersionUID = 42L;</li>
 <p> <a href="https://huster.top/htmls/480.html#more-480" class="more-link">继续阅读<span class="screen-reader-text">“用几个简单例子理解Java的泛型并用好他”</span></a></p>
 	</div>
 
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/480.html" rel="bookmark"><time class="entry-date published" datetime="2017-04-12T23:36:40+00:00">2017 年 4 月 12 日</time><time class="updated" datetime="2017-06-28T18:00:07+00:00">2017 年 6 月 28 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java" rel="tag">Java</a>、<a href="https://huster.top/htmls/tag/%e6%b3%9b%e5%9e%8b" rel="tag">泛型</a></span><span class="comments-link"><a href="https://huster.top/htmls/480.html#respond"><span class="screen-reader-text">于用几个简单例子理解Java的泛型并用好他</span>留下评论</a></span>			</footer></article><article id="post-472" class="post-472 post type-post status-publish format-standard hentry category-java tag-java tag-spring-boot"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/472.html" rel="bookmark">Spring boot访问js、css、图片(img)访问404无法访问的问题</a></h2>	</header><div class="entry-content">
-		<p>问题： 今天在使用spring boot的时候，我按照spring boot的要求将css、js、图片放在规定的/src/main/resource/public/js下面，却怎么也访问不到，报的是404错误，在查找资料无果后，经过反复的实验，终于找到了问题的解决方法.</p>
-<p> <a href="https://huster.top/htmls/472.html#more-472" class="more-link">继续阅读<span class="screen-reader-text">“Spring boot访问js、css、图片(img)访问404无法访问的问题”</span></a></p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/472.html" rel="bookmark"><time class="entry-date published" datetime="2016-12-05T22:13:26+00:00">2016 年 12 月 5 日</time><time class="updated" datetime="2017-06-28T18:01:19+00:00">2017 年 6 月 28 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java" rel="tag">Java</a>、<a href="https://huster.top/htmls/tag/spring-boot" rel="tag">Spring boot</a></span><span class="comments-link"><a href="https://huster.top/htmls/472.html#comments"><span class="screen-reader-text">Spring boot访问js、css、图片(img)访问404无法访问的问题</span>有3条评论</a></span>			</footer></article><article id="post-467" class="post-467 post type-post status-publish format-standard hentry category-java tag-java tag-61"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/467.html" rel="bookmark">Java的动态代理和他的应用</a></h2>	</header><div class="entry-content">
-		<p>Java的动态代理有JDK原生的代理和cglib两种代理模式, 在我们分析源代码的时候，经常可以看到动态代理的身影，所以这部分是必需要理解并且要记住的一个知识点和常识。</p>
-<p> </p>
-<p> <a href="https://huster.top/htmls/467.html#more-467" class="more-link">继续阅读<span class="screen-reader-text">“Java的动态代理和他的应用”</span></a></p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/467.html" rel="bookmark"><time class="entry-date published" datetime="2016-11-23T22:08:46+00:00">2016 年 11 月 23 日</time><time class="updated" datetime="2017-06-28T18:01:52+00:00">2017 年 6 月 28 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java" rel="tag">Java</a>、<a href="https://huster.top/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86" rel="tag">动态代理</a></span><span class="comments-link"><a href="https://huster.top/htmls/467.html#respond"><span class="screen-reader-text">于Java的动态代理和他的应用</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/480.html" rel="bookmark"><time class="entry-date published" datetime="2017-04-12T23:36:40+00:00">2017 年 4 月 12 日</time><time class="updated" datetime="2017-06-28T18:00:07+00:00">2017 年 6 月 28 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java" rel="tag">Java</a>、<a href="https://huster.top/htmls/tag/%e6%b3%9b%e5%9e%8b" rel="tag">泛型</a></span><span class="comments-link"><a href="https://huster.top/htmls/480.html#respond"><span class="screen-reader-text">于用几个简单例子理解Java的泛型并用好他</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><a class="prev page-numbers" href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0/page/2">上一页</a>
 <a class="page-numbers" href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0/"><span class="meta-nav screen-reader-text">页 </span>1</a>
 <a class="page-numbers" href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0/page/2"><span class="meta-nav screen-reader-text">页 </span>2</a>
@@ -161,6 +163,12 @@ private static final long serialVersionUID = 42L;</li>
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/748.html">CPU异常问题排查</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/745.html">又一起GC问题排查过程</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/720.html">生产FullGC问题排查</a>
 									</li>
 											<li>
@@ -214,13 +222,9 @@ private static final long serialVersionUID = 42L;</li>
 											<li>
 					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/610.html">写给计算机专业毕业生的22条宝贵建议</a>
-									</li>
-											<li>
-					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2019/10">2019年十月</a> (6)</li>
 	<li><a href="https://huster.top/htmls/date/2019/07">2019年七月</a> (1)</li>
@@ -272,12 +276,12 @@ private static final long serialVersionUID = 42L;</li>
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28 current-cat-parent current-cat-ancestor"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (66)
+	<li class="cat-item cat-item-28 current-cat-parent current-cat-ancestor"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (68)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54 current-cat"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (36)
+	<li class="cat-item cat-item-54 current-cat"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (38)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>

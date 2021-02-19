@@ -73,7 +73,23 @@
 					</header><div id="content" class="site-content">
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main"><article id="post-720" class="post-720 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/720.html" rel="bookmark">生产FullGC问题排查</a></h2>	</header><div class="entry-content">
+		<main id="main" class="site-main" role="main"><article id="post-748" class="post-748 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/748.html" rel="bookmark">CPU异常问题排查</a></h2>	</header><div class="entry-content">
+		<h1 id="yInPE" data-lake-id="efdcc678a7cc822e93207d6003a42bea">背景</h1>
+<p data-lake-id="4a6eeda11eeeee9313ae155a9a8b4601">距离上次排查cpu异常问题已经过去了至少5年了，那个时候刚接触Java就遇到了hashmap导致的cpu100%问题，茫然无措的时候那叫一个难，现在我们有了基本的常识之后，就不慌了，按照排查思路排查，一定能发现问题。</p>
+<p data-lake-id="4a6eeda11eeeee9313ae155a9a8b4601">
+</p><p data-lake-id="4a6eeda11eeeee9313ae155a9a8b4601"> <a href="https://huster.top/htmls/748.html#more-748" class="more-link">继续阅读<span class="screen-reader-text">“CPU异常问题排查”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/748.html" rel="bookmark"><time class="entry-date published" datetime="2021-02-19T16:59:57+00:00">2021 年 2 月 19 日</time><time class="updated" datetime="2021-02-19T17:00:09+00:00">2021 年 2 月 19 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/748.html#respond"><span class="screen-reader-text">于CPU异常问题排查</span>留下评论</a></span>			</footer></article><article id="post-745" class="post-745 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/745.html" rel="bookmark">又一起GC问题排查过程</a></h2>	</header><div class="entry-content">
+		<h2 id="ggbT8" data-lake-id="9f3c08a1f9fb9f3501aad6053e1c2122">背景</h2>
+<p data-lake-id="f03a859e570b282b5d3e38ddf074e5b5">继上次找到redis导致的gc问题之后，又有一个应用发生了gc时间长的问题。每次gc的大概1s的停顿时间，导致这1s的请求全部超时，经常被业务方投诉。因为G1有更好的并行度，更短和确定的并行时间，因此负责的开发将应用从CMS升级到G1，然而问题依然没有解决. 这是一个网关类型的应用，负责接受rpc的调用，将请求转发到后端的http请求，将封装好的数据，转发给业务使用。所以实际上是</p>
+<p data-lake-id="a00cddf79ea31d40896e0b20ef03866d">Application—->rpc–>GateWay(问题应用)—–http client —> 其他服务.</p>
+<p data-lake-id="a00cddf79ea31d40896e0b20ef03866d">
+</p><p data-lake-id="a00cddf79ea31d40896e0b20ef03866d">
+</p><p data-lake-id="a00cddf79ea31d40896e0b20ef03866d"> <a href="https://huster.top/htmls/745.html#more-745" class="more-link">继续阅读<span class="screen-reader-text">“又一起GC问题排查过程”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/745.html" rel="bookmark"><time class="entry-date published updated" datetime="2020-09-08T19:57:51+00:00">2020 年 9 月 8 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/745.html#respond"><span class="screen-reader-text">于又一起GC问题排查过程</span>留下评论</a></span>			</footer></article><article id="post-720" class="post-720 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/720.html" rel="bookmark">生产FullGC问题排查</a></h2>	</header><div class="entry-content">
 		<h1>FullGC时间过长</h1>
 <p> </p>
 <div class="lake-content-editor-core lake-engine lake-typography-classic" data-lake-element="root" data-selection-180554="%7B%22path%22%3A%5B%5B92%2C0%2C4%5D%2C%5B92%2C0%2C4%5D%5D%2C%22uuid%22%3A%22180554%22%2C%22active%22%3Atrue%7D">
@@ -321,43 +337,22 @@
 <p> <a href="https://huster.top/htmls/691.html#more-691" class="more-link">继续阅读<span class="screen-reader-text">“flink学习笔记(一)”</span></a></p>
 	</div>
 
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/691.html" rel="bookmark"><time class="entry-date published updated" datetime="2019-10-17T16:45:30+00:00">2019 年 10 月 17 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink" rel="category tag">flink</a></span><span class="comments-link"><a href="https://huster.top/htmls/691.html#respond"><span class="screen-reader-text">于flink学习笔记(一)</span>留下评论</a></span>			</footer></article><article id="post-686" class="post-686 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/686.html" rel="bookmark">Java字节码增强应用</a></h2>	</header><div class="entry-content">
-		<h1>Java字节码增强技术</h1>
-<h1 id="N9W6r">认识Instrumentation</h1>
-<p> </p>
-<p>基本用法:</p>
-<table class="lake-table" style="width: 722px;"><colgroup><col width="240"><col width="240"><col width="241"></colgroup><tbody><tr><td>方法</td>
-<td>作用</td>
-<td></td>
-</tr><tr><td>addTransformer</td>
-<td>织入一段代码</td>
-<td></td>
-</tr><tr><td>removeTransformer</td>
-<td>移除被织入的代码</td>
-<td></td>
-</tr><tr><td style="background-color: #ffffff;" colspan="1">retransformClasses</td>
-<td style="background-color: #ffffff;" colspan="1">用于已经载入的类重新植入</td>
-<td style="background-color: #ffffff;" colspan="1">Class<?>… classes</td>
-</tr></tbody></table><p> <a href="https://huster.top/htmls/686.html#more-686" class="more-link">继续阅读<span class="screen-reader-text">“Java字节码增强应用”</span></a></p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/686.html" rel="bookmark"><time class="entry-date published" datetime="2019-07-09T20:55:59+00:00">2019 年 7 月 9 日</time><time class="updated" datetime="2019-07-09T20:57:27+00:00">2019 年 7 月 9 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/686.html#respond"><span class="screen-reader-text">于Java字节码增强应用</span>留下评论</a></span>			</footer></article><article id="post-662" class="post-662 post type-post status-publish format-standard hentry category-java tag-java-agent tag-jvm-sandbox"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/662.html" rel="bookmark">JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</a></h2>	</header><div class="entry-content">
-		<h1>背景</h1>
-<p>jvm sandbox是一个开源项目https://github.com/alibaba/jvm-sandbox/wiki/FIRST-MODULE，他是对java agent的一个应用，他将agent发扬光大，让你可以不用用户改代码的情况下，进行代码增强，实现AOP，切面编程的功能，非常强大。但是他的代码量其实不大，文档清晰，所以读起来不是太费劲。他最最基础和核心的功能是使用了Java 提供的 Instrumenttation和ClassFileTransformer来实现的，我们先来了解下这个两个类的API，了解他们都提供了什么功能。</p>
-<p> </p>
-<p> <a href="https://huster.top/htmls/662.html#more-662" class="more-link">继续阅读<span class="screen-reader-text">“JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用”</span></a></p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/662.html" rel="bookmark"><time class="entry-date published updated" datetime="2019-06-03T20:41:44+00:00">2019 年 6 月 3 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java-agent" rel="tag">java agent</a>、<a href="https://huster.top/htmls/tag/jvm-sandbox" rel="tag">jvm sandbox</a></span><span class="comments-link"><a href="https://huster.top/htmls/662.html#respond"><span class="screen-reader-text">于JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/691.html" rel="bookmark"><time class="entry-date published updated" datetime="2019-10-17T16:45:30+00:00">2019 年 10 月 17 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink" rel="category tag">flink</a></span><span class="comments-link"><a href="https://huster.top/htmls/691.html#respond"><span class="screen-reader-text">于flink学习笔记(一)</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><span aria-current="page" class="page-numbers current"><span class="meta-nav screen-reader-text">页 </span>1</span>
 <a class="page-numbers" href="https://huster.top/page/2"><span class="meta-nav screen-reader-text">页 </span>2</a>
 <span class="page-numbers dots">…</span>
-<a class="page-numbers" href="https://huster.top/page/9"><span class="meta-nav screen-reader-text">页 </span>9</a>
+<a class="page-numbers" href="https://huster.top/page/10"><span class="meta-nav screen-reader-text">页 </span>10</a>
 <a class="next page-numbers" href="https://huster.top/page/2">下一页</a></div>
 	</nav></main></div>
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/748.html">CPU异常问题排查</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/745.html">又一起GC问题排查过程</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/720.html">生产FullGC问题排查</a>
 									</li>
 											<li>
@@ -411,13 +406,9 @@
 											<li>
 					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/610.html">写给计算机专业毕业生的22条宝贵建议</a>
-									</li>
-											<li>
-					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2019/10">2019年十月</a> (6)</li>
 	<li><a href="https://huster.top/htmls/date/2019/07">2019年七月</a> (1)</li>
@@ -469,12 +460,12 @@
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (66)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (68)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (36)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (38)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>

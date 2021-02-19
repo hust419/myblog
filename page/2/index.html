@@ -73,7 +73,34 @@
 					</header><div id="content" class="site-content">
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main"><article id="post-657" class="post-657 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/657.html" rel="bookmark">Java类库设计之日志框架选择</a></h2>	</header><div class="entry-content">
+		<main id="main" class="site-main" role="main"><article id="post-686" class="post-686 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/686.html" rel="bookmark">Java字节码增强应用</a></h2>	</header><div class="entry-content">
+		<h1>Java字节码增强技术</h1>
+<h1 id="N9W6r">认识Instrumentation</h1>
+<p> </p>
+<p>基本用法:</p>
+<table class="lake-table" style="width: 722px;"><colgroup><col width="240"><col width="240"><col width="241"></colgroup><tbody><tr><td>方法</td>
+<td>作用</td>
+<td></td>
+</tr><tr><td>addTransformer</td>
+<td>织入一段代码</td>
+<td></td>
+</tr><tr><td>removeTransformer</td>
+<td>移除被织入的代码</td>
+<td></td>
+</tr><tr><td style="background-color: #ffffff;" colspan="1">retransformClasses</td>
+<td style="background-color: #ffffff;" colspan="1">用于已经载入的类重新植入</td>
+<td style="background-color: #ffffff;" colspan="1">Class<?>… classes</td>
+</tr></tbody></table><p> <a href="https://huster.top/htmls/686.html#more-686" class="more-link">继续阅读<span class="screen-reader-text">“Java字节码增强应用”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/686.html" rel="bookmark"><time class="entry-date published" datetime="2019-07-09T20:55:59+00:00">2019 年 7 月 9 日</time><time class="updated" datetime="2019-07-09T20:57:27+00:00">2019 年 7 月 9 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/686.html#respond"><span class="screen-reader-text">于Java字节码增强应用</span>留下评论</a></span>			</footer></article><article id="post-662" class="post-662 post type-post status-publish format-standard hentry category-java tag-java-agent tag-jvm-sandbox"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/662.html" rel="bookmark">JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</a></h2>	</header><div class="entry-content">
+		<h1>背景</h1>
+<p>jvm sandbox是一个开源项目https://github.com/alibaba/jvm-sandbox/wiki/FIRST-MODULE，他是对java agent的一个应用，他将agent发扬光大，让你可以不用用户改代码的情况下，进行代码增强，实现AOP，切面编程的功能，非常强大。但是他的代码量其实不大，文档清晰，所以读起来不是太费劲。他最最基础和核心的功能是使用了Java 提供的 Instrumenttation和ClassFileTransformer来实现的，我们先来了解下这个两个类的API，了解他们都提供了什么功能。</p>
+<p> </p>
+<p> <a href="https://huster.top/htmls/662.html#more-662" class="more-link">继续阅读<span class="screen-reader-text">“JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/662.html" rel="bookmark"><time class="entry-date published updated" datetime="2019-06-03T20:41:44+00:00">2019 年 6 月 3 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java-agent" rel="tag">java agent</a>、<a href="https://huster.top/htmls/tag/jvm-sandbox" rel="tag">jvm sandbox</a></span><span class="comments-link"><a href="https://huster.top/htmls/662.html#respond"><span class="screen-reader-text">于JVM Sandbox 源码分析（一）基础篇: Instrumentation和ClassFileTransformer作用</span>留下评论</a></span>			</footer></article><article id="post-657" class="post-657 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/657.html" rel="bookmark">Java类库设计之日志框架选择</a></h2>	</header><div class="entry-content">
 		<h4>Java日志框架现状</h4>
 <p>Java日志框架的故事说来话长，做过开发的一定遇到过slf4j,log4j,logback,commons-logging,log4j2。=也一定见过这些jar包，什么log4j.jar,slf4j-api.jar,slf4j-log4j12.jar,logback-classic.jar,logback-core.jar等等。以前看到他们就头大，傻傻分不清楚，到现在搞清楚了也就这么回事，可以具体看看slf4j的实现和适配是怎么做的。</p>
 <p> <a href="https://huster.top/htmls/657.html#more-657" class="more-link">继续阅读<span class="screen-reader-text">“Java类库设计之日志框架选择”</span></a></p>
@@ -133,29 +160,24 @@ Java的多线程环境下，由于共享资源的竞态可能导致错误的结�
 <p> <a href="https://huster.top/htmls/615.html#more-615" class="more-link">继续阅读<span class="screen-reader-text">“理解Java线程间的通信”</span></a></p>
 	</div>
 
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/615.html" rel="bookmark"><time class="entry-date published" datetime="2018-11-01T15:08:37+00:00">2018 年 11 月 1 日</time><time class="updated" datetime="2018-11-02T11:28:43+00:00">2018 年 11 月 2 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/615.html#comments"><span class="screen-reader-text">理解Java线程间的通信</span>有1条评论</a></span>			</footer></article><article id="post-610" class="post-610 post type-post status-publish format-standard hentry category-75"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/610.html" rel="bookmark">写给计算机专业毕业生的22条宝贵建议</a></h2>	</header><div class="entry-content">
-		<p>自从毕业后，人们一直问我:“现在做什么?”我的回答是毫不含糊的:“我不知道。”“我曾经以为，当我完成硕士学位的时候，我就知道该怎么做了。”我以为我会成为一个“大师”。</p>
-<p>可是，我错了。学校并没有让我为毕业后的世界做好准备。学校的学术环境能够提供持续的反馈——你稍微偏离了轨道，有人肯定会告诉你，甚至引导你到正确的轨道上。在现实生活中，我害怕自己会做出一系列错误的决定，而当有人指正你的时候已经为时已晚。一个错误的工作选择可能会让我浪费几年的时间，甚至错过许多更好的发展机会。</p>
-<p> <a href="https://huster.top/htmls/610.html#more-610" class="more-link">继续阅读<span class="screen-reader-text">“写给计算机专业毕业生的22条宝贵建议”</span></a></p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/610.html" rel="bookmark"><time class="entry-date published updated" datetime="2018-10-26T14:59:35+00:00">2018 年 10 月 26 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e8%bd%ac%e8%bd%bd" rel="category tag">转载</a></span><span class="comments-link"><a href="https://huster.top/htmls/610.html#respond"><span class="screen-reader-text">于写给计算机专业毕业生的22条宝贵建议</span>留下评论</a></span>			</footer></article><article id="post-599" class="post-599 post type-post status-publish format-standard hentry category-tensortflow"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/599.html" rel="bookmark">tensortFlow安装和开发环境配置</a></h2>	</header><div class="entry-content">
-		<p>古人云，工欲善其事必先利其器，想要开始一个TensorFlow程序，一个好的开发工具是必不可少的。古人又云，万事开头难。如果你之前没有任何Python工程经验，你会发现看了很多入门文章，却不知道如何下手。今天就介绍下如何把TensorFlow工程环境搭建起来，剩下的就靠自己实践啦。<br>
-其实运行TensorFlow工程也就是运行一个Python工程，我大概看了下Python语法，用起来跟php、java没什么两样，大概是一些基本的数据类型，循环，条件等等，于是你可以使用pycharm很轻易的写出一段hello world!出来，但是你怎么去运行TensorFlow呢？<br><a href="https://huster.top/htmls/599.html#more-599" class="more-link">继续阅读<span class="screen-reader-text">“tensortFlow安装和开发环境配置”</span></a></p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/599.html" rel="bookmark"><time class="entry-date published" datetime="2018-10-19T17:40:26+00:00">2018 年 10 月 19 日</time><time class="updated" datetime="2018-10-19T17:50:43+00:00">2018 年 10 月 19 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/tensortflow" rel="category tag">TensortFlow</a></span><span class="comments-link"><a href="https://huster.top/htmls/599.html#respond"><span class="screen-reader-text">于tensortFlow安装和开发环境配置</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/615.html" rel="bookmark"><time class="entry-date published" datetime="2018-11-01T15:08:37+00:00">2018 年 11 月 1 日</time><time class="updated" datetime="2018-11-02T11:28:43+00:00">2018 年 11 月 2 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/615.html#comments"><span class="screen-reader-text">理解Java线程间的通信</span>有1条评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><a class="prev page-numbers" href="https://huster.top/">上一页</a>
 <a class="page-numbers" href="https://huster.top/"><span class="meta-nav screen-reader-text">页 </span>1</a>
 <span aria-current="page" class="page-numbers current"><span class="meta-nav screen-reader-text">页 </span>2</span>
 <a class="page-numbers" href="https://huster.top/page/3"><span class="meta-nav screen-reader-text">页 </span>3</a>
 <span class="page-numbers dots">…</span>
-<a class="page-numbers" href="https://huster.top/page/9"><span class="meta-nav screen-reader-text">页 </span>9</a>
+<a class="page-numbers" href="https://huster.top/page/10"><span class="meta-nav screen-reader-text">页 </span>10</a>
 <a class="next page-numbers" href="https://huster.top/page/3">下一页</a></div>
 	</nav></main></div>
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/748.html">CPU异常问题排查</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/745.html">又一起GC问题排查过程</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/720.html">生产FullGC问题排查</a>
 									</li>
 											<li>
@@ -209,13 +231,9 @@ Java的多线程环境下，由于共享资源的竞态可能导致错误的结�
 											<li>
 					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/610.html">写给计算机专业毕业生的22条宝贵建议</a>
-									</li>
-											<li>
-					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2019/10">2019年十月</a> (6)</li>
 	<li><a href="https://huster.top/htmls/date/2019/07">2019年七月</a> (1)</li>
@@ -267,12 +285,12 @@ Java的多线程环境下，由于共享资源的竞态可能导致错误的结�
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (66)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (68)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (36)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (38)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>

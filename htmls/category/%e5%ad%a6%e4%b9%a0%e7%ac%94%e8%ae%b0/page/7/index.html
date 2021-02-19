@@ -73,7 +73,34 @@
 					</header><div id="content" class="site-content">
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main"><header class="page-header"><h1 class="page-title">分类：学习笔记</h1>			</header><article id="post-155" class="post-155 post type-post status-publish format-standard hentry category-http1-1"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/155.html" rel="bookmark">HTTP/1.1之消息</a></h2>	</header><div class="entry-content">
+		<main id="main" class="site-main" role="main"><header class="page-header"><h1 class="page-title">分类：学习笔记</h1>			</header><article id="post-166" class="post-166 post type-post status-publish format-standard hentry category-http1-1 category-28 tag-http1-1 tag-14"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/166.html" rel="bookmark">HTTP/1.1阅读之响应</a></h2>	</header><div class="entry-content">
+		<p>与上一章对应，一个响应信息的包含部分如下：</p>
+<pre> Response      =        Status-Line               ; Section 6.1
+                       *(( general-header        ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.5" rel="xref">4.5</a>
+                        | response-header        ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html#sec6.2" rel="xref">6.2</a>
+                        | entity-header ) CRLF)  ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec7.html#sec7.1" rel="xref">7.1</a>
+                       CRLF
+                       [ message-body ]          ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec7.html#sec7.2" rel="xref">7.2</a>
+其中比较重要的是Status-line行，他由以下部分组成：</pre>
+<pre>Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF</pre>
+<p> <a href="https://huster.top/htmls/166.html#more-166" class="more-link">继续阅读<span class="screen-reader-text">“HTTP/1.1阅读之响应”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/166.html" rel="bookmark"><time class="entry-date published updated" datetime="2012-04-16T19:29:34+00:00">2012 年 4 月 16 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0" rel="category tag">HTTP/1.1阅读笔记</a>、<a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" rel="category tag">学习笔记</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/http1-1" rel="tag">HTTP/1.1</a>、<a href="https://huster.top/htmls/tag/%e4%ba%92%e8%81%94%e7%bd%91" rel="tag">互联网</a></span><span class="comments-link"><a href="https://huster.top/htmls/166.html#respond"><span class="screen-reader-text">于HTTP/1.1阅读之响应</span>留下评论</a></span>			</footer></article><article id="post-163" class="post-163 post type-post status-publish format-standard hentry category-http1-1 category-28 tag-http1-1 tag-28"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/163.html" rel="bookmark">HTTP/1.1阅读之请求</a></h2>	</header><div class="entry-content">
+		<p>5.1 请求消息的构成</p>
+<p>在上一章，我们知道一个请求的消息应该由以下几部分组成：</p>
+<pre> Request       = Request-Line              ; Section 5.1
+                 *(( general-header        ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.5" rel="xref">4.5</a>
+                 | request-header         ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.3" rel="xref">5.3</a>
+                 | entity-header ) CRLF)  ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec7.html#sec7.1" rel="xref">7.1</a>
+                        CRLF
+                 [ message-body ]          ; Section <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.3" rel="xref">4.3</a>
+他们是请求头（由请求行、一般头、请求头和信息头）+信息主体构成。我们来看看请求行（Request-Line），他是由下面几部分构成的：
+Method sp URI sp HTTP-Version CRLF,我们来像教科书一样，看看各个部分都是干啥的</pre>
+<p> <a href="https://huster.top/htmls/163.html#more-163" class="more-link">继续阅读<span class="screen-reader-text">“HTTP/1.1阅读之请求”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/163.html" rel="bookmark"><time class="entry-date published updated" datetime="2012-04-16T19:13:40+00:00">2012 年 4 月 16 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0" rel="category tag">HTTP/1.1阅读笔记</a>、<a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" rel="category tag">学习笔记</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/http1-1" rel="tag">HTTP/1.1</a>、<a href="https://huster.top/htmls/tag/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0" rel="tag">学习笔记</a></span><span class="comments-link"><a href="https://huster.top/htmls/163.html#respond"><span class="screen-reader-text">于HTTP/1.1阅读之请求</span>留下评论</a></span>			</footer></article><article id="post-155" class="post-155 post type-post status-publish format-standard hentry category-http1-1"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/155.html" rel="bookmark">HTTP/1.1之消息</a></h2>	</header><div class="entry-content">
 		<p>4.1 消息类型</p>
 <p>消息的类型分为：请求消息和响应消息。 HTTP-message = Request | Response ; HTTP/1.1 messages，任何类型的消息都是由开始行，0个或是多个头域，一个空行（CRLF）用来终止头信息，消息实体（也可能没有）。</p>
 <p> <a href="https://huster.top/htmls/155.html#more-155" class="more-link">继续阅读<span class="screen-reader-text">“HTTP/1.1之消息”</span></a></p>
@@ -127,6 +154,12 @@
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/748.html">CPU异常问题排查</a>
+									</li>
+											<li>
+					<a href="https://huster.top/htmls/745.html">又一起GC问题排查过程</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/720.html">生产FullGC问题排查</a>
 									</li>
 											<li>
@@ -180,13 +213,9 @@
 											<li>
 					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/610.html">写给计算机专业毕业生的22条宝贵建议</a>
-									</li>
-											<li>
-					<a href="https://huster.top/htmls/599.html">tensortFlow安装和开发环境配置</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2019/10">2019年十月</a> (6)</li>
 	<li><a href="https://huster.top/htmls/date/2019/07">2019年七月</a> (1)</li>
@@ -238,12 +267,12 @@
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28 current-cat"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (66)
+	<li class="cat-item cat-item-28 current-cat"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (68)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (36)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (38)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
