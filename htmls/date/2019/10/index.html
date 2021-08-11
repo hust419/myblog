@@ -118,34 +118,11 @@
 	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/704.html" rel="bookmark"><time class="entry-date published updated" datetime="2019-10-17T16:49:06+00:00">2019 年 10 月 17 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink" rel="category tag">flink</a></span><span class="comments-link"><a href="https://huster.top/htmls/704.html#respond"><span class="screen-reader-text">于flink相关 – 通过Table API写入ElasticSearch的部分源码分析</span>留下评论</a></span>			</footer></article><article id="post-700" class="post-700 post type-post status-publish format-standard hentry category-flink"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/700.html" rel="bookmark">flink的动态表格</a></h2>	</header><div class="entry-content">
 		<div>目的： 订阅kafka的消息(kafka的消息是从postgresql来的)，将kafka的消息作为TableSource，执行sql，将结果输出到ElasticSearch中</div>
 <div></div>
-<div>动态表格</div>
 <div></div>
-<div>    flink的概念里，stream的输入是一个insert的模式。类似于点击日志这种，是源源不断的产出的新数据。而postgresql到kafka的消息包含了insert,update和delete的操作。</div>
-<div>在点击日志的概率里，如果统计点击次数，比较好理解。一种是表格不断的更新(update mode)。如果unique key第一次出现，则插入，否则做累加，类似下面这种</div>
-<div><a href="https://huster.top/wp-content/uploads/2019/10/5.png"><img class="alignnone size-full wp-image-701" src="https://huster.top/wp-content/uploads/2019/10/5.png" alt="" width="850" height="370"></a></div>
-<div></div>
-<div>还有一种则是基于窗口的统计，每一个窗口期插入一系列的数据，所以这个是insert模式</div>
-<div><a href="https://huster.top/wp-content/uploads/2019/10/6.png"><img class="alignnone size-full wp-image-702" src="https://huster.top/wp-content/uploads/2019/10/6.png" alt="" width="872" height="350"></a></div>
-<div></div>
-<div></div>
-<div></div>
-<div>但是在我们的场景里面，kafka里的消息不仅仅是插入的数据，还有可能是更新的数据。也就是有个维表，里面的数据在不断的更新。</div>
-<div></div>
-<div>那么现在就是要搞清楚一件事。如果我定义了一个Table，接受Stream data数据不断流入。如果我这个table里不存在这表数据(定义primary key)，那么他就会执行插入。否则他会执行update操作。我们写代码来试验一下这个想法， 看看是不是这样。如果没有group by 语句，你连primary key 都定义不了，也就没办法实现更新了…..所以要区分情况，如果你是上面的例子，通过group by 计算count, 因为有primary key，所以可以形成动态表格，可以自动update.如果你仅仅是接受kafka的消息，scan模式的话，由于表格没有primary key，所以是不支持update,而只支持insert的。</div>
-<div></div>
-<div></div>
-<div>所以针对update 和 delete 还需要单独处理….</div>
-<div></div>
-<div></div>
-<div></div>
-<div>在Table convert to DataStream一章里，使用了Tuple2<Boolean, Row>这个数据结构来区分Reactor Mode. 其中那个Boolean//   True is INSERT, false is DELETE.</div>
-<div></div>
-<div></div>
-<div></div>
-<div></div>
+<p> <a href="https://huster.top/htmls/700.html#more-700" class="more-link">继续阅读<span class="screen-reader-text">“flink的动态表格”</span></a></p>
 	</div>
 
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/700.html" rel="bookmark"><time class="entry-date published updated" datetime="2019-10-17T16:48:28+00:00">2019 年 10 月 17 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink" rel="category tag">flink</a></span><span class="comments-link"><a href="https://huster.top/htmls/700.html#respond"><span class="screen-reader-text">于flink的动态表格</span>留下评论</a></span>			</footer></article><article id="post-696" class="post-696 post type-post status-publish format-standard hentry category-flink"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/696.html" rel="bookmark">flink相关 – 读入kafka数据源</a></h2>	</header><div class="entry-content">
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><img alt="" src="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=49&r=g" srcset="http://1.gravatar.com/avatar/7f8353ec4360ff4bdd9f94dbf153a9a2?s=98&r=g 2x" class="avatar avatar-49 photo" height="49" width="49"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/700.html" rel="bookmark"><time class="entry-date published" datetime="2019-10-17T16:48:28+00:00">2019 年 10 月 17 日</time><time class="updated" datetime="2021-08-10T19:44:45+00:00">2021 年 8 月 10 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink" rel="category tag">flink</a></span><span class="comments-link"><a href="https://huster.top/htmls/700.html#respond"><span class="screen-reader-text">于flink的动态表格</span>留下评论</a></span>			</footer></article><article id="post-696" class="post-696 post type-post status-publish format-standard hentry category-flink"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/696.html" rel="bookmark">flink相关 – 读入kafka数据源</a></h2>	</header><div class="entry-content">
 		<div>业务代码如下 :</div>
 <div>fsTableEnv.connect(</div>
 <div>       newKafka()</div>
