@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/php%e5%b7%a5%e5%85%b7/php-tools/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -150,10 +150,10 @@ file_put_contents("./data",$a);</pre>
        &lt;reportfile&gt;  Write the report to the specified file path
        &lt;reportWidth&gt; How many columns wide screen reports should be printed</pre>
 <p>主要介绍的是，-i参数，用来显示当前的检测风格，系统（1.3.0）默认了PEAR, MySource, Zend, PHPCS and Squiz几种风格</p>
-<p>$ phpcs &#8211;report=summary /path/to/code 以汇总的方式，报告错误</p>
-<p>$ phpcs &#8211;standard=PEAR /path/to/code/myfile.inc 指定以特定的标准检测</p>
-<p>$ phpcs &#8211;extensions=php /path/to/code 仅仅检测php后缀文件</p>
-<p>$ phpcs &#8211;config-set default_standard Squiz 设置默认值</p>
+<p>$ phpcs --report=summary /path/to/code 以汇总的方式，报告错误</p>
+<p>$ phpcs --standard=PEAR /path/to/code/myfile.inc 指定以特定的标准检测</p>
+<p>$ phpcs --extensions=php /path/to/code 仅仅检测php后缀文件</p>
+<p>$ phpcs --config-set default_standard Squiz 设置默认值</p>
 <p>忽略某些文件和文件夹的方法，有时候，我们要检测一个工程，但是呢，有时候因为文件太久，我们不想更改，而如果检测这些文件会带来很多问题这时候，我们可以选择忽略这些文件</p>
 <pre>$ phpcs --ignore=*/tests/*,*/data/* /path/to/code</pre>
 <p>所有的配置文件都写入了/home/renjun/php/lib/php/data/PHP_CodeSniffer/CodeSniffer.conf 因此要保证这个文件写权限，而且可以用vi进行编辑更改设置。 更多使用帮助请查看官方文档。</p>
@@ -165,22 +165,22 @@ file_put_contents("./data",$a);</pre>
 )</pre>
 <h4>自定义风格</h4>
 <p>一般情况下，使用自带的几种风格就已经足够用，但是针对Leapfrog这种情况，我们需要一种自定义的方式来进行检测，否则，很多东西都要被报有问题，影响我们真正的寻找有问题的地方，而且很多时候，我们需要有一种自己的定义的风格方式，这就需要研究这个工具了。 要新建一个风格必须在/home/renjun/php/lib/php/PHP/CodeSniffer/Standards这样的路径下，依照已有的风格，建一个目录，目录中包含ruleset.xml和Sniffs目录。 前者是告诉系统，当前使用哪写检测规则，后者则是自定义过滤规则目录。打开ruleset.xml文件可以看到是这样的样子：</p>
-<p>&lt;?xml version=&#8221;1.0&#8243;?&gt; &lt;ruleset name=&#8221;Leapfrog&#8221;&gt;</p>
+<p>&lt;?xml version="1.0"?&gt; &lt;ruleset name="Leapfrog"&gt;</p>
 <p>&lt;description&gt;A coding standard based on an early Zend Framework coding standard. Note that this standard is out of date.&lt;/description&gt;</p>
-<p>&lt;rule ref=&#8221;Generic.Functions.FunctionCallArgumentSpacing&#8221;/&gt; &lt;rule ref=&#8221;Generic.Functions.OpeningFunctionBraceBsdAllman&#8221;/&gt;</p>
-<p>&lt;rule ref=&#8221;Generic.PHP.DisallowShortOpenTag&#8221;/&gt;</p>
-<p>&lt;rule ref=&#8221;Generic.WhiteSpace.DisallowTabIndent&#8221;/&gt;</p>
-<p>&lt;rule ref=&#8221;PEAR.Classes.ClassDeclaration&#8221;/&gt;</p>
-<p>&lt;rule ref=&#8221;PEAR.ControlStructures.ControlSignature&#8221;/&gt; &lt;rule ref=&#8221;PEAR.Functions.ValidDefaultValue&#8221;/&gt;</p>
-<p>&lt;rule ref=&#8221;PEAR.WhiteSpace.ScopeClosingBrace&#8221;/&gt;</p>
-<p>&lt;rule ref=&#8221;Generic.Files.LineLength&#8221;&gt;</p>
-<p>&lt;properties&gt; &lt;property name=&#8221;lineLimit&#8221; value=&#8221;80&#8243;/&gt;</p>
-<p>&lt;property name=&#8221;absoluteLineLimit&#8221; value=&#8221;120&#8243;/&gt;</p>
-<p>&lt;/properties&gt; &lt;/rule&gt; &lt;rule ref=&#8221;Generic.Files.LineEndings&#8221;&gt;</p>
-<p>&lt;properties&gt; &lt;property name=&#8221;eolChar&#8221; value=&#8221;\n&#8221;/&gt; &lt;/properties&gt;</p>
+<p>&lt;rule ref="Generic.Functions.FunctionCallArgumentSpacing"/&gt; &lt;rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/&gt;</p>
+<p>&lt;rule ref="Generic.PHP.DisallowShortOpenTag"/&gt;</p>
+<p>&lt;rule ref="Generic.WhiteSpace.DisallowTabIndent"/&gt;</p>
+<p>&lt;rule ref="PEAR.Classes.ClassDeclaration"/&gt;</p>
+<p>&lt;rule ref="PEAR.ControlStructures.ControlSignature"/&gt; &lt;rule ref="PEAR.Functions.ValidDefaultValue"/&gt;</p>
+<p>&lt;rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/&gt;</p>
+<p>&lt;rule ref="Generic.Files.LineLength"&gt;</p>
+<p>&lt;properties&gt; &lt;property name="lineLimit" value="80"/&gt;</p>
+<p>&lt;property name="absoluteLineLimit" value="120"/&gt;</p>
+<p>&lt;/properties&gt; &lt;/rule&gt; &lt;rule ref="Generic.Files.LineEndings"&gt;</p>
+<p>&lt;properties&gt; &lt;property name="eolChar" value="\n"/&gt; &lt;/properties&gt;</p>
 <p>&lt;/rule&gt;</p>
 <p>&lt;/ruleset&gt;</p>
-<p>name:描述当前的检测标准的名称 description:描述信息 rule则是具体的检测规则，我们可以复用已有的规则，这样我们可以省去很多工作。 例如 &lt;rule ref=&#8221;Generic.Functions.FunctionCallArgumentSpacing&#8221;/&gt; 表示使用的是Generirc规则下面的.FunctionCallArgumentSpacing规则， 依据名称我们可以看出来，这是检测函数调用的时 候，参数与参数之间是否有空格用的。具体的文件在 /home/renjun/php/lib/php/PHP/CodeSniffer/Standards/Generic/Sniffs /Functions/FunctionCallArgumentSpacingSniff.php 下面我们看看这个文件。这个文件的命名规则，跟 rule中的必须对应。文件名必须是FunctionCallArgumentSpacing+Sniff，而这个文件中定义的类名称也是固定的，以下划 线分隔。并且必须是实现 PHP_CodeSniffer_Sniff接口的两个方法。</p>
+<p>name:描述当前的检测标准的名称 description:描述信息 rule则是具体的检测规则，我们可以复用已有的规则，这样我们可以省去很多工作。 例如 &lt;rule ref="Generic.Functions.FunctionCallArgumentSpacing"/&gt; 表示使用的是Generirc规则下面的.FunctionCallArgumentSpacing规则， 依据名称我们可以看出来，这是检测函数调用的时 候，参数与参数之间是否有空格用的。具体的文件在 /home/renjun/php/lib/php/PHP/CodeSniffer/Standards/Generic/Sniffs /Functions/FunctionCallArgumentSpacingSniff.php 下面我们看看这个文件。这个文件的命名规则，跟 rule中的必须对应。文件名必须是FunctionCallArgumentSpacing+Sniff，而这个文件中定义的类名称也是固定的，以下划 线分隔。并且必须是实现 PHP_CodeSniffer_Sniff接口的两个方法。</p>
 <pre class="brush:php">
 class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_CodeSniffer_Sniff {
 public function register()
@@ -245,7 +245,7 @@ continue;
 如何将背景改为透明使该矩形不会掩盖下面的其它图形呢。依旧右击鼠标，在“格式”中选择“填充”，在“样式”中选择“0无色”也就OK了。</p>
 <p>=================================================================<br />
 问题2：如何将visio图形复制到word文档中而使虚线继续为虚线呢（因为很容易出现虚线变为实线的问题）</p>
-<p>最简单的办法在word文档中的visio图形区域上双击，我们都知道双击后就进入了visio图形编辑模式（当然你的机器上需要装有visio软件），点击相应的虚线，单击右键，“格式”&#8212;“线条”，在这里调整线条的粗细，一般设置到“5”就可以变成虚线了。<br />
+<p>最简单的办法在word文档中的visio图形区域上双击，我们都知道双击后就进入了visio图形编辑模式（当然你的机器上需要装有visio软件），点击相应的虚线，单击右键，“格式”---“线条”，在这里调整线条的粗细，一般设置到“5”就可以变成虚线了。<br />
 也有其它解决办法但是麻烦一些。<br />
 =================================================================<br />
 很没有技术含量吧，但是往往这些没有技术含量的问题会难住人，大大降低文档编写效率。</p>

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>flink读取kafka数据未能触发watermark – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/713.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
+<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>flink读取kafka数据未能触发watermark – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/713.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><style id="md-style-inline-css" type="text/css">
+ 
+</style><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
 	    
 		body.page-template-builder-fullwidth.elementor-page,
 		body.page-template-builder-fullwidth-std.elementor-page {
@@ -56,7 +58,7 @@
 	        }
         }
 	
-</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-713 single-format-standard">
+</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="preload" as="style" href="https://huster.top/wp-content/plugins/code-prettify/prettify/prettify.css"><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-713 single-format-standard">
 <div id="page" class="site">
 	<div class="site-inner">
 		<a class="skip-link screen-reader-text" href="#content">跳至内容</a>
@@ -76,7 +78,7 @@
 	<main id="main" class="site-main" role="main"><article id="post-713" class="post-713 post type-post status-publish format-standard hentry category-flink"><header class="entry-header"><h1 class="entry-title">flink读取kafka数据未能触发watermark</h1>	</header><div class="entry-content">
 		<p>过年被病毒闹的出不了门，就顺带着把flink秒级统计的逻辑写了一下，逻辑很简单，就是从kafka消费数据，然后select count(*) from xxx group by xxx来一秒产出一个打点。程序代码非常简单</p>
 <p><span id="more-713"></span></p>
-<p>“`java</p>
+<p>```java</p>
 <pre>StreamExecutionEnvironment bsEnv = StreamExecutionEnvironment.getExecutionEnvironment();
 EnvironmentSettings bsSettings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build();
 StreamTableEnvironment bsTableEnv = StreamTableEnvironment.create(bsEnv, bsSettings);
@@ -143,14 +145,14 @@ bsEnv.execute("data-metrics");
 
 </pre>
 <p>代码如上，非常简单，输入的数据类似于</p>
-<p>“`json</p>
-<p class="p1"><span class="s1">{“t”:1580896327330,”st”:”DIRECT”,”i”:”hitch_passenger_order_2020_01_22_23_50_40″,”op”:”es_sink”,”id”:”,guid:15756341902141200002900″,”ut”:”,order_update_time:2020-02-05 17:52:07.190435″,”msg”:””,”rId”:”0.1.1.1″}</span></p>
-<p class="p1"><span class="s1">{“t”:1580896327831,”st”:”DIRECT”,”i”:”hitch_passenger_order_2020_01_22_23_50_40″,”op”:”es_sink”,”id”:”,guid:15756341902141200002900″,”ut”:”,order_update_time:2020-02-05 17:52:07.687468″,”msg”:””,”rId”:”0.1.1.1″}</span></p>
-<p class="p1"><span class="s1">{“t”:1580896328131,”st”:”DIRECT”,”i”:”hitch_passenger_order_2020_01_22_23_50_40″,”op”:”es_sink”,”id”:”,guid:15756341902141200002900″,”ut”:”,order_update_time:2020-02-05 17:52:08.047474″,”msg”:””,”rId”:”0.1.1.1″}</span></p>
+<p>```json</p>
+<p class="p1"><span class="s1">{"t":1580896327330,"st":"DIRECT","i":"hitch_passenger_order_2020_01_22_23_50_40","op":"es_sink","id":",guid:15756341902141200002900","ut":",order_update_time:2020-02-05 17:52:07.190435","msg":"","rId":"0.1.1.1"}</span></p>
+<p class="p1"><span class="s1">{"t":1580896327831,"st":"DIRECT","i":"hitch_passenger_order_2020_01_22_23_50_40","op":"es_sink","id":",guid:15756341902141200002900","ut":",order_update_time:2020-02-05 17:52:07.687468","msg":"","rId":"0.1.1.1"}</span></p>
+<p class="p1"><span class="s1">{"t":1580896328131,"st":"DIRECT","i":"hitch_passenger_order_2020_01_22_23_50_40","op":"es_sink","id":",guid:15756341902141200002900","ut":",order_update_time:2020-02-05 17:52:08.047474","msg":"","rId":"0.1.1.1"}</span></p>
 <p> </p>
 <p>然而，死活就是无法输出正确的统计数据。但是当我把setParallelism并发设置为1的时候，就能正常输出统计数据。太神奇了，为什么跟并发度有关系呢？</p>
 <p>于是我在本地打开了跟踪调试功能，我发现问题出在StatusWatermarkValve这个类里，这个类的这个方法是这么写的</p>
-<p>“`java</p>
+<p>```java</p>
 <pre>private void findAndOutputNewMinWatermarkAcrossAlignedChannels() {
    long newMinWatermark = Long.MAX_VALUE;
    boolean hasAlignedChannels = false;
@@ -209,7 +211,7 @@ bsEnv.execute("data-metrics");
 				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
 <p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes"></p>
 <p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
-<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="713" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="a7a120a50e"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="11"></p>			</form>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="713" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="625d189ee2"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="36"></p>			</form>
 			</div>
 	
 </div>
@@ -223,6 +225,9 @@ bsEnv.execute("data-metrics");
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/780.html">如何用java.io.*写一个服务器</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/748.html">CPU异常问题排查</a>
 									</li>
 											<li>
@@ -279,10 +284,8 @@ bsEnv.execute("data-metrics");
 											<li>
 					<a href="https://huster.top/htmls/629.html">Java的锁</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
@@ -336,12 +339,12 @@ bsEnv.execute("data-metrics");
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (68)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (69)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (38)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (39)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
@@ -464,7 +467,9 @@ bsEnv.execute("data-metrics");
 			} );
 		} );
 	}
-</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
+</script><script type="text/javascript">
+var codePrettifyLoaderBaseUrl = "https:\/\/huster.top\/wp-content\/plugins\/code-prettify\/prettify";
+</script><script type="text/javascript" src="https://huster.top/wp-content/plugins/code-prettify/prettify/run_prettify.js"></script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
 /* <![CDATA[ */
 var screenReaderText = {"expand":"\u5c55\u5f00\u5b50\u83dc\u5355","collapse":"\u6298\u53e0\u5b50\u83dc\u5355"};
 /* ]]> */

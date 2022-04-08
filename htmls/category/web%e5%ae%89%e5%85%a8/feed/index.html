@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/web%e5%ae%89%e5%85%a8/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -35,13 +35,13 @@
 		<category><![CDATA[WEB安全]]></category>
 
 		<guid isPermaLink="false">http://huster.top/?p=511</guid>
-		<description><![CDATA[最近搭建了一个独立应用，使用相同的域名去访问的时候居然报出了&#8221;Invalid CORS reque &#8230; <a href="https://huster.top/htmls/511.html" class="more-link">继续阅读<span class="screen-reader-text">“一次nginx导致的乌龙跨域事件”</span></a>]]></description>
-				<content:encoded><![CDATA[<p>最近搭建了一个独立应用，使用相同的域名去访问的时候居然报出了&#8221;Invalid CORS request&#8221;, 而且GET请求是好的，唯独POST请求报403 forbidden错误，response是, Invalid CORS request。 真是奇怪啊，明明同一个域名，为什么报跨域的错误呢?</p>
+		<description><![CDATA[最近搭建了一个独立应用，使用相同的域名去访问的时候居然报出了"Invalid CORS request", 而 &#8230; <a href="https://huster.top/htmls/511.html" class="more-link">继续阅读<span class="screen-reader-text">“一次nginx导致的乌龙跨域事件”</span></a>]]></description>
+				<content:encoded><![CDATA[<p>最近搭建了一个独立应用，使用相同的域名去访问的时候居然报出了"Invalid CORS request", 而且GET请求是好的，唯独POST请求报403 forbidden错误，response是, Invalid CORS request。 真是奇怪啊，明明同一个域名，为什么报跨域的错误呢?</p>
 <p>&nbsp;</p>
 <p><span id="more-511"></span></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>我的结构如下 ： react.js &#8212;&#8212;&#8211;http&#8212;&#8212;&#8212;&#8212;&gt; nginx &#8212;&#8212;-<span class="s1">proxy_pass</span>&#8212;&#8211;&gt;spring boot tomcat server.</p>
+<p>我的结构如下 ： react.js --------http------------&gt; nginx -------<span class="s1">proxy_pass</span>-----&gt;spring boot tomcat server.</p>
 <pre class="brush:c">Request URL:http://q.huster.top/experiment/infosave?_input_charset=utf-8
 Request Method:POST
 Status Code:403 Forbidden
@@ -275,7 +275,7 @@ proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
 <p>前两天发现scp命令的一个坑，分享 下，以免其他兄弟再踩这坑了~</p>
 <p>前两天有个开发兄弟向我反馈他的任务跑失败了，原因是里面 的一条scp执行失败。后来我试 了试，发现xxxxx机 器下的数据不能通过tssfsdf帐户scp至其他机器，或从其 他机器scp过来，只输出’bashrc’然后就结 束了（顺便吐下槽，感谢XX同学在tscadmin下的~/.bashrc加的是echo ’bashrc’， 让俺能够快速定位问题）。</p>
 <p>为什么bashrc里加一条echo语句，就会造成scp失败呢？</p>
-<p>scp使用SSH连接，在两台服务器 之间通过一些特特殊的协议消息控制源端与宿端的数据传输。在实际数据传输前，源端需要先向宿端传输协议文本，协议文本传输结束 后，再向宿端传递字符&#8217;\0&#8217;来表示真正文件传 输的开始。当文件接收完成后，宿端会给源端发送一个&#8217;\0&#8217;表示文件传输结 束。然后而ssh login远程服 务器时，会source ~/.bashrc和/etc/bashrc文 件，所以当在 ~/.bashrc或/etc/bashrc执 行过程中产生了任何内容输出时，scp会把这些echo回来的东西认作协 议包进行解析，遇到&#8217;\0&#8217;则会当成表示传输 失败的错误信息，然后exit 1。</p>
+<p>scp使用SSH连接，在两台服务器 之间通过一些特特殊的协议消息控制源端与宿端的数据传输。在实际数据传输前，源端需要先向宿端传输协议文本，协议文本传输结束 后，再向宿端传递字符'\0'来表示真正文件传 输的开始。当文件接收完成后，宿端会给源端发送一个'\0'表示文件传输结 束。然后而ssh login远程服 务器时，会source ~/.bashrc和/etc/bashrc文 件，所以当在 ~/.bashrc或/etc/bashrc执 行过程中产生了任何内容输出时，scp会把这些echo回来的东西认作协 议包进行解析，遇到'\0'则会当成表示传输 失败的错误信息，然后exit 1。</p>
 <p align="left">所以，一般对于有标准输出的语句最好是放到.bash_profile中。 以免引起不必要的错误。</p>
 <p> <span id="more-319"></span></p>
 <h3>以 下是scp协 议原理  （这 个是在网上找的，俺就直接贴了，</h3>
@@ -307,11 +307,11 @@ proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
 <pre>__....|....__                       __....|....__</pre>
 <pre>=__  fileX  __:'                    =__  fileX  __:'</pre>
 <pre>`''''''''                           `''''''''</pre>
-<p>需要注意的是, 永远不会有两个工作模 式一样的scp协同工作. (译者注: 你可以想象下两个源端 互相期待对方给自己传文件会是啥情况&#8230;) 远程服务器上的scp进程选定一种模式后, 本地的scp进程(就是本地用户命令行起的这个进程)会自动选定另一种模式, 因为这个本地进程会于 用户交互.</p>
+<p>需要注意的是, 永远不会有两个工作模 式一样的scp协同工作. (译者注: 你可以想象下两个源端 互相期待对方给自己传文件会是啥情况...) 远程服务器上的scp进程选定一种模式后, 本地的scp进程(就是本地用户命令行起的这个进程)会自动选定另一种模式, 因为这个本地进程会于 用户交互.</p>
 <h4>源端</h4>
 <p>协议信息是由文本和二进制数据混合构 成的. 例如, 当我们要传出一个普通 文件时, 协议消息的类型, 文件的权限位, 长度及文件名都会以文 本的方式发送, 接着在一个换行符后发 送文件的内容. 我们在后面会更详细地 讨论这一点. 协议消息内容可能类似:</p>
 <pre>C0644 299 group</pre>
-<p>二进制数据传输前需要传输的文本信息 可能更多. 源端会一直等宿端的回 应, 直到等到回应才会传输 下一条协议文本. 在送出最后一条协议文 本后, 源端会传出一个大小为 零的字符&#8217;\0&#8217;来表示真正文件传输的开始. 当文件接收完成后, 宿端会给源端发送一个&#8217;\0&#8242;.</p>
+<p>二进制数据传输前需要传输的文本信息 可能更多. 源端会一直等宿端的回 应, 直到等到回应才会传输 下一条协议文本. 在送出最后一条协议文 本后, 源端会传出一个大小为 零的字符'\0'来表示真正文件传输的开始. 当文件接收完成后, 宿端会给源端发送一个'\0'.</p>
 <h4>宿端</h4>
 <p>来自源端的每条消息和每个传输完毕的 文件都需要宿端的确认和响应. 宿端会返回三种确认消 息: 0(正常), 1(警告)或2(严重错误, 将中断连接). 消息1和2可以跟一个字符串和一个换行符, 这个字符串将显示在scp的源端. 无论这个字符串是否为 空, 换行符都是不可缺少的.</p>
 <h3>协议消息类型列表</h3>
@@ -362,10 +362,10 @@ proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
 <pre>C0600 6 test</pre>
 <pre>hello</pre>
 <pre>E</pre>
-<p>解释下, 这次没有进度条了, 这是因为我们用了-q选项. 你可以看到传输了文件 时间信息, 这是因为我们是用了-p选项. 另外, -f表示这一次scp进程是源端. 你可以发现我们丢了六 个&#8217;\000&#8217;给scp, 这是我们模拟的传输过 程中的应答. 第一个来开始传输过程, 四个响应消息, 一个响应文件传输结束. 对了吗? 不对, 我们还没响应最后的E呢. 此时看看退出状态:</p>
+<p>解释下, 这次没有进度条了, 这是因为我们用了-q选项. 你可以看到传输了文件 时间信息, 这是因为我们是用了-p选项. 另外, -f表示这一次scp进程是源端. 你可以发现我们丢了六 个'\000'给scp, 这是我们模拟的传输过 程中的应答. 第一个来开始传输过程, 四个响应消息, 一个响应文件传输结束. 对了吗? 不对, 我们还没响应最后的E呢. 此时看看退出状态:</p>
 <pre>$ echo $?</pre>
 <pre>1</pre>
-<p>如果我们用七个&#8217;\000&#8242;, 就不会有问题了:</p>
+<p>如果我们用七个'\000', 就不会有问题了:</p>
 <pre>$ printf '\000\000\000\000\000\000\000' | scp -qprf testdir</pre>
 <pre>T1183832947 0 1183833956 0</pre>
 <pre>D0700 0 testdir</pre>
@@ -376,7 +376,7 @@ proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
 <pre>$ echo $?</pre>
 <pre>0</pre>
 <h4>4. 发送错误消息</h4>
-<p>下面这个例子中, 我们将会返回2给scp, 你可以看到即使我们在 这个2后面又发送了几个&#8217;\000&#8242;, scp命令也不接 受后面的这些确认信息了.</p>
+<p>下面这个例子中, 我们将会返回2给scp, 你可以看到即使我们在 这个2后面又发送了几个'\000', scp命令也不接 受后面的这些确认信息了.</p>
 <pre>$ printf '\000\000\002n\000\000' | scp -qprf testdir</pre>
 <pre></pre>
 <pre>T1183895689 0 1183899084 0</pre>
@@ -404,15 +404,15 @@ proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
 <p>先看一下这个示例</p>
 <pre class="brush:php">preg_replace("/test/e",$_GET["h"],"jutst test");</pre>
 <p>如果我们提交?h=phpinfo()，phpinfo()将会被执行（使用/e修饰符，preg_replace会将 replacement 参数当作 PHP 代码执行）,这句话匹配到了</p>
-<p>just test 中的test ，在进行替换的时候，将$_GET[&#8220;h&#8221;]中的字符串当作了PHP代码执行。</p>
+<p>just test 中的test ，在进行替换的时候，将$_GET["h"]中的字符串当作了PHP代码执行。</p>
 <p>进而，我们进入ThinkPHP的源码，下载2.1版（2.1以后已经被修复）。在/ThinikPHP/Lib/ThinkPHP/Util/Dispatcher.class.php的dispatch函数中，找到这句话：</p>
 <pre class="brush:php"> $res = preg_replace('@(\w+)'.$depr.'([^'.$depr.'\/]+)@e', '$var[\'\\1\']="\\2";', implode($depr,$paths));</pre>
 <p>只要是没有定义路由规则，默认情况下，这个函数都能执行。显然，这个使用了/e函数，会导致第二个参数当作函数使用。这句话的意思是</p>
-<p>正则匹配的是 ：字母开头，加上“/”分隔符，后面跟一个非&#8221;/&#8221;的元素，被替换成$var[&#8220;分隔符前的字母&#8221;]=分隔符后的值；作者的本意是要将这么一对一对的</p>
+<p>正则匹配的是 ：字母开头，加上“/”分隔符，后面跟一个非"/"的元素，被替换成$var["分隔符前的字母"]=分隔符后的值；作者的本意是要将这么一对一对的</p>
 <p>参数/值的形式的url写入到 $var[$key] = $value的数组中，第二个替换参数实际上是一个php语法，因此使用了/e参数。但是在赋值的时候，使用的是双引号。危险的地方实际上在这里，在php中，双引号里面如果包含有变量，php解释器会将其替换为变量解释后的结果；单引号中的变量不会被处理。可以先做如下测试：<br />
-echo &#8220;{${phpinfo()}}&#8221;;   phpinfo会被成功执行了。</p>
+echo "{${phpinfo()}}";   phpinfo会被成功执行了。</p>
 <p>因此，我们将第二个变量替换成我们需要的函数，构造出来的url大致如下：</p>
-<p>http://www.xxxx.com/index.php/Model/Action/par/<code>${@print(THINK_VERSION)}</code>  这个可以打印出ThinkPHP的版本，在页头的位置，我用2.1的实验了一下，成功了，这个相当于开启了一个PHP的一句话后门啊。这句话的/par/${@print(THINK_VERSION)}将匹配到正则表达式，将会执行第二个参数，具体语句是$var[&#8216;par&#8217;] = &#8220;<code>${@print(THINK_VERSION)}</code> &#8220;; 问题出在双引号上面，这个就会执行里面的语句，自然，想干什么就干什么了！</p>
+<p>http://www.xxxx.com/index.php/Model/Action/par/<code>${@print(THINK_VERSION)}</code>  这个可以打印出ThinkPHP的版本，在页头的位置，我用2.1的实验了一下，成功了，这个相当于开启了一个PHP的一句话后门啊。这句话的/par/${@print(THINK_VERSION)}将匹配到正则表达式，将会执行第二个参数，具体语句是$var['par'] = "<code>${@print(THINK_VERSION)}</code> "; 问题出在双引号上面，这个就会执行里面的语句，自然，想干什么就干什么了！</p>
 <p>防范的方法就是将双引号改为单引号。</p>
 <pre>'$var[\'\\1\']='\\2';'</pre>
 <p>&nbsp;</p>

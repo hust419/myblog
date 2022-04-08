@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>使用Spring Boot框架的时候怎么用JDBC连接MySql数据库 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/436.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
+<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>使用Spring Boot框架的时候怎么用JDBC连接MySql数据库 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/436.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><style id="md-style-inline-css" type="text/css">
+ 
+</style><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
 	    
 		body.page-template-builder-fullwidth.elementor-page,
 		body.page-template-builder-fullwidth-std.elementor-page {
@@ -56,7 +58,7 @@
 	        }
         }
 	
-</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-436 single-format-standard">
+</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="preload" as="style" href="https://huster.top/wp-content/plugins/code-prettify/prettify/prettify.css"><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-436 single-format-standard">
 <div id="page" class="site">
 	<div class="site-inner">
 		<a class="skip-link screen-reader-text" href="#content">跳至内容</a>
@@ -95,7 +97,7 @@ spring.datasource.driver-class-name=com.mysql.jdbc.Driver</pre>
 private JdbcTemplate jdbcTemplate;</pre>
 <p> </p>
 <p>以上是spring.io官方网站给出的<a href="http://docs.spring.io/spring-boot/docs/1.2.7.RELEASE/reference/htmlsingle/#boot-features-connect-to-production-database" target="_blank">提示信息</a>，你以为就这样简单就完成了吗？那么就没有这篇文章存在的价值了。 如果不出意外，你会碰到以下报错：</p>
-<p class="p1">Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name ‘docWhoDAOImpl’: Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private org.springframework.jdbc.core.JdbcTemplate com.taobao.search.admin.DAO.impl.DocWhoDAOImpl.jdbcTemplate; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name ‘org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration$JdbcTemplateConfiguration’: Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private javax.sql.DataSource org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration$JdbcTemplateConfiguration.dataSource; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name ‘dataSource’ defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceAutoConfiguration$NonEmbeddedConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method ‘dataSource’ threw exception; nested exception is java.lang.IllegalStateException: <span style="color: #ff0000;">Cannot load driver class: com.mysql.jdbc.Driver</span></p>
+<p class="p1">Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'docWhoDAOImpl': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private org.springframework.jdbc.core.JdbcTemplate com.taobao.search.admin.DAO.impl.DocWhoDAOImpl.jdbcTemplate; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration$JdbcTemplateConfiguration': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: private javax.sql.DataSource org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration$JdbcTemplateConfiguration.dataSource; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceAutoConfiguration$NonEmbeddedConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'dataSource' threw exception; nested exception is java.lang.IllegalStateException: <span style="color: #ff0000;">Cannot load driver class: com.mysql.jdbc.Driver</span></p>
 <p class="p1">如果你的application.properties里配置了<span class="hl-attribute">spring.datasource.driver-class-name</span>=com.mysql.jdbc.Driver这条信息，他会在启动阶段报错，否则他会在你刷新页面的时候出现，看信息应该是没有找到mysql的驱动。</p>
 <p class="p1">有一种做法是添加在容器内，检查下你的tomcat里的lib里有没有mysql-connector-java.jar，你可以下载一个放进去，我没有测试。因为这样做的坏处是，你部署的时候，不能使用统一的tomcat包，需要自己放进去一个jar，所以我的做法是在pom中添加mysql的依赖。</p>
 <pre class="brush:xml"><dependency>
@@ -160,7 +162,7 @@ jdbcTemplate.queryForList("select * from " + tableName + " where id= ? ",  id); 
 				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
 <p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes"></p>
 <p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
-<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="436" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="5a441a050d"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="53"></p>			</form>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="436" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="ba60809df4"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="84"></p>			</form>
 			</div>
 	
 </div>
@@ -174,6 +176,9 @@ jdbcTemplate.queryForList("select * from " + tableName + " where id= ? ",  id); 
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/780.html">如何用java.io.*写一个服务器</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/748.html">CPU异常问题排查</a>
 									</li>
 											<li>
@@ -230,10 +235,8 @@ jdbcTemplate.queryForList("select * from " + tableName + " where id= ? ",  id); 
 											<li>
 					<a href="https://huster.top/htmls/629.html">Java的锁</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
@@ -287,12 +290,12 @@ jdbcTemplate.queryForList("select * from " + tableName + " where id= ? ",  id); 
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (68)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (69)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (38)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (39)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
@@ -415,7 +418,9 @@ jdbcTemplate.queryForList("select * from " + tableName + " where id= ? ",  id); 
 			} );
 		} );
 	}
-</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
+</script><script type="text/javascript">
+var codePrettifyLoaderBaseUrl = "https:\/\/huster.top\/wp-content\/plugins\/code-prettify\/prettify";
+</script><script type="text/javascript" src="https://huster.top/wp-content/plugins/code-prettify/prettify/run_prettify.js"></script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
 /* <![CDATA[ */
 var screenReaderText = {"expand":"\u5c55\u5f00\u5b50\u83dc\u5355","collapse":"\u6298\u53e0\u5b50\u83dc\u5355"};
 /* ]]> */

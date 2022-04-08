@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/nas-%e7%be%a4%e6%99%96/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -62,7 +62,7 @@
 <p>只所以选择Oracle VM VirtualBox是因为习惯了用这个虚拟机，非常好用。首先，需要在Oracle VM VirtualBox里新建一台Linux主机，并将主机的网络修改成桥接模式。具体的教程，可以百度搜索“DSM4.1安装到VirtualBox虚拟机”,这部分没什么参考价值，基本一样，千篇一律应该还不至于失效。所要注意的是，虚拟主机是没办法通过u盘安装系统的，所以，你需要把img系统文件，转换成virtualbox能够识别的vdi文件。</p>
 <p>你需要在群晖官网下载最新的<a href="https://www.synology.com/en-global/support/download/DS3612xs">DSM系统，下载里面的dsm5.0，那个是最新的系统</a></p>
 <p>然后打开cmd，使用命令</p>
-<p align="left">D:\Program Files\Oracle\VirtualBox&gt;VBoxManage.exe convertfromraw &#8211;format VDI DS3612xs_4.2-3211_x64_AIO-20130716.img DS3612xs_3202-Repack.vdi</p>
+<p align="left">D:\Program Files\Oracle\VirtualBox&gt;VBoxManage.exe convertfromraw --format VDI DS3612xs_4.2-3211_x64_AIO-20130716.img DS3612xs_3202-Repack.vdi</p>
 <p align="left">需要注意的是，在win7下面，这样执行是会出错的。你需要做的是，把cmd.exe拷贝到VBoxManage.exe文件夹，然后右键，以管理员身份运行，你才可以运行成功，然后你拿着你的生成的vdi文件，按照百度来的教程，安装nas系统。分享一个我转换好的vdi文件<a title="DSM 5.0 vdi" href="http://pan.baidu.com/share/link?shareid=3651398871&amp;uk=4026794092"> DSM5.0版本</a></p>
 <p align="left">按照国外论坛那哥们的教程安装以后，是没有套件中心的，所以最好还是自己制作vdi文件。<a title="论坛" href="http://xpenology.com/forum/viewforum.php?f=15&amp;sid=cbd9c0344112c06761829d21c6c4c8ae">国外论坛</a>，都是讨论如何在虚拟机里安装黑群晖的</p>
 <p align="left">如果遇到错误，请看看是否除了这个vdi文件以外，再没有其他盘了？ 一定需要添加一个虚拟硬盘，用于安装系统</p>
@@ -116,7 +116,7 @@
 		<description><![CDATA[群辉设置之后，smb服务正常，能够使用，而windows的共享却突然不见了？ 其实是在高级设置里，将启用高级共 &#8230; <a href="https://huster.top/htmls/395.html" class="more-link">继续阅读<span class="screen-reader-text">“群晖问题-windows共享无法看到”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>群辉设置之后，smb服务正常，能够使用，而windows的共享却突然不见了？ 其实是在高级设置里，将启用高级共享权限打开，并把用户加进去，就可以了！<a href="http://www.longant.com/wp-content/uploads/2014/10/1.png"><img class="alignnone size-full wp-image-396" alt="1" src="http://www.longant.com/wp-content/uploads/2014/10/1.png" width="801" height="534" srcset="https://huster.top/wp-content/uploads/2014/10/1.png 801w, https://huster.top/wp-content/uploads/2014/10/1-300x200.png 300w" sizes="(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 984px) 61vw, (max-width: 1362px) 45vw, 600px" /></a></p>
 <p>&nbsp;</p>
-<p>如果这样依然不行的话，控制面板&#8211;&gt;网络&#8211;&gt;常规&#8211;&gt;系统名称 稍作修改，把名称改成其他的，就可以看见了</p>
+<p>如果这样依然不行的话，控制面板--&gt;网络--&gt;常规--&gt;系统名称 稍作修改，把名称改成其他的，就可以看见了</p>
 ]]></content:encoded>
 			<wfw:commentRss>https://huster.top/htmls/395.html/feed</wfw:commentRss>
 		<slash:comments>0</slash:comments>

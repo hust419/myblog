@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/php%e5%b7%a5%e5%85%b7/php%e9%82%a3%e4%ba%9b%e6%9c%89%e8%b6%a3%e7%9a%84%e4%ba%8b%e5%84%bf/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -132,7 +132,7 @@ $GLOBALS[$k] = null;
 unset( $GLOBALS[$k] );
 }
 }</pre>
-<div>这个函数首先判断register_globals是不是打开了，那么这个是什么用途呢，如果这个变量打开了，则会产生如下效果，可以从url中获取变量值，例如$_GET[&#8220;var&#8221;] = &#8220;abc&#8221;; 那么打开以后默认$var = &#8220;abc&#8221;; 明白了吧</div>
+<div>这个函数首先判断register_globals是不是打开了，那么这个是什么用途呢，如果这个变量打开了，则会产生如下效果，可以从url中获取变量值，例如$_GET["var"] = "abc"; 那么打开以后默认$var = "abc"; 明白了吧</div>
 <div><span style="font-family: 'Courier New';">看看官方的说明,这个register_global打开了会导致什么问题 ：</span></div>
 <div>以下是取自官方的一个例子</div>
 <div>

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>tensortFlow安装和开发环境配置 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/599.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
+<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>tensortFlow安装和开发环境配置 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/599.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><style id="md-style-inline-css" type="text/css">
+ 
+</style><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
 	    
 		body.page-template-builder-fullwidth.elementor-page,
 		body.page-template-builder-fullwidth-std.elementor-page {
@@ -56,7 +58,7 @@
 	        }
         }
 	
-</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-599 single-format-standard">
+</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="preload" as="style" href="https://huster.top/wp-content/plugins/code-prettify/prettify/prettify.css"><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-599 single-format-standard">
 <div id="page" class="site">
 	<div class="site-inner">
 		<a class="skip-link screen-reader-text" href="#content">跳至内容</a>
@@ -82,13 +84,13 @@
 <p><span><span style="font-family: Helvetica Neue;">    接着你使用官方的介绍文档开始安装TensorFlow，只有这个写的是最清楚明白的，<a href="https://www.tensorflow.org/install/install_mac?hl=zh-cn#ValidateYourInstallation">https://www.tensorflow.org/install/install_mac?hl=zh-cn#ValidateYourInstallation</a>。文章推荐你使用Virtualenv的安装方式来安装，那么Virtualenv是个什么东西呢？<br></span></span></p>
 <p><span><span style="font-family: Helvetica Neue;">    Virtualenv从名字就可以看出是一个虚拟的环境。这里的一个背景是，python对依赖包有多个版本时候的冲突问题。如果你一个工程依赖的是这个包的1.0，另外一个工程依赖的是2.0，结果就杯具了，因为他安装在同一个位置，导致包冲突。java里的maven仓库通过不同的路径很好的解决了这个问题，不知道python为什么不能多个版本？所以virtualenv就可以让你一个工程一个环境，互相不冲突。详细的介绍 <a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432712108300322c61f256c74803b43bfd65c6f8d0d0000">https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432712108300322c61f256c74803b43bfd65c6f8d0d0000</a><br></span></span></p>
 <div><span><span style="font-family: Helvetica Neue;">    接下来，你按照官方Virtualenv的方式，安装了你的TensorFlow，我们可以写一个程序来验证一下？结果你发现，</span></span>import tensorflow as tf 就挂了。 真是命途多舛啊。
-<div><span><span style="font-family: Roboto Mono, monospace;">    不过没关系，多半是那个</span><span style="font-family: -apple-system, system-ui, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;">“ImportError: No module named protobuf”.这个错误，只需要执行如下命令。（在Virtualenv下执行，不要</span>deactivate<span style="font-family: -apple-system, system-ui, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;">）, </span></span>
+<div><span><span style="font-family: Roboto Mono, monospace;">    不过没关系，多半是那个</span><span style="font-family: -apple-system, system-ui, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;">"ImportError: No module named protobuf".这个错误，只需要执行如下命令。（在Virtualenv下执行，不要</span>deactivate<span style="font-family: -apple-system, system-ui, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;">）, </span></span>
 <div><span>  </span></div>
 <div>
 <blockquote>
 <div><span>        pip uninstall protobuf</span></div>
 <div><span>        pip install protobuf</span></div>
-<div><span>        pip install –upgrade protobuf==3.0.0a3</span></div>
+<div><span>        pip install --upgrade protobuf==3.0.0a3</span></div>
 </blockquote>
 </div>
 <div></div>
@@ -96,7 +98,7 @@
 <div><span style="font-family: Helvetica Neue;"> </span></div>
 <div>
 <blockquote>
-<div><span>TypeError: __init__() got an unexpected keyword argument ‘serialized_options’</span></div>
+<div><span>TypeError: __init__() got an unexpected keyword argument ‘serialized_options'</span></div>
 </blockquote>
 </div>
 <div><span> </span></div>
@@ -146,7 +148,7 @@
 				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
 <p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes"></p>
 <p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
-<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="599" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="822e2ff72a"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="194"></p>			</form>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="599" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="b43ef2f9be"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="228"></p>			</form>
 			</div>
 	
 </div>
@@ -160,6 +162,9 @@
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/780.html">如何用java.io.*写一个服务器</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/748.html">CPU异常问题排查</a>
 									</li>
 											<li>
@@ -216,10 +221,8 @@
 											<li>
 					<a href="https://huster.top/htmls/629.html">Java的锁</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
@@ -273,12 +276,12 @@
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (68)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (69)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (38)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (39)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
@@ -401,7 +404,9 @@
 			} );
 		} );
 	}
-</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
+</script><script type="text/javascript">
+var codePrettifyLoaderBaseUrl = "https:\/\/huster.top\/wp-content\/plugins\/code-prettify\/prettify";
+</script><script type="text/javascript" src="https://huster.top/wp-content/plugins/code-prettify/prettify/run_prettify.js"></script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
 /* <![CDATA[ */
 var screenReaderText = {"expand":"\u5c55\u5f00\u5b50\u83dc\u5355","collapse":"\u6298\u53e0\u5b50\u83dc\u5355"};
 /* ]]> */

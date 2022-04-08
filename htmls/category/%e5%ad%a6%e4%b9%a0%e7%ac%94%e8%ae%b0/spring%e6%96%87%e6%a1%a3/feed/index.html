@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/spring%e6%96%87%e6%a1%a3/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -174,7 +174,7 @@ return;
 </ol>
 <pre>@Cacheable(cacheNames="tesla-cache", key="'diamond' + #group + #key")</pre>
 <p>每一次都会执行方法上面的内容。为什么呢？</p>
-<p>你需要在你的main方法入口的地方，增加@EnableCaching&#8230;&#8230;</p>
+<p>你需要在你的main方法入口的地方，增加@EnableCaching......</p>
 <p>2.  在一个方法上申明了</p>
 <pre class="brush:java">@Cacheable(cacheNames="tesla-cache", key="'diamond' + #group + #key") 
 public getcontent(String group, String key) {
@@ -194,7 +194,7 @@ return content;
 }</pre>
 <p>又是死活不生效，改成@CacheEvict也不行，搞了好久发现了这个：</p>
 <p>http://stackoverflow.com/questions/10343885/spring-3-1-cacheable-method-still-executed/10347208#10347208</p>
-<p>In proxy mode (which is the default), only external method calls coming in through the proxy are intercepted. This means that self-invocation, in effect, <strong>a method within the target object calling another method of the target object</strong>, <strong>will not lead to an actual caching</strong> at runtime even if the invoked method is marked with @Cacheable &#8211; considering using the aspectj mode in this case.</p>
+<p>In proxy mode (which is the default), only external method calls coming in through the proxy are intercepted. This means that self-invocation, in effect, <strong>a method within the target object calling another method of the target object</strong>, <strong>will not lead to an actual caching</strong> at runtime even if the invoked method is marked with @Cacheable - considering using the aspectj mode in this case.</p>
 <p>&nbsp;</p>
 <p>第一、方法必须是public</p>
 <p>第二、你的updateConfig方法不能在同一个类里面，否则不生效。。。</p>
@@ -227,11 +227,11 @@ return content;
 <h2>17. Web MVC framework</h2>
 <h3>17.1 Spring的Web Mvc框架的介绍</h3>
 <p>Spring的Web的模型-视图层-控制层（MVC）都是通过DispatcherServlet这个组件实现的。这个组件能够通过配置将各种请求路由给各个Controller的方法，并且提供多语言、主题设置、文件上传等功能的解决方案。</p>
-<p>“Open for extension&#8230;”</p>
+<p>“Open for extension...”</p>
 <p>Spring的Web框架的设计理念是：“Open for extension. Open for extension.的概念（不知道啥意思，往后看吧）”</p>
 <p>Spring的Web框架的核心方法，很多都是final的，所以你不能用自己的方法覆写core里面的方法，这样做虽然不是强制的，但是你必须要铭记在心。</p>
 <p>为什么这么做？详细请参考[<a href="http://www.objectmentor.com/resources/articles/ocp.pdf">Bob Martin, The Open-Closed Principle (PDF</a>)]</p>
-<p align="left">在这个MVC框架中，你不需要事先框架的接口或者继承一些基类，而是可以直接拿过来用。他的数据绑定是非常灵活，举个例子来说，对于数据不匹配的情况，他会给出（不是抛出异常）一个验证错误，而不是提高为一个系统错误，这样，应用程序自己可以决定，怎样处理这样的错误。Thus you need not duplicate your business objects&#8217; properties as simple, untyped stringsin your form objects simply to handle invalid submissions, or to convert the Strings properly. Instead, itis often preferable to bind directly to your business objects.(不懂)</p>
+<p align="left">在这个MVC框架中，你不需要事先框架的接口或者继承一些基类，而是可以直接拿过来用。他的数据绑定是非常灵活，举个例子来说，对于数据不匹配的情况，他会给出（不是抛出异常）一个验证错误，而不是提高为一个系统错误，这样，应用程序自己可以决定，怎样处理这样的错误。Thus you need not duplicate your business objects' properties as simple, untyped stringsin your form objects simply to handle invalid submissions, or to convert the Strings properly. Instead, itis often preferable to bind directly to your business objects.(不懂)</p>
 <p align="left"> Spring的view层更加灵活。Controller的要务是从Model层拿数据，然后选择合适的视图层渲染.当然，他也可以直接写入响应的数据流来直接完成本次的请求响应。视图层的名字的辨别通过bean名称甚至是自己实现ViewResolver来完成。Model层跟视图层的通信那更加没有问题了，你可以使用Xml、Json、Atom或者其他的内容形式。数据层都能够将自身转换成合适的数据供视图层调用。</p>
 <h4>Spring的Web框架的特征：</h4>
 <p align="left"><a href="ViewResolver">SWF(Spring Web Flow)</a>页面流动效果？具体参考这里吧</p>

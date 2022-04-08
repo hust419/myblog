@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/tag/%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -165,7 +165,7 @@ public class TestTest {
 }
 </pre>
 <p>&nbsp;</p>
-<p>那么回到我们刚刚提出的那个问题，这里是Test，你也可以代理Test1, Test2, Test3, TestN&#8230;.等等，而不用写那么多的代理类了,我这里一个代理类足够了<br />
+<p>那么回到我们刚刚提出的那个问题，这里是Test，你也可以代理Test1, Test2, Test3, TestN....等等，而不用写那么多的代理类了,我这里一个代理类足够了<br />
 那么proxy.newProxyInstance的方法返回的是个啥玩意儿呢？他是Test对象吗？显然不是，那么他是TestProxy对象吗？也不是，否则的强制转换都要出错，他是由jvm生成的一个动态对象，该对象实现了TestInterface接口当然就可以直接调用test方法喽，这要得益于newProxyInstance这个方法中的第二个参数，明确的告诉他，被代理的target对象是个什么玩意儿的接口.</p>
 <p>三、 我们继续提出下一个问题，你这个Test类必须得实现接口，才能工作，那么我可不可以就针对一个类来创建一个动态代理，不需要传入接口类型呢？ 答案是肯定的，他就是cglib干的事情</p>
 <p>a. 一个类，没有实现任何接口</p>

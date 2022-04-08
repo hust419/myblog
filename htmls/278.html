@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>VPS下LNMP(Linux+Nginx+php-fpm+mysql)的安装 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/278.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
+<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>VPS下LNMP(Linux+Nginx+php-fpm+mysql)的安装 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/278.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><style id="md-style-inline-css" type="text/css">
+ 
+</style><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
 	    
 		body.page-template-builder-fullwidth.elementor-page,
 		body.page-template-builder-fullwidth-std.elementor-page {
@@ -56,7 +58,7 @@
 	        }
         }
 	
-</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-278 single-format-standard">
+</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="preload" as="style" href="https://huster.top/wp-content/plugins/code-prettify/prettify/prettify.css"><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-278 single-format-standard">
 <div id="page" class="site">
 	<div class="site-inner">
 		<a class="skip-link screen-reader-text" href="#content">跳至内容</a>
@@ -103,11 +105,11 @@
 <p>Rpm –ivh <a href="http://mirrors.sohu.com/fedora-epel/5/i386/epel-release-5-4.noarch.rpm">http://mirrors.sohu.com/fedora-epel/5/i386/epel-release-5-4.noarch.rpm</a></p>
 <p>然后 yum search nginx php-fpm发现还是没有php-fpm。后来找到另外一个更新源<a href="http://centos.alt.ru/repository/centos/5/">http://centos.alt.ru/repository/centos/5/</a> 这里面有php-fpm。添加的方法是，在/etc/yum.repos.d/目录下，新建一个文件,写上</p>
 <p>[CentALT]</p>
-<p>name=CentALT Packages for Enterprise Linux 5 – $basearch</p>
+<p>name=CentALT Packages for Enterprise Linux 5 - $basearch</p>
 <p>baseurl=http://centos.alt.ru/repository/centos/5/$basearch/</p>
 <p>enabled=1</p>
 <p>gpgcheck=0</p>
-<p align="left">前提是先启用启用 EPEL repo ，然后导入rpm –import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL。接下来就是让Nginx能和php进行通信。以前的方式是通过cgi，是php作为apache的mod来进行启动的。适用了php-fpm以后，则可以独立出来，具有更高的效率。具体的配置是：</p>
+<p align="left">前提是先启用启用 EPEL repo ，然后导入rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL。接下来就是让Nginx能和php进行通信。以前的方式是通过cgi，是php作为apache的mod来进行启动的。适用了php-fpm以后，则可以独立出来，具有更高的效率。具体的配置是：</p>
 <p align="left">location ~ .*\.php$ {</p>
 <p align="left">        #fastcgi_pass unix:/tmp/php-cgi.sock;</p>
 <p align="left">        fastcgi_pass 127.0.0.1:9000;</p>
@@ -143,13 +145,13 @@ fi<br>
 <p align="left">你以为这就完了吗？没有，因为能够yum安装的最新的php-fpm的php版本是5.2.17，也就是目前php空间、一键安装包什么的，所使用的版本，我对去年的那个php由于hash设计缺陷导致的ddos还记忆犹新，那个太厉害了。所以，我决定，自己编译php，安装一个新的稳定的版本。具体的编译参数放在最后面。Php的设置，我还是比较熟悉的，一些危险的函数，该禁用的禁用。</p>
 <p align="left">唠叨了很多，总结下，拿到一台新的VPS，我们可以做下面的事情。</p>
 <p align="left">Vi ~/.bashrc</p>
-<p align="left">alias rm=’rm -i’</p>
-<p align="left">alias cp=’cp -i’</p>
-<p align="left">alias mv=’mv -i’</p>
-<p align="left">export LS_OPTION=’–color=auto’</p>
-<p align="left">alias ls=’ls $LS_OPTION’</p>
-<p align="left">alias ll=’ls $LS_OPTION -l’</p>
-<p align="left">alias vi=’vim’</p>
+<p align="left">alias rm='rm -i'</p>
+<p align="left">alias cp='cp -i'</p>
+<p align="left">alias mv='mv -i'</p>
+<p align="left">export LS_OPTION='--color=auto'</p>
+<p align="left">alias ls='ls $LS_OPTION'</p>
+<p align="left">alias ll='ls $LS_OPTION -l'</p>
+<p align="left">alias vi='vim'</p>
 <p align="left"># Source global definitions</p>
 <p align="left">if [ -f /etc/bashrc ]; then</p>
 <p align="left">        . /etc/bashrc</p>
@@ -168,7 +170,7 @@ fi<br>
 <p align="left">        include fastcgi_params;</p>
 <p align="left">      }</p>
 <p align="left">然后编译php，并以php-fpm的方式运行</p>
-<p align="left">./configure  –prefix=/usr –with-config-file-path=/etc  –disable-pdo  –disable-cgi –without-sqlite –enable-fpm   –with-fpm-user=nginx  –with-fpm-group=nginx   –with-mcrypt –with-zlib  –with-openssl –with-gd –enable-gd-native-ttf -with-mysql=/usr –with-mysql-sock=/var/lib/mysql/mysql.sock –enable-sockets –disable-pcntl –enable-sysvsem –enable-sysvshm –enable-sysvmsg  –enable-zip –without-pear –disable-phar –without-pspell –disable-fileinfo</p>
+<p align="left">./configure  --prefix=/usr --with-config-file-path=/etc  --disable-pdo  --disable-cgi --without-sqlite --enable-fpm   --with-fpm-user=nginx  --with-fpm-group=nginx   --with-mcrypt --with-zlib  --with-openssl --with-gd --enable-gd-native-ttf -with-mysql=/usr --with-mysql-sock=/var/lib/mysql/mysql.sock --enable-sockets --disable-pcntl --enable-sysvsem --enable-sysvshm --enable-sysvmsg  --enable-zip --without-pear --disable-phar --without-pspell --disable-fileinfo</p>
 <p align="left">Make & makeinstall</p>
 <p align="left">期间，发生了很多错误，可以看下面的提示信息，比如说fileinfo相关的东西，导致了安装失败（编译成功），查了下，这东西不重要，因此禁用它。注意记住最后安装成功以后的信息。然后是安装apc，这里下次可以编译的时候，直接带上，先安装apc，再编译php时候指定apc目录，现在我只好以动态so的方式加载。下载apc，进入目录，phpize</p>
 <p align="left">然后，./configure –with-php-config=/usr/php-config</p>
@@ -264,7 +266,7 @@ fi<br>
 				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
 <p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes"></p>
 <p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
-<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="278" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="6c1bc549ce"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="7"></p>			</form>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="278" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="90c2a280e6"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="237"></p>			</form>
 			</div>
 	
 </div>
@@ -278,6 +280,9 @@ fi<br>
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/780.html">如何用java.io.*写一个服务器</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/748.html">CPU异常问题排查</a>
 									</li>
 											<li>
@@ -334,10 +339,8 @@ fi<br>
 											<li>
 					<a href="https://huster.top/htmls/629.html">Java的锁</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
@@ -391,12 +394,12 @@ fi<br>
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (68)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (69)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (38)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (39)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
@@ -519,7 +522,9 @@ fi<br>
 			} );
 		} );
 	}
-</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
+</script><script type="text/javascript">
+var codePrettifyLoaderBaseUrl = "https:\/\/huster.top\/wp-content\/plugins\/code-prettify\/prettify";
+</script><script type="text/javascript" src="https://huster.top/wp-content/plugins/code-prettify/prettify/run_prettify.js"></script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
 /* <![CDATA[ */
 var screenReaderText = {"expand":"\u5c55\u5f00\u5b50\u83dc\u5355","collapse":"\u6298\u53e0\u5b50\u83dc\u5355"};
 /* ]]> */

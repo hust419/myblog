@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>Java的Serializable接口 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/485.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
+<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>Java的Serializable接口 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/485.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><style id="md-style-inline-css" type="text/css">
+ 
+</style><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
 	    
 		body.page-template-builder-fullwidth.elementor-page,
 		body.page-template-builder-fullwidth-std.elementor-page {
@@ -56,7 +58,7 @@
 	        }
         }
 	
-</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-485 single-format-standard">
+</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="preload" as="style" href="https://huster.top/wp-content/plugins/code-prettify/prettify/prettify.css"><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-485 single-format-standard">
 <div id="page" class="site">
 	<div class="site-inner">
 		<a class="skip-link screen-reader-text" href="#content">跳至内容</a>
@@ -97,9 +99,9 @@ All subtypes of a serializable class are themselves serializable<br>
 集成了这个类的子类也具备了可序列化的能力<br>
 The serialization interface has no methods or fields and serves only to identify the semantics of being serializable.<br>
 这个接口没有方法也没有属性，他仅仅是语义上定义可被序列化的能力<br>
-To allow subtypes of non-serializable classes to be serialized, the subtype may assume responsibility for saving and restoring the state of the supertype’s public, protected, and (if accessible)package fields.<br>
+To allow subtypes of non-serializable classes to be serialized, the subtype may assume responsibility for saving and restoring the state of the supertype's public, protected, and (if accessible)package fields.<br>
 要使得一个不可序列化的子类能够序列化，这个子类必须能保存他父类的public、protected和包级别的属性.<br>
-The subtype may assume this responsibility only if the class it extends has an accessible no-arg constructor to initialize the class’s state<br>
+The subtype may assume this responsibility only if the class it extends has an accessible no-arg constructor to initialize the class's state<br>
 这样的子类所继承的父类必须有一个可以被子类访问的无参构造函数用来初始化这个类的声明.<br>
 It is an error to declare a class Serializable if this is not the case. The error will be detected at runtime.<br>
 如果不这样做，就会在运行时报错.<br>
@@ -120,7 +122,7 @@ private void readObject(java.io.ObjectInputStream in) throws IOException, ClassN
 private void readObjectNoData() throws ObjectStreamException;</p>
 <p>The writeObject method is responsible for writing the state of the object for its particular class so that the corresponding readObject method can restore it.<br>
 writeObjective方法负责写入这个对象的陈述，这样和他对应的readObject方法能够恢复他<br>
-The default mechanism for saving the Object’s fields can be invoked by calling out.defaultWriteObject.<br>
+The default mechanism for saving the Object's fields can be invoked by calling out.defaultWriteObject.<br>
 默认的情况, 可以通过调用out.defaultWriteObject方法来保存这个对象的属性域.<br>
 The method does not need to concern itself with the state belonging to its superclasses or subclasses.<br>
 这个方法不需要去关心这个陈述是属于他的子类还是父类<br>
@@ -128,7 +130,7 @@ State is saved by writing the individual fields to the ObjectOutputStream using 
 保存这个对象的陈述有两种方法。一种是通过writeObject方法将独立属性域写入ObjectOutputStream. 另外一种是通过DataOutput支持的原始数据类型.<br>
 The readObject method is responsible for reading from the stream and restoring the classes fields.<br>
 readObject方法则是用来从stream读取信息并且恢复这个类的.<br>
-It may call in.defaultReadObject to invoke the default mechanism for restoring the object’s non-static and non-transient fields.<br>
+It may call in.defaultReadObject to invoke the default mechanism for restoring the object's non-static and non-transient fields.<br>
 in.defaultReadObject来恢复没有被static 或者 transient关键字修饰的属性<br>
 The defaultReadObject method uses information in the stream to assign the fields of the object saved in the stream with the correspondingly named fields in the current object.<br>
 defaultReadObject方法使用保存在stream中的信息来赋值这个对象的相对应的属性字段<br>
@@ -140,11 +142,11 @@ State is saved by writing the individual fields to the ObjectOutputStream using 
 保存这个对象的陈述有两种方法。一种是通过writeObject方法将独立属性域写入ObjectOutputStream. 另外一种是通过DataOutput支持的原始数据类型.<br>
 The readObjectNoData method is responsible for initializing the state of the object for its particular class in the event that the serialization stream does not list the given class as a superclass of the object being deserialized.<br>
 当给出的类不是反序列化的父类的时候这种情况发生的时候, readObjectNoData的作用就是初始化这个对象的信息.<br>
-This may occur in cases where the receiving party uses a different version of the deserialized instance’s class than the sending party, and the receiver’s version extends classes that are not extended by the sender’s version.<br>
+This may occur in cases where the receiving party uses a different version of the deserialized instance's class than the sending party, and the receiver's version extends classes that are not extended by the sender's version.<br>
 这通常发生在收到的部分使用的class和发送端的class的版本不同，或者接受到的类extend的类没有被发送端继承<br>
 This may also occur if the serialization stream has been tampered;<br>
 或者当收到的信息因为被干扰而不完整<br>
-This may also occur if the serialization stream has been tampered; hence, readObjectNoData is useful for initializing deserialized objects properly despite a “hostile” or incomplete source stream.<br>
+This may also occur if the serialization stream has been tampered; hence, readObjectNoData is useful for initializing deserialized objects properly despite a "hostile" or incomplete source stream.<br>
 当收到的信息不完整或者被故意破坏的时候readObjectNoData就显得非常有用了.<br>
 Serializable classes that need to designate an alternative object to be used when writing an object to the stream should implement this special method with the exact signature:<br>
 如果可序列化的类在需要在写入stream的时候指派可选择的对象，那么他需要实现下面这个特殊的方法<br>
@@ -153,9 +155,9 @@ This readResolve method follows the same invocation rules and accessibility rule
 readResolve和writeReplace有相同的运行和访问规则<br>
 The serialization runtime associates with each serializable class a version number, called a serialVersionUID, which is used during deserialization to verify that the sender and receiver of a serialized object have loaded classes for that object that are compatible with respect to serialization.<br>
 运行时的序列化数据通过serialVersionUID和序列化的类进行关联. 这个id是用来在反序列化的时候验证发送和接受放的兼容行.<br>
-If the receiver has loaded a class for the object that has a different serialVersionUID than that of the corresponding sender’s class, then deserialization will result in an {@linkInvalidClassException}.<br>
+If the receiver has loaded a class for the object that has a different serialVersionUID than that of the corresponding sender's class, then deserialization will result in an {@linkInvalidClassException}.<br>
 如果接收到的类和发送的类有不同的serialVersionUID，将会抛一个linkInvalidClassException异常.<br>
-serializable class can declare its own serialVersionUID explicitly by declaring a field named <code>”serialVersionUID”</code> that must be static, final, and of type <code>long</code>:<p><br>
+serializable class can declare its own serialVersionUID explicitly by declaring a field named <code>"serialVersionUID"</code> that must be static, final, and of type <code>long</code>:<p><br>
 你可以自定义这个serialVersionUID属性，他必须是名称是serialVersionUID并且是static 和 final修饰的. 他是一个long型的数据<br>
 例如 static final long serialVersionUID = 42L;<br>
 If a serializable class does not explicitly declare a serialVersionUID, then the serialization runtime will calculate a default serialVersionUID value for that class based on various aspects of the class, as described in the Java(TM) Object Serialization Specification.<br>
@@ -165,8 +167,8 @@ However, it is <em>stronglyrecommended</em> that all serializable classes explic
 Therefore, to guarantee a consistent serialVersionUID value across different java compiler implementations, a serializable class must declare an explicit serialVersionUID value.<br>
 所以为了在不同的Java编译实现能有相同的serialVersionUID，你最好能自己为类定义一个固定的值<br>
 It is also strongly advised that explicit serialVersionUID declarations use the <code>private</code> modifier where possible, since such declarations apply only to the immediately declaring<br>
-class–serialVersionUID fields are not useful as inherited members.<br>
-另外也建议将这个字段设置为private的权限, 因为这个声明仅仅用在类的声明上 — 并不能作为一个集成的成员<br>
+class--serialVersionUID fields are not useful as inherited members.<br>
+另外也建议将这个字段设置为private的权限, 因为这个声明仅仅用在类的声明上 -- 并不能作为一个集成的成员<br>
 Array classes cannot declare an explicit serialVersionUID, so they always have the default computed value, but the requirement for matching serialVersionUID values is waived for array classes.<br>
 数组类不能定义serialVersionUID字段,所以他们使用默认计算的值.但是在数组上的serialVersionUID的值匹配被放弃了.</p>
 <p> </p>
@@ -196,7 +198,7 @@ Array classes cannot declare an explicit serialVersionUID, so they always have t
 				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
 <p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes"></p>
 <p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
-<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="485" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="a3799dd59f"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="96"></p>			</form>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="485" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="4a15111412"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="105"></p>			</form>
 			</div>
 	
 </div>
@@ -210,6 +212,9 @@ Array classes cannot declare an explicit serialVersionUID, so they always have t
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/780.html">如何用java.io.*写一个服务器</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/748.html">CPU异常问题排查</a>
 									</li>
 											<li>
@@ -266,10 +271,8 @@ Array classes cannot declare an explicit serialVersionUID, so they always have t
 											<li>
 					<a href="https://huster.top/htmls/629.html">Java的锁</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
@@ -323,12 +326,12 @@ Array classes cannot declare an explicit serialVersionUID, so they always have t
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (68)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (69)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (38)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (39)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
@@ -451,7 +454,9 @@ Array classes cannot declare an explicit serialVersionUID, so they always have t
 			} );
 		} );
 	}
-</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
+</script><script type="text/javascript">
+var codePrettifyLoaderBaseUrl = "https:\/\/huster.top\/wp-content\/plugins\/code-prettify\/prettify";
+</script><script type="text/javascript" src="https://huster.top/wp-content/plugins/code-prettify/prettify/run_prettify.js"></script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
 /* <![CDATA[ */
 var screenReaderText = {"expand":"\u5c55\u5f00\u5b50\u83dc\u5355","collapse":"\u6298\u53e0\u5b50\u83dc\u5355"};
 /* ]]> */

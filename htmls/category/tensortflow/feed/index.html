@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/tensortflow/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -47,13 +47,13 @@
 <p><span><span style="font-family: Helvetica Neue;">    Virtualenv从名字就可以看出是一个虚拟的环境。这里的一个背景是，python对依赖包有多个版本时候的冲突问题。如果你一个工程依赖的是这个包的1.0，另外一个工程依赖的是2.0，结果就杯具了，因为他安装在同一个位置，导致包冲突。java里的maven仓库通过不同的路径很好的解决了这个问题，不知道python为什么不能多个版本？所以virtualenv就可以让你一个工程一个环境，互相不冲突。详细的介绍 <a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432712108300322c61f256c74803b43bfd65c6f8d0d0000">https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001432712108300322c61f256c74803b43bfd65c6f8d0d0000</a><br />
 </span></span></p>
 <div><span><span style="font-family: Helvetica Neue;">    接下来，你按照官方Virtualenv的方式，安装了你的TensorFlow，我们可以写一个程序来验证一下？结果你发现，</span></span>import tensorflow as tf 就挂了。 真是命途多舛啊。</p>
-<div><span><span style="font-family: Roboto Mono, monospace;">    不过没关系，多半是那个</span><span style="font-family: -apple-system, system-ui, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;">&#8220;ImportError: No module named protobuf&#8221;.这个错误，只需要执行如下命令。（在Virtualenv下执行，不要</span>deactivate<span style="font-family: -apple-system, system-ui, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;">）, </span></span></p>
+<div><span><span style="font-family: Roboto Mono, monospace;">    不过没关系，多半是那个</span><span style="font-family: -apple-system, system-ui, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;">"ImportError: No module named protobuf".这个错误，只需要执行如下命令。（在Virtualenv下执行，不要</span>deactivate<span style="font-family: -apple-system, system-ui, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;">）, </span></span></p>
 <div><span>  </span></div>
 <div>
 <blockquote>
 <div><span>        pip uninstall protobuf</span></div>
 <div><span>        pip install protobuf</span></div>
-<div><span>        pip install &#8211;upgrade protobuf==3.0.0a3</span></div>
+<div><span>        pip install --upgrade protobuf==3.0.0a3</span></div>
 </blockquote>
 </div>
 <div></div>
@@ -61,7 +61,7 @@
 <div><span style="font-family: Helvetica Neue;"> </span></div>
 <div>
 <blockquote>
-<div><span>TypeError: __init__() got an unexpected keyword argument ‘serialized_options&#8217;</span></div>
+<div><span>TypeError: __init__() got an unexpected keyword argument ‘serialized_options'</span></div>
 </blockquote>
 </div>
 <div><span> </span></div>
@@ -101,9 +101,9 @@
 		<guid isPermaLink="false">http://huster.top/?p=568</guid>
 		<description><![CDATA[想试试TensorFlow来着,结果在安装的时候就悲剧了。先安装Python 2.7.10版本。然后试试pip &#8230; <a href="https://huster.top/htmls/568.html" class="more-link">继续阅读<span class="screen-reader-text">“Mac下Pip的报错问题”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>想试试TensorFlow来着,结果在安装的时候就悲剧了。先安装Python 2.7.10版本。然后试试pip -v 发现报错：</p>
-<p>ValueError: invalid truth value &#8216;true #\xe5\x8f\x96\xe6\xb6\x88pip\xe7\x89\x88\xe6<br />
+<p>ValueError: invalid truth value 'true #\xe5\x8f\x96\xe6\xb6\x88pip\xe7\x89\x88\xe6<br />
 \x9c\xac\xe6\xa3\x80\xe6\x9f\xa5\xef\xbc\x8c\xe6\x8e\x92\xe9\x99\xa4\xe6\xaf\x8f<br />
-\xe6\xac\xa1\xe9\x83\xbd\xe6\x8a\xa5\xe6\x9c\x80\xe6\x96\xb0\xe7\x9a\x84pip&#8217;</p>
+\xe6\xac\xa1\xe9\x83\xbd\xe6\x8a\xa5\xe6\x9c\x80\xe6\x96\xb0\xe7\x9a\x84pip'</p>
 <p><span id="more-568"></span></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
@@ -134,7 +134,7 @@
 <p>&nbsp;</p>
 <p>写的再清楚不多，是val不符合格式</p>
 <p>&nbsp;</p>
-<p>再查看报错，&#8217;true #\xe5\x8f\x96\xe6\xb6\x88pip\xe7\x89\x88\xe6\x9c\xac\xe6\xa3\x80\xe6\x9f\xa5\xef\xbc\x8c\xe6\x8e\x92\xe9\x99\xa4\xe6\xaf\x8f\xe6\xac\xa1\xe9\x83\xbd\xe6\x8a\xa5\xe6\x9c\x80\xe6\x96\xb0\xe7\x9a\x84pip&#8217;</p>
+<p>再查看报错，'true #\xe5\x8f\x96\xe6\xb6\x88pip\xe7\x89\x88\xe6\x9c\xac\xe6\xa3\x80\xe6\x9f\xa5\xef\xbc\x8c\xe6\x8e\x92\xe9\x99\xa4\xe6\xaf\x8f\xe6\xac\xa1\xe9\x83\xbd\xe6\x8a\xa5\xe6\x9c\x80\xe6\x96\xb0\xe7\x9a\x84pip'</p>
 <p>果然是不符合格式，因为后面一大坨，再发现有#这肯定是注释了。那么这个val是啥呢？ 联想到第一段内容，我打开pip.conf看看，他在 ~/.pip/pip.conf 。发现果然是注释和配置写在了一行，他把注释也读进来了当做配置，所以就报错了。。。</p>
 <p>&nbsp;</p>
 <p>果断删除注释，再运行 pip -v 果然就好了。。。</p>

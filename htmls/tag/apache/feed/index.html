@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/tag/apache/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -52,7 +52,7 @@
 <h3><a id="combined" name="combined"></a>Combined Log Format</h3>
 <p>这种日志，比common多了两个字段 :</p>
 <p><code>127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326 "http://www.example.com/start.html" "Mozilla/4.08 [en] (Win98; I ;Nav)" </code></p>
-<p><code>"http://www.example.com/start.html"</code> (<code>\"%{Referer}i\"</code>) &#8212;-referer 信息</p>
+<p><code>"http://www.example.com/start.html"</code> (<code>\"%{Referer}i\"</code>) ----referer 信息</p>
 <p><code>"Mozilla/4.08 [en] (Win98; I ;Nav)"</code> 客户端的信息</p>
 <p>还有<a id="multiple" name="multiple"></a>Multiple Access Logs和<a id="conditional" name="conditional"></a>Conditional Logs详细查看：<a href="http://httpd.apache.org/docs/2.0/logs.html" target="_blank">apache官网介绍</a></p>
 <p>值得一提的是日志的轮转：</p>
@@ -66,9 +66,9 @@ gzip access_log.old error_log.old </code></p>
 <p><code>CustomLog "|bin/rotatelogs /var/logs/logfile 86400" common</code> //每天一个文件</p>
 <p><code>CustomLog "|bin/rotatelogs /var/logs/logfile 5M" common</code> // 每5M一个</p>
 <p><code>ErrorLog "|bin/rotatelogs /var/logs/errorlog.%Y-%m-%d-%H" // 每小时存一次错误日志</code></p>
-<p>CustomLog &#8220;|/usr/sbin/apache/bin/cronolog /usr/local/apache/logs/search/%Y/%m/%d/access-%Y-%m-%d_%H.log&#8221; combined</p>
+<p>CustomLog "|/usr/sbin/apache/bin/cronolog /usr/local/apache/logs/search/%Y/%m/%d/access-%Y-%m-%d_%H.log" combined</p>
 <p>combined日志，每1小时存一次<br />
-ErrorLog &#8220;|grep -v &#8216;tairclientapi_impl&#8217;  &#8211;line-buffered|/home/admin/apache/bin/cronolog /home/admin/apache/logs/search/%Y/%m/%d/error-%Y-%m-%d.log&#8221;</p>
+ErrorLog "|grep -v 'tairclientapi_impl'  --line-buffered|/home/admin/apache/bin/cronolog /home/admin/apache/logs/search/%Y/%m/%d/error-%Y-%m-%d.log"</p>
 <p>首先交给grep处理，然后刷新到log</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>

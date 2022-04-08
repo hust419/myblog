@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/tag/ecache/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -44,7 +44,7 @@
 </ol>
 <pre>@Cacheable(cacheNames="tesla-cache", key="'diamond' + #group + #key")</pre>
 <p>每一次都会执行方法上面的内容。为什么呢？</p>
-<p>你需要在你的main方法入口的地方，增加@EnableCaching&#8230;&#8230;</p>
+<p>你需要在你的main方法入口的地方，增加@EnableCaching......</p>
 <p>2.  在一个方法上申明了</p>
 <pre class="brush:java">@Cacheable(cacheNames="tesla-cache", key="'diamond' + #group + #key") 
 public getcontent(String group, String key) {
@@ -64,7 +64,7 @@ return content;
 }</pre>
 <p>又是死活不生效，改成@CacheEvict也不行，搞了好久发现了这个：</p>
 <p>http://stackoverflow.com/questions/10343885/spring-3-1-cacheable-method-still-executed/10347208#10347208</p>
-<p>In proxy mode (which is the default), only external method calls coming in through the proxy are intercepted. This means that self-invocation, in effect, <strong>a method within the target object calling another method of the target object</strong>, <strong>will not lead to an actual caching</strong> at runtime even if the invoked method is marked with @Cacheable &#8211; considering using the aspectj mode in this case.</p>
+<p>In proxy mode (which is the default), only external method calls coming in through the proxy are intercepted. This means that self-invocation, in effect, <strong>a method within the target object calling another method of the target object</strong>, <strong>will not lead to an actual caching</strong> at runtime even if the invoked method is marked with @Cacheable - considering using the aspectj mode in this case.</p>
 <p>&nbsp;</p>
 <p>第一、方法必须是public</p>
 <p>第二、你的updateConfig方法不能在同一个类里面，否则不生效。。。</p>

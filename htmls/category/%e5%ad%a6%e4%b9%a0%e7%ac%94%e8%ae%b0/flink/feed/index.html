@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -37,7 +37,7 @@
 		<description><![CDATA[过年被病毒闹的出不了门，就顺带着把flink秒级统计的逻辑写了一下，逻辑很简单，就是从kafka消费数据，然后 &#8230; <a href="https://huster.top/htmls/713.html" class="more-link">继续阅读<span class="screen-reader-text">“flink读取kafka数据未能触发watermark”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>过年被病毒闹的出不了门，就顺带着把flink秒级统计的逻辑写了一下，逻辑很简单，就是从kafka消费数据，然后select count(*) from xxx group by xxx来一秒产出一个打点。程序代码非常简单</p>
 <p><span id="more-713"></span></p>
-<p>&#8220;`java</p>
+<p>```java</p>
 <pre>StreamExecutionEnvironment bsEnv = StreamExecutionEnvironment.getExecutionEnvironment();
 EnvironmentSettings bsSettings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build();
 StreamTableEnvironment bsTableEnv = StreamTableEnvironment.create(bsEnv, bsSettings);
@@ -104,14 +104,14 @@ bsEnv.execute("data-metrics");
 
 </pre>
 <p>代码如上，非常简单，输入的数据类似于</p>
-<p>&#8220;`json</p>
-<p class="p1"><span class="s1">{&#8220;t&#8221;:1580896327330,&#8221;st&#8221;:&#8221;DIRECT&#8221;,&#8221;i&#8221;:&#8221;hitch_passenger_order_2020_01_22_23_50_40&#8243;,&#8221;op&#8221;:&#8221;es_sink&#8221;,&#8221;id&#8221;:&#8221;,guid:15756341902141200002900&#8243;,&#8221;ut&#8221;:&#8221;,order_update_time:2020-02-05 17:52:07.190435&#8243;,&#8221;msg&#8221;:&#8221;&#8221;,&#8221;rId&#8221;:&#8221;0.1.1.1&#8243;}</span></p>
-<p class="p1"><span class="s1">{&#8220;t&#8221;:1580896327831,&#8221;st&#8221;:&#8221;DIRECT&#8221;,&#8221;i&#8221;:&#8221;hitch_passenger_order_2020_01_22_23_50_40&#8243;,&#8221;op&#8221;:&#8221;es_sink&#8221;,&#8221;id&#8221;:&#8221;,guid:15756341902141200002900&#8243;,&#8221;ut&#8221;:&#8221;,order_update_time:2020-02-05 17:52:07.687468&#8243;,&#8221;msg&#8221;:&#8221;&#8221;,&#8221;rId&#8221;:&#8221;0.1.1.1&#8243;}</span></p>
-<p class="p1"><span class="s1">{&#8220;t&#8221;:1580896328131,&#8221;st&#8221;:&#8221;DIRECT&#8221;,&#8221;i&#8221;:&#8221;hitch_passenger_order_2020_01_22_23_50_40&#8243;,&#8221;op&#8221;:&#8221;es_sink&#8221;,&#8221;id&#8221;:&#8221;,guid:15756341902141200002900&#8243;,&#8221;ut&#8221;:&#8221;,order_update_time:2020-02-05 17:52:08.047474&#8243;,&#8221;msg&#8221;:&#8221;&#8221;,&#8221;rId&#8221;:&#8221;0.1.1.1&#8243;}</span></p>
+<p>```json</p>
+<p class="p1"><span class="s1">{"t":1580896327330,"st":"DIRECT","i":"hitch_passenger_order_2020_01_22_23_50_40","op":"es_sink","id":",guid:15756341902141200002900","ut":",order_update_time:2020-02-05 17:52:07.190435","msg":"","rId":"0.1.1.1"}</span></p>
+<p class="p1"><span class="s1">{"t":1580896327831,"st":"DIRECT","i":"hitch_passenger_order_2020_01_22_23_50_40","op":"es_sink","id":",guid:15756341902141200002900","ut":",order_update_time:2020-02-05 17:52:07.687468","msg":"","rId":"0.1.1.1"}</span></p>
+<p class="p1"><span class="s1">{"t":1580896328131,"st":"DIRECT","i":"hitch_passenger_order_2020_01_22_23_50_40","op":"es_sink","id":",guid:15756341902141200002900","ut":",order_update_time:2020-02-05 17:52:08.047474","msg":"","rId":"0.1.1.1"}</span></p>
 <p>&nbsp;</p>
 <p>然而，死活就是无法输出正确的统计数据。但是当我把setParallelism并发设置为1的时候，就能正常输出统计数据。太神奇了，为什么跟并发度有关系呢？</p>
 <p>于是我在本地打开了跟踪调试功能，我发现问题出在StatusWatermarkValve这个类里，这个类的这个方法是这么写的</p>
-<p>&#8220;`java</p>
+<p>```java</p>
 <pre>private void findAndOutputNewMinWatermarkAcrossAlignedChannels() {
    long newMinWatermark = Long.MAX_VALUE;
    boolean hasAlignedChannels = false;
@@ -167,14 +167,14 @@ bsEnv.execute("data-metrics");
 <div>   StreamExecutionEnvironment fsEnv = StreamExecutionEnvironment.getExecutionEnvironment();</div>
 <div>   StreamTableEnvironment tttt = StreamTableEnvironment.create(fsEnv,fsSettings);</div>
 <div>   Properties properties =newProperties();</div>
-<div>   properties.setProperty(&#8220;bootstrap.servers&#8221;,&#8221;localhost:9092&#8243;);</div>
-<div>    properties.setProperty(&#8220;<a href="http://group.id/">group.id</a>&#8220;,&#8221;test&#8221;+ System.currentTimeMillis());</div>
-<div>   FlinkKafkaConsumer011&lt;String&gt; kafkaConsumer011 =newFlinkKafkaConsumer011&lt;String&gt;(&#8220;test&#8221;, newSimpleStringSchema(),properties);</div>
+<div>   properties.setProperty("bootstrap.servers","localhost:9092");</div>
+<div>    properties.setProperty("<a href="http://group.id/">group.id</a>","test"+ System.currentTimeMillis());</div>
+<div>   FlinkKafkaConsumer011&lt;String&gt; kafkaConsumer011 =newFlinkKafkaConsumer011&lt;String&gt;("test", newSimpleStringSchema(),properties);</div>
 <div>   kafkaConsumer011.setStartFromTimestamp(System.currentTimeMillis());</div>
 <div>   DataStream&lt;String&gt; stream = fsEnv.addSource(kafkaConsumer011);</div>
 <div>   stream.print();</div>
-<div>   fsEnv.execute(&#8220;test&#8221;);</div>
-<div>}2019-10-21 23:06:58.970 [Thread-8] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 0 creating fetcher with offsets {}.</div>
+<div>   fsEnv.execute("test");</div>
+<div>}2019-10-21 23:06:58.970 [Thread-8] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 0 creating fetcher with offsets {}.</div>
 <div></div>
 <div>表现为，无法收到kafka发送过来的消息。这就很奇怪了，因为我使用kafka-consumer-console.sh的方式可以看到实际上是有消息产出的，但是这里死活就收不到数据。</div>
 <div></div>
@@ -188,16 +188,16 @@ bsEnv.execute("data-metrics");
 <div>对比了下，能拿到数据和不能拿到数据的区别。下面是不能拿到数据时候的日志输出，</div>
 <div></div>
 <div></div>
-<div>2019-10-21 23:06:58.970 [Thread-10] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 3 creating fetcher with offsets {}.</div>
-<div>2019-10-21 23:06:58.970 [Thread-7] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 1 creating fetcher with offsets {}.</div>
-<div>2019-10-21 23:07:01.100 [Source: Custom Source -&gt; Sink: Print to Std. Out (3/4)] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 2 initially has no partitions to read from.</div>
-<div>2019-10-21 23:07:01.108 [Thread-9] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 2 creating fetcher with offsets {}.</div>
+<div>2019-10-21 23:06:58.970 [Thread-10] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 3 creating fetcher with offsets {}.</div>
+<div>2019-10-21 23:06:58.970 [Thread-7] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 1 creating fetcher with offsets {}.</div>
+<div>2019-10-21 23:07:01.100 [Source: Custom Source -&gt; Sink: Print to Std. Out (3/4)] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 2 initially has no partitions to read from.</div>
+<div>2019-10-21 23:07:01.108 [Thread-9] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 2 creating fetcher with offsets {}.</div>
 <div></div>
 <div></div>
 <div>而下面是能拿到数据时候的日志输出, 可以看到有一个task成功拿到了这个partition的offset</div>
 <div></div>
 <div></div>
-<div>2019-10-21 23:14:11.871 [Thread-7] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 2 creating fetcher with offsets {KafkaTopicPartition{topic=&#8217;test&#8217;, partition=0}=35}.</div>
+<div>2019-10-21 23:14:11.871 [Thread-7] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 2 creating fetcher with offsets {KafkaTopicPartition{topic='test', partition=0}=35}.</div>
 <div></div>
 <div></div>
 <div>所以原因是因为，通过kafka的consumer的api，consumer.offsetsForTimes的时候，能否拿到offset，如果拿不到在KafkaConsumerThread的线程的run方法里，有一个这个代码表明这个方法是阻塞的，一直等到有新的partition到来，才会继续。而新的partition不会到来，所以这里就有问题了。。。</div>
@@ -210,7 +210,7 @@ bsEnv.execute("data-metrics");
 <div>      // if no assigned partitions block until we get at least one</div>
 <div>      // instead of hot spinning this loop. We rely on a fact that</div>
 <div>      // unassignedPartitionsQueue will be closed on a shutdown, so</div>
-<div>      // we don&#8217;t block indefinitely</div>
+<div>      // we don't block indefinitely</div>
 <div>      newPartitions = unassignedPartitionsQueue.getBatchBlocking();</div>
 <div>   }</div>
 <div>   if (newPartitions != null) {</div>
@@ -228,25 +228,25 @@ bsEnv.execute("data-metrics");
 <div></div>
 <div>private static void testConsumer() {</div>
 <div>    Properties props = new Properties();</div>
-<div>    props.put(&#8220;bootstrap.servers&#8221;, &#8220;localhost:9092&#8221;);</div>
-<div>    props.put(&#8220;group.id&#8221;, &#8220;test&#8221;);</div>
-<div>    props.put(&#8220;key.deserializer&#8221;, &#8220;org.apache.kafka.common.serialization.StringDeserializer&#8221;);</div>
-<div>    props.put(&#8220;value.deserializer&#8221;, &#8220;org.apache.kafka.common.serialization.StringDeserializer&#8221;);</div>
+<div>    props.put("bootstrap.servers", "localhost:9092");</div>
+<div>    props.put("group.id", "test");</div>
+<div>    props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");</div>
+<div>    props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");</div>
 <div>    KafkaConsumer&lt;String, String&gt; consumer = new KafkaConsumer&lt;&gt;(props);</div>
-<div>    consumer.subscribe(Collections.singletonList(&#8220;test&#8221;));</div>
-<div>    TopicPartition topicPartition = new TopicPartition(&#8220;test&#8221;, 0);</div>
+<div>    consumer.subscribe(Collections.singletonList("test"));</div>
+<div>    TopicPartition topicPartition = new TopicPartition("test", 0);</div>
 <div>    long current = System.currentTimeMillis();</div>
 <div>    for (int i=0; i&lt;10000; i++) {</div>
 <div>        Map&lt;TopicPartition, Long&gt; map = new HashMap&lt;&gt;();</div>
-<div>        map.put(topicPartition, current &#8211; i*1000);</div>
+<div>        map.put(topicPartition, current - i*1000);</div>
 <div>        Map&lt;TopicPartition, OffsetAndTimestamp&gt; result  = consumer.offsetsForTimes(map);</div>
-<div>        System.out.println(&#8220;===================test : &#8221; + i + &#8220;==================&#8221;);</div>
+<div>        System.out.println("===================test : " + i + "==================");</div>
 <div>        System.out.println(new Gson().toJson(result));</div>
 <div>    }</div>
 <div>    while (true) {</div>
 <div>        ConsumerRecords&lt;String, String&gt; records = consumer.poll(100);</div>
 <div>        for (ConsumerRecord&lt;String, String&gt; record : records)</div>
-<div>            System.out.printf(&#8220;offset = %d, key = %s, value = %s%n&#8221;, record.offset(), record.key(), record.value());</div>
+<div>            System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());</div>
 <div>    }</div>
 <div>}</div>
 <div></div>
@@ -287,7 +287,7 @@ bsEnv.execute("data-metrics");
 <div>    at org.apache.flink.api.java.typeutils.runtime.RowSerializer.copy(RowSerializer.java:93)</div>
 <div>    at org.apache.flink.api.java.typeutils.runtime.RowSerializer.copy(RowSerializer.java:44)</div>
 <div>    at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.pushToOperator(OperatorChain.java:635)</div>
-<div>    &#8230; 9 more</div>
+<div>    ... 9 more</div>
 <div></div>
 <div></div>
 <div>问题2: partition必须是数字类型的字段</div>
@@ -295,14 +295,14 @@ bsEnv.execute("data-metrics");
 <div></div>
 <div> 另外，因为connector.read.partition.column他使用的是between语句，所以只能是数字，时间戳等，否则也会报错</div>
 <div>. partition.column must be a numeric,</div>
-<div> &#8212; date, or timestamp column from the table in question.</div>
+<div> -- date, or timestamp column from the table in question.</div>
 <div></div>
 <div></div>
 <div></div>
 <div></div>
 <div></div>
 <div></div>
-<div>Exception in thread &#8220;main&#8221; org.apache.flink.runtime.client.JobExecutionException: Job execution failed.</div>
+<div>Exception in thread "main" org.apache.flink.runtime.client.JobExecutionException: Job execution failed.</div>
 <div>    at org.apache.flink.runtime.jobmaster.JobResult.toJobExecutionResult(JobResult.java:146)</div>
 <div>    at org.apache.flink.runtime.minicluster.MiniCluster.executeJobBlocking(MiniCluster.java:627)</div>
 <div>    at org.apache.flink.streaming.api.environment.LocalStreamEnvironment.execute(LocalStreamEnvironment.java:117)</div>
@@ -336,7 +336,7 @@ bsEnv.execute("data-metrics");
 <div>    at org.postgresql.jdbc2.AbstractJdbc2Statement.executeWithFlags(AbstractJdbc2Statement.java:388)</div>
 <div>    at org.postgresql.jdbc2.AbstractJdbc2Statement.executeQuery(AbstractJdbc2Statement.java:273)</div>
 <div>    at org.apache.flink.api.java.io.jdbc.JDBCInputFormat.open(JDBCInputFormat.java:247)</div>
-<div>    &#8230; 4 more</div>
+<div>    ... 4 more</div>
 <div>
 <div></div>
 </div>
@@ -353,8 +353,8 @@ bsEnv.execute("data-metrics");
 				<category><![CDATA[flink]]></category>
 
 		<guid isPermaLink="false">https://huster.top/?p=704</guid>
-		<description><![CDATA[New ElasticSearch()…xxx&#8230;registerTableSink(); Elas &#8230; <a href="https://huster.top/htmls/704.html" class="more-link">继续阅读<span class="screen-reader-text">“flink相关 &#8211; 通过Table API写入ElasticSearch的部分源码分析”</span></a>]]></description>
-				<content:encoded><![CDATA[<div>New ElasticSearch()…xxx&#8230;registerTableSink();</div>
+		<description><![CDATA[New ElasticSearch()…xxx...registerTableSink(); ElasticS &#8230; <a href="https://huster.top/htmls/704.html" class="more-link">继续阅读<span class="screen-reader-text">“flink相关 &#8211; 通过Table API写入ElasticSearch的部分源码分析”</span></a>]]></description>
+				<content:encoded><![CDATA[<div>New ElasticSearch()…xxx...registerTableSink();</div>
 <div></div>
 <div>ElasticSearch是一个ConnectorDescriptor: 最关键的就是一个toConnectorProperties就是一个配置的map,传给factory使用，他其实是一个配置收集器.</div>
 <div></div>
@@ -430,7 +430,7 @@ bsEnv.execute("data-metrics");
 <div>*&lt;p&gt;The keys array might be empty, if the table consists of a single (updated) record.</div>
 <div>* If the table does not have a key and is append-only, the keys attribute is null.</div>
 <div>*</div>
-<div>*@paramkeysthe field names of the table&#8217;s keys, an empty array if the table has a single</div>
+<div>*@paramkeysthe field names of the table's keys, an empty array if the table has a single</div>
 <div>*             row, and null if the table is append-only and has no key.</div>
 <div>*/</div>
 <div>voidsetKeyFields(String[] keys);</div>
@@ -522,10 +522,10 @@ bsEnv.execute("data-metrics");
 				<content:encoded><![CDATA[<div>业务代码如下 :</div>
 <div>fsTableEnv.connect(</div>
 <div>       newKafka()</div>
-<div>                .version(&#8220;0.11&#8221;)</div>
-<div>                .topic(&#8220;xxxx&#8221;)</div>
-<div>                .property(&#8220;bootstrap.servers”,”<a href="http://newdev-kafka1.ttbike.com.cn:9092/">x</a>xxxx:xxxx&#8221;)</div>
-<div>                .property(&#8220;<a href="http://group.id/">group.id</a>&#8220;,&#8221;test4444&#8221;)</div>
+<div>                .version("0.11")</div>
+<div>                .topic("xxxx")</div>
+<div>                .property("bootstrap.servers”,”<a href="http://newdev-kafka1.ttbike.com.cn:9092/">x</a>xxxx:xxxx")</div>
+<div>                .property("<a href="http://group.id/">group.id</a>","test4444")</div>
 <div>                .startFromEarliest()//测试需要</div>
 <div>)</div>
 <div>        .withSchema(newSchema().schema(newTableSchema(fields, types)))</div>
@@ -535,7 +535,7 @@ bsEnv.execute("data-metrics");
 <div></div>
 <div></div>
 <div>问题是：读出来的数据总是null</div>
-<div>DataStream&lt;Row&gt; table = fsTableEnv.toAppendStream(fsTableEnv.sqlQuery(&#8220;select * from testTable&#8221;),Row.class);</div>
+<div>DataStream&lt;Row&gt; table = fsTableEnv.toAppendStream(fsTableEnv.sqlQuery("select * from testTable"),Row.class);</div>
 <div>table.print();</div>
 <div></div>
 <div></div>
@@ -557,20 +557,20 @@ bsEnv.execute("data-metrics");
 <div>最后跟踪定位到convert那个地方，才发现，原来解析的时候，他使用的是完整的json schema，而不是仅仅是data里的field字段，例如你传给kafka的json schema是包含了data平级的那些字段,table,operation等。而我传过去的是data里的field字段，当然就错了。</div>
 <div></div>
 <div>{</div>
-<div>    &#8220;schema&#8221;: “44444&#8243;,</div>
-<div>    &#8220;table&#8221;: &#8220;safs&#8221;,</div>
-<div>    &#8220;operation&#8221;: &#8220;INSERT&#8221;,</div>
-<div>    &#8220;data&#8221;: {</div>
-<div>        &#8220;start_time&#8221;: &#8220;2019-10-10 23:00:00&#8221;,</div>
-<div>        &#8220;end_point&#8221;: &#8220;0101000020E61000008BDEA9807B545E4062D9CC21A9313F40&#8221;,</div>
-<div>        &#8220;start_point&#8221;: &#8220;0101000020E61000002250FD8348575E40C284D1AC6C1F3F40&#8221;,</div>
-<div>        &#8220;user_new_id&#8221;: 1200001917,</div>
-<div>        &#8220;end_adcode&#8221;: null,</div>
-<div>        &#8220;end_time&#8221;: null,</div>
-<div>        &#8220;distance&#8221;: null,</div>
-<div>        &#8220;seat_count&#8221;: 4</div>
+<div>    "schema": “44444",</div>
+<div>    "table": "safs",</div>
+<div>    "operation": "INSERT",</div>
+<div>    "data": {</div>
+<div>        "start_time": "2019-10-10 23:00:00",</div>
+<div>        "end_point": "0101000020E61000008BDEA9807B545E4062D9CC21A9313F40",</div>
+<div>        "start_point": "0101000020E61000002250FD8348575E40C284D1AC6C1F3F40",</div>
+<div>        "user_new_id": 1200001917,</div>
+<div>        "end_adcode": null,</div>
+<div>        "end_time": null,</div>
+<div>        "distance": null,</div>
+<div>        "seat_count": 4</div>
 <div>    },</div>
-<div>    &#8220;operateTime&#8221;: 1570602631926</div>
+<div>    "operateTime": 1570602631926</div>
 <div>}</div>
 <div></div>
 <div></div>
@@ -581,7 +581,7 @@ bsEnv.execute("data-metrics");
 <div>      final JsonNode root = objectMapper.readTree(message);</div>
 <div>      return (Row) runtimeConverter.convert(objectMapper, root);</div>
 <div>   } catch (Throwable t) {</div>
-<div>      throw new IOException(&#8220;Failed to deserialize JSON object.&#8221;, t);</div>
+<div>      throw new IOException("Failed to deserialize JSON object.", t);</div>
 <div>   }</div>
 <div>}</div>
 <div>这段代码里，root解析出来是好的，然后他开始convert.</div>

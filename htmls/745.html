@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>又一起GC问题排查过程 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/745.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
+<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>又一起GC问题排查过程 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/745.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><style id="md-style-inline-css" type="text/css">
+ 
+</style><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
 	    
 		body.page-template-builder-fullwidth.elementor-page,
 		body.page-template-builder-fullwidth-std.elementor-page {
@@ -56,7 +58,7 @@
 	        }
         }
 	
-</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-745 single-format-standard">
+</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="preload" as="style" href="https://huster.top/wp-content/plugins/code-prettify/prettify/prettify.css"><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-745 single-format-standard">
 <div id="page" class="site">
 	<div class="site-inner">
 		<a class="skip-link screen-reader-text" href="#content">跳至内容</a>
@@ -76,7 +78,7 @@
 	<main id="main" class="site-main" role="main"><article id="post-745" class="post-745 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h1 class="entry-title">又一起GC问题排查过程</h1>	</header><div class="entry-content">
 		<h2 id="ggbT8" data-lake-id="9f3c08a1f9fb9f3501aad6053e1c2122">背景</h2>
 <p data-lake-id="f03a859e570b282b5d3e38ddf074e5b5">继上次找到redis导致的gc问题之后，又有一个应用发生了gc时间长的问题。每次gc的大概1s的停顿时间，导致这1s的请求全部超时，经常被业务方投诉。因为G1有更好的并行度，更短和确定的并行时间，因此负责的开发将应用从CMS升级到G1，然而问题依然没有解决. 这是一个网关类型的应用，负责接受rpc的调用，将请求转发到后端的http请求，将封装好的数据，转发给业务使用。所以实际上是</p>
-<p data-lake-id="a00cddf79ea31d40896e0b20ef03866d">Application—->rpc–>GateWay(问题应用)—–http client —> 其他服务.</p>
+<p data-lake-id="a00cddf79ea31d40896e0b20ef03866d">Application---->rpc-->GateWay(问题应用)-----http client ---> 其他服务.</p>
 <p data-lake-id="a00cddf79ea31d40896e0b20ef03866d">
 </p><p data-lake-id="a00cddf79ea31d40896e0b20ef03866d">
 </p><p data-lake-id="a00cddf79ea31d40896e0b20ef03866d"><span id="more-745"></span></p>
@@ -290,7 +292,7 @@
 <p data-lake-id="915fc8d33ec55dc9a51d5c0f7d66ccfe">           final RouteSpecificPool<T, C, E> pool = getPool(route);</p>
 <p data-lake-id="0e5583255fb0070be41e72dc8ef9f55a">           E entry;</p>
 <p data-lake-id="080b4d0056badae556f9dc5584e5b464">           for (;;) {</p>
-<p data-lake-id="f251e386587cdeebc2cfab0c50fdd0b9">               Asserts.check(!this.isShutDown, “Connection pool shut down”);</p>
+<p data-lake-id="f251e386587cdeebc2cfab0c50fdd0b9">               Asserts.check(!this.isShutDown, "Connection pool shut down");</p>
 <p data-lake-id="990e7c1b9eea18c7f47a1bf2a2efdd04">               for (;;) {</p>
 <p data-lake-id="42567f3dce1845583f3bf39b5ae67d25">                   //从avaiable的队列里取出来一个并且放到lease的队列里</p>
 <p data-lake-id="de76584a5d858a611ede485d262f4052">                   //获取一个可用</p>
@@ -324,7 +326,7 @@
 <p data-lake-id="c8d81eb9c7565da2d94417fd4179f925">                        // 如果为null则需要重新构建一个连接.</p>
 <p data-lake-id="d40e17c265215331cb19915ed93b35da">               final int maxPerRoute = getMax(route);</p>
 <p data-lake-id="e34bcb12d2a5616ea252b019544e7402">               // Shrink the pool prior to allocating a new connection</p>
-<p data-lake-id="0ae305270c476cd4068513b3269d232a">               final int excess = Math.max(0, pool.getAllocatedCount() + 1 – maxPerRoute);</p>
+<p data-lake-id="0ae305270c476cd4068513b3269d232a">               final int excess = Math.max(0, pool.getAllocatedCount() + 1 - maxPerRoute);</p>
 <p data-lake-id="043a8c29c8260f97df266e72bbe382ea">                   //这个excess恒大于1?</p>
 <p data-lake-id="8d8ad59f3fccb6dd9e126968369f11cb">                   if (excess > 0) {</p>
 <p data-lake-id="589b3b9ab7d2d6a0abc06d77c684b6f3">                   for (int i = 0; i < excess; i++) {</p>
@@ -342,10 +344,10 @@
 <p data-lake-id="705f16c2772c106fc822adc2c8b72c90">
 </p><p data-lake-id="952722c5123ef12d46efda2be5e79ff5">                     if (pool.getAllocatedCount() < maxPerRoute) {</p>
 <p data-lake-id="33879a733cdeb3f1331b30b3758bc6ec">                   final int totalUsed = this.leased.size();</p>
-<p data-lake-id="1a3dfc197e195f664b9a4e28fe2bef18">                   final int freeCapacity = Math.max(this.maxTotal – totalUsed, 0);</p>
+<p data-lake-id="1a3dfc197e195f664b9a4e28fe2bef18">                   final int freeCapacity = Math.max(this.maxTotal - totalUsed, 0);</p>
 <p data-lake-id="c6cc30619b2d6275f04ae40e48658b3d">                   if (freeCapacity > 0) {</p>
 <p data-lake-id="f7b38a99cd93057983a36e3103fc3c99">                       final int totalAvailable = this.available.size();</p>
-<p data-lake-id="7417d4af38a55666ad341ba739737d2f">                       if (totalAvailable > freeCapacity – 1) {</p>
+<p data-lake-id="7417d4af38a55666ad341ba739737d2f">                       if (totalAvailable > freeCapacity - 1) {</p>
 <p data-lake-id="95180eb2b42aa0406ec48d8c335e22c6">                           if (!this.available.isEmpty()) {</p>
 <p data-lake-id="e340006d44f88ff55c8e5c40f47ee9f5">                               final E lastUsed = this.available.removeLast();</p>
 <p data-lake-id="1eed268466053d5b88688f4838454da4">                               lastUsed.close();</p>
@@ -396,7 +398,7 @@
 </div>
 <h4 id="rHfOp" data-lake-id="08f4816707efce6f1b85c38590c0a592">生产问题定位</h4>
 <p data-lake-id="7038f43cec5ab5704619cb400b2116b0">了解了PoolingHttpClientConnectionManager之后，其实我们可以把日志打开看一看，到底是什么情况？</p>
-<p data-lake-id="9160fc8ce98db43369a83870642de5fe">  <Logger name=”org.apache.http.impl.conn.PoolingHttpClientConnectionManager” level=”DEBUG”></p>
+<p data-lake-id="9160fc8ce98db43369a83870642de5fe">  <Logger name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" level="DEBUG"></p>
 <p data-lake-id="ced18afe925bcc2be351101553369fad">       </Logger></p>
 <p data-lake-id="037551fe2db85f904ff64a404bc3f0b4">我把这个类的info日志打开，发现日志如下:</p>
 <div id="VHJSj" class="lake-card-margin lake-selected" data-card-type="block" data-lake-card="codeblock" data-card-value="data:%7B%22mode%22%3A%22shell%22%2C%22code%22%3A%222020-08-26%2016%3A47%3A36%20%5Cu001b%5B36mDEBUG%5Cu001b%5Bm%5Bpool-7-thread-149%5D%20%5Bo.a.h.i.c.PoolingHttpClientConnectionManager.requestConnection%3A266%5D%20%5B154ee4edcd6d1152%2C154ee4edcd6d1152%2C0%5D%20Connection%20request%3A%20%5Broute%3A%20%7Bs%7D-%3Ehttps%3A%2F%2Faiengine-hellomap-route-inner.hellobike.cn%3A9003%5D%5Btotal%20kept%20alive%3A%200%3B%20route%20allocated%3A%2050%20of%2050%3B%20total%20allocated%3A%2050%20of%20100%5D%5Cn2020-08-26%2016%3A47%3A36%20%5Cu001b%5B36mDEBUG%5Cu001b%5Bm%5Bpool-7-thread-219%5D%20%5Bo.a.h.i.c.PoolingHttpClientConnectionManager.leaseConnection%3A310%5D%20%5B8f2ce76435c397c6%2C8f2ce76435c397c6%2C0%5D%20Connection%20leased%3A%20%5Bid%3A%20607%5D%5Broute%3A%20%7Bs%7D-%3Ehttps%3A%2F%2Faiengine-hellomap-route-inner.hellobike.cn%3A9003%5D%5Btotal%20kept%20alive%3A%200%3B%20route%20allocated%3A%2050%20of%2050%3B%20total%20allocated%3A%2050%20of%20100%5D%22%2C%22heightLimit%22%3Atrue%2C%22margin%22%3Atrue%2C%22id%22%3A%22VHJSj%22%7D" data-language="shell">
@@ -505,7 +507,7 @@
 				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
 <p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes"></p>
 <p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
-<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="745" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="34eb6967fc"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="250"></p>			</form>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="745" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="171057fa54"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="187"></p>			</form>
 			</div>
 	
 </div>
@@ -519,6 +521,9 @@
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/780.html">如何用java.io.*写一个服务器</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/748.html">CPU异常问题排查</a>
 									</li>
 											<li>
@@ -575,10 +580,8 @@
 											<li>
 					<a href="https://huster.top/htmls/629.html">Java的锁</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
@@ -632,12 +635,12 @@
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (68)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (69)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (38)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (39)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
@@ -760,7 +763,9 @@
 			} );
 		} );
 	}
-</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
+</script><script type="text/javascript">
+var codePrettifyLoaderBaseUrl = "https:\/\/huster.top\/wp-content\/plugins\/code-prettify\/prettify";
+</script><script type="text/javascript" src="https://huster.top/wp-content/plugins/code-prettify/prettify/run_prettify.js"></script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
 /* <![CDATA[ */
 var screenReaderText = {"expand":"\u5c55\u5f00\u5b50\u83dc\u5355","collapse":"\u6298\u53e0\u5b50\u83dc\u5355"};
 /* ]]> */

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>HTTP/1.1阅读第2～3章 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/152.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
+<html lang="zh-CN" class="no-js"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script><title>HTTP/1.1阅读第2～3章 – 三两带走</title><link rel="amphtml" href="https://huster.top/htmls/152.html/amp"><link rel="dns-prefetch" href="//rentb.vicp.net"><link rel="dns-prefetch" href="//maxcdn.bootstrapcdn.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" id="dashicons-css" href="https://huster.top/wp-includes/css/dashicons.min.css" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-0-css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css?ver=2.8.4" type="text/css" media="all"><link rel="stylesheet" id="obfx-module-pub-css-menu-icons-1-css" href="https://huster.top/wp-content/plugins/themeisle-companion/obfx_modules/menu-icons/css/public.css" type="text/css" media="all"><style id="md-style-inline-css" type="text/css">
+ 
+</style><link rel="stylesheet" id="genericons-css" href="https://huster.top/wp-content/themes/twentysixteen/genericons/genericons.css" type="text/css" media="all"><link rel="stylesheet" id="twentysixteen-style-css" href="https://huster.top/wp-content/themes/twentysixteen/style.css" type="text/css" media="all"><style id="twentysixteen-style-inline-css" type="text/css">
 	    
 		body.page-template-builder-fullwidth.elementor-page,
 		body.page-template-builder-fullwidth-std.elementor-page {
@@ -56,7 +58,7 @@
 	        }
         }
 	
-</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-152 single-format-standard">
+</style><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery.js"></script><script type="text/javascript" src="https://huster.top/wp-includes/js/jquery/jquery-migrate.min.js"></script><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="preload" as="style" href="https://huster.top/wp-content/plugins/code-prettify/prettify/prettify.css"><style type="text/css" id="syntaxhighlighteranchor"></style><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png" sizes="32x32"><link rel="icon" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-192x192.png" sizes="192x192"><link rel="apple-touch-icon-precomposed" href="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-180x180.png"><meta name="msapplication-TileImage" content="https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-270x270.png"></head><body class="post-template-default single single-post postid-152 single-format-standard">
 <div id="page" class="site">
 	<div class="site-inner">
 		<a class="skip-link screen-reader-text" href="#content">跳至内容</a>
@@ -81,13 +83,13 @@
 名字（name）=定义（definition）<br>
 名字（name）就是代表规则的名字，规则名里不能包含“<”和“>”，通过等号把规则名和规则定义（definiation）分离开。空格只有在采用延续行缩进来指定跨度多于一行的规则定义的时候才有意义。某些基本规则（basic rules）使用大写字母包含在规则定义里， 如SP，LWS，HT，CRLF，DIGIT，ALPHA，等等。尖括号可以包含在规则定义里，只要它们的存在有利于区分规则名的使用。</p>
 <p>“字面文本”（“literal”）<br>
-字面文本（literal text）两边用引号。除非声明，字面文本大小写不敏感（译注：如，HEX =”A” | “B” | “C” | “D” | “E” | “F” | “a” | “b” | “c” | “d” | “e” | “f” | DIGIT 里的A，B,C，D等等都是字面文本（literal text））。</p>
+字面文本（literal text）两边用引号。除非声明，字面文本大小写不敏感（译注：如，HEX ="A" | "B" | "C" | "D" | "E" | "F" | "a" | "b" | "c" | "d" | "e" | "f" | DIGIT 里的A，B,C，D等等都是字面文本（literal text））。</p>
 <p>规则1 | 规则2</p>
 <p>由竖线（“|”）分开的元素是可选的，例如，“yes | no”表示yes或no都是可接受的。</p>
 <p>(规则1 规则2)<br>
 围在括号里的多个元素视作一个元素。所以，“(elem (foo | bar) elem)”符合的字符串是“elem foo elem”和“elem bar elem”。 实际上是两个元素，但是用一个都足以表达了。</p>
 <p>*规则<br>
-前面的字符“*”表示重复。完整的形式是“<n>*<m>元素”，表示元素至少出现<n>次，至多出现<m>次。默认值是0和无穷大，所以”*（元素）”允许任何数值，包括零；”1*元素”至少出现一次；”1*2element”允许出现一次或两次。</p>
+前面的字符“*”表示重复。完整的形式是“<n>*<m>元素”，表示元素至少出现<n>次，至多出现<m>次。默认值是0和无穷大，所以"*（元素）"允许任何数值，包括零；"1*元素"至少出现一次；"1*2element"允许出现一次或两次。</p>
 <p>[规则]<br>
 方括号里是任选元素；“[foo bar]”相当于“*1（foo bar）”。选其中一个，且必须选一个。</p>
 <p>N 规则<br>
@@ -95,7 +97,7 @@
 <p>#规则<br>
 类似于“*”，结构“#”是用来定义一系列元素的。完整的形式是<n>#<m>元素，表示至少<n>个<br>
 元素，至多<m>个元素，（*表示重复出现多少次）元素之间被一个或多个逗号（“,”）以及可选的线性空白（LWS）隔<br>
-开了。这就使得表示列表这样的形式变得非常容易；像(*LWS element *(*LWS “,”*LWS element))<br>
+开了。这就使得表示列表这样的形式变得非常容易；像(*LWS element *(*LWS ","*LWS element))<br>
 就可以表示为1#element无论在哪里使用这个结构，空元素都是允许的，但是不计入元素出现的次数。换句话说 ，“（element ）, , （element） ”是允许的，但是仅仅视为两个元素。因此，在至少需要一个元素的地方，必须存在至少一个非空元素。默认值是0和无穷大，这样，“#element”允许任意零个或多个元素；“1# element”需要至少一个；“1#2element”允许一个或两个元素。</p>
 <p>注释（comment）<br>
 用分号引导注释。<br>
@@ -105,16 +107,16 @@
 <p>下面的规则贯穿于本规范的全文，此规则描述了基本的解析结构。US-ASCII（美国信息交换标准码）编码字符集是由ANSI X3.4-1986[21]定义的。<br>
 OCTET（字节） = <任意八比特的数据序列><br>
 CHAR = <任意ASCII字符（ascii码值从 0到127的字节）><br>
-UPALPHA = <任意大写字母”A”…”Z”><br>
-LOALPHA = <任意小写字母”a”…”z”><br>
+UPALPHA = <任意大写字母"A"..."Z"><br>
+LOALPHA = <任意小写字母"a"..."z"><br>
 ALPHA = UPALPHA | LOALPHA<br>
-DIGIT = <任意数字0，1，…9><br>
+DIGIT = <任意数字0，1，...9><br>
 CTL = <任意控制字符（ascii码值从0 到 31的字节）及删除键DEL（127><br>
 CR = <US-ASCII CR, 回车（13）><br>
 LF = <US-ASCII LF, 换行符（10）><br>
 SP = <US-ASCII SP, 空格（32）><br>
 HT = <US-ASCII HT, 水平制表 （9）><br>
-<“> = <US-ASCII双引号（34）></p>
+<"> = <US-ASCII双引号（34）></p>
 <p>HTTP/1.1 将 CR LF 的序列定义为任何协议元素的行尾标志，但这个规定对实体主体<br>
 （endtity-body）除外（要求比较松的应用见附录19.3）。实体主体（entity-body）的行尾标志<br>
 是由其相应的媒体类型定义的，如3.7节所述。<br>
@@ -125,46 +127,46 @@ LWS = [CRLF] 1*(SP | HT)</p>
 TEXT = <除CTLs以外的任意OCTET，但包括LWS><br>
 一个CRLF只有作为HTTP消息头域延续的一部分时才在TEXT定义里使用。<br>
 十六进制数字字符用在多个协议元素（protocol element）里。<br>
-HEX = “A” | “B” | “C” | “D” | “E” | “F”<br>
-| “a” | “b” | “c” | “d” | “e” | “f” | DIGIT</p>
+HEX = "A" | "B" | "C" | "D" | "E" | "F"<br>
+| "a" | "b" | "c" | "d" | "e" | "f" | DIGIT</p>
 <p>许多HTTP/1.1的消息头域值是由LWS或特殊字符分隔的字构成的。这些特殊字符必须先被包<br>
 含在引用字符串（quoted string）里之后才能用于参数值（如3.6节定义）里。<br>
 token （标记） = 1*<除CTLs与分割符以外的任意CHAR ><br>
-separators（分割符） = “(” | “)” | “<” | “>” | “@”<br>
-| “,” | “;” | “:” | “\” | <“><br>
-| “/” | “[” | “]” | “?” | “=”<br>
-| “{” | “}” | SP | HT<br>
+separators（分割符） = "(" | ")" | "<" | ">" | "@"<br>
+| "," | ";" | ":" | "\" | <"><br>
+| "/" | "[" | "]" | "?" | "="<br>
+| "{" | "}" | SP | HT<br>
 通过用圆括号括起来，注释（comment）可以包含在一些HTTP头域里。注释只能被包含在域<br>
 值定义里有“comment”的域里。在其他域里，圆括号被视作域值的一部分。<br>
-comment （注释）= “(” *(ctext | quoted-pair | comment )” )”<br>
-ctext = <除”(” 和 “)”以外的任意TEXT ><br>
+comment （注释）= "(" *(ctext | quoted-pair | comment )” )"<br>
+ctext = <除"(" 和 ")"以外的任意TEXT ><br>
 如果一个TEXT若被包含在双引号里，则当作一个字。<br>
-quoted-string = （ <“> *（qdtext | quoted-pair ） <“> ）<br>
-qdtext = <any TEXT except <“>><br>
-斜划线（”\”）可以被作为单字符的引用机制，但是必须要在quoted-string和comment构造之<br>
+quoted-string = （ <"> *（qdtext | quoted-pair ） <"> ）<br>
+qdtext = <any TEXT except <">><br>
+斜划线（"\"）可以被作为单字符的引用机制，但是必须要在quoted-string和comment构造之<br>
 内。<br>
-quoted-pair = “\” CHAR<br>
+quoted-pair = "\" CHAR<br>
 3 协议参数<br>
 3.1 HTTP版本<br>
 HTTP使用一个“<major>.<minor>”数字模式来指明协议的版本号。为了进一步的理解HTTP通信，协议的版本号指示了发送端指明消息的格式和能力，而不仅仅是通过双方通信而获得的通信特性。当消息元素的增加不会影响通信行为或扩展了域值时，协议版本是不需要修改的。当协议会因为添加一些特征而做了修改时，<minor>数字就会递增。这些修改不会影响通常的消息解析算法，但它会给消息添加额外的语意（semantic）并且会暗示发送者具有额外的能力。协议的消息格式发生变化时，<major>数字就会增加。HTTP消息的版本在HTTP-Version域被指明，HTTP-Version域在消息的第一行中。</p>
 <p>注意major和minor数字必须被看成两个独立整数，每个整数都可以递增，并且可以增大到大于一位数的整数，如HTTP/2.4比HTTP/2.13低，而HTTP/2.4又比HTTP/12.3低。前导0必须被接收者忽略并且不能被发送者发送。</p>
 <p>网关或代理服务器版本不能容忍用户端发送过来的高版本的协议的时候，就会触发一个错误。</p>
 <p>3.2 通用资源标识符（URI）</p>
-<p>URIs有许多名字已为人所知：WWW地址，通用文档标识符，通用资源标识符[3]，以及后来的统一资源定位器（URL）[4]和统一资源名称（URN）[20]。就HTTP而言，通用资源标识符（URI）只是简单的格式化字符串—通过名称，位置，或其它特征—识别一个资源。</p>
+<p>URIs有许多名字已为人所知：WWW地址，通用文档标识符，通用资源标识符[3]，以及后来的统一资源定位器（URL）[4]和统一资源名称（URN）[20]。就HTTP而言，通用资源标识符（URI）只是简单的格式化字符串---通过名称，位置，或其它特征---识别一个资源。</p>
 <p>根据使用的背景，HTTP里的URIs可以表示成绝对（absoulute）形式或相对形式（相对URI基于根URI[11]）。两种形式的区别是根据这样的事实：绝对URI总是以一个模式（scheme）名作为开头，其后是一个冒号。关于URL 更详尽的语法和含义请参看“统一资源标识符<br>
-（URI）:一般语法和语义”，RFC 2396 [42]（代替了RFCs 1738 [4]和RFC 1808 [11]）。本规范采用了RFC 2396 里的” URIreference”， “absoluteURI” ， “relativeURI” ， “port” ， “host” ， “abs_path” ， “rel_path”,和”authority”的定义格式。</p>
+（URI）:一般语法和语义”，RFC 2396 [42]（代替了RFCs 1738 [4]和RFC 1808 [11]）。本规范采用了RFC 2396 里的” URIreference”， "absoluteURI" ， "relativeURI" ， "port" ， "host" ， "abs_path" ， "rel_path",和"authority"的定义格式。</p>
 <p>HTTP协议不对URI的长度作事先的限制，服务器必须能够处理任何他们提供资源的URI，并且应该能够处理无限长度的URIs，这种无效长度的URL可能会在客户端以基于GET方式的请求时产生。如果服务器不能处理太长的URI的时候，服务器应该返回414状态码（此状态码代表Request-URI太长）。</p>
 <p>在HTTP协议里，http模式（http scheme）被用于定位网络资源（resourse）的位置。本节定义了http URLs这种特定模式（scheme）的语法和语义。<br>
-http_URL = “http:” “//” host [ “:” port ] [ abs_path [ “?” query ]]<br>
-如果端口为空或未给出，就假定为80。它的语义即：已识别的资源存放于正在监听tcp连接的那个端口的服务器上，并且请求资源的的Request-UR为绝对路径（5.1.2节）。无论什么可能的时候，URL 里使用IP 地址都是应该避免的（参看RFC 1900 [24]）。如果绝对地址（abs_path）没有出现在URL 里，那么应该给出”/”。如果代理（proxy）收到一个主机（host）名，但是这个主机名不是全称域名（fully quanlified domain name），则代理应该把它的域名加到主机名上。如果代理（proxy）接收了一个全称域名，代理不能改变主机（host）名称。</p>
+http_URL = "http:" "//" host [ ":" port ] [ abs_path [ "?" query ]]<br>
+如果端口为空或未给出，就假定为80。它的语义即：已识别的资源存放于正在监听tcp连接的那个端口的服务器上，并且请求资源的的Request-UR为绝对路径（5.1.2节）。无论什么可能的时候，URL 里使用IP 地址都是应该避免的（参看RFC 1900 [24]）。如果绝对地址（abs_path）没有出现在URL 里，那么应该给出"/"。如果代理（proxy）收到一个主机（host）名，但是这个主机名不是全称域名（fully quanlified domain name），则代理应该把它的域名加到主机名上。如果代理（proxy）接收了一个全称域名，代理不能改变主机（host）名称。</p>
 <p>3.2.3 URI 比较</p>
 <p>当比较两个URI是否匹配时，客户应该对整个URI比较时应该区分大小写，并且一个字节一<br>
 个字节的比较。 但下面有些特殊情况：<br>
-– 一个为空或未给定的端口等同于URI-refernece（见RFC 2396）里的默认端口;<br>
-– 主机（host）名的比较必须不区分大小写;<br>
-– 模式（scheme）名的比较必须是不区分大小写的;<br>
-– 一个空绝对路径（abs_path）等同于”/”。<br>
-除了“保留（reserved）”和“不安全（unsafe）”字符集里的字符（参见RFC 2396[42]） ，其它字符和它们的”%HEXHEX”编码的效果一样。<br>
+- 一个为空或未给定的端口等同于URI-refernece（见RFC 2396）里的默认端口;<br>
+- 主机（host）名的比较必须不区分大小写;<br>
+- 模式（scheme）名的比较必须是不区分大小写的;<br>
+- 一个空绝对路径（abs_path）等同于"/"。<br>
+除了“保留（reserved）”和“不安全（unsafe）”字符集里的字符（参见RFC 2396[42]） ，其它字符和它们的"%HEXHEX"编码的效果一样。<br>
 例如,以下三个URI是等同的:<br>
 http://abc.com:80/~smith/home.html<br>
 http://ABC.com/%7Esmith/home.html<br>
@@ -174,28 +176,28 @@ http://ABC.com:/%7esmith/home.html<br>
 HTTP应用曾经一直允许三种不同日期/时间格式：<br>
 Sun, 06 Nov 1994 08:49:37 GMT ; RFC 822, updated by RFC 1123<br>
 Sunday, 06-Nov-94 08:49:37 GMT ; RFC 850, obsoleted by RFC 1036<br>
-Sun Nov 6 08:49:37 1994 ; ANSI C’s asctime（） format<br>
+Sun Nov 6 08:49:37 1994 ; ANSI C's asctime（） format<br>
 第一种格式是作为Internet 标准提出来的，它是一个国定长度的，由RFC 1123 [8]（RFC822[9]的升级版本）定义的一个子集。第二种格式使用比较普遍，但是基于废弃的RFC 850[12]协议，并且没有年份。如果HTTP/1.1客户端和服务器要解析日期，他们必须能接收所有三种格式（为了兼容HTTP/1.0），但是它们只能用RFC 1123 里定义的日期格式来填充头域（header field）的值里用到HTTP-date的地方。<br>
 注:日期值的接收者被鼓励能可靠地接收来自于非HTTP应用程序发送的的日期值，例如有时<br>
 可以通过代理（proxy）/网关（gateway）向SMTP或NNTP获取或提交消息。<br>
 所有的HTTP日期/时间都必须以格林威治时间（GMT）表示。对HTTP而言，GMT完全等同于UTC（世界协调时间）。前两种日期/时间格式里包含“GMT”，它是时区的三个字面的简写，并且当读到一个asctime格式时必须先被假定是GMT时间。HTTP日期（HTTP-date）区分大小写，不能在此语法中除SP之外包含一个多余的LWS。<br>
 HTTP-date = rfc1123-date | rfc850-date | asctime-date<br>
-rfc1123-date = wkday “,” SP date1 SP time SP “GMT”<br>
-rfc850-date = weekday “,” SP date2 SP time SP “GMT”<br>
+rfc1123-date = wkday "," SP date1 SP time SP "GMT"<br>
+rfc850-date = weekday "," SP date2 SP time SP "GMT"<br>
 asctime-date = wkday SP date3 SP time SP 4DIGIT<br>
 date1 = 2DIGIT SP month SP 4DIGIT<br>
 ; day month year （e.g., 02 Jun 1982）<br>
-date2 = 2DIGIT “-” month “-” 2DIGIT<br>
+date2 = 2DIGIT "-" month "-" 2DIGIT<br>
 ; day-month-year （e.g., 02-Jun-82）<br>
 date3 = month SP （ 2DIGIT | （ SP 1DIGIT ））<br>
 ; month day （e.g., Jun 2）<br>
-time = 2DIGIT “:” 2DIGIT “:” 2DIGIT<br>
-; 00:00:00 – 23:59:59<br>
-wkday = “Mon” | “Tue” | “Wed”<br>
-| “Thu” | “Fri” | “Sat” | “Sun”<br>
-weekday = “Monday” | “Tuesday” | “Wednesday”month = “Jan” | “Feb” | “Mar” | “Apr”<br>
-| “May” | “Jun” | “Jul” | “Aug”<br>
-| “Sep” | “Oct” | “Nov” | “Dec”<br>
+time = 2DIGIT ":" 2DIGIT ":" 2DIGIT<br>
+; 00:00:00 - 23:59:59<br>
+wkday = "Mon" | "Tue" | "Wed"<br>
+| "Thu" | "Fri" | "Sat" | "Sun"<br>
+weekday = "Monday" | "Tuesday" | "Wednesday"month = "Jan" | "Feb" | "Mar" | "Apr"<br>
+| "May" | "Jun" | "Jul" | "Aug"<br>
+| "Sep" | "Oct" | "Nov" | "Dec"<br>
 注意：HTTP对日期/时间格式的要求仅仅应用在协议流的使用。客户和服务器不必把这种格式应用于用户呈现（user presentation），请求记录日志，等等。.</p>
 <p>3.3.2 Delta Seconds （秒间隔）<br>
 一些HTTP头域（header field）允许时间值以秒为单位，以十进制整数表示，此值代表消息接收后的时间。<br>
@@ -221,11 +223,11 @@ content-coding = token</p>
 这种机制对实体的编码进行解码。网络分配数字权威（ （IANA）充当内容编码的值标记（token）注册机构。最初，注册表里包<br>
 含下列标记:<br>
 gzip（压缩程序）<br>
-一种由文件压缩程序”gzip”（GNU zip）产生的编码格式（在RFC 1952中描述）。这种编码格式是一种具有32位CRC的Lempel-Ziv编码（LZ77）。<br>
+一种由文件压缩程序"gzip"（GNU zip）产生的编码格式（在RFC 1952中描述）。这种编码格式是一种具有32位CRC的Lempel-Ziv编码（LZ77）。<br>
 compress（压缩）<br>
-一种由UNIX文件压缩程序”compress”产生的编码格式。这种编码格式是一种具有可适应性的Lempel-Ziv-Welch编码（LZW）。对于将来的编码，用程序名识表征编码格式是不可取。在这里用到他们是因为他们在历史的作用，虽然这样做并不好。为了同以前的HTTP 实现相兼容，应用程序应该将”x-gzip”和”xcompress”分别等同于”gzip”和”compress”。<br>
+一种由UNIX文件压缩程序"compress"产生的编码格式。这种编码格式是一种具有可适应性的Lempel-Ziv-Welch编码（LZW）。对于将来的编码，用程序名识表征编码格式是不可取。在这里用到他们是因为他们在历史的作用，虽然这样做并不好。为了同以前的HTTP 实现相兼容，应用程序应该将"x-gzip"和"xcompress"分别等同于"gzip"和"compress"。<br>
 deflate（缩小）<br>
-deflate编码是由RFC 1950 [31]定义的”zlib”编码格式与RFC 1951 [29]里描述的”deflate”压缩<br>
+deflate编码是由RFC 1950 [31]定义的"zlib"编码格式与RFC 1951 [29]里描述的"deflate"压缩<br>
 机制的组合的产物。<br>
 identity（一致性）<br>
 Identity是缺省编码；指明这种编码表明不进行任何编码转换。这种内容编码仅被用于接受译码（Accept-Encoding）头域里，但不能被用在内容译码（Content-Encoding）头域里。.<br>
@@ -236,7 +238,7 @@ Identity是缺省编码；指明这种编码表明不进行任何编码转换。
 的有用信息。</p>
 <p>3.7 媒体类型（Media Type）</p>
 <p>为了提供开放的，可扩展的数据类型和类型协商，HTTP在Content-Type（14.17节）实体头域和Accept请求头域里利用了网络媒体[17]类型。<br>
-media-type = type “/” subtype *（ “;” parameter ）<br>
+media-type = type "/" subtype *（ ";" parameter ）<br>
 type = token<br>
 subtype = token<br>
 参数（parameter）以一种 属性/值（attribute/value）形式（如3.6节定义）跟随 类型/子类型（type/subtype）。<br>
@@ -276,7 +278,7 @@ subtype = token<br>
 				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span></p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名</label> <input id="author" name="author" type="text" value="" size="30" maxlength="245"></p>
 <p class="comment-form-email"><label for="email">电子邮件</label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes"></p>
 <p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
-<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="152" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="9dd70ae0eb"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="28"></p>			</form>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论"><input type="hidden" name="comment_post_ID" value="152" id="comment_post_ID"><input type="hidden" name="comment_parent" id="comment_parent" value="0"></p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="c1c75afd8d"></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="163"></p>			</form>
 			</div>
 	
 </div>
@@ -290,6 +292,9 @@ subtype = token<br>
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/780.html">如何用java.io.*写一个服务器</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/748.html">CPU异常问题排查</a>
 									</li>
 											<li>
@@ -346,10 +351,8 @@ subtype = token<br>
 											<li>
 					<a href="https://huster.top/htmls/629.html">Java的锁</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/615.html">理解Java线程间的通信</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/02">2020年二月</a> (1)</li>
@@ -403,12 +406,12 @@ subtype = token<br>
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (68)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (69)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (38)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (39)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
@@ -531,7 +534,9 @@ subtype = token<br>
 			} );
 		} );
 	}
-</script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
+</script><script type="text/javascript">
+var codePrettifyLoaderBaseUrl = "https:\/\/huster.top\/wp-content\/plugins\/code-prettify\/prettify";
+</script><script type="text/javascript" src="https://huster.top/wp-content/plugins/code-prettify/prettify/run_prettify.js"></script><script type="text/javascript" src="https://huster.top/wp-content/themes/twentysixteen/js/skip-link-focus-fix.js"></script><script type="text/javascript">
 /* <![CDATA[ */
 var screenReaderText = {"expand":"\u5c55\u5f00\u5b50\u83dc\u5355","collapse":"\u6298\u53e0\u5b50\u83dc\u5355"};
 /* ]]> */

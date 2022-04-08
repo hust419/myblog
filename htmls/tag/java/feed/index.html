@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/tag/java/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -797,11 +797,11 @@ public class ProductClient4 implements Runnable {
 </tr>
 <tr>
 <td>c</td>
-<td>使用它为输出的日志事件分类，比如对于分类 &#8220;a.b.c&#8221;，模式 %c{2} 会输出 &#8220;b.c&#8221; 。</td>
+<td>使用它为输出的日志事件分类，比如对于分类 "a.b.c"，模式 %c{2} 会输出 "b.c" 。</td>
 </tr>
 <tr>
 <td>C</td>
-<td>使用它输出发起记录日志请求的类的全名。比如对于类 &#8220;org.apache.xyz.SomeClass&#8221;，模式 %C{1} 会输出 &#8220;SomeClass&#8221;。</td>
+<td>使用它输出发起记录日志请求的类的全名。比如对于类 "org.apache.xyz.SomeClass"，模式 %C{1} 会输出 "SomeClass"。</td>
 </tr>
 <tr>
 <td>d</td>
@@ -920,9 +920,9 @@ All subtypes of a serializable class are themselves serializable<br />
 集成了这个类的子类也具备了可序列化的能力<br />
 The serialization interface has no methods or fields and serves only to identify the semantics of being serializable.<br />
 这个接口没有方法也没有属性，他仅仅是语义上定义可被序列化的能力<br />
-To allow subtypes of non-serializable classes to be serialized, the subtype may assume responsibility for saving and restoring the state of the supertype&#8217;s public, protected, and (if accessible)package fields.<br />
+To allow subtypes of non-serializable classes to be serialized, the subtype may assume responsibility for saving and restoring the state of the supertype's public, protected, and (if accessible)package fields.<br />
 要使得一个不可序列化的子类能够序列化，这个子类必须能保存他父类的public、protected和包级别的属性.<br />
-The subtype may assume this responsibility only if the class it extends has an accessible no-arg constructor to initialize the class&#8217;s state<br />
+The subtype may assume this responsibility only if the class it extends has an accessible no-arg constructor to initialize the class's state<br />
 这样的子类所继承的父类必须有一个可以被子类访问的无参构造函数用来初始化这个类的声明.<br />
 It is an error to declare a class Serializable if this is not the case. The error will be detected at runtime.<br />
 如果不这样做，就会在运行时报错.<br />
@@ -943,7 +943,7 @@ private void readObject(java.io.ObjectInputStream in) throws IOException, ClassN
 private void readObjectNoData() throws ObjectStreamException;</p>
 <p>The writeObject method is responsible for writing the state of the object for its particular class so that the corresponding readObject method can restore it.<br />
 writeObjective方法负责写入这个对象的陈述，这样和他对应的readObject方法能够恢复他<br />
-The default mechanism for saving the Object&#8217;s fields can be invoked by calling out.defaultWriteObject.<br />
+The default mechanism for saving the Object's fields can be invoked by calling out.defaultWriteObject.<br />
 默认的情况, 可以通过调用out.defaultWriteObject方法来保存这个对象的属性域.<br />
 The method does not need to concern itself with the state belonging to its superclasses or subclasses.<br />
 这个方法不需要去关心这个陈述是属于他的子类还是父类<br />
@@ -951,7 +951,7 @@ State is saved by writing the individual fields to the ObjectOutputStream using 
 保存这个对象的陈述有两种方法。一种是通过writeObject方法将独立属性域写入ObjectOutputStream. 另外一种是通过DataOutput支持的原始数据类型.<br />
 The readObject method is responsible for reading from the stream and restoring the classes fields.<br />
 readObject方法则是用来从stream读取信息并且恢复这个类的.<br />
-It may call in.defaultReadObject to invoke the default mechanism for restoring the object&#8217;s non-static and non-transient fields.<br />
+It may call in.defaultReadObject to invoke the default mechanism for restoring the object's non-static and non-transient fields.<br />
 in.defaultReadObject来恢复没有被static 或者 transient关键字修饰的属性<br />
 The defaultReadObject method uses information in the stream to assign the fields of the object saved in the stream with the correspondingly named fields in the current object.<br />
 defaultReadObject方法使用保存在stream中的信息来赋值这个对象的相对应的属性字段<br />
@@ -963,11 +963,11 @@ State is saved by writing the individual fields to the ObjectOutputStream using 
 保存这个对象的陈述有两种方法。一种是通过writeObject方法将独立属性域写入ObjectOutputStream. 另外一种是通过DataOutput支持的原始数据类型.<br />
 The readObjectNoData method is responsible for initializing the state of the object for its particular class in the event that the serialization stream does not list the given class as a superclass of the object being deserialized.<br />
 当给出的类不是反序列化的父类的时候这种情况发生的时候, readObjectNoData的作用就是初始化这个对象的信息.<br />
-This may occur in cases where the receiving party uses a different version of the deserialized instance&#8217;s class than the sending party, and the receiver&#8217;s version extends classes that are not extended by the sender&#8217;s version.<br />
+This may occur in cases where the receiving party uses a different version of the deserialized instance's class than the sending party, and the receiver's version extends classes that are not extended by the sender's version.<br />
 这通常发生在收到的部分使用的class和发送端的class的版本不同，或者接受到的类extend的类没有被发送端继承<br />
 This may also occur if the serialization stream has been tampered;<br />
 或者当收到的信息因为被干扰而不完整<br />
-This may also occur if the serialization stream has been tampered; hence, readObjectNoData is useful for initializing deserialized objects properly despite a &#8220;hostile&#8221; or incomplete source stream.<br />
+This may also occur if the serialization stream has been tampered; hence, readObjectNoData is useful for initializing deserialized objects properly despite a "hostile" or incomplete source stream.<br />
 当收到的信息不完整或者被故意破坏的时候readObjectNoData就显得非常有用了.<br />
 Serializable classes that need to designate an alternative object to be used when writing an object to the stream should implement this special method with the exact signature:<br />
 如果可序列化的类在需要在写入stream的时候指派可选择的对象，那么他需要实现下面这个特殊的方法<br />
@@ -976,9 +976,9 @@ This readResolve method follows the same invocation rules and accessibility rule
 readResolve和writeReplace有相同的运行和访问规则<br />
 The serialization runtime associates with each serializable class a version number, called a serialVersionUID, which is used during deserialization to verify that the sender and receiver of a serialized object have loaded classes for that object that are compatible with respect to serialization.<br />
 运行时的序列化数据通过serialVersionUID和序列化的类进行关联. 这个id是用来在反序列化的时候验证发送和接受放的兼容行.<br />
-If the receiver has loaded a class for the object that has a different serialVersionUID than that of the corresponding sender&#8217;s class, then deserialization will result in an {@linkInvalidClassException}.<br />
+If the receiver has loaded a class for the object that has a different serialVersionUID than that of the corresponding sender's class, then deserialization will result in an {@linkInvalidClassException}.<br />
 如果接收到的类和发送的类有不同的serialVersionUID，将会抛一个linkInvalidClassException异常.<br />
-serializable class can declare its own serialVersionUID explicitly by declaring a field named &lt;code&gt;&#8221;serialVersionUID&#8221;&lt;/code&gt; that must be static, final, and of type &lt;code&gt;long&lt;/code&gt;:&lt;p&gt;<br />
+serializable class can declare its own serialVersionUID explicitly by declaring a field named &lt;code&gt;"serialVersionUID"&lt;/code&gt; that must be static, final, and of type &lt;code&gt;long&lt;/code&gt;:&lt;p&gt;<br />
 你可以自定义这个serialVersionUID属性，他必须是名称是serialVersionUID并且是static 和 final修饰的. 他是一个long型的数据<br />
 例如 static final long serialVersionUID = 42L;<br />
 If a serializable class does not explicitly declare a serialVersionUID, then the serialization runtime will calculate a default serialVersionUID value for that class based on various aspects of the class, as described in the Java(TM) Object Serialization Specification.<br />
@@ -988,8 +988,8 @@ However, it is &lt;em&gt;stronglyrecommended&lt;/em&gt; that all serializable cl
 Therefore, to guarantee a consistent serialVersionUID value across different java compiler implementations, a serializable class must declare an explicit serialVersionUID value.<br />
 所以为了在不同的Java编译实现能有相同的serialVersionUID，你最好能自己为类定义一个固定的值<br />
 It is also strongly advised that explicit serialVersionUID declarations use the &lt;code&gt;private&lt;/code&gt; modifier where possible, since such declarations apply only to the immediately declaring<br />
-class&#8211;serialVersionUID fields are not useful as inherited members.<br />
-另外也建议将这个字段设置为private的权限, 因为这个声明仅仅用在类的声明上 &#8212; 并不能作为一个集成的成员<br />
+class--serialVersionUID fields are not useful as inherited members.<br />
+另外也建议将这个字段设置为private的权限, 因为这个声明仅仅用在类的声明上 -- 并不能作为一个集成的成员<br />
 Array classes cannot declare an explicit serialVersionUID, so they always have the default computed value, but the requirement for matching serialVersionUID values is waived for array classes.<br />
 数组类不能定义serialVersionUID字段,所以他们使用默认计算的值.但是在数组上的serialVersionUID的值匹配被放弃了.</p>
 <p>&nbsp;</p>
@@ -1092,8 +1092,8 @@ System.out.print("data is " + list.get(0));
 }</pre>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h5>在最小范围内使用SuppressWarnings(&#8220;unchecked&#8221;)</h5>
-<p>在使用泛型的时候，总是会遇到很多的unchecked cast warnings和unchecked conversion warning，这个时候你就可以用@SuppressWarnings(&#8220;unchecked&#8221;)来消除这些警告，前提是你要能够确定自己的类型一定是安全的。也就是说要谨慎的放在整个类上面，他会让你错过很多有用信息。</p>
+<h5>在最小范围内使用SuppressWarnings("unchecked")</h5>
+<p>在使用泛型的时候，总是会遇到很多的unchecked cast warnings和unchecked conversion warning，这个时候你就可以用@SuppressWarnings("unchecked")来消除这些警告，前提是你要能够确定自己的类型一定是安全的。也就是说要谨慎的放在整个类上面，他会让你错过很多有用信息。</p>
 <p>这个注解即可以用到类上面，还可以用到方法上面，如下图</p>
 <p><img class="alignnone" src="https://img.alicdn.com/tfs/TB1Ik84QFXXXXb6XpXXXXXXXXXX-780-76.png" alt="" width="780" height="76" /><br />
 但是我们要遵循一个原则，就是在最小范围内放在我们确定的代码上生效，不要放过那些自己没有check过的代码上.</p>
@@ -1226,11 +1226,11 @@ out.addAll(list);
 <p>我的目录结构如下：</p>
 <p><a href="http://huster.top/wp-content/uploads/2016/12/mulu.png"><img class="alignnone size-full wp-image-473" src="http://huster.top/wp-content/uploads/2016/12/mulu.png" alt="mulu" width="348" height="287" srcset="https://huster.top/wp-content/uploads/2016/12/mulu.png 348w, https://huster.top/wp-content/uploads/2016/12/mulu-300x247.png 300w" sizes="(max-width: 348px) 85vw, 348px" /></a></p>
 <p>按照道理来说，是没问题的，但是访问时候却是404，我好奇怪，于是将public改成static，还是不行。</p>
-<p>接着，我从spring boot的官网，重新生成了一个新的项目，也是添加的这样的目录结构，访问确实正常的，那么就可以肯定是某个地方配置或者是冲突导致的，我先怀疑是引入的某个jar包导致的冲突，尤其是mybatis的引入，以及@MapperScan(&#8220;huster.top.mapper&#8221;)的配置（具体原因是因为观察到info信息）于是我将正常的pom.xml拷贝过去，结果不行，把MapperScan去掉也不行，把ComponentScan也同时去掉还是不行&#8230;</p>
+<p>接着，我从spring boot的官网，重新生成了一个新的项目，也是添加的这样的目录结构，访问确实正常的，那么就可以肯定是某个地方配置或者是冲突导致的，我先怀疑是引入的某个jar包导致的冲突，尤其是mybatis的引入，以及@MapperScan("huster.top.mapper")的配置（具体原因是因为观察到info信息）于是我将正常的pom.xml拷贝过去，结果不行，把MapperScan去掉也不行，把ComponentScan也同时去掉还是不行...</p>
 <p>然后我观察到正常的时候，有输出这样的info信息:</p>
-<p>2016-12-05 21:57:05.395 INFO 91962 &#8212; [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]<br />
-2016-12-05 21:57:05.396 INFO 91962 &#8212; [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]<br />
-2016-12-05 21:57:06.119 INFO 91962 &#8212; [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</p>
+<p>2016-12-05 21:57:05.395 INFO 91962 --- [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]<br />
+2016-12-05 21:57:05.396 INFO 91962 --- [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]<br />
+2016-12-05 21:57:06.119 INFO 91962 --- [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</p>
 <p>&nbsp;</p>
 <p>然而在不正常的工程里，却没有这个信息，那么为什么没有加载SimpleUrlHandlerMapping这个类的里面的registerHandlers方法，为啥呢。然后我发现registerHandlers是被initApplicationContext方法调用的，那么为什么SimpleUrlHandlerMapping这个类就没有在被初始化列表里呢？什么时候才会调用这个类呢？这让我想起了注册static目录的一配置方法，代码如下：</p>
 <p>然后我添加了如下的代码，</p>
@@ -1453,7 +1453,7 @@ public class TestTest {
 }
 </pre>
 <p>&nbsp;</p>
-<p>那么回到我们刚刚提出的那个问题，这里是Test，你也可以代理Test1, Test2, Test3, TestN&#8230;.等等，而不用写那么多的代理类了,我这里一个代理类足够了<br />
+<p>那么回到我们刚刚提出的那个问题，这里是Test，你也可以代理Test1, Test2, Test3, TestN....等等，而不用写那么多的代理类了,我这里一个代理类足够了<br />
 那么proxy.newProxyInstance的方法返回的是个啥玩意儿呢？他是Test对象吗？显然不是，那么他是TestProxy对象吗？也不是，否则的强制转换都要出错，他是由jvm生成的一个动态对象，该对象实现了TestInterface接口当然就可以直接调用test方法喽，这要得益于newProxyInstance这个方法中的第二个参数，明确的告诉他，被代理的target对象是个什么玩意儿的接口.</p>
 <p>三、 我们继续提出下一个问题，你这个Test类必须得实现接口，才能工作，那么我可不可以就针对一个类来创建一个动态代理，不需要传入接口类型呢？ 答案是肯定的，他就是cglib干的事情</p>
 <p>a. 一个类，没有实现任何接口</p>

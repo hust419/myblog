@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/tag/spring-boot/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -206,11 +206,11 @@ if you want to enable cell logic, you must change your proxy_pass conf to follow
 <p>我的目录结构如下：</p>
 <p><a href="http://huster.top/wp-content/uploads/2016/12/mulu.png"><img class="alignnone size-full wp-image-473" src="http://huster.top/wp-content/uploads/2016/12/mulu.png" alt="mulu" width="348" height="287" srcset="https://huster.top/wp-content/uploads/2016/12/mulu.png 348w, https://huster.top/wp-content/uploads/2016/12/mulu-300x247.png 300w" sizes="(max-width: 348px) 85vw, 348px" /></a></p>
 <p>按照道理来说，是没问题的，但是访问时候却是404，我好奇怪，于是将public改成static，还是不行。</p>
-<p>接着，我从spring boot的官网，重新生成了一个新的项目，也是添加的这样的目录结构，访问确实正常的，那么就可以肯定是某个地方配置或者是冲突导致的，我先怀疑是引入的某个jar包导致的冲突，尤其是mybatis的引入，以及@MapperScan(&#8220;huster.top.mapper&#8221;)的配置（具体原因是因为观察到info信息）于是我将正常的pom.xml拷贝过去，结果不行，把MapperScan去掉也不行，把ComponentScan也同时去掉还是不行&#8230;</p>
+<p>接着，我从spring boot的官网，重新生成了一个新的项目，也是添加的这样的目录结构，访问确实正常的，那么就可以肯定是某个地方配置或者是冲突导致的，我先怀疑是引入的某个jar包导致的冲突，尤其是mybatis的引入，以及@MapperScan("huster.top.mapper")的配置（具体原因是因为观察到info信息）于是我将正常的pom.xml拷贝过去，结果不行，把MapperScan去掉也不行，把ComponentScan也同时去掉还是不行...</p>
 <p>然后我观察到正常的时候，有输出这样的info信息:</p>
-<p>2016-12-05 21:57:05.395 INFO 91962 &#8212; [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]<br />
-2016-12-05 21:57:05.396 INFO 91962 &#8212; [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]<br />
-2016-12-05 21:57:06.119 INFO 91962 &#8212; [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</p>
+<p>2016-12-05 21:57:05.395 INFO 91962 --- [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]<br />
+2016-12-05 21:57:05.396 INFO 91962 --- [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]<br />
+2016-12-05 21:57:06.119 INFO 91962 --- [ main] o.s.w.s.handler.SimpleUrlHandlerMapping : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</p>
 <p>&nbsp;</p>
 <p>然而在不正常的工程里，却没有这个信息，那么为什么没有加载SimpleUrlHandlerMapping这个类的里面的registerHandlers方法，为啥呢。然后我发现registerHandlers是被initApplicationContext方法调用的，那么为什么SimpleUrlHandlerMapping这个类就没有在被初始化列表里呢？什么时候才会调用这个类呢？这让我想起了注册static目录的一配置方法，代码如下：</p>
 <p>然后我添加了如下的代码，</p>

@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/tag/java-agent/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -58,13 +58,13 @@
 <h2 id="Mys7v"><span>isRetransformClassesSupported</span>()</h2>
 <p>返回当前的JVM配置是否支持类的reTransform。这个取决于你的javaagent里manifest的配置项<span>的</span><span>Can-</span><span>Retransform-Classes配置，示例如下</span></p>
 <p><span>​<span data-card-element="center" contenteditable="false"><span class="lake-image"><span class="lake-image-content lake-image-content-isvalid"><span data-role="detail" class="lake-image-detail"><span class="lake-image-meta"><img data-role="image" src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/1831/1559554109168-85b8888a-e4ed-4c7d-91bf-4ae19d1b3ece.png" data-raw-src="" class="image lake-drag-image" alt="image.png" title="image.png" />                            </span>       </span>     </span>   </span></span>​</span></p>
-<h2 id="U0Gra"><span>retransformClasses</span>(Class&lt;?&gt;&#8230; classes) throws UnmodifiableClassException</h2>
+<h2 id="U0Gra"><span>retransformClasses</span>(Class&lt;?&gt;... classes) throws UnmodifiableClassException</h2>
 <p>函数的用途是对传入的classes执行transform，一般用于agentmain的方式。因为agentmain的方式是在class已经被加载完了之后attch到jvm上的，这个时候只有通过这种方式来修改原来的类的行为。</p>
 <p>所以在add的时候，canTransform设置为false的将会被忽略，只有设置为true的才会被执行。如果你的jvm的<span>Can-</span><span>Retransform-Classes被设置为false，会抛出异常。同时如果你的类有问题，可能会抛出ClassFormatError，NoClassDefFoundError，</span><span>ClassCircularityError，LinkageError异常，如果传入的是null，会报NullPointerException</span></p>
 <h2 id="CcbjG">isRedefineClassesSupported();</h2>
 <p><span>同</span><span>isRetransformClassesSupported，在manifest里配置的</span></p>
 <p><span>​<span data-card-element="center" contenteditable="false"><span class="lake-image"><span class="lake-image-content lake-image-content-isvalid"><span data-role="detail" class="lake-image-detail"><span class="lake-image-meta"><img data-role="image" src="https://intranetproxy.alipay.com/skylark/lark/0/2019/png/1831/1559555920501-e7da66a6-082e-487b-a8e8-10a3d901fd8a.png" data-raw-src="" class="image lake-drag-image" alt="image.png" title="image.png" />                            </span>       </span>     </span>   </span></span>​</span></p>
-<h2 id="vkc6n">redefineClasses(ClassDefinition&#8230; definitions) throws  ClassNotFoundException, UnmodifiableClassException;</h2>
+<h2 id="vkc6n">redefineClasses(ClassDefinition... definitions) throws  ClassNotFoundException, UnmodifiableClassException;</h2>
 <p>这个和retransformClasses非常的相似。也有人在openjdk里问过这个问题，http://mail.openjdk.java.net/pipermail/serviceability-dev/2008-May/000131.html，大概的解释是，retransformClasses是fix-and-continues，而redefined则是直接替换掉了。尤其是有多个agent同时工作的时候，更加推荐retransform。</p>
 <h2 id="gXuF8">isModifiableClass(Class&lt;?&gt; theClass)</h2>
 <p>这个类是否能够被transform，如果可以则返回true。</p>
@@ -84,7 +84,7 @@
 <h2 id="sdkq9">setNativeMethodPrefix(ClassFileTransformer transformer, String prefix)</h2>
 <p>对本地方法进行代码增强。但是由于本地方法是没有字节码的，所以他的办法是重新定义一个同名的函数(原来native method)的名称，然后将原来的本地方法使用prefix进行重命名。</p>
 <p>举例，以前有一个本地方法 native boolean foo(String x),他的做法是先将native的方法重命名，例如改成</p>
-<p>native boolean wapped_foo(String x), 然后再定义一个方法叫 boolean foo(String x) { &#8212;你的代码&#8212; ; prefix_foo(x)}。为了防止重复，所以你的prefix最好考虑到方法重复的情况。</p>
+<p>native boolean wapped_foo(String x), 然后再定义一个方法叫 boolean foo(String x) { ---你的代码--- ; prefix_foo(x)}。为了防止重复，所以你的prefix最好考虑到方法重复的情况。</p>
 <p>正常情况下，按照上面顺序执行，但是如果有问题的时候他的执行顺序分别是</p>
 <ol start="1">
 <li><span>method(foo) -&gt; nativeImplementation(foo)</span></li>

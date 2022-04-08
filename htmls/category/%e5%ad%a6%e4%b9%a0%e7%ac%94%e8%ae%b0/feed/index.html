@@ -12,11 +12,11 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Tue, 10 Aug 2021 11:44:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=4.9.10</generator>
+	<generator>https://wordpress.org/?v=4.9.18</generator>
 
 <image>
 	<url>https://huster.top/wp-content/uploads/2018/09/cropped-fish_112.18181818182px_1208536_easyicon.net_-32x32.png</url>
@@ -26,6 +26,193 @@
 	<height>32</height>
 </image> 
 	<item>
+		<title>如何用java.io.*写一个服务器</title>
+		<link>https://huster.top/htmls/780.html</link>
+		<comments>https://huster.top/htmls/780.html#respond</comments>
+		<pubDate>Fri, 08 Apr 2022 13:10:54 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[Java学习]]></category>
+		<category><![CDATA[netty]]></category>
+
+		<guid isPermaLink="false">https://huster.top/?p=780</guid>
+		<description><![CDATA[写一个服务器 最近在看java nio相关的东西，照着书上的代码写了一个示例，然后就遇到了问题。为什么我们的服 &#8230; <a href="https://huster.top/htmls/780.html" class="more-link">继续阅读<span class="screen-reader-text">“如何用java.io.*写一个服务器”</span></a>]]></description>
+				<content:encoded><![CDATA[<h1>写一个服务器</h1>
+<p>最近在看java nio相关的东西，照着书上的代码写了一个示例，然后就遇到了问题。为什么我们的服务器，只能接受一个请求，就卡在那里了，他到底在干啥呢？</p>
+<p><span id="more-780"></span></p>
+<p>我们先写一个简单的server</p>
+<pre><code class="language-java">package top.huster.server.bio;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Date;
+
+/***
+ * @Author : rentianbing
+ * @Date : 2021/3/11 10:26 上午
+ *
+ ***/
+public class TimeServerV0 {
+    private final static int SERVER_PORT = 9898;
+
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
+        final Socket socket = serverSocket.accept();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        String content = bufferedReader.readLine();
+        System.out.println(&quot;server : &quot; + content);
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        bufferedWriter.write(&quot;time is &quot; + new Date());
+        bufferedWriter.flush();
+    }
+}
+</code></pre>
+<p>然后写一个client去连接,</p>
+<pre><code class="language-java">package top.huster.server.bio;
+
+import java.io.*;
+import java.net.Socket;
+
+/***
+ * @Author : rentianbing
+ * @Date : 2021/3/11 10:33 上午
+ *
+ ***/
+public class TimeServerClient {
+    public static void main(String[] args) throws IOException {
+        Socket s = new Socket(&quot;127.0.0.1&quot;, 9898);
+        //构建IO
+        InputStream is = s.getInputStream();
+        OutputStream os = s.getOutputStream();
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os));
+        //向服务器端发送一条消息
+        bw.write(&quot;测试客户端和服务器通信，服务器接收到消息返回到客户端\n&quot;);
+        bw.flush();
+
+        //读取服务器返回的消息
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        String mess = br.readLine();
+        System.out.println(&quot;服务器：&quot;+mess);
+    }
+}
+</code></pre>
+<p>先把server起起来，接着我们用client连上去，发现正常执行一次之后，server和client都结束了，这显然不符合我们的要求，我们要求的是server需要一直在，源源不断的接受用户请求，很简单，稍加改造，我们改成如下</p>
+<pre><code class="language-java">package top.huster.server.bio;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Date;
+
+/***
+ * @Author : rentianbing
+ * @Date : 2021/3/11 10:26 上午
+ *
+ ***/
+public class TimeServer {
+    private final static int SERVER_PORT = 9898;
+
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
+        while (true) {
+            final Socket socket = serverSocket.accept();
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        String content = bufferedReader.readLine();
+                        System.out.println(&quot;server : &quot; + content);
+                        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                        bufferedWriter.write(&quot;time is &quot; + new Date());
+
+                        bufferedWriter.flush();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+
+    }
+}
+</code></pre>
+<p>我们加了一个死循环进去，每当有连接进来的时候，我们交给另外一个线程去处理，但是就这么个简单的程序，发现client无法收到服务端的信息，除非断开服务端，这个是为什么呢 ？我们不得不去探究一下这个java.io包的一些类和他的功能了。</p>
+<h1>几个关键的类</h1>
+<h2>ServerSocket</h2>
+<p>首先看看这个类，这个类是启动一个server所必须的类，这个类有4个构造方法，通过这个类的accept可以拿到一个和client端的Socket，而通过这个Socket就可以实现和client端的通信，读或者写都可以。记住这个类的核心关键，一个是构造方法，一个是accept</p>
+<h2>BufferedReader</h2>
+<p>接着就是读写数据，最重要的就是BufferedReader这个缓冲区，为什么要有这么个缓冲区呢？ 因为网卡/磁盘的数据要到用户空间，是一个非常漫长的过程，他们的速率相差了至少10倍，因此需要开辟一个用户空间和硬件之间的一个缓冲区。<br />这个方法的构造函数里需要一个字节流，数据以字节流的形式进行传输。<br />他有个非常重要的函数 readLine，逐行读入</p>
+<h2>InputStreamReader</h2>
+<p>An InputStreamReader is a bridge from byte streams to character streams: It reads bytes and decodes them into characters using a specified<br />他是streams字节流和字节的一个桥梁，能够将byte解码成字符，传递给用户使用。</p>
+<p>这些可能在最初接触的时候，觉得挺复杂的，暂时不用理解太多，知道怎么写，其实就是一个固定的模式。</p>
+<h1>为什么第二个版本的服务器没有数据输出</h1>
+<p>我们排查看到，我们的client端阻塞在了BufferedReader.readLine这个方法里，我们研究下这个方法。<br />里面最关键的有两段，其中一个bufferLoop是不断的从外设读取数据填充到缓冲区</p>
+<pre><code class="language-java"> bufferLoop:
+            for (;;) {
+
+                if (nextChar &gt;= nChars)
+                    fill();
+                if (nextChar &gt;= nChars) { /* EOF */
+                    if (s != null &amp;&amp; s.length() &gt; 0)
+                        return s.toString();
+                    else
+                        return null;
+                }
+                boolean eol = false;
+                char c = 0;
+                int i;
+
+                /* Skip a leftover &#039;\n&#039;, if necessary */
+                if (omitLF &amp;&amp; (cb[nextChar] == &#039;\n&#039;))
+                    nextChar++;
+                skipLF = false;
+                omitLF = false;</code></pre>
+<p>第二段，不断的从缓冲区里拿数据，知道遇到了反斜杠r反斜杠n</p>
+<pre><code class="language-java"> charLoop:
+                for (i = nextChar; i &lt; nChars; i++) {
+                    c = cb[i];
+                    if ((c == &#039;\n&#039;) || (c == &#039;\r&#039;)) {
+                        eol = true;
+                        break charLoop;
+                    }
+                }
+
+                startChar = nextChar;
+                nextChar = i;
+
+                if (eol) {
+                    String str;
+                    if (s == null) {
+                        str = new String(cb, startChar, i - startChar);
+                    } else {
+                        s.append(cb, startChar, i - startChar);
+                        str = s.toString();
+                    }
+                    nextChar++;
+                    if (c == &#039;\r&#039;) {
+                        skipLF = true;
+                    }
+                    return str;
+                }
+
+                if (s == null)
+                    s = new StringBuffer(defaultExpectedLineLength);
+                s.append(cb, startChar, i - startChar);
+            }</code></pre>
+<p>关键的地方就在于fill()这个方法里，</p>
+<pre><code class="language-java">
+        int n;
+        do {
+            n = in.read(cb, dst, cb.length - dst);
+        } while (n == 0);</code></pre>
+<p>里面的in.read方法是阻塞的，当这个方法在遇到了<br />Reads characters into a portion of an array.  This method will block until some input is available, an I/O error occurs, or the end of the stream is reached.</p>
+<p>所以我们的程序是在等着服务端给数据，知道遇到了IO错误或者服务端的断口，才会返回，也就才会终止charLoop的运行，这样我们就知道了，为什么我们的客户端被卡住了。</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/780.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
 		<title>CPU异常问题排查</title>
 		<link>https://huster.top/htmls/748.html</link>
 		<comments>https://huster.top/htmls/748.html#respond</comments>
@@ -97,7 +284,7 @@
 		<description><![CDATA[背景 继上次找到redis导致的gc问题之后，又有一个应用发生了gc时间长的问题。每次gc的大概1s的停顿时间 &#8230; <a href="https://huster.top/htmls/745.html" class="more-link">继续阅读<span class="screen-reader-text">“又一起GC问题排查过程”</span></a>]]></description>
 				<content:encoded><![CDATA[<h2 id="ggbT8" data-lake-id="9f3c08a1f9fb9f3501aad6053e1c2122">背景</h2>
 <p data-lake-id="f03a859e570b282b5d3e38ddf074e5b5">继上次找到redis导致的gc问题之后，又有一个应用发生了gc时间长的问题。每次gc的大概1s的停顿时间，导致这1s的请求全部超时，经常被业务方投诉。因为G1有更好的并行度，更短和确定的并行时间，因此负责的开发将应用从CMS升级到G1，然而问题依然没有解决. 这是一个网关类型的应用，负责接受rpc的调用，将请求转发到后端的http请求，将封装好的数据，转发给业务使用。所以实际上是</p>
-<p data-lake-id="a00cddf79ea31d40896e0b20ef03866d">Application&#8212;-&gt;rpc&#8211;&gt;GateWay(问题应用)&#8212;&#8211;http client &#8212;&gt; 其他服务.</p>
+<p data-lake-id="a00cddf79ea31d40896e0b20ef03866d">Application----&gt;rpc--&gt;GateWay(问题应用)-----http client ---&gt; 其他服务.</p>
 <p data-lake-id="a00cddf79ea31d40896e0b20ef03866d">
 <p data-lake-id="a00cddf79ea31d40896e0b20ef03866d">
 <p data-lake-id="a00cddf79ea31d40896e0b20ef03866d"><span id="more-745"></span></p>
@@ -313,7 +500,7 @@
 <p data-lake-id="915fc8d33ec55dc9a51d5c0f7d66ccfe">           final RouteSpecificPool&lt;T, C, E&gt; pool = getPool(route);</p>
 <p data-lake-id="0e5583255fb0070be41e72dc8ef9f55a">           E entry;</p>
 <p data-lake-id="080b4d0056badae556f9dc5584e5b464">           for (;;) {</p>
-<p data-lake-id="f251e386587cdeebc2cfab0c50fdd0b9">               Asserts.check(!this.isShutDown, &#8220;Connection pool shut down&#8221;);</p>
+<p data-lake-id="f251e386587cdeebc2cfab0c50fdd0b9">               Asserts.check(!this.isShutDown, "Connection pool shut down");</p>
 <p data-lake-id="990e7c1b9eea18c7f47a1bf2a2efdd04">               for (;;) {</p>
 <p data-lake-id="42567f3dce1845583f3bf39b5ae67d25">                   //从avaiable的队列里取出来一个并且放到lease的队列里</p>
 <p data-lake-id="de76584a5d858a611ede485d262f4052">                   //获取一个可用</p>
@@ -347,7 +534,7 @@
 <p data-lake-id="c8d81eb9c7565da2d94417fd4179f925">                        // 如果为null则需要重新构建一个连接.</p>
 <p data-lake-id="d40e17c265215331cb19915ed93b35da">               final int maxPerRoute = getMax(route);</p>
 <p data-lake-id="e34bcb12d2a5616ea252b019544e7402">               // Shrink the pool prior to allocating a new connection</p>
-<p data-lake-id="0ae305270c476cd4068513b3269d232a">               final int excess = Math.max(0, pool.getAllocatedCount() + 1 &#8211; maxPerRoute);</p>
+<p data-lake-id="0ae305270c476cd4068513b3269d232a">               final int excess = Math.max(0, pool.getAllocatedCount() + 1 - maxPerRoute);</p>
 <p data-lake-id="043a8c29c8260f97df266e72bbe382ea">                   //这个excess恒大于1?</p>
 <p data-lake-id="8d8ad59f3fccb6dd9e126968369f11cb">                   if (excess &gt; 0) {</p>
 <p data-lake-id="589b3b9ab7d2d6a0abc06d77c684b6f3">                   for (int i = 0; i &lt; excess; i++) {</p>
@@ -365,10 +552,10 @@
 <p data-lake-id="705f16c2772c106fc822adc2c8b72c90">
 <p data-lake-id="952722c5123ef12d46efda2be5e79ff5">                     if (pool.getAllocatedCount() &lt; maxPerRoute) {</p>
 <p data-lake-id="33879a733cdeb3f1331b30b3758bc6ec">                   final int totalUsed = this.leased.size();</p>
-<p data-lake-id="1a3dfc197e195f664b9a4e28fe2bef18">                   final int freeCapacity = Math.max(this.maxTotal &#8211; totalUsed, 0);</p>
+<p data-lake-id="1a3dfc197e195f664b9a4e28fe2bef18">                   final int freeCapacity = Math.max(this.maxTotal - totalUsed, 0);</p>
 <p data-lake-id="c6cc30619b2d6275f04ae40e48658b3d">                   if (freeCapacity &gt; 0) {</p>
 <p data-lake-id="f7b38a99cd93057983a36e3103fc3c99">                       final int totalAvailable = this.available.size();</p>
-<p data-lake-id="7417d4af38a55666ad341ba739737d2f">                       if (totalAvailable &gt; freeCapacity &#8211; 1) {</p>
+<p data-lake-id="7417d4af38a55666ad341ba739737d2f">                       if (totalAvailable &gt; freeCapacity - 1) {</p>
 <p data-lake-id="95180eb2b42aa0406ec48d8c335e22c6">                           if (!this.available.isEmpty()) {</p>
 <p data-lake-id="e340006d44f88ff55c8e5c40f47ee9f5">                               final E lastUsed = this.available.removeLast();</p>
 <p data-lake-id="1eed268466053d5b88688f4838454da4">                               lastUsed.close();</p>
@@ -419,7 +606,7 @@
 </div>
 <h4 id="rHfOp" data-lake-id="08f4816707efce6f1b85c38590c0a592">生产问题定位</h4>
 <p data-lake-id="7038f43cec5ab5704619cb400b2116b0">了解了PoolingHttpClientConnectionManager之后，其实我们可以把日志打开看一看，到底是什么情况？</p>
-<p data-lake-id="9160fc8ce98db43369a83870642de5fe">  &lt;Logger name=&#8221;org.apache.http.impl.conn.PoolingHttpClientConnectionManager&#8221; level=&#8221;DEBUG&#8221;&gt;</p>
+<p data-lake-id="9160fc8ce98db43369a83870642de5fe">  &lt;Logger name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" level="DEBUG"&gt;</p>
 <p data-lake-id="ced18afe925bcc2be351101553369fad">       &lt;/Logger&gt;</p>
 <p data-lake-id="037551fe2db85f904ff64a404bc3f0b4">我把这个类的info日志打开，发现日志如下:</p>
 <div id="VHJSj" class="lake-card-margin lake-selected" data-card-type="block" data-lake-card="codeblock" data-card-value="data:%7B%22mode%22%3A%22shell%22%2C%22code%22%3A%222020-08-26%2016%3A47%3A36%20%5Cu001b%5B36mDEBUG%5Cu001b%5Bm%5Bpool-7-thread-149%5D%20%5Bo.a.h.i.c.PoolingHttpClientConnectionManager.requestConnection%3A266%5D%20%5B154ee4edcd6d1152%2C154ee4edcd6d1152%2C0%5D%20Connection%20request%3A%20%5Broute%3A%20%7Bs%7D-%3Ehttps%3A%2F%2Faiengine-hellomap-route-inner.hellobike.cn%3A9003%5D%5Btotal%20kept%20alive%3A%200%3B%20route%20allocated%3A%2050%20of%2050%3B%20total%20allocated%3A%2050%20of%20100%5D%5Cn2020-08-26%2016%3A47%3A36%20%5Cu001b%5B36mDEBUG%5Cu001b%5Bm%5Bpool-7-thread-219%5D%20%5Bo.a.h.i.c.PoolingHttpClientConnectionManager.leaseConnection%3A310%5D%20%5B8f2ce76435c397c6%2C8f2ce76435c397c6%2C0%5D%20Connection%20leased%3A%20%5Bid%3A%20607%5D%5Broute%3A%20%7Bs%7D-%3Ehttps%3A%2F%2Faiengine-hellomap-route-inner.hellobike.cn%3A9003%5D%5Btotal%20kept%20alive%3A%200%3B%20route%20allocated%3A%2050%20of%2050%3B%20total%20allocated%3A%2050%20of%20100%5D%22%2C%22heightLimit%22%3Atrue%2C%22margin%22%3Atrue%2C%22id%22%3A%22VHJSj%22%7D" data-language="shell">
@@ -670,7 +857,7 @@
 		<description><![CDATA[过年被病毒闹的出不了门，就顺带着把flink秒级统计的逻辑写了一下，逻辑很简单，就是从kafka消费数据，然后 &#8230; <a href="https://huster.top/htmls/713.html" class="more-link">继续阅读<span class="screen-reader-text">“flink读取kafka数据未能触发watermark”</span></a>]]></description>
 				<content:encoded><![CDATA[<p>过年被病毒闹的出不了门，就顺带着把flink秒级统计的逻辑写了一下，逻辑很简单，就是从kafka消费数据，然后select count(*) from xxx group by xxx来一秒产出一个打点。程序代码非常简单</p>
 <p><span id="more-713"></span></p>
-<p>&#8220;`java</p>
+<p>```java</p>
 <pre>StreamExecutionEnvironment bsEnv = StreamExecutionEnvironment.getExecutionEnvironment();
 EnvironmentSettings bsSettings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build();
 StreamTableEnvironment bsTableEnv = StreamTableEnvironment.create(bsEnv, bsSettings);
@@ -737,14 +924,14 @@ bsEnv.execute("data-metrics");
 
 </pre>
 <p>代码如上，非常简单，输入的数据类似于</p>
-<p>&#8220;`json</p>
-<p class="p1"><span class="s1">{&#8220;t&#8221;:1580896327330,&#8221;st&#8221;:&#8221;DIRECT&#8221;,&#8221;i&#8221;:&#8221;hitch_passenger_order_2020_01_22_23_50_40&#8243;,&#8221;op&#8221;:&#8221;es_sink&#8221;,&#8221;id&#8221;:&#8221;,guid:15756341902141200002900&#8243;,&#8221;ut&#8221;:&#8221;,order_update_time:2020-02-05 17:52:07.190435&#8243;,&#8221;msg&#8221;:&#8221;&#8221;,&#8221;rId&#8221;:&#8221;0.1.1.1&#8243;}</span></p>
-<p class="p1"><span class="s1">{&#8220;t&#8221;:1580896327831,&#8221;st&#8221;:&#8221;DIRECT&#8221;,&#8221;i&#8221;:&#8221;hitch_passenger_order_2020_01_22_23_50_40&#8243;,&#8221;op&#8221;:&#8221;es_sink&#8221;,&#8221;id&#8221;:&#8221;,guid:15756341902141200002900&#8243;,&#8221;ut&#8221;:&#8221;,order_update_time:2020-02-05 17:52:07.687468&#8243;,&#8221;msg&#8221;:&#8221;&#8221;,&#8221;rId&#8221;:&#8221;0.1.1.1&#8243;}</span></p>
-<p class="p1"><span class="s1">{&#8220;t&#8221;:1580896328131,&#8221;st&#8221;:&#8221;DIRECT&#8221;,&#8221;i&#8221;:&#8221;hitch_passenger_order_2020_01_22_23_50_40&#8243;,&#8221;op&#8221;:&#8221;es_sink&#8221;,&#8221;id&#8221;:&#8221;,guid:15756341902141200002900&#8243;,&#8221;ut&#8221;:&#8221;,order_update_time:2020-02-05 17:52:08.047474&#8243;,&#8221;msg&#8221;:&#8221;&#8221;,&#8221;rId&#8221;:&#8221;0.1.1.1&#8243;}</span></p>
+<p>```json</p>
+<p class="p1"><span class="s1">{"t":1580896327330,"st":"DIRECT","i":"hitch_passenger_order_2020_01_22_23_50_40","op":"es_sink","id":",guid:15756341902141200002900","ut":",order_update_time:2020-02-05 17:52:07.190435","msg":"","rId":"0.1.1.1"}</span></p>
+<p class="p1"><span class="s1">{"t":1580896327831,"st":"DIRECT","i":"hitch_passenger_order_2020_01_22_23_50_40","op":"es_sink","id":",guid:15756341902141200002900","ut":",order_update_time:2020-02-05 17:52:07.687468","msg":"","rId":"0.1.1.1"}</span></p>
+<p class="p1"><span class="s1">{"t":1580896328131,"st":"DIRECT","i":"hitch_passenger_order_2020_01_22_23_50_40","op":"es_sink","id":",guid:15756341902141200002900","ut":",order_update_time:2020-02-05 17:52:08.047474","msg":"","rId":"0.1.1.1"}</span></p>
 <p>&nbsp;</p>
 <p>然而，死活就是无法输出正确的统计数据。但是当我把setParallelism并发设置为1的时候，就能正常输出统计数据。太神奇了，为什么跟并发度有关系呢？</p>
 <p>于是我在本地打开了跟踪调试功能，我发现问题出在StatusWatermarkValve这个类里，这个类的这个方法是这么写的</p>
-<p>&#8220;`java</p>
+<p>```java</p>
 <pre>private void findAndOutputNewMinWatermarkAcrossAlignedChannels() {
    long newMinWatermark = Long.MAX_VALUE;
    boolean hasAlignedChannels = false;
@@ -800,14 +987,14 @@ bsEnv.execute("data-metrics");
 <div>   StreamExecutionEnvironment fsEnv = StreamExecutionEnvironment.getExecutionEnvironment();</div>
 <div>   StreamTableEnvironment tttt = StreamTableEnvironment.create(fsEnv,fsSettings);</div>
 <div>   Properties properties =newProperties();</div>
-<div>   properties.setProperty(&#8220;bootstrap.servers&#8221;,&#8221;localhost:9092&#8243;);</div>
-<div>    properties.setProperty(&#8220;<a href="http://group.id/">group.id</a>&#8220;,&#8221;test&#8221;+ System.currentTimeMillis());</div>
-<div>   FlinkKafkaConsumer011&lt;String&gt; kafkaConsumer011 =newFlinkKafkaConsumer011&lt;String&gt;(&#8220;test&#8221;, newSimpleStringSchema(),properties);</div>
+<div>   properties.setProperty("bootstrap.servers","localhost:9092");</div>
+<div>    properties.setProperty("<a href="http://group.id/">group.id</a>","test"+ System.currentTimeMillis());</div>
+<div>   FlinkKafkaConsumer011&lt;String&gt; kafkaConsumer011 =newFlinkKafkaConsumer011&lt;String&gt;("test", newSimpleStringSchema(),properties);</div>
 <div>   kafkaConsumer011.setStartFromTimestamp(System.currentTimeMillis());</div>
 <div>   DataStream&lt;String&gt; stream = fsEnv.addSource(kafkaConsumer011);</div>
 <div>   stream.print();</div>
-<div>   fsEnv.execute(&#8220;test&#8221;);</div>
-<div>}2019-10-21 23:06:58.970 [Thread-8] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 0 creating fetcher with offsets {}.</div>
+<div>   fsEnv.execute("test");</div>
+<div>}2019-10-21 23:06:58.970 [Thread-8] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 0 creating fetcher with offsets {}.</div>
 <div></div>
 <div>表现为，无法收到kafka发送过来的消息。这就很奇怪了，因为我使用kafka-consumer-console.sh的方式可以看到实际上是有消息产出的，但是这里死活就收不到数据。</div>
 <div></div>
@@ -821,16 +1008,16 @@ bsEnv.execute("data-metrics");
 <div>对比了下，能拿到数据和不能拿到数据的区别。下面是不能拿到数据时候的日志输出，</div>
 <div></div>
 <div></div>
-<div>2019-10-21 23:06:58.970 [Thread-10] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 3 creating fetcher with offsets {}.</div>
-<div>2019-10-21 23:06:58.970 [Thread-7] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 1 creating fetcher with offsets {}.</div>
-<div>2019-10-21 23:07:01.100 [Source: Custom Source -&gt; Sink: Print to Std. Out (3/4)] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 2 initially has no partitions to read from.</div>
-<div>2019-10-21 23:07:01.108 [Thread-9] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 2 creating fetcher with offsets {}.</div>
+<div>2019-10-21 23:06:58.970 [Thread-10] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 3 creating fetcher with offsets {}.</div>
+<div>2019-10-21 23:06:58.970 [Thread-7] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 1 creating fetcher with offsets {}.</div>
+<div>2019-10-21 23:07:01.100 [Source: Custom Source -&gt; Sink: Print to Std. Out (3/4)] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 2 initially has no partitions to read from.</div>
+<div>2019-10-21 23:07:01.108 [Thread-9] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 2 creating fetcher with offsets {}.</div>
 <div></div>
 <div></div>
 <div>而下面是能拿到数据时候的日志输出, 可以看到有一个task成功拿到了这个partition的offset</div>
 <div></div>
 <div></div>
-<div>2019-10-21 23:14:11.871 [Thread-7] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase &#8211; Consumer subtask 2 creating fetcher with offsets {KafkaTopicPartition{topic=&#8217;test&#8217;, partition=0}=35}.</div>
+<div>2019-10-21 23:14:11.871 [Thread-7] INFO  o.a.f.s.connectors.kafka.FlinkKafkaConsumerBase - Consumer subtask 2 creating fetcher with offsets {KafkaTopicPartition{topic='test', partition=0}=35}.</div>
 <div></div>
 <div></div>
 <div>所以原因是因为，通过kafka的consumer的api，consumer.offsetsForTimes的时候，能否拿到offset，如果拿不到在KafkaConsumerThread的线程的run方法里，有一个这个代码表明这个方法是阻塞的，一直等到有新的partition到来，才会继续。而新的partition不会到来，所以这里就有问题了。。。</div>
@@ -843,7 +1030,7 @@ bsEnv.execute("data-metrics");
 <div>      // if no assigned partitions block until we get at least one</div>
 <div>      // instead of hot spinning this loop. We rely on a fact that</div>
 <div>      // unassignedPartitionsQueue will be closed on a shutdown, so</div>
-<div>      // we don&#8217;t block indefinitely</div>
+<div>      // we don't block indefinitely</div>
 <div>      newPartitions = unassignedPartitionsQueue.getBatchBlocking();</div>
 <div>   }</div>
 <div>   if (newPartitions != null) {</div>
@@ -861,25 +1048,25 @@ bsEnv.execute("data-metrics");
 <div></div>
 <div>private static void testConsumer() {</div>
 <div>    Properties props = new Properties();</div>
-<div>    props.put(&#8220;bootstrap.servers&#8221;, &#8220;localhost:9092&#8221;);</div>
-<div>    props.put(&#8220;group.id&#8221;, &#8220;test&#8221;);</div>
-<div>    props.put(&#8220;key.deserializer&#8221;, &#8220;org.apache.kafka.common.serialization.StringDeserializer&#8221;);</div>
-<div>    props.put(&#8220;value.deserializer&#8221;, &#8220;org.apache.kafka.common.serialization.StringDeserializer&#8221;);</div>
+<div>    props.put("bootstrap.servers", "localhost:9092");</div>
+<div>    props.put("group.id", "test");</div>
+<div>    props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");</div>
+<div>    props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");</div>
 <div>    KafkaConsumer&lt;String, String&gt; consumer = new KafkaConsumer&lt;&gt;(props);</div>
-<div>    consumer.subscribe(Collections.singletonList(&#8220;test&#8221;));</div>
-<div>    TopicPartition topicPartition = new TopicPartition(&#8220;test&#8221;, 0);</div>
+<div>    consumer.subscribe(Collections.singletonList("test"));</div>
+<div>    TopicPartition topicPartition = new TopicPartition("test", 0);</div>
 <div>    long current = System.currentTimeMillis();</div>
 <div>    for (int i=0; i&lt;10000; i++) {</div>
 <div>        Map&lt;TopicPartition, Long&gt; map = new HashMap&lt;&gt;();</div>
-<div>        map.put(topicPartition, current &#8211; i*1000);</div>
+<div>        map.put(topicPartition, current - i*1000);</div>
 <div>        Map&lt;TopicPartition, OffsetAndTimestamp&gt; result  = consumer.offsetsForTimes(map);</div>
-<div>        System.out.println(&#8220;===================test : &#8221; + i + &#8220;==================&#8221;);</div>
+<div>        System.out.println("===================test : " + i + "==================");</div>
 <div>        System.out.println(new Gson().toJson(result));</div>
 <div>    }</div>
 <div>    while (true) {</div>
 <div>        ConsumerRecords&lt;String, String&gt; records = consumer.poll(100);</div>
 <div>        for (ConsumerRecord&lt;String, String&gt; record : records)</div>
-<div>            System.out.printf(&#8220;offset = %d, key = %s, value = %s%n&#8221;, record.offset(), record.key(), record.value());</div>
+<div>            System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());</div>
 <div>    }</div>
 <div>}</div>
 <div></div>
@@ -920,7 +1107,7 @@ bsEnv.execute("data-metrics");
 <div>    at org.apache.flink.api.java.typeutils.runtime.RowSerializer.copy(RowSerializer.java:93)</div>
 <div>    at org.apache.flink.api.java.typeutils.runtime.RowSerializer.copy(RowSerializer.java:44)</div>
 <div>    at org.apache.flink.streaming.runtime.tasks.OperatorChain$CopyingChainingOutput.pushToOperator(OperatorChain.java:635)</div>
-<div>    &#8230; 9 more</div>
+<div>    ... 9 more</div>
 <div></div>
 <div></div>
 <div>问题2: partition必须是数字类型的字段</div>
@@ -928,14 +1115,14 @@ bsEnv.execute("data-metrics");
 <div></div>
 <div> 另外，因为connector.read.partition.column他使用的是between语句，所以只能是数字，时间戳等，否则也会报错</div>
 <div>. partition.column must be a numeric,</div>
-<div> &#8212; date, or timestamp column from the table in question.</div>
+<div> -- date, or timestamp column from the table in question.</div>
 <div></div>
 <div></div>
 <div></div>
 <div></div>
 <div></div>
 <div></div>
-<div>Exception in thread &#8220;main&#8221; org.apache.flink.runtime.client.JobExecutionException: Job execution failed.</div>
+<div>Exception in thread "main" org.apache.flink.runtime.client.JobExecutionException: Job execution failed.</div>
 <div>    at org.apache.flink.runtime.jobmaster.JobResult.toJobExecutionResult(JobResult.java:146)</div>
 <div>    at org.apache.flink.runtime.minicluster.MiniCluster.executeJobBlocking(MiniCluster.java:627)</div>
 <div>    at org.apache.flink.streaming.api.environment.LocalStreamEnvironment.execute(LocalStreamEnvironment.java:117)</div>
@@ -969,7 +1156,7 @@ bsEnv.execute("data-metrics");
 <div>    at org.postgresql.jdbc2.AbstractJdbc2Statement.executeWithFlags(AbstractJdbc2Statement.java:388)</div>
 <div>    at org.postgresql.jdbc2.AbstractJdbc2Statement.executeQuery(AbstractJdbc2Statement.java:273)</div>
 <div>    at org.apache.flink.api.java.io.jdbc.JDBCInputFormat.open(JDBCInputFormat.java:247)</div>
-<div>    &#8230; 4 more</div>
+<div>    ... 4 more</div>
 <div>
 <div></div>
 </div>
@@ -986,8 +1173,8 @@ bsEnv.execute("data-metrics");
 				<category><![CDATA[flink]]></category>
 
 		<guid isPermaLink="false">https://huster.top/?p=704</guid>
-		<description><![CDATA[New ElasticSearch()…xxx&#8230;registerTableSink(); Elas &#8230; <a href="https://huster.top/htmls/704.html" class="more-link">继续阅读<span class="screen-reader-text">“flink相关 &#8211; 通过Table API写入ElasticSearch的部分源码分析”</span></a>]]></description>
-				<content:encoded><![CDATA[<div>New ElasticSearch()…xxx&#8230;registerTableSink();</div>
+		<description><![CDATA[New ElasticSearch()…xxx...registerTableSink(); ElasticS &#8230; <a href="https://huster.top/htmls/704.html" class="more-link">继续阅读<span class="screen-reader-text">“flink相关 &#8211; 通过Table API写入ElasticSearch的部分源码分析”</span></a>]]></description>
+				<content:encoded><![CDATA[<div>New ElasticSearch()…xxx...registerTableSink();</div>
 <div></div>
 <div>ElasticSearch是一个ConnectorDescriptor: 最关键的就是一个toConnectorProperties就是一个配置的map,传给factory使用，他其实是一个配置收集器.</div>
 <div></div>
@@ -1063,7 +1250,7 @@ bsEnv.execute("data-metrics");
 <div>*&lt;p&gt;The keys array might be empty, if the table consists of a single (updated) record.</div>
 <div>* If the table does not have a key and is append-only, the keys attribute is null.</div>
 <div>*</div>
-<div>*@paramkeysthe field names of the table&#8217;s keys, an empty array if the table has a single</div>
+<div>*@paramkeysthe field names of the table's keys, an empty array if the table has a single</div>
 <div>*             row, and null if the table is append-only and has no key.</div>
 <div>*/</div>
 <div>voidsetKeyFields(String[] keys);</div>
@@ -1155,10 +1342,10 @@ bsEnv.execute("data-metrics");
 				<content:encoded><![CDATA[<div>业务代码如下 :</div>
 <div>fsTableEnv.connect(</div>
 <div>       newKafka()</div>
-<div>                .version(&#8220;0.11&#8221;)</div>
-<div>                .topic(&#8220;xxxx&#8221;)</div>
-<div>                .property(&#8220;bootstrap.servers”,”<a href="http://newdev-kafka1.ttbike.com.cn:9092/">x</a>xxxx:xxxx&#8221;)</div>
-<div>                .property(&#8220;<a href="http://group.id/">group.id</a>&#8220;,&#8221;test4444&#8221;)</div>
+<div>                .version("0.11")</div>
+<div>                .topic("xxxx")</div>
+<div>                .property("bootstrap.servers”,”<a href="http://newdev-kafka1.ttbike.com.cn:9092/">x</a>xxxx:xxxx")</div>
+<div>                .property("<a href="http://group.id/">group.id</a>","test4444")</div>
 <div>                .startFromEarliest()//测试需要</div>
 <div>)</div>
 <div>        .withSchema(newSchema().schema(newTableSchema(fields, types)))</div>
@@ -1168,7 +1355,7 @@ bsEnv.execute("data-metrics");
 <div></div>
 <div></div>
 <div>问题是：读出来的数据总是null</div>
-<div>DataStream&lt;Row&gt; table = fsTableEnv.toAppendStream(fsTableEnv.sqlQuery(&#8220;select * from testTable&#8221;),Row.class);</div>
+<div>DataStream&lt;Row&gt; table = fsTableEnv.toAppendStream(fsTableEnv.sqlQuery("select * from testTable"),Row.class);</div>
 <div>table.print();</div>
 <div></div>
 <div></div>
@@ -1190,20 +1377,20 @@ bsEnv.execute("data-metrics");
 <div>最后跟踪定位到convert那个地方，才发现，原来解析的时候，他使用的是完整的json schema，而不是仅仅是data里的field字段，例如你传给kafka的json schema是包含了data平级的那些字段,table,operation等。而我传过去的是data里的field字段，当然就错了。</div>
 <div></div>
 <div>{</div>
-<div>    &#8220;schema&#8221;: “44444&#8243;,</div>
-<div>    &#8220;table&#8221;: &#8220;safs&#8221;,</div>
-<div>    &#8220;operation&#8221;: &#8220;INSERT&#8221;,</div>
-<div>    &#8220;data&#8221;: {</div>
-<div>        &#8220;start_time&#8221;: &#8220;2019-10-10 23:00:00&#8221;,</div>
-<div>        &#8220;end_point&#8221;: &#8220;0101000020E61000008BDEA9807B545E4062D9CC21A9313F40&#8221;,</div>
-<div>        &#8220;start_point&#8221;: &#8220;0101000020E61000002250FD8348575E40C284D1AC6C1F3F40&#8221;,</div>
-<div>        &#8220;user_new_id&#8221;: 1200001917,</div>
-<div>        &#8220;end_adcode&#8221;: null,</div>
-<div>        &#8220;end_time&#8221;: null,</div>
-<div>        &#8220;distance&#8221;: null,</div>
-<div>        &#8220;seat_count&#8221;: 4</div>
+<div>    "schema": “44444",</div>
+<div>    "table": "safs",</div>
+<div>    "operation": "INSERT",</div>
+<div>    "data": {</div>
+<div>        "start_time": "2019-10-10 23:00:00",</div>
+<div>        "end_point": "0101000020E61000008BDEA9807B545E4062D9CC21A9313F40",</div>
+<div>        "start_point": "0101000020E61000002250FD8348575E40C284D1AC6C1F3F40",</div>
+<div>        "user_new_id": 1200001917,</div>
+<div>        "end_adcode": null,</div>
+<div>        "end_time": null,</div>
+<div>        "distance": null,</div>
+<div>        "seat_count": 4</div>
 <div>    },</div>
-<div>    &#8220;operateTime&#8221;: 1570602631926</div>
+<div>    "operateTime": 1570602631926</div>
 <div>}</div>
 <div></div>
 <div></div>
@@ -1214,7 +1401,7 @@ bsEnv.execute("data-metrics");
 <div>      final JsonNode root = objectMapper.readTree(message);</div>
 <div>      return (Row) runtimeConverter.convert(objectMapper, root);</div>
 <div>   } catch (Throwable t) {</div>
-<div>      throw new IOException(&#8220;Failed to deserialize JSON object.&#8221;, t);</div>
+<div>      throw new IOException("Failed to deserialize JSON object.", t);</div>
 <div>   }</div>
 <div>}</div>
 <div>这段代码里，root解析出来是好的，然后他开始convert.</div>
@@ -1245,43 +1432,6 @@ bsEnv.execute("data-metrics");
 <div>0.11版本依赖0.10.再依赖0.9……..让人很迷惑.</div>
 ]]></content:encoded>
 			<wfw:commentRss>https://huster.top/htmls/696.html/feed</wfw:commentRss>
-		<slash:comments>0</slash:comments>
-		</item>
-		<item>
-		<title>flink学习笔记(一)</title>
-		<link>https://huster.top/htmls/691.html</link>
-		<comments>https://huster.top/htmls/691.html#respond</comments>
-		<pubDate>Thu, 17 Oct 2019 08:45:30 +0000</pubDate>
-		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
-				<category><![CDATA[flink]]></category>
-
-		<guid isPermaLink="false">https://huster.top/?p=691</guid>
-		<description><![CDATA[架构  什么是flink flink是一个框架或者叫流式计算引擎，他可以用来处理有界(批处理，mapReduc &#8230; <a href="https://huster.top/htmls/691.html" class="more-link">继续阅读<span class="screen-reader-text">“flink学习笔记(一)”</span></a>]]></description>
-				<content:encoded><![CDATA[<div>架构</div>
-<ol>
-<li>
-<div> 什么是flink</div>
-</li>
-</ol>
-<div>flink是一个框架或者叫流式计算引擎，他可以用来处理有界(批处理，mapReduce)数据和无界数据。他的特点是具有内存的速度和分布式的横向扩展能力。由于是分布式的，所以他可以处理任意规模的数据。另外，他是有状态的，表现为上一步的结算结果可以为下一步使用。</div>
-<div></div>
-<p><span id="more-691"></span></p>
-<div>有界和无界的解释，见下面的图。</div>
-<div><a href="https://huster.top/wp-content/uploads/2019/10/1.png"><img class="alignnone size-full wp-image-692" src="https://huster.top/wp-content/uploads/2019/10/1.png" alt="" width="2220" height="526" /></a></div>
-<ol start="2">
-<li>
-<div>    如何解释内存般的访问速度。</div>
-</li>
-</ol>
-<div>是指用户的逻辑始终需要不断的访问记录的状态，而这些状态被记录在内存里，这样访问就很快。当内存放不下的时候，会固化到硬盘里。另外，会定期的异步将当前的快照存放到硬盘里，以防止任务的重启能接着上次的终止的地方继续运算。如下图所示</div>
-<div><a href="https://huster.top/wp-content/uploads/2019/10/2.png"><img class="alignnone size-full wp-image-693" src="https://huster.top/wp-content/uploads/2019/10/2.png" alt="" width="2784" height="630" /></a></div>
-<div>运维</div>
-<div>   1. flink的时间和特点</div>
-<div>    flink提供了事件事件模式，即用事件发生时自身的时间戳来进行统计。好处是计算结果一定正确，坏处是可能有延迟。也就是即使是数据到达的不及时，也要保证结果的正确性。还有一种是处理时间模式，也就是用的是事件到达工作机的机器时间作为统计时间。这样做的好处是低延迟，坏处是可能结果不是那么的准确。</div>
-<div>        2. flink的checkpoint和savepoint</div>
-<div>checkpoint是异步的增量的持久化的保存着，是为了机器故障的恢复。而savepoint则是为了集群的迁移，版本的升级而设计。在流式应用中，一个很大的难点是如何在线平滑的升级你的flink应用(业务代码，业务发布)。如果你的业务代码都重新发布了，那以前的计算的中间结果如何承接过来。总不能你一升级，用户的点击数就从0开始计算吧？flink使用savepoint很好的解决了这个难题。另外，还支持flink版本的平滑升级。</div>
-]]></content:encoded>
-			<wfw:commentRss>https://huster.top/htmls/691.html/feed</wfw:commentRss>
 		<slash:comments>0</slash:comments>
 		</item>
 	</channel>
