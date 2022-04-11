@@ -1,5 +1,5 @@
 User-agent: *
 Disallow: /wp-admin/
-Allow: /wp-admin/admin-ajax.php
+Allow: /
 
 Sitemap: https://huster.top/sitemap.xml
