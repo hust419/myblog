@@ -112,6 +112,12 @@
 
 	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/107.html" rel="bookmark"><time class="entry-date published" datetime="2010-12-14T16:26:43+00:00">2010 年 12 月 14 日</time><time class="updated" datetime="2013-08-12T20:15:28+00:00">2013 年 8 月 12 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php-tools" rel="category tag">PHP的开发工具</a></span>			</footer></article><div id="gitalk-container"></div>
   <script type="text/javascript">
+	  window.onhashchange = function(event) {
+    	if(event.newURL !== event.oldURL ) {
+        	location.reload()
+    	}
+	}
+
     var gitalk = new Gitalk({
 
     // gitalk的主要参数

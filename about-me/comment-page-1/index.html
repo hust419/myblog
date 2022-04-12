@@ -90,6 +90,12 @@
 	
 </article><div id="gitalk-container"></div>
   <script type="text/javascript">
+	  window.onhashchange = function(event) {
+    	if(event.newURL !== event.oldURL ) {
+        	location.reload()
+    	}
+	}
+
     var gitalk = new Gitalk({
 
     // gitalk的主要参数
