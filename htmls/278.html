@@ -212,12 +212,7 @@ fi<br>
 
 	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/278.html" rel="bookmark"><time class="entry-date published" datetime="2012-08-25T19:22:25+00:00">2012 年 8 月 25 日</time><time class="updated" datetime="2012-09-09T22:52:05+00:00">2012 年 9 月 9 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84" rel="category tag">系统架构学习</a></span>			</footer></article><div id="gitalk-container"></div>
   <script type="text/javascript">
-	  window.onhashchange = function(event) {
-    	if(event.newURL !== event.oldURL ) {
-        	location.reload()
-    	}
-	}
-
+	 
     var gitalk = new Gitalk({
 
     // gitalk的主要参数
@@ -226,9 +221,14 @@ fi<br>
 		repo: 'myblog',
 		owner: 'hust419',
 		admin: ['hust419'],
-		id: 'window.location.pathname',
+		id: location.hash.match(/#(.*?)([?]|$)/)[1]
     
     });
+	 window.onhashchange = function(event){
+      if(event.newURL.split('?')[0] !== event.oldURL .split('?')[0]) {
+        location.reload()
+      }
+    }
     gitalk.render('gitalk-container');
 </script><nav class="navigation post-navigation" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><div class="nav-previous"><a href="https://huster.top/htmls/263.html" rel="prev"><span class="meta-nav" aria-hidden="true">上一</span> <span class="screen-reader-text">上篇文章：</span> <span class="post-title">史上最快的消息队列-ZeroMQ的学习研究</span></a></div><div class="nav-next"><a href="https://huster.top/htmls/285.html" rel="next"><span class="meta-nav" aria-hidden="true">下一</span> <span class="screen-reader-text">下篇文章：</span> <span class="post-title">FTP服务器架设篇：VSFTP的安装和配置</span></a></div></div>

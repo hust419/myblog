@@ -258,12 +258,7 @@ public class HttpSessionConfig {
 
 	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/520.html" rel="bookmark"><time class="entry-date published" datetime="2017-08-18T14:00:54+00:00">2017 年 8 月 18 日</time><time class="updated" datetime="2018-11-05T10:36:46+00:00">2018 年 11 月 5 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a>、<a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84" rel="category tag">系统架构学习</a></span>			</footer></article><div id="gitalk-container"></div>
   <script type="text/javascript">
-	  window.onhashchange = function(event) {
-    	if(event.newURL !== event.oldURL ) {
-        	location.reload()
-    	}
-	}
-
+	 
     var gitalk = new Gitalk({
 
     // gitalk的主要参数
@@ -272,9 +267,14 @@ public class HttpSessionConfig {
 		repo: 'myblog',
 		owner: 'hust419',
 		admin: ['hust419'],
-		id: 'window.location.pathname',
+		id: location.hash.match(/#(.*?)([?]|$)/)[1]
     
     });
+	 window.onhashchange = function(event){
+      if(event.newURL.split('?')[0] !== event.oldURL .split('?')[0]) {
+        location.reload()
+      }
+    }
     gitalk.render('gitalk-container');
 </script><nav class="navigation post-navigation" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><div class="nav-previous"><a href="https://huster.top/htmls/516.html" rel="prev"><span class="meta-nav" aria-hidden="true">上一</span> <span class="screen-reader-text">上篇文章：</span> <span class="post-title">Mybatis获取最近插入的主键</span></a></div><div class="nav-next"><a href="https://huster.top/htmls/524.html" rel="next"><span class="meta-nav" aria-hidden="true">下一</span> <span class="screen-reader-text">下篇文章：</span> <span class="post-title">通过文件覆盖类里面的属性–一种配置文件的另类实现方式</span></a></div></div>

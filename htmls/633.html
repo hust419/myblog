@@ -219,12 +219,7 @@
 
 	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/633.html" rel="bookmark"><time class="entry-date published updated" datetime="2018-11-08T15:50:32+00:00">2018 年 11 月 8 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span>			</footer></article><div id="gitalk-container"></div>
   <script type="text/javascript">
-	  window.onhashchange = function(event) {
-    	if(event.newURL !== event.oldURL ) {
-        	location.reload()
-    	}
-	}
-
+	 
     var gitalk = new Gitalk({
 
     // gitalk的主要参数
@@ -233,9 +228,14 @@
 		repo: 'myblog',
 		owner: 'hust419',
 		admin: ['hust419'],
-		id: 'window.location.pathname',
+		id: location.hash.match(/#(.*?)([?]|$)/)[1]
     
     });
+	 window.onhashchange = function(event){
+      if(event.newURL.split('?')[0] !== event.oldURL .split('?')[0]) {
+        location.reload()
+      }
+    }
     gitalk.render('gitalk-container');
 </script><nav class="navigation post-navigation" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><div class="nav-previous"><a href="https://huster.top/htmls/629.html" rel="prev"><span class="meta-nav" aria-hidden="true">上一</span> <span class="screen-reader-text">上篇文章：</span> <span class="post-title">Java的锁</span></a></div><div class="nav-next"><a href="https://huster.top/htmls/637.html" rel="next"><span class="meta-nav" aria-hidden="true">下一</span> <span class="screen-reader-text">下篇文章：</span> <span class="post-title">细说Java的内存模型</span></a></div></div>

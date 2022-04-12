@@ -175,12 +175,7 @@ anon_umask=0777</p>
 
 	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/285.html" rel="bookmark"><time class="entry-date published" datetime="2012-09-09T22:49:37+00:00">2012 年 9 月 9 日</time><time class="updated" datetime="2013-08-20T23:36:58+00:00">2013 年 8 月 20 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84" rel="category tag">系统架构学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/vsftp" rel="tag">VSFTP</a></span>			</footer></article><div id="gitalk-container"></div>
   <script type="text/javascript">
-	  window.onhashchange = function(event) {
-    	if(event.newURL !== event.oldURL ) {
-        	location.reload()
-    	}
-	}
-
+	 
     var gitalk = new Gitalk({
 
     // gitalk的主要参数
@@ -189,9 +184,14 @@ anon_umask=0777</p>
 		repo: 'myblog',
 		owner: 'hust419',
 		admin: ['hust419'],
-		id: 'window.location.pathname',
+		id: location.hash.match(/#(.*?)([?]|$)/)[1]
     
     });
+	 window.onhashchange = function(event){
+      if(event.newURL.split('?')[0] !== event.oldURL .split('?')[0]) {
+        location.reload()
+      }
+    }
     gitalk.render('gitalk-container');
 </script><nav class="navigation post-navigation" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><div class="nav-previous"><a href="https://huster.top/htmls/278.html" rel="prev"><span class="meta-nav" aria-hidden="true">上一</span> <span class="screen-reader-text">上篇文章：</span> <span class="post-title">VPS下LNMP(Linux+Nginx+php-fpm+mysql)的安装</span></a></div><div class="nav-next"><a href="https://huster.top/htmls/294.html" rel="next"><span class="meta-nav" aria-hidden="true">下一</span> <span class="screen-reader-text">下篇文章：</span> <span class="post-title">Linux学习笔记之Ubuntu的包的管理</span></a></div></div>

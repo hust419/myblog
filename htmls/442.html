@@ -279,12 +279,7 @@ ps: 再附送一点知识，如果你的map想转成HashMap也非常简单,你�
 
 	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/442.html" rel="bookmark"><time class="entry-date published updated" datetime="2015-11-23T21:45:34+00:00">2015 年 11 月 23 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span>			</footer></article><div id="gitalk-container"></div>
   <script type="text/javascript">
-	  window.onhashchange = function(event) {
-    	if(event.newURL !== event.oldURL ) {
-        	location.reload()
-    	}
-	}
-
+	 
     var gitalk = new Gitalk({
 
     // gitalk的主要参数
@@ -293,9 +288,14 @@ ps: 再附送一点知识，如果你的map想转成HashMap也非常简单,你�
 		repo: 'myblog',
 		owner: 'hust419',
 		admin: ['hust419'],
-		id: 'window.location.pathname',
+		id: location.hash.match(/#(.*?)([?]|$)/)[1]
     
     });
+	 window.onhashchange = function(event){
+      if(event.newURL.split('?')[0] !== event.oldURL .split('?')[0]) {
+        location.reload()
+      }
+    }
     gitalk.render('gitalk-container');
 </script><nav class="navigation post-navigation" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><div class="nav-previous"><a href="https://huster.top/htmls/436.html" rel="prev"><span class="meta-nav" aria-hidden="true">上一</span> <span class="screen-reader-text">上篇文章：</span> <span class="post-title">使用Spring Boot框架的时候怎么用JDBC连接MySql数据库</span></a></div><div class="nav-next"><a href="https://huster.top/htmls/446.html" rel="next"><span class="meta-nav" aria-hidden="true">下一</span> <span class="screen-reader-text">下篇文章：</span> <span class="post-title">Spring boot的controller无法生效404的原因</span></a></div></div>
