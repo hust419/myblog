@@ -75,7 +75,13 @@
 					</header><div id="content" class="site-content">
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main"><header class="page-header"><h1 class="page-title">分类：Java学习</h1>			</header><article id="post-637" class="post-637 post type-post status-publish format-standard hentry category-java tag-java tag-jmm tag-76"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/637.html" rel="bookmark">细说Java的内存模型</a></h2>	</header><div class="entry-content">
+		<main id="main" class="site-main" role="main"><header class="page-header"><h1 class="page-title">分类：Java学习</h1>			</header><article id="post-642" class="post-642 post type-post status-publish format-standard hentry category-java tag-java tag-78"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/642.html" rel="bookmark">Java多线程总结(上部分)面试题解答</a></h2>	</header><div class="entry-content">
+		<div>    自去年列下计划到现在一年有余，看了好几本书，以为已经过了很长时间，现在回头发现仅仅才过了一年而已，已经积累了不少知识，看来有目的的去学习还是有一些成效的。正好今天看到一个关于多线程的面试题，所以来总结过去所学，也是对过去知识的一个考验。</div>
+<div></div>
+<p> <a href="https://huster.top/htmls/642.html#more-642" class="more-link">继续阅读<span class="screen-reader-text">“Java多线程总结(上部分)面试题解答”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/642.html" rel="bookmark"><time class="entry-date published" datetime="2018-11-23T17:30:22+00:00">2018 年 11 月 23 日</time><time class="updated" datetime="2018-11-23T17:31:02+00:00">2018 年 11 月 23 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/java" rel="tag">Java</a>、<a href="https://huster.top/htmls/tag/%e5%a4%9a%e7%ba%bf%e7%a8%8b" rel="tag">多线程</a></span><span class="comments-link"><a href="https://huster.top/htmls/642.html#respond"><span class="screen-reader-text">于Java多线程总结(上部分)面试题解答</span>留下评论</a></span>			</footer></article><article id="post-637" class="post-637 post type-post status-publish format-standard hentry category-java tag-java tag-jmm tag-76"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/637.html" rel="bookmark">细说Java的内存模型</a></h2>	</header><div class="entry-content">
 		<div><span>    多线程之所以复杂，是因为在多线程环境下，稍有不慎就会导致诡异的问题。这个诡异表现在，他不是一定会出现，他不知道会在什么时候会以什么样的姿态出现在我们的生产环境中。为了避免犯错误，所以我们在所有可能出问题的地方都加上synchronize，那当然也是欠妥的，所以我们要搞清楚其中的细节，对我们写程序就有比较大的帮助了。</span></div>
 <div></div>
 <p> <a href="https://huster.top/htmls/637.html#more-637" class="more-link">继续阅读<span class="screen-reader-text">“细说Java的内存模型”</span></a></p>
@@ -126,12 +132,7 @@ Java的多线程环境下，由于共享资源的竞态可能导致错误的结�
 <p> <a href="https://huster.top/htmls/543.html#more-543" class="more-link">继续阅读<span class="screen-reader-text">“Java里的Join的执行顺序问题”</span></a></p>
 	</div>
 
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/543.html" rel="bookmark"><time class="entry-date published" datetime="2018-04-03T00:00:33+00:00">2018 年 4 月 3 日</time><time class="updated" datetime="2018-04-03T00:02:54+00:00">2018 年 4 月 3 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/543.html#respond"><span class="screen-reader-text">于Java里的Join的执行顺序问题</span>留下评论</a></span>			</footer></article><article id="post-538" class="post-538 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/538.html" rel="bookmark">spring boot cache踩到的坑</a></h2>	</header><div class="entry-content">
-		<p>这周在做线上查询优化的时候，用到了spring boot cache，结果就踩到了坑里，追查了好久最终发现了问题。这次使用的是spring boot cache 和 Ehcache. 不得不说，spring boot的注解式的使用cache非常方便，只需要在方法或者类上面加一个注解，这个方法就被增加了缓存，你自己根本不需要去if get or null put的逻辑，一起都给你做好了。</p>
-<p> <a href="https://huster.top/htmls/538.html#more-538" class="more-link">继续阅读<span class="screen-reader-text">“spring boot cache踩到的坑”</span></a></p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/538.html" rel="bookmark"><time class="entry-date published updated" datetime="2018-01-05T22:43:51+00:00">2018 年 1 月 5 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/538.html#respond"><span class="screen-reader-text">于spring boot cache踩到的坑</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/543.html" rel="bookmark"><time class="entry-date published" datetime="2018-04-03T00:00:33+00:00">2018 年 4 月 3 日</time><time class="updated" datetime="2018-04-03T00:02:54+00:00">2018 年 4 月 3 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/543.html#respond"><span class="screen-reader-text">于Java里的Join的执行顺序问题</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><a class="prev page-numbers" href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0/">上一页</a>
 <a class="page-numbers" href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0/"><span class="meta-nav screen-reader-text">页 </span>1</a>
 <span aria-current="page" class="page-numbers current"><span class="meta-nav screen-reader-text">页 </span>2</span>
@@ -142,6 +143,9 @@ Java的多线程环境下，由于共享资源的竞态可能导致错误的结�
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/790.html">Java的Jar包冲突的总结和实践</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/780.html">如何用java.io.*写一个服务器</a>
 									</li>
 											<li>
@@ -198,10 +202,8 @@ Java的多线程环境下，由于共享资源的竞态可能导致错误的结�
 											<li>
 					<a href="https://huster.top/htmls/633.html">Java面试题之Java语法的基础知识</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/629.html">Java的锁</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/05">2022年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
@@ -256,12 +258,12 @@ Java的多线程环境下，由于共享资源的竞态可能导致错误的结�
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28 current-cat-parent current-cat-ancestor"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (69)
+	<li class="cat-item cat-item-28 current-cat-parent current-cat-ancestor"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (70)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54 current-cat"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (39)
+	<li class="cat-item cat-item-54 current-cat"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (40)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>

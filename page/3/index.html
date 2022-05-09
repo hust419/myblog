@@ -75,7 +75,14 @@
 					</header><div id="content" class="site-content">
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main"><article id="post-615" class="post-615 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/615.html" rel="bookmark">理解Java线程间的通信</a></h2>	</header><div class="entry-content">
+		<main id="main" class="site-main" role="main"><article id="post-629" class="post-629 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/629.html" rel="bookmark">Java的锁</a></h2>	</header><div class="entry-content">
+		<p>一、锁的使用<br>
+Java的多线程环境下，由于共享资源的竞态可能导致错误的结果。因此锁的使用就是保护临界代码，这个就不再赘述。<br>
+代码： 没有锁的时候，临界区没有保护，可能出现错误的结果(出错概率跟你的并发程度有关，小概率事件)，尽管代码比较简单，可以通过其他手段来规避多线程问题，这里还是以这个代码为例，仅仅用来说明多线程问题</p>
+<p> <a href="https://huster.top/htmls/629.html#more-629" class="more-link">继续阅读<span class="screen-reader-text">“Java的锁”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/629.html" rel="bookmark"><time class="entry-date published" datetime="2018-11-07T20:47:10+00:00">2018 年 11 月 7 日</time><time class="updated" datetime="2018-11-07T20:48:53+00:00">2018 年 11 月 7 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/629.html#respond"><span class="screen-reader-text">于Java的锁</span>留下评论</a></span>			</footer></article><article id="post-615" class="post-615 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/615.html" rel="bookmark">理解Java线程间的通信</a></h2>	</header><div class="entry-content">
 		<p>多个线程间肯定是需要通信的，回忆一下我们的并发编程模型里的流水线工作模式(<a href="https://huster.top/htmls/557.html">流水线工作模式</a>)，我们的线程在遇到io阻塞的时候，肯定不能在那边一直等着，得出让自己的cpu资源，等到io完成了，再把任务交给下一个工作线程，我们试着来实现下看看。</p>
 <p> <a href="https://huster.top/htmls/615.html#more-615" class="more-link">继续阅读<span class="screen-reader-text">“理解Java线程间的通信”</span></a></p>
 	</div>
@@ -126,12 +133,7 @@
 <p> <a href="https://huster.top/htmls/543.html#more-543" class="more-link">继续阅读<span class="screen-reader-text">“Java里的Join的执行顺序问题”</span></a></p>
 	</div>
 
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/543.html" rel="bookmark"><time class="entry-date published" datetime="2018-04-03T00:00:33+00:00">2018 年 4 月 3 日</time><time class="updated" datetime="2018-04-03T00:02:54+00:00">2018 年 4 月 3 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/543.html#respond"><span class="screen-reader-text">于Java里的Join的执行顺序问题</span>留下评论</a></span>			</footer></article><article id="post-538" class="post-538 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/538.html" rel="bookmark">spring boot cache踩到的坑</a></h2>	</header><div class="entry-content">
-		<p>这周在做线上查询优化的时候，用到了spring boot cache，结果就踩到了坑里，追查了好久最终发现了问题。这次使用的是spring boot cache 和 Ehcache. 不得不说，spring boot的注解式的使用cache非常方便，只需要在方法或者类上面加一个注解，这个方法就被增加了缓存，你自己根本不需要去if get or null put的逻辑，一起都给你做好了。</p>
-<p> <a href="https://huster.top/htmls/538.html#more-538" class="more-link">继续阅读<span class="screen-reader-text">“spring boot cache踩到的坑”</span></a></p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/538.html" rel="bookmark"><time class="entry-date published updated" datetime="2018-01-05T22:43:51+00:00">2018 年 1 月 5 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/538.html#respond"><span class="screen-reader-text">于spring boot cache踩到的坑</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/543.html" rel="bookmark"><time class="entry-date published" datetime="2018-04-03T00:00:33+00:00">2018 年 4 月 3 日</time><time class="updated" datetime="2018-04-03T00:02:54+00:00">2018 年 4 月 3 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/543.html#respond"><span class="screen-reader-text">于Java里的Join的执行顺序问题</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><a class="prev page-numbers" href="https://huster.top/page/2">上一页</a>
 <a class="page-numbers" href="https://huster.top/"><span class="meta-nav screen-reader-text">页 </span>1</a>
 <a class="page-numbers" href="https://huster.top/page/2"><span class="meta-nav screen-reader-text">页 </span>2</a>
@@ -144,6 +146,9 @@
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/790.html">Java的Jar包冲突的总结和实践</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/780.html">如何用java.io.*写一个服务器</a>
 									</li>
 											<li>
@@ -200,10 +205,8 @@
 											<li>
 					<a href="https://huster.top/htmls/633.html">Java面试题之Java语法的基础知识</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/629.html">Java的锁</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/05">2022年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
@@ -258,12 +261,12 @@
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (69)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (70)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (39)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (40)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>

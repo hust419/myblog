@@ -12,7 +12,7 @@
 	<atom:link href="http://rentb.vicp.net/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/feed" rel="self" type="application/rss+xml" />
 	<link>http://huster.top/</link>
 	<description>(任天兵)龙安的博客</description>
-	<lastBuildDate>Fri, 08 Apr 2022 13:10:54 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 09 May 2022 13:11:26 +0000</lastBuildDate>
 	<language>zh-CN</language>
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
@@ -26,6 +26,59 @@
 	<height>32</height>
 </image> 
 	<item>
+		<title>Java的Jar包冲突的总结和实践</title>
+		<link>https://huster.top/htmls/790.html</link>
+		<comments>https://huster.top/htmls/790.html#respond</comments>
+		<pubDate>Mon, 09 May 2022 13:11:26 +0000</pubDate>
+		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
+				<category><![CDATA[Java学习]]></category>
+
+		<guid isPermaLink="false">https://huster.top/?p=790</guid>
+		<description><![CDATA[“我这边现在有个问题，兵哥，你忙吗，想找你看看，有关冲突的，等等我联系下你”，这天接到线上求助。一般情况下ja &#8230; <a href="https://huster.top/htmls/790.html" class="more-link">继续阅读<span class="screen-reader-text">“Java的Jar包冲突的总结和实践”</span></a>]]></description>
+				<content:encoded><![CDATA[<p>“我这边现在有个问题，兵哥，你忙吗，想找你看看，有关冲突的，等等我联系下你”，这天接到线上求助。一般情况下jar包冲突开发都可以自己搞定，然后听说找了好几个人，按照常规手法没有搞定。感觉是遇到了疑难杂症，我听完挺有兴趣的，有什么jar包冲突是我们没遇到过的吗？我们今天来总结下jar包冲突相关的处理手法。</p>
+<p><span id="more-790"></span></p>
+<p><a name="O3nk5"></a></p>
+<h2>Jar包冲突的表现</h2>
+<p>Jar包冲突是Java里比较常见的问题，因为Java的生态非常丰富，所以有很多第三方jar包的依赖，一般情况下使用maven来进行jar包依赖的管理。这个时候，如果一个新版，一个旧版而且新旧版接口不兼容，就会出现jar包冲突的情况。表现一般是ClassNotFoundException、NoSuchMethodException、NoClassDefFoundError等相关的报错，通常你打开源码会发现，这个方法明明就在为什么会报这个错误呢？ 有的在启动的时候就报错了还好，还有种表现就是，时好时坏。运气好，应用就起来了，运气不好，就报了上面的异常，让人非常头疼。要是测试环境都起来了，到了生产部分机器起来了，部分机器挂了，影响就比较大了。<br />由于大家都依赖了日志jar包，所以通常日志的jar包冲突比较多，感兴趣的可以自行了解日志框架相关，也有一段比较有趣的历史。<br />
+<a name="FeJZ7"></a></p>
+<h2>常用的排查办法</h2>
+<p>常用的解决办法当时是mvn dependency:tree把依赖树打出来，然后看看相同的jar包到底是从哪被引入进来的，然后根据权衡，保留一个兼容的版本，也就是新旧版都能使用的，通常的第三方jar包都是向下兼容的，保留最新的就好了。<br />另外安利一个工具，Intellij IDEA安装一个 Dependency Analyzer的插件，图形话的界面，操作起来更加的方便。<br /><img src="/wp-content/uploads/2022/05/1.png" alt="image.png" /><br />同时我们还要知道的是，maven的依赖顺序到底是怎样的，有时候怎么感觉把依赖换一个顺序就能够解决问题呢？<br />1.间接依赖路径最短优先一个项目test依赖了a和b两个jar包。其中a-b-c1.0 ， d-e-f-c1.1 。由于c1.0路径最短，所以项目test最后使用的是c1.0。<br />2.pom文件中申明顺序优先<br />有人就问了如果 a-b-c1.0 ， d-e-c1.1 这样路径都一样怎么办？其实maven的作者也没那么傻，会以在pom文件中申明的顺序那选，如果pom文件中先申明了d再申明了a，test项目最后依赖的会是c1.1<br />所以maven依赖原则总结起来就两条：路径最短，申明顺序其次。<br />
+<a name="K6q5z"></a></p>
+<h2>非常规排查办法</h2>
+<p>一般情况下，常规的手法能够解决80%的问题，但是不一定会能解决所有的问题。我抛两个案例来看看常规手段失效的时候，怎么排查。<br />
+<a name="AHhL7"></a></p>
+<h3>中间件升级带来的问题</h3>
+<p>一次是在阿里的时候，升级forest的jar包导致应用起不来，通过dependency:tree分析，始终找不出问题在哪里，因为明明是forest升级，报错的却是tair的相关的类没找到，你不知道是哪个jar包冲突了，所以也无从排查。这个时候我就把新版和旧版的真正部署的jar包文件夹里的所有jar包文件列出来，通常这些文件都带了版本号了，通过这个来对比新旧版本到底是哪个jar包的版本号发生了改变带来了冲突，定位到底是哪个jar包冲突了，定位到了是哪个jar包，你才好去解决他。我记得当时分享出来之后，帮好多踩坑的同学解决了问题，下面留言说，找了好久，终于通过这个帖子解决了问题。这个问题的诡异之处是，明明升级的是中间件A,报错是中间件B的相关的类。通常你对于加载的jar包到底是哪个版本有疑惑的时候，都可以采用这种办法。<br /><img src="/wp-content/uploads/2022/05/2.png" alt="image.png" /><br />
+<a name="sUgmi"></a></p>
+<h3>flink的jar包冲突</h3>
+<p>另外一个特殊的地方是flink的集群的jar包冲突，当flink部署集群的时候，他的jar包加载顺序是由Hadoop集群来配置的，详细了解<a href="https://ci.apache.org/projects/flink/flink-docs-release-1.13/zh/docs/ops/debugging/debugging_classloading/">https://ci.apache.org/projects/flink/flink-docs-release-1.13/zh/docs/ops/debugging/debugging_classloading/</a><br />那么这个时候，需要求助于集群的管理员帮你排查jar包冲突问题，如果他没有时间你又没有权限怎么办呢？ 我们其实可以在抛异常的地方，打印一些日志，来寻找到当前的jar包到底是从哪里加载的。</p>
+<pre><code class="language-java"> File f2 = new File(this.getClass().getResource(&quot;&quot;).getPath());
+ System.out.println(f2);</code></pre>
+<p><a name="Rc4nf"></a></p>
+<h2>解决办法</h2>
+<p>常规的解决办法就是排除，使用exclusions把旧版本排掉，引入新版本就可以了。但是也有例外的，例如新版本身既不是向下兼容的，你用的别人的jar包他需要旧版，而你需要新版，怎么办呢？</p>
+<p><a name="IJ9Sj"></a></p>
+<h3>终极手段</h3>
+<p>这个时候可以使用maven的shade插件来支持类的重命名，让你的jar包里依赖的，始终是你需要的版本，不再会有冲突的问题，这个也是解决冲突的终极方案。<br /><img src="/wp-content/uploads/2022/05/3.png" alt="image.png" /><br />
+<a name="b03Sb"></a></p>
+<h2>具体案例分析</h2>
+<p>说了这么多理论知识，我们回到最初的这个案例，看看如何实践。<br />具体的报错信息<br />Caused by: java.lang.NoSuchMethodError: io.netty.buffer.PooledByteBufAllocator.defaultPreferDirect()Z<br />其中PooledByteBufAllocator这个类是来自于<br />grpc-netty :1.33.1 <br />   at io.grpc.netty.Utils.getByteBufAllocator(Utils.java:128) ~[grpc-netty-1.33.1.jar:1.33.1]</p>
+<p>报找不到这个方法，我们打开类看一看, 这个类来自于netty-buffer-4.1.14<br /><img src="/wp-content/uploads/2022/05/4.png" alt="image.png" /></p>
+<p>一搜发现真的找不到<br /><img src="/wp-content/uploads/2022/05/5.png" alt="image.png" /></p>
+<p>这个类既存在于netty-buffer也存在于netty-all， 我们保留最新版nett-all，解决了这个PooledByteBufAllocator这个类的兼容问题。</p>
+<p>接着报了第二个错误，遇到错误不要慌，我们先分析一下看看。</p>
+<p>Caused by: java.lang.NoSuchMethodError: io.netty.util.ResourceLeakDetector.addExclusions(Ljava/lang/Class;[Ljava/lang/String;)V</p>
+<p>这个地方有个问题在于，我们无法确定ResourceLeakDetector到底从哪里加载的，打开了源代码明明看到了这个方法，为何找不到呢？ 我们可以利用IDEA的断点调试功能，打印出这个class到底从哪里加载的<br /><img src="/wp-content/uploads/2022/05/6.png" alt="image.png" /></p>
+<p>打开之后我们发现是，netty-common和netty-all冲突了，里面都有这个类，而netty-common里没有这个方法。<br /><img src="/wp-content/uploads/2022/05/7.png" alt="image.png" /></p>
+<p>应用总算是起来了，但是一请求就报错了，报了第三个错误，这个果然还是有点棘手的。<br /><img src="/wp-content/uploads/2022/05/8.png" alt="image.png" /></p>
+<p>这个在运行的时候，报了一个AbstractMethodError，这个错误很明显，你调用了一个抽象方法。<br />我们继续打开类OwlThreadLocalScopeManager来分析下，发现在这里发生调用的，也就是soa的soa - 3.4.2的这个版本，调用了OwlThreadLocalScopeManager.activate(Span span)的方法<br /><img src="/wp-content/uploads/2022/05/9.png" alt="image.png" /><br />然后我们打开这个类发现，这个类根本没实现activate(Span span)的方法<br /><img src="/wp-content/uploads/2022/05/10.png" alt="image.png" /></p>
+<p>这个就比较麻烦了，这个类都没有实现这个接口的方法，怎么会被调用到。可能是编译的时候，用的版本和运行时用的版本不一致导致的。问了相关的开发，发现可能依赖了冲突的import导入所致。<br />我去检查了发现了这个东西，果然是通过scope为import的方式导入了另外一个包，而这个包里包含了太多的内容，甚至指定了soa的版本，因此导致了非常多的冲突。 找到问题就比较好解决了。</p>
+<p>解决的办法其实很简单，定位到代码所在行，打开源代码进行分析，看看这个代码属于哪个jar的，然后就知道要怎么排除了。<br />有时候IEDA会有些缓存，导致你明明修改了pom.xml里的版本，结果加载的还是老的。这个时候一些常规手段，是reimport，再不行，删除target目录，重启IDEA，删除.m2的下载到本地的仓库，强行让他重新加载。</p>
+]]></content:encoded>
+			<wfw:commentRss>https://huster.top/htmls/790.html/feed</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
 		<title>如何用java.io.*写一个服务器</title>
 		<link>https://huster.top/htmls/780.html</link>
 		<comments>https://huster.top/htmls/780.html#respond</comments>
@@ -1327,111 +1380,6 @@ bsEnv.execute("data-metrics");
 <div></div>
 ]]></content:encoded>
 			<wfw:commentRss>https://huster.top/htmls/700.html/feed</wfw:commentRss>
-		<slash:comments>0</slash:comments>
-		</item>
-		<item>
-		<title>flink相关 &#8211; 读入kafka数据源</title>
-		<link>https://huster.top/htmls/696.html</link>
-		<comments>https://huster.top/htmls/696.html#respond</comments>
-		<pubDate>Thu, 17 Oct 2019 08:47:14 +0000</pubDate>
-		<dc:creator><![CDATA[龙安_任天兵]]></dc:creator>
-				<category><![CDATA[flink]]></category>
-
-		<guid isPermaLink="false">https://huster.top/?p=696</guid>
-		<description><![CDATA[业务代码如下 : fsTableEnv.connect(        newKafka()          &#8230; <a href="https://huster.top/htmls/696.html" class="more-link">继续阅读<span class="screen-reader-text">“flink相关 &#8211; 读入kafka数据源”</span></a>]]></description>
-				<content:encoded><![CDATA[<div>业务代码如下 :</div>
-<div>fsTableEnv.connect(</div>
-<div>       newKafka()</div>
-<div>                .version("0.11")</div>
-<div>                .topic("xxxx")</div>
-<div>                .property("bootstrap.servers”,”<a href="http://newdev-kafka1.ttbike.com.cn:9092/">x</a>xxxx:xxxx")</div>
-<div>                .property("<a href="http://group.id/">group.id</a>","test4444")</div>
-<div>                .startFromEarliest()//测试需要</div>
-<div>)</div>
-<div>        .withSchema(newSchema().schema(newTableSchema(fields, types)))</div>
-<div>        .withFormat(newJson().schema(newRowTypeInfo(types, fields)))</div>
-<div>        .inAppendMode()</div>
-<div>        .registerTableSource(“testTable”);</div>
-<div></div>
-<div></div>
-<div>问题是：读出来的数据总是null</div>
-<div>DataStream&lt;Row&gt; table = fsTableEnv.toAppendStream(fsTableEnv.sqlQuery("select * from testTable"),Row.class);</div>
-<div>table.print();</div>
-<div></div>
-<div></div>
-<p><span id="more-696"></span></p>
-<div></div>
-<div></div>
-<div><a href="https://huster.top/wp-content/uploads/2019/10/3.png"><img class="alignnone size-full wp-image-697" src="https://huster.top/wp-content/uploads/2019/10/3.png" alt="" width="1810" height="219" /></a></div>
-<div></div>
-<div></div>
-<div>Kafka.java 这个类依然是一个配置收集器，就是为了收集一堆配置，然后给后面的工厂方法使用。依然通过FactoryService找到了Kafka011TableSourceSinkFactory这个工厂类。</div>
-<div></div>
-<div>Kafka011TableSourceSinkFactory : 作用是为了生成Kafka011TableSource这个TableSource。</div>
-<div></div>
-<div>Kafka011TableSource: 这个类的主要功效还是一个TableSource除了定义了TableSchema和ReturnType，最主要的是完成了他的核心功能，getDataStream()方法</div>
-<div></div>
-<div>FlinkKafkaConsumerBase : 由上一步的getDataStream方法，其实是为了生成这个类。这个类是一个SourceFunction，其中弹出信息的方法是run方法，我们继续看他的run方法</div>
-<div></div>
-<div></div>
-<div>最后跟踪定位到convert那个地方，才发现，原来解析的时候，他使用的是完整的json schema，而不是仅仅是data里的field字段，例如你传给kafka的json schema是包含了data平级的那些字段,table,operation等。而我传过去的是data里的field字段，当然就错了。</div>
-<div></div>
-<div>{</div>
-<div>    "schema": “44444",</div>
-<div>    "table": "safs",</div>
-<div>    "operation": "INSERT",</div>
-<div>    "data": {</div>
-<div>        "start_time": "2019-10-10 23:00:00",</div>
-<div>        "end_point": "0101000020E61000008BDEA9807B545E4062D9CC21A9313F40",</div>
-<div>        "start_point": "0101000020E61000002250FD8348575E40C284D1AC6C1F3F40",</div>
-<div>        "user_new_id": 1200001917,</div>
-<div>        "end_adcode": null,</div>
-<div>        "end_time": null,</div>
-<div>        "distance": null,</div>
-<div>        "seat_count": 4</div>
-<div>    },</div>
-<div>    "operateTime": 1570602631926</div>
-<div>}</div>
-<div></div>
-<div></div>
-<div>跟踪调试，发现具体的是在Kafka09Fetcher的runFetchLoop方法里有一段，final T value = deserializer.deserialize(record);解析出来就出错了，就空了。继续跟踪调试，发现是在 JsonRowDeserializationSchema类的</div>
-<div>@Override</div>
-<div>public Row deserialize(byte[] message) throws IOException {</div>
-<div>   try {</div>
-<div>      final JsonNode root = objectMapper.readTree(message);</div>
-<div>      return (Row) runtimeConverter.convert(objectMapper, root);</div>
-<div>   } catch (Throwable t) {</div>
-<div>      throw new IOException("Failed to deserialize JSON object.", t);</div>
-<div>   }</div>
-<div>}</div>
-<div>这段代码里，root解析出来是好的，然后他开始convert.</div>
-<div></div>
-<div>private DeserializationRuntimeConverter assembleRowConverter(</div>
-<div>   String[] fieldNames,</div>
-<div>   List&lt;DeserializationRuntimeConverter&gt; fieldConverters) {</div>
-<div>   return (mapper, jsonNode) -&gt; {</div>
-<div>      ObjectNode node = (ObjectNode) jsonNode;</div>
-<div>      int arity = fieldNames.length;</div>
-<div>      Row row = new Row(arity);</div>
-<div>      for (int i = 0; i &lt; arity; i++) {</div>
-<div>         String fieldName = fieldNames[i];</div>
-<div>         JsonNode field = node.get(fieldName);</div>
-<div>         Object convertField = convertField(mapper, fieldConverters.get(i), fieldName, field);</div>
-<div>         row.setField(i, convertField);</div>
-<div>      }</div>
-<div>      return row;</div>
-<div>   };</div>
-<div>}</div>
-<div></div>
-<div>其中有这么一段JsonNode field = node.get(fieldName);他拿着你的fieldName去json数据里get,因为少了一个data层，所以就出错了。</div>
-<div></div>
-<div></div>
-<div>这个kafka的连接器的依赖也挺奇葩的 。</div>
-<div><a href="https://huster.top/wp-content/uploads/2019/10/4.png"><img class="alignnone size-full wp-image-698" src="https://huster.top/wp-content/uploads/2019/10/4.png" alt="" width="1141" height="132" /></a></div>
-<div></div>
-<div>0.11版本依赖0.10.再依赖0.9……..让人很迷惑.</div>
-]]></content:encoded>
-			<wfw:commentRss>https://huster.top/htmls/696.html/feed</wfw:commentRss>
 		<slash:comments>0</slash:comments>
 		</item>
 	</channel>

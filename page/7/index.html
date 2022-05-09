@@ -75,7 +75,12 @@
 					</header><div id="content" class="site-content">
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main"><article id="post-335" class="post-335 post type-post status-publish format-standard hentry category-php"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/335.html" rel="bookmark">fastcgi_finish_request函数的妙用以及性能测试</a></h2>	</header><div class="entry-content">
+		<main id="main" class="site-main" role="main"><article id="post-342" class="post-342 post type-post status-publish format-standard hentry category-php-tools category-16"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/342.html" rel="bookmark">利用jquery和bootstarp做一个好看的进度条</a></h2>	</header><div class="entry-content">
+		<p>安装软件有进度条指示我们安装了多少了。上传文件也能告诉我们上传了多少了，那么如果后台有一个非常耗时的操作，能不能有这么一个进度条来告知我进行了多少了呢？答案是肯定的，<a href="/processbar.php">点击查看demo</a></p>
+<p> <a href="https://huster.top/htmls/342.html#more-342" class="more-link">继续阅读<span class="screen-reader-text">“利用jquery和bootstarp做一个好看的进度条”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/342.html" rel="bookmark"><time class="entry-date published" datetime="2013-06-23T00:07:50+00:00">2013 年 6 月 23 日</time><time class="updated" datetime="2018-10-22T14:27:54+00:00">2018 年 10 月 22 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/php%e5%b7%a5%e5%85%b7/php-tools" rel="category tag">PHP的开发工具</a>、<a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84" rel="category tag">系统架构学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/342.html#respond"><span class="screen-reader-text">于利用jquery和bootstarp做一个好看的进度条</span>留下评论</a></span>			</footer></article><article id="post-335" class="post-335 post type-post status-publish format-standard hentry category-php"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/335.html" rel="bookmark">fastcgi_finish_request函数的妙用以及性能测试</a></h2>	</header><div class="entry-content">
 		<p>昨天无意中得知 fastcgi_finish_request这个函数以及对应的register_shutdown_function，然后对他做了一个了解，用他可以实现一些非常巧妙而有趣的事情。首先，我们看下这个函数的注解：</p>
 <p>special function to finish request and flush all data while continuing to do something time-consuming (video converting, stats processing etc.);</p>
 <p>它能够让你结束你跟浏览器的交互，然后在后台再继续的运行这个线程，做一些不需要输出，不需要和浏览器交互的事情，例如，上传视频后，视频在转码的时候，不需要用户等待，可以先告诉用户成功，然后再到后台转码（优酷是不是这样？ 视频传成功以后，还需要等段时间，才能后台看到该视频的信息。，我们直接通过程序来说明吧。</p>
@@ -142,12 +147,7 @@
 <p> <a href="https://huster.top/htmls/256.html#more-256" class="more-link">继续阅读<span class="screen-reader-text">“ZMQ的异步和进程间通信”</span></a></p>
 	</div>
 
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/256.html" rel="bookmark"><time class="entry-date published" datetime="2012-07-16T17:27:10+00:00">2012 年 7 月 16 日</time><time class="updated" datetime="2012-07-20T14:01:34+00:00">2012 年 7 月 20 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84" rel="category tag">系统架构学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/zeromq" rel="tag">ZeroMQ</a>、<a href="https://huster.top/htmls/tag/zmq" rel="tag">zmq</a></span><span class="comments-link"><a href="https://huster.top/htmls/256.html#respond"><span class="screen-reader-text">于ZMQ的异步和进程间通信</span>留下评论</a></span>			</footer></article><article id="post-254" class="post-254 post type-post status-publish format-standard hentry category-16 tag-zeromq tag-zmq"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/254.html" rel="bookmark">Zeromq简介：三种模式</a></h2>	</header><div class="entry-content">
-		<p>简述Zmq的三个模型：</p>
-<p> <a href="https://huster.top/htmls/254.html#more-254" class="more-link">继续阅读<span class="screen-reader-text">“Zeromq简介：三种模式”</span></a></p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/254.html" rel="bookmark"><time class="entry-date published" datetime="2012-07-16T15:23:01+00:00">2012 年 7 月 16 日</time><time class="updated" datetime="2012-07-20T14:02:09+00:00">2012 年 7 月 20 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84" rel="category tag">系统架构学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/zeromq" rel="tag">ZeroMQ</a>、<a href="https://huster.top/htmls/tag/zmq" rel="tag">zmq</a></span><span class="comments-link"><a href="https://huster.top/htmls/254.html#respond"><span class="screen-reader-text">于Zeromq简介：三种模式</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/256.html" rel="bookmark"><time class="entry-date published" datetime="2012-07-16T17:27:10+00:00">2012 年 7 月 16 日</time><time class="updated" datetime="2012-07-20T14:01:34+00:00">2012 年 7 月 20 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e7%b3%bb%e7%bb%9f%e6%9e%b6%e6%9e%84" rel="category tag">系统架构学习</a></span><span class="tags-links"><span class="screen-reader-text">标签 </span><a href="https://huster.top/htmls/tag/zeromq" rel="tag">ZeroMQ</a>、<a href="https://huster.top/htmls/tag/zmq" rel="tag">zmq</a></span><span class="comments-link"><a href="https://huster.top/htmls/256.html#respond"><span class="screen-reader-text">于ZMQ的异步和进程间通信</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><a class="prev page-numbers" href="https://huster.top/page/6">上一页</a>
 <a class="page-numbers" href="https://huster.top/"><span class="meta-nav screen-reader-text">页 </span>1</a>
 <span class="page-numbers dots">…</span>
@@ -161,6 +161,9 @@
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/790.html">Java的Jar包冲突的总结和实践</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/780.html">如何用java.io.*写一个服务器</a>
 									</li>
 											<li>
@@ -217,10 +220,8 @@
 											<li>
 					<a href="https://huster.top/htmls/633.html">Java面试题之Java语法的基础知识</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/629.html">Java的锁</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/05">2022年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
@@ -275,12 +276,12 @@
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (69)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (70)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (39)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (40)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>

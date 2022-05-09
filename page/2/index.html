@@ -75,7 +75,31 @@
 					</header><div id="content" class="site-content">
 
 	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main"><article id="post-691" class="post-691 post type-post status-publish format-standard hentry category-flink"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/691.html" rel="bookmark">flink学习笔记(一)</a></h2>	</header><div class="entry-content">
+		<main id="main" class="site-main" role="main"><article id="post-696" class="post-696 post type-post status-publish format-standard hentry category-flink"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/696.html" rel="bookmark">flink相关 – 读入kafka数据源</a></h2>	</header><div class="entry-content">
+		<div>业务代码如下 :</div>
+<div>fsTableEnv.connect(</div>
+<div>       newKafka()</div>
+<div>                .version("0.11")</div>
+<div>                .topic("xxxx")</div>
+<div>                .property("bootstrap.servers”,”<a href="http://newdev-kafka1.ttbike.com.cn:9092/">x</a>xxxx:xxxx")</div>
+<div>                .property("<a href="http://group.id/">group.id</a>","test4444")</div>
+<div>                .startFromEarliest()//测试需要</div>
+<div>)</div>
+<div>        .withSchema(newSchema().schema(newTableSchema(fields, types)))</div>
+<div>        .withFormat(newJson().schema(newRowTypeInfo(types, fields)))</div>
+<div>        .inAppendMode()</div>
+<div>        .registerTableSource(“testTable”);</div>
+<div></div>
+<div></div>
+<div>问题是：读出来的数据总是null</div>
+<div>DataStream<Row> table = fsTableEnv.toAppendStream(fsTableEnv.sqlQuery("select * from testTable"),Row.class);</div>
+<div>table.print();</div>
+<div></div>
+<div></div>
+<p> <a href="https://huster.top/htmls/696.html#more-696" class="more-link">继续阅读<span class="screen-reader-text">“flink相关 – 读入kafka数据源”</span></a></p>
+	</div>
+
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/696.html" rel="bookmark"><time class="entry-date published updated" datetime="2019-10-17T16:47:14+00:00">2019 年 10 月 17 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink" rel="category tag">flink</a></span><span class="comments-link"><a href="https://huster.top/htmls/696.html#respond"><span class="screen-reader-text">于flink相关 – 读入kafka数据源</span>留下评论</a></span>			</footer></article><article id="post-691" class="post-691 post type-post status-publish format-standard hentry category-flink"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/691.html" rel="bookmark">flink学习笔记(一)</a></h2>	</header><div class="entry-content">
 		<div>架构</div>
 <ol><li>
 <div> 什么是flink</div>
@@ -160,14 +184,7 @@
 <p> <a href="https://huster.top/htmls/633.html#more-633" class="more-link">继续阅读<span class="screen-reader-text">“Java面试题之Java语法的基础知识”</span></a></p>
 	</div>
 
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/633.html" rel="bookmark"><time class="entry-date published updated" datetime="2018-11-08T15:50:32+00:00">2018 年 11 月 8 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/633.html#respond"><span class="screen-reader-text">于Java面试题之Java语法的基础知识</span>留下评论</a></span>			</footer></article><article id="post-629" class="post-629 post type-post status-publish format-standard hentry category-java"><header class="entry-header"><h2 class="entry-title"><a href="https://huster.top/htmls/629.html" rel="bookmark">Java的锁</a></h2>	</header><div class="entry-content">
-		<p>一、锁的使用<br>
-Java的多线程环境下，由于共享资源的竞态可能导致错误的结果。因此锁的使用就是保护临界代码，这个就不再赘述。<br>
-代码： 没有锁的时候，临界区没有保护，可能出现错误的结果(出错概率跟你的并发程度有关，小概率事件)，尽管代码比较简单，可以通过其他手段来规避多线程问题，这里还是以这个代码为例，仅仅用来说明多线程问题</p>
-<p> <a href="https://huster.top/htmls/629.html#more-629" class="more-link">继续阅读<span class="screen-reader-text">“Java的锁”</span></a></p>
-	</div>
-
-	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/629.html" rel="bookmark"><time class="entry-date published" datetime="2018-11-07T20:47:10+00:00">2018 年 11 月 7 日</time><time class="updated" datetime="2018-11-07T20:48:53+00:00">2018 年 11 月 7 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/629.html#respond"><span class="screen-reader-text">于Java的锁</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
+	<footer class="entry-footer"><span class="byline"><span class="author vcard"><span class="screen-reader-text">作者 </span> <a class="url fn n" href="https://huster.top/htmls/author/admin">龙安_任天兵</a></span></span><span class="posted-on"><span class="screen-reader-text">发布于 </span><a href="https://huster.top/htmls/633.html" rel="bookmark"><time class="entry-date published updated" datetime="2018-11-08T15:50:32+00:00">2018 年 11 月 8 日</time></a></span><span class="cat-links"><span class="screen-reader-text">分类 </span><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0" rel="category tag">Java学习</a></span><span class="comments-link"><a href="https://huster.top/htmls/633.html#respond"><span class="screen-reader-text">于Java面试题之Java语法的基础知识</span>留下评论</a></span>			</footer></article><nav class="navigation pagination" role="navigation"><h2 class="screen-reader-text">文章导航</h2>
 		<div class="nav-links"><a class="prev page-numbers" href="https://huster.top/">上一页</a>
 <a class="page-numbers" href="https://huster.top/"><span class="meta-nav screen-reader-text">页 </span>1</a>
 <span aria-current="page" class="page-numbers current"><span class="meta-nav screen-reader-text">页 </span>2</span>
@@ -179,6 +196,9 @@ Java的多线程环境下，由于共享资源的竞态可能导致错误的结�
 
 
 	<aside id="secondary" class="sidebar widget-area" role="complementary"><section id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widget-title">近期文章</h2>		<ul><li>
+					<a href="https://huster.top/htmls/790.html">Java的Jar包冲突的总结和实践</a>
+									</li>
+											<li>
 					<a href="https://huster.top/htmls/780.html">如何用java.io.*写一个服务器</a>
 									</li>
 											<li>
@@ -235,10 +255,8 @@ Java的多线程环境下，由于共享资源的竞态可能导致错误的结�
 											<li>
 					<a href="https://huster.top/htmls/633.html">Java面试题之Java语法的基础知识</a>
 									</li>
-											<li>
-					<a href="https://huster.top/htmls/629.html">Java的锁</a>
-									</li>
-					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
+					</ul></section><section id="archives-2" class="widget widget_archive"><h2 class="widget-title">文章归档</h2>		<ul><li><a href="https://huster.top/htmls/date/2022/05">2022年五月</a> (1)</li>
+	<li><a href="https://huster.top/htmls/date/2022/04">2022年四月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2021/02">2021年二月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/09">2020年九月</a> (1)</li>
 	<li><a href="https://huster.top/htmls/date/2020/06">2020年六月</a> (1)</li>
@@ -293,12 +311,12 @@ Java的多线程环境下，由于共享资源的竞态可能导致错误的结�
 </li>
 	<li class="cat-item cat-item-33"><a href="https://huster.top/htmls/category/web%e5%ae%89%e5%85%a8">WEB安全</a> (3)
 </li>
-	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (69)
+	<li class="cat-item cat-item-28"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">学习笔记</a> (70)
 <ul class="children"><li class="cat-item cat-item-83"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/flink">flink</a> (7)
 </li>
 	<li class="cat-item cat-item-19"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/http1-1%e9%98%85%e8%af%bb%e7%ac%94%e8%ae%b0">HTTP/1.1阅读笔记</a> (11)
 </li>
-	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (39)
+	<li class="cat-item cat-item-54"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/java%e5%ad%a6%e4%b9%a0">Java学习</a> (40)
 </li>
 	<li class="cat-item cat-item-44"><a href="https://huster.top/htmls/category/%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0/linux%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0">Linux学习笔记</a> (1)
 </li>
